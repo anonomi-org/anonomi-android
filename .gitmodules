@@ -1,0 +1,3 @@
+[submodule "anonomi-postbox"]
+	path = anonomi-postbox
+	url = ../anonomi-postbox.git

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<EditTextPreference
+		android:key="pref_key_primary_address"
+		android:title="@string/pref_primary_address_title"
+		android:hint="@string/pref_primary_address_hint"
+		android:inputType="text" />
+
+	<EditTextPreference
+		android:key="pref_key_private_view_key"
+		android:title="@string/pref_private_view_key_title"
+		android:hint="@string/pref_private_view_key_hint"
+		android:inputType="text" />
+
+	<EditTextPreference
+		android:key="pref_key_monero_rate"
+		android:title="@string/pref_monero_rate_title"
+		android:hint="@string/pref_monero_rate_hint"
+		android:inputType="numberDecimal" />
+
+	<EditTextPreference
+		android:key="pref_key_minor_index_key"
+		android:title="@string/pref_minor_index_title"
+		android:hint="@string/pref_minor_index_hint"
+		android:inputType="number" />
+
+</PreferenceScreen>

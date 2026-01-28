@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+	<style name="AnonTheme" parent="Theme.Material3.DayNight"/>
+
+	<style name="AnonTheme.Base" parent="AnonTheme">
+		<item name="colorPrimary">@color/anontheme_anon_accent_color</item>
+		<item name="colorOnPrimary">@color/md_theme_onPrimary</item>
+		<item name="colorPrimaryContainer">@color/md_theme_primary</item>
+		<item name="colorOnPrimaryContainer">@color/md_theme_onPrimary</item>
+		<item name="colorSecondary">@color/anontheme_anon_accent_dark_color</item>
+		<item name="colorOnSecondary">@color/md_theme_onSecondary</item>
+		<item name="colorTertiary">@color/md_theme_tertiary</item>
+		<item name="colorOnTertiary">@color/md_theme_onTertiary</item>
+		<item name="colorTertiaryContainer">@color/md_theme_tertiaryContainer</item>
+		<item name="colorOnTertiaryContainer">@color/md_theme_onTertiaryContainer</item>
+		<item name="android:colorBackground">@color/window_background</item>
+		<item name="colorOnBackground">@color/md_theme_onBackground</item>
+		<item name="colorSurface">@color/card_background</item>
+		<item name="colorOnSurface">@color/md_theme_onSurface</item>
+		<item name="colorSurfaceDim">@color/md_theme_surfaceDim</item>
+		<item name="colorError">@color/md_theme_error</item>
+		<item name="android:statusBarColor">#000000</item>
+		<item name="android:windowBackground">@color/window_background</item>
+		<item name="android:textColorLink">@color/anon_text_link</item>
+		<item name="android:windowAnimationStyle">@style/ActivityAnimation</item>
+		<item name="windowActionModeOverlay">true</item>
+		<item name="toolbarStyle">@style/AnonToolbar</item>
+		<item name="alertDialogTheme">@style/AnonDialogTheme.Neutral</item>
+		<item name="preferenceTheme">@style/PreferenceThemeOverlay.v14</item>
+		<item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+		<item name="android:windowOptOutEdgeToEdgeEnforcement" tools:targetApi="35">true</item>
+
+		<item name="colorSurface">@color/anontheme_anon_accent_color</item>
+		<item name="colorOnPrimary">@color/white</item>
+		<item name="android:colorBackground">@color/anontheme_anon_accent_color</item>
+
+		<!-- Control Theme Colors -->
+		<!-- General -->
+		<item name="anonAccentColor">@color/anontheme_anon_accent_color</item>
+		<item name="anonAccentDarkColor">@color/anontheme_anon_accent_dark_color</item>
+
+
+
+		<!-- Message Out -->
+		<item name="msgOutBubbleBackground">@color/anontheme_msg_out_bubble_background</item>
+		<item name="msgOutTextColor">@color/anontheme_msg_out_text_color</item>
+		<item name="msgOutLinkTextColor">@color/anontheme_msg_out_linktext_color</item>
+		<item name="msgOutMetaTextColor">@color/anontheme_msg_out_metatext_color</item>
+		<item name="msgOutStrokeColor">@color/anontheme_msg_out_stroke_color</item>
+
+
+		<!-- Message In -->
+		<item name="msgInBubbleBackground">@color/anontheme_msg_in_bubble_background</item>
+		<item name="msgInTextColor">@color/anontheme_msg_in_text_color</item>
+		<item name="msgInLinkTextColor">@color/anontheme_msg_in_linktext_color</item>
+		<item name="msgInStrokeColor">@color/anontheme_msg_in_stroke_color</item>
+		<item name="msgInMetaTextColor">@color/anontheme_msg_in_metatext_color</item>
+
+
+
+		<!-- Message Notice In -->
+		<item name="msgNoticeInBubbleBackground">@color/anontheme_msg_notice_in_bubble_background</item>
+		<item name="msgNoticeInStrokeColor">@color/anontheme_msg_notice_in_stroke_color</item>
+		<item name="msgNoticeInLinkTextColor">@color/anontheme_msg_notice_in_linktext_color</item>
+		<item name="msgNoticeInMetaTextColor">@color/anontheme_msg_notice_in_metatext_color</item>
+		<item name="msgNoticeInTextColor">@color/anontheme_msg_notice_in_text_color</item>
+
+		<!-- Message Notice Out -->
+		<item name="msgNoticeOutBubbleBackground">@color/anontheme_msg_notice_out_bubble_background</item>
+		<item name="msgNoticeOutStrokeColor">@color/anontheme_msg_notice_out_stroke_color</item>
+		<item name="msgNoticeOutTextColor">@color/anontheme_msg_notice_out_text_color</item>
+		<item name="msgNoticeOutTopTextColor">@color/anontheme_msg_notice_out_top_text_color</item>
+		<item name="msgNoticeOutMetaTextColor">@color/anontheme_msg_notice_out_metatext_color</item>
+
+		<!-- Request -->
+		<item name="requestBubbleBackground">@color/anontheme_request_bubble_background</item>
+		<item name="requestTextColor">@color/anontheme_request_text_color</item>
+		<item name="requestLinkTextColor">@color/anontheme_request_link_text_color</item>
+		<item name="requestStrokeColor">@color/anontheme_request_stroke_color</item>
+		<item name="requestMetaTextColor">@color/anontheme_request_meta_text_color</item>
+	</style>
+
+	<style name="AnonThemeDiscord" parent="AnonTheme.Base">
+		<!-- General -->
+		<item name="anonAccentColor">@color/discord_anon_accent_color</item>
+		<item name="colorPrimary">@color/discord_anon_accent_color</item>
+		<item name="colorSecondary">@color/discord_anon_accent_dark_color</item>
+		<item name="anonAccentDarkColor">@color/discord_anon_accent_dark_color</item>
+
+		<!-- Message Out -->
+		<item name="msgOutBubbleBackground">@color/discord_msg_out_bubble_background</item>
+		<item name="msgOutTextColor">@color/discord_msg_out_text_color</item>
+		<item name="msgOutLinkTextColor">@color/discord_msg_out_linktext_color</item>
+		<item name="msgOutMetaTextColor">@color/discord_msg_out_metatext_color</item>
+		<item name="msgOutStrokeColor">@color/discord_msg_out_stroke_color</item>
+
+
+		<!-- Message In -->
+		<item name="msgInBubbleBackground">@color/discord_msg_in_bubble_background</item>
+		<item name="msgInTextColor">@color/discord_msg_in_text_color</item>
+		<item name="msgInLinkTextColor">@color/discord_msg_in_linktext_color</item>
+		<item name="msgInStrokeColor">@color/discord_msg_in_stroke_color</item>
+		<item name="msgInMetaTextColor">@color/discord_msg_in_metatext_color</item>
+
+		<!-- Message Notice In -->
+		<item name="msgNoticeInBubbleBackground">@color/discord_msg_notice_in_bubble_background</item>
+		<item name="msgNoticeInStrokeColor">@color/discord_msg_notice_in_stroke_color</item>
+		<item name="msgNoticeInLinkTextColor">@color/discord_msg_notice_in_linktext_color</item>
+		<item name="msgNoticeInMetaTextColor">@color/discord_msg_notice_in_metatext_color</item>
+		<item name="msgNoticeInTextColor">@color/discord_msg_notice_in_text_color</item>
+
+
+		<!-- Message Notice Out -->
+		<item name="msgNoticeOutBubbleBackground">@color/discord_msg_notice_out_bubble_background</item>
+		<item name="msgNoticeOutStrokeColor">@color/discord_msg_notice_out_stroke_color</item>
+		<item name="msgNoticeOutTextColor">@color/discord_msg_notice_out_text_color</item>
+		<item name="msgNoticeOutTopTextColor">@color/discord_msg_notice_out_top_text_color</item>
+		<item name="msgNoticeOutMetaTextColor">@color/discord_msg_notice_out_metatext_color</item>
+
+		<!-- Request -->
+		<item name="requestBubbleBackground">@color/discord_request_bubble_background</item>
+		<item name="requestTextColor">@color/discord_request_text_color</item>
+		<item name="requestLinkTextColor">@color/discord_request_link_text_color</item>
+		<item name="requestStrokeColor">@color/discord_request_stroke_color</item>
+		<item name="requestMetaTextColor">@color/discord_request_meta_text_color</item>
+	</style>
+
+	<style name="AnonThemeDiscord.NoActionBar" parent="AnonThemeDiscord">
+		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
+		<item name="toolbarStyle">@style/AnonToolbar</item>
+	</style>
+
+	<style name="AnonThemeDiscreteBlue" parent="AnonTheme.Base">
+		<!-- General -->
+		<item name="anonAccentColor">@color/discreteblue_anon_accent_color</item>
+		<item name="colorPrimary">@color/discreteblue_anon_accent_color</item>
+		<item name="colorSecondary">@color/discreteblue_anon_accent_dark_color</item>
+		<item name="anonAccentDarkColor">@color/discreteblue_anon_accent_dark_color</item>
+
+		<!-- Message Out -->
+		<item name="msgOutBubbleBackground">@color/discreteblue_msg_out_bubble_background</item>
+		<item name="msgOutTextColor">@color/discreteblue_msg_out_text_color</item>
+		<item name="msgOutLinkTextColor">@color/discreteblue_msg_out_linktext_color</item>
+		<item name="msgOutMetaTextColor">@color/discreteblue_msg_out_metatext_color</item>
+		<item name="msgOutStrokeColor">@color/discreteblue_msg_out_stroke_color</item>
+
+
+		<!-- Message In -->
+		<item name="msgInBubbleBackground">@color/discreteblue_msg_in_bubble_background</item>
+		<item name="msgInTextColor">@color/discreteblue_msg_in_text_color</item>
+		<item name="msgInLinkTextColor">@color/discreteblue_msg_in_linktext_color</item>
+		<item name="msgInStrokeColor">@color/discreteblue_msg_in_stroke_color</item>
+		<item name="msgInMetaTextColor">@color/discreteblue_msg_in_metatext_color</item>
+
+		<!-- Message Notice In -->
+		<item name="msgNoticeInBubbleBackground">@color/discreteblue_msg_notice_in_bubble_background</item>
+		<item name="msgNoticeInStrokeColor">@color/discreteblue_msg_notice_in_stroke_color</item>
+		<item name="msgNoticeInLinkTextColor">@color/discreteblue_msg_notice_in_linktext_color</item>
+		<item name="msgNoticeInMetaTextColor">@color/discreteblue_msg_notice_in_metatext_color</item>
+		<item name="msgNoticeInTextColor">@color/discreteblue_msg_notice_in_text_color</item>
+
+
+		<!-- Message Notice Out -->
+		<item name="msgNoticeOutBubbleBackground">@color/discreteblue_msg_notice_out_bubble_background</item>
+		<item name="msgNoticeOutStrokeColor">@color/discreteblue_msg_notice_out_stroke_color</item>
+		<item name="msgNoticeOutTextColor">@color/discreteblue_msg_notice_out_text_color</item>
+		<item name="msgNoticeOutTopTextColor">@color/discreteblue_msg_notice_out_top_text_color</item>
+		<item name="msgNoticeOutMetaTextColor">@color/discreteblue_msg_notice_out_metatext_color</item>
+
+		<!-- Request -->
+		<item name="requestBubbleBackground">@color/discreteblue_request_bubble_background</item>
+		<item name="requestTextColor">@color/discreteblue_request_text_color</item>
+		<item name="requestLinkTextColor">@color/discreteblue_request_link_text_color</item>
+		<item name="requestStrokeColor">@color/discreteblue_request_stroke_color</item>
+		<item name="requestMetaTextColor">@color/discreteblue_request_meta_text_color</item>
+	</style>
+
+	<style name="AnonThemeDiscreteBlue.NoActionBar" parent="AnonThemeDiscreteBlue">
+		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
+		<item name="toolbarStyle">@style/AnonToolbar</item>
+	</style>
+
+	<style name="AnonGreenTheme" parent="AnonTheme.Base">
+		<!-- General -->
+		<item name="anonAccentColor">@color/anongreentheme_anon_accent_color</item>
+		<item name="colorPrimary">@color/anongreentheme_anon_accent_color</item>
+		<item name="colorSecondary">@color/anongreentheme_anon_accent_dark_color</item>
+		<item name="anonAccentDarkColor">@color/anongreentheme_anon_accent_dark_color</item>
+
+		<!-- Message Out -->
+		<item name="msgOutBubbleBackground">@color/anongreentheme_msg_out_bubble_background</item>
+		<item name="msgOutTextColor">@color/anongreentheme_msg_out_text_color</item>
+		<item name="msgOutLinkTextColor">@color/anongreentheme_msg_out_linktext_color</item>
+		<item name="msgOutMetaTextColor">@color/anongreentheme_msg_out_metatext_color</item>
+		<item name="msgOutStrokeColor">@color/anongreentheme_msg_out_stroke_color</item>
+
+		<!-- Message In -->
+		<item name="msgInBubbleBackground">@color/anongreentheme_msg_in_bubble_background</item>
+		<item name="msgInTextColor">@color/anongreentheme_msg_in_text_color</item>
+		<item name="msgInLinkTextColor">@color/anongreentheme_msg_in_linktext_color</item>
+		<item name="msgInStrokeColor">@color/anongreentheme_msg_in_stroke_color</item>
+		<item name="msgInMetaTextColor">@color/anongreentheme_msg_in_metatext_color</item>
+
+
+		<!-- Message Notice In -->
+		<item name="msgNoticeInBubbleBackground">@color/anongreentheme_msg_notice_in_bubble_background</item>
+		<item name="msgNoticeInStrokeColor">@color/anongreentheme_msg_notice_in_stroke_color</item>
+		<item name="msgNoticeInLinkTextColor">@color/anongreentheme_msg_notice_in_linktext_color</item>
+		<item name="msgNoticeInMetaTextColor">@color/anongreentheme_msg_notice_in_metatext_color</item>
+		<item name="msgNoticeInTextColor">@color/anongreentheme_msg_notice_in_text_color</item>
+
+		<!-- Message Notice Out -->
+		<item name="msgNoticeOutBubbleBackground">@color/anongreentheme_msg_notice_out_bubble_background</item>
+		<item name="msgNoticeOutStrokeColor">@color/anongreentheme_msg_notice_out_stroke_color</item>
+		<item name="msgNoticeOutTextColor">@color/anongreentheme_msg_notice_out_text_color</item>
+		<item name="msgNoticeOutTopTextColor">@color/anongreentheme_msg_notice_out_top_text_color</item>
+		<item name="msgNoticeOutMetaTextColor">@color/anongreentheme_msg_notice_out_metatext_color</item>
+
+		<!-- Request -->
+		<item name="requestBubbleBackground">@color/anongreentheme_request_bubble_background</item>
+		<item name="requestTextColor">@color/anongreentheme_request_text_color</item>
+		<item name="requestLinkTextColor">@color/anongreentheme_request_link_text_color</item>
+		<item name="requestStrokeColor">@color/anongreentheme_request_stroke_color</item>
+		<item name="requestMetaTextColor">@color/anongreentheme_request_meta_text_color</item>
+
+	</style>
+
+	<style name="AnonGreenTheme.NoActionBar" parent="AnonGreenTheme">
+		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
+		<item name="toolbarStyle">@style/AnonToolbar</item>
+	</style>
+
+	<style name="AnonTheme.Dark.NoActionBar" parent="AnonTheme">
+		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
+	</style>
+
+	<style name="AnonTheme.Light.NoActionBar" parent="AnonTheme">
+		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
+	</style>
+
+
+	<!-- Default app theme using base -->
+	<style name="AnonTheme.Base.NoActionBar" parent="AnonTheme.Base">
+		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
+		<item name="toolbarStyle">@style/AnonToolbar</item>
+	</style>
+
+	<style name="AnonTheme.NoActionBar" parent="AnonTheme.Base">
+		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
+		<item name="toolbarStyle">@style/AnonToolbar</item>
+	</style>
+
+
+	<style name="AnonTheme.ActionBarOverlay" parent="AnonTheme.NoActionBar">
+		<item name="android:windowActionBarOverlay">true</item>
+	</style>
+
+
+	<!-- remaining dialog and animation styles unchanged -->
+	<style name="ActivityAnimation" parent="@android:style/Animation.Activity">
+		<item name="android:activityOpenEnterAnimation">@anim/screen_new_in</item>
+		<item name="android:activityOpenExitAnimation">@anim/screen_old_out</item>
+		<item name="android:activityCloseEnterAnimation">@anim/screen_old_in</item>
+		<item name="android:activityCloseExitAnimation">@anim/screen_new_out</item>
+	</style>
+
+	<style name="AnonDialogTheme" parent="Theme.Material3.DayNight.Dialog">
+		<item name="colorPrimary">@color/anon_primary</item>
+		<item name="buttonBarPositiveButtonStyle">@style/BriarButtonFlat.Positive</item>
+		<item name="buttonBarNeutralButtonStyle">@style/BriarButtonFlat.Neutral</item>
+		<item name="buttonBarNegativeButtonStyle">@style/BriarButtonFlat.Negative</item>
+		<item name="android:textColorLink">@color/anon_text_link</item>
+		<item name="android:windowBackground">@color/window_background</item>
+		<item name="android:windowAnimationStyle">@style/DialogAnimation</item>
+		<item name="android:filterTouchesWhenObscured">true</item>
+	</style>
+
+	<style name="AnonFullScreenDialogTheme" parent="AnonDialogTheme">
+		<item name="android:windowIsFloating">false</item>
+		<item name="android:windowAnimationStyle">@style/FullScreenDialogAnimation</item>
+	</style>
+
+	<style name="FullScreenDialogAnimation" parent="@android:style/Animation.Activity">
+		<item name="android:windowEnterAnimation">@anim/step_next_in</item>
+		<item name="android:windowExitAnimation">@anim/step_next_out</item>
+	</style>
+
+	<style name="AnonDialogThemeNoFilter" parent="AnonDialogTheme">
+		<item name="android:filterTouchesWhenObscured">false</item>
+	</style>
+
+	<style name="AnonDialogTheme.Neutral" parent="AnonDialogTheme">
+		<item name="buttonBarPositiveButtonStyle">@style/BriarButtonFlat.Neutral</item>
+		<item name="buttonBarNeutralButtonStyle">@style/BriarButtonFlat.Neutral</item>
+		<item name="buttonBarNegativeButtonStyle">@style/BriarButtonFlat.Neutral</item>
+	</style>
+
+	<style name="DialogAnimation" parent="@android:style/Animation.Dialog">
+		<item name="android:windowEnterAnimation">@anim/fade_in</item>
+		<item name="android:windowExitAnimation">@anim/fade_out</item>
+	</style>
+
+	<style name="OnboardingDialogTheme" parent="AnonDialogTheme">
+		<item name="android:background">@color/md_theme_primaryContainer</item>
+		<item name="android:textColorPrimary">@color/md_theme_onPrimaryContainer</item>
+	</style>
+
+	<style name="TranslucentTheme" parent="Theme.Material3.DayNight.NoActionBar">
+		<item name="android:colorBackgroundCacheHint">@null</item>
+		<item name="android:windowAnimationStyle">@android:style/Animation</item>
+		<item name="android:windowBackground">@android:color/transparent</item>
+		<item name="android:windowContentOverlay">@null</item>
+		<item name="android:windowIsTranslucent">true</item>
+		<item name="android:windowNoTitle">true</item>
+	</style>
+
+</resources>

@@ -1,0 +1,22 @@
+apply plugin: 'java-library'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+apply plugin: 'idea'
+apply from: '../dagger.gradle'
+
+dependencies {
+	testImplementation project(':bramble-api')
+	testImplementation project(path: ':bramble-api', configuration: 'testOutput')
+	testImplementation project(':bramble-core')
+	testImplementation project(path: ':bramble-core', configuration: 'testOutput')
+	testImplementation project(':mailbox-core')
+	testImplementation project(':mailbox-lib')
+
+	testImplementation "junit:junit:$junit_version"
+	testImplementation "ch.qos.logback:logback-classic:1.2.11"
+	testImplementation 'net.jodah:concurrentunit:0.4.6'
+	testImplementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+
+	testAnnotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
+}

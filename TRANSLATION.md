@@ -1,0 +1,1 @@
+Translations for this project are managed by the translations team.

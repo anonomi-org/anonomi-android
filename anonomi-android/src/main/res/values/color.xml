@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<!-- =========================================================
+	     Anonomi Brand Tokens
+	     ========================================================= -->
+	<color name="anon_brand_pink_50">#FDF2FF</color>
+	<color name="anon_brand_pink_100">#F8D7FF</color>
+	<color name="anon_brand_pink_200">#F1ADFF</color>
+	<color name="anon_brand_pink_300">#E87CFF</color>
+	<color name="anon_brand_pink_400">#DD4CFF</color>
+
+	<color name="anon_brand_pink_500">#CE27E5</color>
+	<color name="anon_brand_pink_600">#B61FCC</color>
+	<color name="anon_brand_pink_700">#9519A7</color>
+	<color name="anon_brand_pink_800">#6F1380</color>
+	<color name="anon_brand_pink_900">#4B0D57</color>
+	<color name="anon_brand_pink_950">#2A0731</color>
+
+	<!-- =========================================================
+	     Base colors
+	     ========================================================= -->
+	<color name="white">#FFFFFF</color>
+	<color name="black">#000000</color>
+
+	<!-- =========================================================
+	     AnonTheme (DEFAULT) — updated to Anonomi palette
+	     ========================================================= -->
+	<color name="anontheme_accent">@color/anon_purple_500</color>
+	<color name="anontheme_anon_accent_dark_color">@color/anon_night_950</color>
+	<color name="anontheme_anon_accent_color">@color/anon_purple_500</color>
+
+	<!-- Message out -->
+	<color name="anontheme_msg_out_bubble_background">@color/anon_night_800</color>
+	<color name="anontheme_msg_out_text_color">@color/anon_night_50</color>
+	<color name="anontheme_msg_out_linktext_color">@color/anon_blue_300</color>
+	<color name="anontheme_msg_out_metatext_color">@color/anon_night_200</color>
+	<color name="anontheme_msg_out_stroke_color">@color/anon_gray_900</color>
+
+	<!-- Message in -->
+	<color name="anontheme_msg_in_bubble_background">@color/white</color>
+	<color name="anontheme_msg_in_text_color">@color/anon_night_950</color>
+	<color name="anontheme_msg_in_linktext_color">@color/anon_blue_600</color>
+	<color name="anontheme_msg_in_stroke_color">@color/anon_gray_200</color>
+	<color name="anontheme_msg_in_metatext_color">@color/anon_gray_500</color>
+
+	<!-- Message Notice In -->
+	<color name="anontheme_msg_notice_in_bubble_background">@color/anon_night_100</color>
+	<color name="anontheme_msg_notice_in_stroke_color">@color/anon_gray_200</color>
+	<color name="anontheme_msg_notice_in_linktext_color">@color/anon_blue_600</color>
+	<color name="anontheme_msg_notice_in_metatext_color">@color/anon_gray_600</color>
+	<color name="anontheme_msg_notice_in_text_color">@color/anon_night_950</color>
+
+	<!-- Message Notice Out -->
+	<color name="anontheme_msg_notice_out_bubble_background">@color/anon_night_700</color>
+	<color name="anontheme_msg_notice_out_stroke_color">@color/anon_gray_900</color>
+	<color name="anontheme_msg_notice_out_text_color">@color/anon_night_50</color>
+	<color name="anontheme_msg_notice_out_top_text_color">@color/anon_night_50</color>
+	<color name="anontheme_msg_notice_out_metatext_color">@color/anon_night_200</color>
+
+	<!-- Request -->
+	<color name="anontheme_request_bubble_background">@color/anon_purple_50</color>
+	<color name="anontheme_request_stroke_color">@color/anon_purple_200</color>
+	<color name="anontheme_request_text_color">@color/anon_night_950</color>
+	<color name="anontheme_request_link_text_color">@color/anon_blue_600</color>
+	<color name="anontheme_request_meta_text_color">@color/anon_gray_600</color>
+
+
+	<!-- =========================================================
+	     AnonThemeDiscreteBlue
+	     ========================================================= -->
+	<color name="discreteblue_anon_accent_color">@color/anon_blue_700</color>
+	<color name="discreteblue_anon_accent_dark_color">@color/anon_blue_900</color>
+
+	<!-- Message Out -->
+	<color name="discreteblue_msg_out_bubble_background">@color/anon_blue_700</color>
+	<color name="discreteblue_msg_out_text_color">@color/white</color>
+	<color name="discreteblue_msg_out_linktext_color">@color/anon_night_200</color>
+	<color name="discreteblue_msg_out_metatext_color">@color/anon_gray_100</color>
+	<color name="discreteblue_msg_out_stroke_color">@color/anon_night_950</color>
+
+	<!-- Message In -->
+	<color name="discreteblue_msg_in_bubble_background">@color/white</color>
+	<color name="discreteblue_msg_in_text_color">@color/anon_night_950</color>
+	<color name="discreteblue_msg_in_linktext_color">@color/anon_blue_500</color>
+	<color name="discreteblue_msg_in_stroke_color">@color/anon_gray_200</color>
+	<color name="discreteblue_msg_in_metatext_color">@color/anon_gray_500</color>
+
+	<!-- Message Notice In -->
+	<color name="discreteblue_msg_notice_in_bubble_background">@color/anon_blue_50</color>
+	<color name="discreteblue_msg_notice_in_stroke_color">@color/anon_blue_50</color>
+	<color name="discreteblue_msg_notice_in_linktext_color">@color/anon_blue_500</color>
+	<color name="discreteblue_msg_notice_in_metatext_color">@color/anon_gray_500</color>
+	<color name="discreteblue_msg_notice_in_text_color">@color/black</color>
+
+	<!-- Message Notice Out -->
+	<color name="discreteblue_msg_notice_out_bubble_background">@color/anon_blue_800</color>
+	<color name="discreteblue_msg_notice_out_stroke_color">@color/anon_blue_800</color>
+	<color name="discreteblue_msg_notice_out_text_color">@color/white</color>
+	<color name="discreteblue_msg_notice_out_top_text_color">@color/anon_night_50</color>
+	<color name="discreteblue_msg_notice_out_metatext_color">@color/anon_gray_100</color>
+
+	<!-- Request -->
+	<color name="discreteblue_request_bubble_background">@color/anon_blue_50</color>
+	<color name="discreteblue_request_stroke_color">@color/anon_blue_100</color>
+	<color name="discreteblue_request_text_color">@color/anon_night_950</color>
+	<color name="discreteblue_request_link_text_color">@color/anon_blue_600</color>
+	<color name="discreteblue_request_meta_text_color">@color/anon_blue_100</color>
+
+
+	<!-- =========================================================
+	     AnonThemeDiscord
+	     ========================================================= -->
+	<color name="discord_anon_accent_color">@color/anon_purple_500</color>
+	<color name="discord_anon_accent_dark_color">@color/anon_purple_800</color>
+
+	<!-- Message Out -->
+	<color name="discord_msg_out_bubble_background">@color/anon_purple_500</color>
+	<color name="discord_msg_out_text_color">@color/white</color>
+	<color name="discord_msg_out_linktext_color">@color/anon_night_200</color>
+	<color name="discord_msg_out_metatext_color">@color/anon_gray_100</color>
+	<color name="discord_msg_out_stroke_color">@color/anon_night_950</color>
+
+	<!-- Message In -->
+	<color name="discord_msg_in_bubble_background">@color/white</color>
+	<color name="discord_msg_in_text_color">@color/anon_night_950</color>
+	<color name="discord_msg_in_linktext_color">@color/anon_purple_500</color>
+	<color name="discord_msg_in_stroke_color">@color/anon_gray_200</color>
+	<color name="discord_msg_in_metatext_color">@color/anon_gray_500</color>
+
+	<!-- Message Notice In -->
+	<color name="discord_msg_notice_in_bubble_background">@color/anon_purple_50</color>
+	<color name="discord_msg_notice_in_stroke_color">@color/anon_purple_50</color>
+	<color name="discord_msg_notice_in_linktext_color">@color/anon_purple_500</color>
+	<color name="discord_msg_notice_in_metatext_color">@color/anon_gray_500</color>
+	<color name="discord_msg_notice_in_text_color">@color/black</color>
+
+	<!-- Message Notice Out -->
+	<color name="discord_msg_notice_out_bubble_background">@color/anon_purple_700</color>
+	<color name="discord_msg_notice_out_stroke_color">@color/anon_purple_800</color>
+	<color name="discord_msg_notice_out_text_color">@color/white</color>
+	<color name="discord_msg_notice_out_top_text_color">@color/anon_night_50</color>
+	<color name="discord_msg_notice_out_metatext_color">@color/anon_gray_100</color>
+
+	<!-- Request -->
+	<color name="discord_request_bubble_background">@color/anon_purple_50</color>
+	<color name="discord_request_stroke_color">@color/anon_purple_100</color>
+	<color name="discord_request_text_color">@color/anon_night_950</color>
+	<color name="discord_request_link_text_color">@color/anon_purple_500</color>
+	<color name="discord_request_meta_text_color">@color/anon_gray_600</color>
+
+
+	<!-- =========================================================
+	     AnonGreenTheme
+	     ========================================================= -->
+	<color name="anongreentheme_accent">@color/anon_lime_500</color>
+	<color name="anongreentheme_anon_accent_color">@color/anon_lime_500</color>
+	<color name="anongreentheme_anon_accent_dark_color">@color/anon_lime_800</color>
+
+	<!-- Message Out -->
+	<color name="anongreentheme_msg_out_bubble_background">@color/anon_lime_500</color>
+	<color name="anongreentheme_msg_out_text_color">@color/white</color>
+	<color name="anongreentheme_msg_out_linktext_color">@color/anon_night_200</color>
+	<color name="anongreentheme_msg_out_metatext_color">@color/anon_gray_100</color>
+	<color name="anongreentheme_msg_out_stroke_color">@color/anon_night_950</color>
+
+	<!-- Message In -->
+	<color name="anongreentheme_msg_in_bubble_background">@color/white</color>
+	<color name="anongreentheme_msg_in_text_color">@color/anon_night_950</color>
+	<color name="anongreentheme_msg_in_linktext_color">@color/anon_lime_600</color>
+	<color name="anongreentheme_msg_in_stroke_color">@color/anon_gray_200</color>
+	<color name="anongreentheme_msg_in_metatext_color">@color/anon_gray_500</color>
+
+	<!-- Message Notice In -->
+	<color name="anongreentheme_msg_notice_in_bubble_background">@color/anon_lime_50</color>
+	<color name="anongreentheme_msg_notice_in_stroke_color">@color/anon_lime_50</color>
+	<color name="anongreentheme_msg_notice_in_linktext_color">@color/anon_lime_600</color>
+	<color name="anongreentheme_msg_notice_in_metatext_color">@color/anon_gray_500</color>
+	<color name="anongreentheme_msg_notice_in_text_color">@color/black</color>
+
+	<!-- Message Notice Out -->
+	<color name="anongreentheme_msg_notice_out_bubble_background">@color/anon_lime_700</color>
+	<color name="anongreentheme_msg_notice_out_stroke_color">@color/anon_lime_800</color>
+	<color name="anongreentheme_msg_notice_out_text_color">@color/white</color>
+	<color name="anongreentheme_msg_notice_out_top_text_color">@color/anon_night_50</color>
+	<color name="anongreentheme_msg_notice_out_metatext_color">@color/anon_gray_100</color>
+
+	<!-- Request -->
+	<color name="anongreentheme_request_bubble_background">@color/anon_lime_50</color>
+	<color name="anongreentheme_request_stroke_color">@color/anon_lime_100</color>
+	<color name="anongreentheme_request_text_color">@color/anon_night_950</color>
+	<color name="anongreentheme_request_link_text_color">@color/anon_lime_600</color>
+	<color name="anongreentheme_request_meta_text_color">@color/anon_lime_100</color>
+
+
+	<!-- =========================================================
+	     Color palettes
+	     ========================================================= -->
+
+	<color name="anon_teal_50">#F0FBF8</color>
+	<color name="anon_teal_100">#D6F4EC</color>
+	<color name="anon_teal_200">#AFE8D8</color>
+	<color name="anon_teal_300">#7FD9C1</color>
+	<color name="anon_teal_400">#4FC6A6</color>
+	<color name="anon_teal_500">#1FA885</color>
+	<color name="anon_teal_600">#1A8F72</color>
+	<color name="anon_teal_700">#156F59</color>
+	<color name="anon_teal_800">#105344</color>
+	<color name="anon_teal_900">#0C3C33</color>
+	<color name="anon_teal_950">#07241F</color>
+
+	<color name="anon_green_50">#F1FFF3</color>
+	<color name="anon_green_100">#E1FBE6</color>
+	<color name="anon_green_200">#C4F5CE</color>
+	<color name="anon_green_300">#A3F2A9</color>
+	<color name="anon_green_400">#73E57D</color>
+	<color name="anon_green_500">#53D861</color>
+	<color name="anon_green_600">#33C943</color>
+	<color name="anon_green_700">#269C3A</color>
+	<color name="anon_green_800">#1D7A33</color>
+	<color name="anon_green_900">#145A27</color>
+	<color name="anon_green_950">#0F2F18</color>
+
+	<color name="anon_purple_50">#F4F2FF</color>
+	<color name="anon_purple_100">#E3DEFF</color>
+	<color name="anon_purple_200">#C8BFFF</color>
+	<color name="anon_purple_300">#A89CFF</color>
+	<color name="anon_purple_400">#8B77FF</color>
+	<color name="anon_purple_500">#6D4AFF</color>
+	<color name="anon_purple_600">#5E3FE0</color>
+	<color name="anon_purple_700">#4A33B3</color>
+	<color name="anon_purple_800">#33257A</color>
+	<color name="anon_purple_900">#241C52</color>
+	<color name="anon_purple_950">#171230</color>
+
+	<color name="anon_lime_50">#F6FEEB</color>
+	<color name="anon_lime_100">#E7FCCB</color>
+	<color name="anon_lime_200">#CCF796</color>
+	<color name="anon_lime_300">#B3F064</color>
+	<color name="anon_lime_400">#A3E635</color>
+	<color name="anon_lime_500">#82C91E</color>
+	<color name="anon_lime_600">#65A30D</color>
+	<color name="anon_lime_700">#4A7B0A</color>
+	<color name="anon_lime_800">#355906</color>
+	<color name="anon_lime_900">#2C4406</color>
+	<color name="anon_lime_950">#283E0F</color>
+
+	<color name="anon_blue_50">#F1F8FF</color>
+	<color name="anon_blue_100">#DDEDFE</color>
+	<color name="anon_blue_200">#BBD8FD</color>
+	<color name="anon_blue_300">#8BCAFD</color>
+	<color name="anon_blue_400">#52ADF9</color>
+	<color name="anon_blue_500">#3491EF</color>
+	<color name="anon_blue_600">#196FDE</color>
+	<color name="anon_blue_700">#1553C4</color>
+	<color name="anon_blue_800">#1649A0</color>
+	<color name="anon_blue_900">#184080</color>
+	<color name="anon_blue_950">#071327</color>
+
+	<color name="anon_orange_50">#FFF8ED</color>
+	<color name="anon_orange_100">#FFE7C2</color>
+	<color name="anon_orange_200">#FED69F</color>
+	<color name="anon_orange_300">#FEC46B</color>
+	<color name="anon_orange_400">#FBBF24</color>
+	<color name="anon_orange_500">#F59E0B</color>
+	<color name="anon_orange_600">#D97706</color>
+	<color name="anon_orange_700">#B45309</color>
+	<color name="anon_orange_800">#92400E</color>
+	<color name="anon_orange_900">#78350F</color>
+	<color name="anon_orange_950">#431407</color>
+
+	<color name="anon_red_50">#FEF2F2</color>
+	<color name="anon_red_100">#FEE2E2</color>
+	<color name="anon_red_200">#FECACA</color>
+	<color name="anon_red_300">#FCA5A5</color>
+	<color name="anon_red_400">#F87171</color>
+	<color name="anon_red_500">#EF4444</color>
+	<color name="anon_red_600">#DC2626</color>
+	<color name="anon_red_700">#B91C1C</color>
+	<color name="anon_red_800">#991B1B</color>
+	<color name="anon_red_900">#7F1D1D</color>
+	<color name="anon_red_950">#450A0A</color>
+
+	<color name="anon_night_50">#F6F6F6</color>
+	<color name="anon_night_100">#EEEEEE</color>
+	<color name="anon_night_200">#D5D5D5</color>
+	<color name="anon_night_300">#BBBBBB</color>
+	<color name="anon_night_400">#9F9F9F</color>
+	<color name="anon_night_500">#4A4A4A</color>
+	<color name="anon_night_600">#3A3A3A</color>
+	<color name="anon_night_700">#2A2A2A</color>
+	<color name="anon_night_800">#1A1A1A</color>
+	<color name="anon_night_900">#161616</color>
+	<color name="anon_night_950">#0F0F0F</color>
+
+	<color name="anon_gray_50">#FAFAFA</color>
+	<color name="anon_gray_100">#F2F2F2</color>
+	<color name="anon_gray_200">#E5E7EB</color>
+	<color name="anon_gray_300">#CCCCCC</color>
+	<color name="anon_gray_400">#B3B3B3</color>
+	<color name="anon_gray_500">#A7A7A7</color>
+	<color name="anon_gray_600">#888888</color>
+	<color name="anon_gray_700">#4A4A4A</color>
+	<color name="anon_gray_800">#2E2E2E</color>
+	<color name="anon_gray_900">#1A1A1A</color>
+	<color name="anon_gray_950">#0D0D0D</color>
+
+
+	<!-- =========================================================
+	     Legacy / app-level mappings
+	     ========================================================= -->
+	<color name="briar_brand_blue">@color/anon_night_700</color>
+	<color name="briar_brand_green">@color/anon_lime_400</color>
+
+	<!-- App "primary/accent" follow Anonomi identity -->
+	<color name="anon_primary">@color/anon_night_950</color>
+	<color name="anon_primary_dark">@color/anon_night_950</color>
+	<color name="anon_accent">@color/anon_brand_pink_500</color>
+
+	<color name="window_background">@color/anon_gray_100</color>
+	<color name="card_background">@color/cardview_light_background</color>
+	<color name="item_background_highlight">@color/anon_gray_200</color>
+	<color name="anon_warning_background">@color/anon_red_500</color>
+	<color name="action_bar_text">@android:color/white</color>
+	<color name="private_message_date_inverse">@color/anon_gray_200</color>
+	<color name="forum_avatar_shadow">#99000000</color>
+
+	<color name="color_primary">#dd000000</color>
+
+	<!-- Legacy message colors used in older layouts -->
+	<color name="msg_in">@android:color/white</color>
+	<color name="msg_out">@color/anon_night_800</color>
+	<color name="notice_in">@color/anon_night_50</color>
+	<color name="notice_out">@color/anon_night_700</color>
+	<color name="msg_stroke_light">@color/anon_gray_300</color>
+	<color name="msg_stroke_dark">@color/anon_gray_900</color>
+	<color name="msg_stroke">@color/msg_stroke_light</color>
+	<color name="msg_status_bubble_background">#66000000</color>
+	<color name="msg_status_bubble_foreground">@android:color/white</color>
+	<color name="msg_selected_background">@color/anon_accent</color>
+
+	<color name="il_border">#9CA3AF</color>
+	<color name="il_background">#E5E7EB</color>
+	<color name="il_lime">@color/anon_lime_600</color>
+	<color name="il_orange">@color/anon_orange_500</color>
+	<color name="il_red">@color/anon_red_600</color>
+
+	<!-- text colors -->
+	<color name="anon_text_link">@color/anon_blue_500</color>
+	<color name="anon_text_link_inverse">@android:color/white</color>
+	<color name="briar_text_primary">#df000000</color>
+	<color name="briar_text_primary_inverse">@android:color/white</color>
+	<color name="briar_text_secondary_inverse">#b4ffffff</color>
+	<color name="briar_text_tertiary_inverse">#80ffffff</color>
+
+	<color name="preference_category_background">@color/window_background</color>
+
+	<!-- Buttons: positive becomes brand pink -->
+	<color name="briar_button_text_positive">@color/anon_brand_pink_500</color>
+	<color name="briar_button_text_neutral">@color/anon_night_500</color>
+	<color name="briar_button_text_negative">@color/anon_red_500</color>
+	<color name="briar_button_text_disabled">#28000000</color>
+
+	<color name="thread_indicator">@color/anon_gray_500</color>
+	<color name="thread_item_background">@color/window_background</color>
+	<color name="thread_item_highlight">@android:color/white</color>
+
+	<color name="divider">@color/anon_gray_200</color>
+
+
+	<!-- =========================================================
+	     Material theme mappings
+	     - Primary: brand pink
+	     - Secondary: dark neutral (top bar)
+	     - Tertiary: blue for info
+	     ========================================================= -->
+	<color name="md_theme_primary">@color/anon_brand_pink_500</color>
+	<color name="md_theme_onPrimary">@android:color/white</color>
+	<color name="md_theme_primaryContainer">@color/anon_brand_pink_50</color>
+	<color name="md_theme_onPrimaryContainer">@color/anon_night_950</color>
+	<color name="md_theme_inversePrimary">@color/anon_brand_pink_200</color>
+
+	<color name="md_theme_secondary">@color/anon_night_700</color>
+	<color name="md_theme_onSecondary">@android:color/white</color>
+
+	<color name="md_theme_tertiaryContainer">@color/anon_blue_100</color>
+	<color name="md_theme_onTertiaryContainer">@color/anon_blue_700</color>
+	<color name="md_theme_tertiary">@color/anon_blue_600</color>
+	<color name="md_theme_onTertiary">@android:color/white</color>
+
+	<color name="md_theme_onBackground">#191D12</color>
+	<color name="md_theme_onSurface">#191D12</color>
+	<color name="md_theme_surfaceDim">@color/anon_gray_200</color>
+	<color name="md_theme_error">@color/anon_red_600</color>
+
+
+	<!-- =========================================================
+	     Legacy Android theme keys
+	     ========================================================= -->
+	<color name="link_color">#1976D2</color>
+
+	<color name="colorPrimary">@color/anon_night_700</color>
+	<color name="colorPrimaryDark">@color/anon_night_950</color>
+	<color name="colorAccent">@color/anon_purple_500</color>
+
+	<!-- Unused / legacy -->
+	<color name="anon_green_bubble">#000000</color>
+
+</resources>

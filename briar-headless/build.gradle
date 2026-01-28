@@ -1,0 +1,197 @@
+import java.util.jar.JarEntry
+import java.util.jar.JarFile
+import java.util.jar.JarOutputStream
+
+import static java.util.Collections.list
+
+plugins {
+	id 'java'
+	id 'idea'
+	id 'org.jetbrains.kotlin.jvm'
+	id 'org.jetbrains.kotlin.kapt'
+	id 'witness'
+}
+apply from: 'witness.gradle'
+
+configurations {
+	windows {
+		extendsFrom runtimeClasspath
+	}
+	linux {
+		extendsFrom runtimeClasspath
+	}
+	macos {
+		extendsFrom runtimeClasspath
+	}
+}
+
+kotlin {
+	jvmToolchain(17)
+}
+
+compileJava {
+	options.release = 17
+}
+
+dependencies {
+	implementation project(':bramble-core')
+	implementation project(':bramble-java')
+	implementation project(':briar-core')
+
+	linux "org.briarproject:tor-linux:$tor_version"
+	linux "org.briarproject:lyrebird-linux:$lyrebird_version"
+
+	windows "org.briarproject:tor-windows:$tor_version"
+	windows "org.briarproject:lyrebird-windows:$lyrebird_version"
+
+	macos "org.briarproject:tor-macos:$tor_version"
+	macos "org.briarproject:lyrebird-macos:$lyrebird_version"
+
+	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+	implementation 'io.javalin:javalin:3.5.0'
+	implementation 'org.slf4j:slf4j-simple:1.7.30'
+	implementation 'com.github.ajalt:clikt:2.2.0'
+	implementation "org.bouncycastle:bcprov-jdk15to18:$bouncy_castle_version"
+	implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+	implementation "com.fasterxml.jackson.core:jackson-databind:$jackson_version"
+	implementation "org.briarproject:onionwrapper-java:$onionwrapper_version"
+
+	kapt "com.google.dagger:dagger-compiler:$dagger_version"
+
+	testImplementation project(path: ':bramble-api', configuration: 'testOutput')
+	testImplementation project(path: ':bramble-core', configuration: 'testOutput')
+	testImplementation project(path: ':briar-core', configuration: 'testOutput')
+
+	def junitVersion = '5.5.2'
+	testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+	testImplementation "org.junit.jupiter:junit-jupiter-params:$junitVersion"
+	testImplementation 'io.mockk:mockk:1.12.4'
+	testImplementation 'org.skyscreamer:jsonassert:1.5.0'
+	testImplementation "com.squareup.okhttp3:okhttp:4.10.0"
+
+	testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+
+	kaptTest "com.google.dagger:dagger-compiler:$dagger_version"
+}
+
+void jarFactory(Jar jarTask, os, architecture, configuration) {
+	def jarArchitecture = os + "-" + architecture
+	jarTask.dependsOn(
+		':bramble-api:jar',
+		':bramble-core:jar',
+		':bramble-java:jar',
+		':briar-api:jar',
+		':briar-core:jar'
+	)
+	jarTask.dependsOn(jar)
+	jarTask.doFirst {
+		println 'Building ' + jarArchitecture + ' version has started'
+	}
+	jarTask.manifest {
+		attributes(
+			'Main-Class': 'org.anonchatsecure.anonchat.headless.MainKt'
+		)
+	}
+	jarTask.setArchiveClassifier(jarArchitecture)
+	jarTask.from {
+		configuration.collect { it.isDirectory() ? it : zipTree(it) }
+	}
+		{
+			it.duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+			if (os == "linux" || os == "macos") {
+				String[] architectures = [
+					"aarch64",
+					"armhf",
+					"x86_64",
+				]
+				for (String arch : architectures) {
+					if (arch != architecture) {
+						exclude arch + "/obfs4proxy"
+						exclude arch + "/tor"
+						exclude arch + "/snowflake"
+						exclude arch + "/libevent-*.dylib"
+					}
+				}
+			}
+			exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA'
+		}
+	jarTask.with jar
+	jarTask.doLast {
+		// Rename the original jar
+		File jar = jarTask.archiveFile.get().asFile
+		String srcPath = jar.toString().replaceFirst('\\.jar$', '.unsorted.jar')
+		File srcFile = new File(srcPath)
+		jar.renameTo(srcFile)
+		JarFile srcJarFile = new JarFile(srcFile)
+		OutputStream destStream = new JarOutputStream(new FileOutputStream(jar))
+		// Read and sort the entries
+		Map<String, JarEntry> entries = new TreeMap<>()
+		for (JarEntry e : list(srcJarFile.entries())) entries.put(e.getName(), e)
+		// Write the sorted entries
+		for (JarEntry srcEntry : entries.values()) {
+			JarEntry destEntry = new JarEntry(srcEntry.getName())
+			destEntry.setTime(0)
+			destStream.putNextEntry(destEntry)
+			InputStream srcStream = srcJarFile.getInputStream(srcEntry)
+			int read
+			byte[] buf = new byte[4096]
+			while ((read = srcStream.read(buf, 0, buf.length)) != -1) {
+				destStream.write(buf, 0, read)
+			}
+			destStream.closeEntry()
+			srcStream.close()
+		}
+		destStream.close()
+		srcJarFile.close()
+		println 'Building ' + jarArchitecture + ' version has finished'
+	}
+}
+
+task aarch64LinuxJar(type: Jar) {
+	jarFactory(it, 'linux', 'aarch64', configurations.linux)
+}
+
+task armhfLinuxJar(type: Jar) {
+	jarFactory(it, 'linux', 'armhf', configurations.linux)
+}
+
+task x86LinuxJar(type: Jar) {
+	jarFactory(it, 'linux', 'x86_64', configurations.linux)
+}
+
+task windowsJar(type: Jar) {
+	jarFactory(it, 'windows', 'x86_64', configurations.windows)
+}
+
+task aarch64MacOsJar(type: Jar) {
+	jarFactory(it, 'macos', 'aarch64', configurations.macos)
+}
+
+task x86MacOsJar(type: Jar) {
+	jarFactory(it, 'macos', 'x86_64', configurations.macos)
+}
+
+task linuxJars {
+	dependsOn(aarch64LinuxJar, armhfLinuxJar, x86LinuxJar)
+}
+
+task macosJars {
+	dependsOn(aarch64MacOsJar, x86MacOsJar)
+}
+
+// At the moment for non-Android projects we need to explicitly mark the code generated by kapt
+// as 'generated source code' for correct highlighting and resolve in IDE.
+idea {
+	module {
+		sourceDirs += file('build/generated/source/kapt/main')
+		testSourceDirs += file('build/generated/source/kapt/test')
+		generatedSourceDirs += file('build/generated/source/kapt/main')
+	}
+}
+
+test {
+	useJUnitPlatform()
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
+}

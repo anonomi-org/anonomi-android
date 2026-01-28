@@ -1,0 +1,88 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	tools:parentTag="org.anonomi.android.view.CompositeSendButton"
+	tools:showIn="@layout/text_input_view">
+
+	<LinearLayout
+		android:id="@+id/sendButtonLayout"
+		android:layout_width="wrap_content"
+		android:layout_height="@dimen/text_input_height"
+		android:orientation="horizontal"
+		android:gravity="center_vertical">
+
+		<!-- 🖼️ Image Button -->
+		<androidx.appcompat.widget.AppCompatImageButton
+			android:id="@+id/imageButton"
+			android:layout_width="40dp"
+			android:layout_height="match_parent"
+			android:layout_marginEnd="4dp"
+			android:background="?attr/selectableItemBackground"
+			android:clickable="true"
+			android:contentDescription="@string/image_attach"
+			android:enabled="true"
+			android:focusable="true"
+			android:padding="4dp"
+			android:scaleType="center"
+			app:srcCompat="@drawable/ic_image"
+			app:tint="?attr/colorControlNormal" />
+
+		<!-- 🎤 / 📤 Mic and Send share same space -->
+		<FrameLayout
+			android:layout_width="40dp"
+			android:layout_height="match_parent">
+
+			<!-- 🎤 Mic Button -->
+			<androidx.appcompat.widget.AppCompatImageButton
+				android:id="@+id/recordButton"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:background="?attr/selectableItemBackground"
+				android:clickable="true"
+				android:contentDescription="@string/voice_record"
+				android:enabled="true"
+				android:focusable="true"
+				android:padding="4dp"
+				android:scaleType="center"
+				app:srcCompat="@drawable/ic_mic"
+				app:tint="?attr/colorControlNormal" />
+
+			<!-- 📤 Send Button -->
+			<androidx.appcompat.widget.AppCompatImageButton
+				android:id="@+id/sendButton"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:background="?attr/selectableItemBackground"
+				android:clickable="true"
+				android:contentDescription="@string/send"
+				android:enabled="false"
+				android:focusable="true"
+				android:padding="4dp"
+				android:scaleType="center"
+				android:visibility="gone"
+				app:srcCompat="@drawable/social_send_now_white"
+				app:tint="?colorPrimary" />
+		</FrameLayout>
+	</LinearLayout>
+
+	<!-- 💣 Bomb Icon -->
+	<ImageView
+		android:id="@+id/bombBadge"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="end|bottom"
+		android:layout_margin="3dp"
+		android:contentDescription="@string/auto_delete_msg_contact_enabled"
+		android:visibility="invisible"
+		app:srcCompat="@drawable/ic_bomb"
+		app:tint="?attr/anonAccentColor"
+		tools:visibility="visible" />
+
+	<!-- ⏳ Progress Spinner -->
+	<ProgressBar
+		android:id="@+id/progressBar"
+		style="@style/CircularProgress"
+		android:layout_width="40dp"
+		android:layout_height="40dp"
+		android:visibility="invisible" />
+</merge>

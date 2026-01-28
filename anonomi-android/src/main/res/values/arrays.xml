@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="tor_network_setting_names">
+		<item>@string/tor_network_setting_automatic</item>
+		<item>@string/tor_network_setting_without_bridges</item>
+		<item>@string/tor_network_setting_with_bridges</item>
+	</string-array>
+	<string-array name="tor_network_setting_values">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+	</string-array>
+
+	<string-array name="pref_language_values">
+		<item>default</item>
+		<item>en-US</item>
+		<item>ar</item>
+		<item>ast</item>
+		<item>az</item>
+		<item>bg</item>
+		<item>bn</item>
+		<item>br</item>
+		<item>bs</item>
+		<item>ca</item>
+		<item>cs</item>
+		<item>de</item>
+		<item>es</item>
+		<item>es-CU</item>
+		<item>eu</item>
+		<item>fa</item>
+		<item>fi</item>
+		<item>fr</item>
+		<item>gl</item>
+		<item>he</item>
+		<item>hi</item>
+		<item>hu</item>
+		<item>is</item>
+		<item>it</item>
+		<item>ja</item>
+		<item>ka</item>
+		<item>ko</item>
+		<item>lt</item>
+		<item>mk</item>
+		<item>ms</item>
+		<item>my</item>
+		<item>nb</item>
+		<item>nl</item>
+		<item>oc</item>
+		<item>pl</item>
+		<item>pt-BR</item>
+		<item>pt-PT</item>
+		<item>ro</item>
+		<item>ru</item>
+		<item>sk</item>
+		<item>sq</item>
+		<item>sr</item>
+		<item>sv</item>
+		<item>sw</item>
+		<item>tr</item>
+		<item>uk</item>
+		<item>zh-CN</item>
+		<item>zh-TW</item>
+	</string-array>
+
+	<string-array name="pref_theme_entries">
+		<item>@string/pref_theme_light</item>
+		<item>@string/pref_theme_dark</item>
+		<item>@string/pref_theme_system</item>
+		<item>@string/pref_theme_anon_green_dark</item> <!-- NEW -->
+		<item>@string/pref_theme_anon_green_light</item> <!-- NEW -->
+		<item>@string/pref_theme_discrete_blue_dark</item> <!-- ✅ New -->
+		<item>@string/pref_theme_discrete_blue_light</item> <!-- ✅ New -->
+		<item>@string/pref_theme_discord_dark</item>
+		<item>@string/pref_theme_discord_light</item>
+
+
+	</string-array>
+
+	<string name="pref_theme_light_value" translatable="false">light</string>
+	<string name="pref_theme_dark_value" translatable="false">dark</string>
+	<string name="pref_theme_system_value" translatable="false">system</string>
+	<string name="pref_theme_anon_green_dark" translatable="false">Lime – Dark</string>
+	<string name="pref_theme_anon_green_dark_value" translatable="false">anon_green_dark</string>
+	<string name="pref_theme_anon_green_light" translatable="false">Lime – Light</string>
+	<string name="pref_theme_anon_green_light_value" translatable="false">anon_green_light</string>
+	<string name="pref_theme_discrete_blue_dark" translatable="false">Discrete Blue – Dark</string> <!-- ✅ New -->
+	<string name="pref_theme_discrete_blue_dark_value" translatable="false">discrete_blue_dark</string> <!-- ✅ New -->
+	<string name="pref_theme_discrete_blue_light" translatable="false">Discrete Blue – Light</string> <!-- ✅ New -->
+	<string name="pref_theme_discrete_blue_light_value" translatable="false">discrete_blue_light</string> <!-- ✅ New -->
+	<string name="pref_theme_discord_dark" translatable="false">Discord – Dark</string>
+	<string name="pref_theme_discord_dark_value" translatable="false">discord_dark</string>
+	<string name="pref_theme_discord_light" translatable="false">Discord – Light</string>
+	<string name="pref_theme_discord_light_value" translatable="false">discord_light</string>
+
+	<string-array name="pref_theme_values">
+		<item>@string/pref_theme_light_value</item>
+		<item>@string/pref_theme_dark_value</item>
+		<item>@string/pref_theme_system_value</item>
+		<item>@string/pref_theme_anon_green_dark_value</item> <!-- NEW -->
+		<item>@string/pref_theme_anon_green_light_value</item> <!-- NEW -->
+		<item>@string/pref_theme_discrete_blue_dark_value</item> <!-- ✅ New -->
+		<item>@string/pref_theme_discrete_blue_light_value</item> <!-- ✅ New -->
+		<item>@string/pref_theme_discord_dark_value</item>
+		<item>@string/pref_theme_discord_light_value</item>
+
+	</string-array>
+
+	<string-array name="pref_key_lock_timeout_entries">
+		<item>@string/pref_lock_timeout_never</item>
+		<item>@string/pref_lock_timeout_1</item>
+		<item>@string/pref_lock_timeout_5</item>
+		<item>@string/pref_lock_timeout_15</item>
+		<item>@string/pref_lock_timeout_30</item>
+		<item>@string/pref_lock_timeout_60</item>
+	</string-array>
+	<string name="pref_lock_timeout_value_default" translatable="false">5</string>
+	<string name="pref_lock_timeout_value_never" translatable="false">-1</string>
+	<string-array name="pref_key_lock_timeout_values">
+		<item>@string/pref_lock_timeout_value_never</item>
+		<item>1</item>
+		<item>5</item>
+		<item>15</item>
+		<item>30</item>
+		<item>60</item>
+	</string-array>
+
+	<string-array name="auto_delete_durations">
+		<item>@string/auto_delete_1_minute</item>
+		<item>@string/auto_delete_5_minutes</item>
+		<item>@string/auto_delete_30_minutes</item>
+		<item>@string/auto_delete_1_hour</item>
+		<item>@string/auto_delete_1_day</item>
+		<item>@string/auto_delete_3_days</item>
+		<item>@string/auto_delete_7_days</item>
+	</string-array>
+
+
+	<integer-array name="auto_delete_durations_values">
+		<item>60000</item>          <!-- 1 minute -->
+		<item>300000</item>         <!-- 5 minutes -->
+		<item>1800000</item>        <!-- 30 minutes -->
+		<item>3600000</item>        <!-- 1 hour -->
+		<item>86400000</item>       <!-- 1 day -->
+		<item>259200000</item>      <!-- 3 days -->
+		<item>604800000</item>      <!-- 7 days -->
+	</integer-array>
+</resources>

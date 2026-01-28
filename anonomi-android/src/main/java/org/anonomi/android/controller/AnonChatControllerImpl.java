@@ -1,0 +1,170 @@
+package org.anonomi.android.controller;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.IBinder;
+
+import org.briarproject.android.dontkillmelib.wakelock.AndroidWakeLockManager;
+import org.anonchatsecure.bramble.api.account.AccountManager;
+import org.anonchatsecure.bramble.api.db.DatabaseExecutor;
+import org.anonchatsecure.bramble.api.db.DbException;
+import org.anonchatsecure.bramble.api.lifecycle.LifecycleManager;
+import org.anonchatsecure.bramble.api.settings.Settings;
+import org.anonchatsecure.bramble.api.settings.SettingsManager;
+import org.anonomi.android.AnonChatApplication;
+import org.anonomi.android.AnonChatService;
+import org.anonomi.android.AnonChatService.AnonchatServiceConnection;
+import org.anonomi.android.controller.handler.ResultHandler;
+import org.anonchatsecure.anonchat.api.android.DozeWatchdog;
+import org.briarproject.nullsafety.NotNullByDefault;
+
+import java.util.concurrent.Executor;
+import java.util.logging.Logger;
+
+import javax.inject.Inject;
+
+import androidx.annotation.CallSuper;
+
+import static java.util.logging.Level.WARNING;
+import static java.util.logging.Logger.getLogger;
+import static org.briarproject.android.dontkillmelib.DozeUtils.needsDozeWhitelisting;
+import static org.anonchatsecure.bramble.api.lifecycle.LifecycleManager.LifecycleState.STARTING_SERVICES;
+import static org.anonchatsecure.bramble.util.LogUtils.logException;
+import static org.anonomi.android.settings.SettingsFragment.SETTINGS_NAMESPACE;
+
+@NotNullByDefault
+public class AnonChatControllerImpl implements AnonChatController {
+
+	private static final Logger LOG =
+			getLogger(AnonChatControllerImpl.class.getName());
+
+	public static final String DOZE_ASK_AGAIN = "dozeAskAgain";
+
+	private final AnonchatServiceConnection serviceConnection;
+	private final AccountManager accountManager;
+	private final LifecycleManager lifecycleManager;
+	private final Executor databaseExecutor;
+	private final SettingsManager settingsManager;
+	private final DozeWatchdog dozeWatchdog;
+	private final AndroidWakeLockManager wakeLockManager;
+	private final Activity activity;
+
+	private boolean bound = false;
+
+	@Inject
+	AnonChatControllerImpl(AnonchatServiceConnection serviceConnection,
+			AccountManager accountManager,
+			LifecycleManager lifecycleManager,
+			@DatabaseExecutor Executor databaseExecutor,
+			SettingsManager settingsManager,
+			DozeWatchdog dozeWatchdog,
+			AndroidWakeLockManager wakeLockManager,
+			Activity activity) {
+		this.serviceConnection = serviceConnection;
+		this.accountManager = accountManager;
+		this.lifecycleManager = lifecycleManager;
+		this.databaseExecutor = databaseExecutor;
+		this.settingsManager = settingsManager;
+		this.dozeWatchdog = dozeWatchdog;
+		this.wakeLockManager = wakeLockManager;
+		this.activity = activity;
+	}
+
+	@Override
+	@CallSuper
+	public void onActivityCreate(Activity activity) {
+		if (accountManager.hasDatabaseKey()) startAndBindService();
+	}
+
+	@Override
+	public void onActivityStart() {
+	}
+
+	@Override
+	public void onActivityStop() {
+	}
+
+	@Override
+	@CallSuper
+	public void onActivityDestroy() {
+		unbindService();
+	}
+
+	@Override
+	public void startAndBindService() {
+		activity.startService(new Intent(activity, AnonChatService.class));
+		bound = activity.bindService(new Intent(activity, AnonChatService.class),
+				serviceConnection, 0);
+	}
+
+	@Override
+	public boolean accountSignedIn() {
+		return accountManager.hasDatabaseKey() &&
+				lifecycleManager.getLifecycleState().isAfter(STARTING_SERVICES);
+	}
+
+	@Override
+	public void hasDozed(ResultHandler<Boolean> handler) {
+		AnonChatApplication app = (AnonChatApplication) activity.getApplication();
+		if (app.isInstrumentationTest() || !dozeWatchdog.getAndResetDozeFlag()
+				|| !needsDozeWhitelisting(activity)) {
+			handler.onResult(false);
+			return;
+		}
+		databaseExecutor.execute(() -> {
+			try {
+				Settings settings =
+						settingsManager.getSettings(SETTINGS_NAMESPACE);
+				boolean ask = settings.getBoolean(DOZE_ASK_AGAIN, true);
+				handler.onResult(ask);
+			} catch (DbException e) {
+				logException(LOG, WARNING, e);
+			}
+		});
+	}
+
+	@Override
+	public void doNotAskAgainForDozeWhiteListing() {
+		databaseExecutor.execute(() -> {
+			try {
+				Settings settings = new Settings();
+				settings.putBoolean(DOZE_ASK_AGAIN, false);
+				settingsManager.mergeSettings(settings, SETTINGS_NAMESPACE);
+			} catch (DbException e) {
+				logException(LOG, WARNING, e);
+			}
+		});
+	}
+
+	@Override
+	public void signOut(ResultHandler<Void> handler, boolean deleteAccount) {
+		wakeLockManager.executeWakefully(() -> {
+			try {
+				// Wait for the service to finish starting up
+				IBinder binder = serviceConnection.waitForBinder();
+				AnonChatService service =
+						((AnonChatService.BriarBinder) binder).getService();
+				service.waitForStartup();
+				// Shut down the service and wait for it to shut down
+				//LOG.info("Shutting down service");
+				service.shutdown(true);
+				service.waitForShutdown();
+			} catch (InterruptedException e) {
+				LOG.warning("Interrupted while waiting for service");
+			} finally {
+				if (deleteAccount) accountManager.deleteAccount();
+			}
+			handler.onResult(null);
+		}, "SignOut");
+	}
+
+	@Override
+	public void deleteAccount() {
+		accountManager.deleteAccount();
+	}
+
+	private void unbindService() {
+		if (bound) activity.unbindService(serviceConnection);
+	}
+
+}

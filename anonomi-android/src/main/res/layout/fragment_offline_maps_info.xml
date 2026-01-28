@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:padding="16dp">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/offline_maps_help_main_title"
+				android:textStyle="bold"
+				android:textSize="18sp"
+				android:paddingBottom="8dp" />
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/offline_maps_help_intro"
+				android:paddingBottom="16dp" />
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/offline_maps_help_preload_title"
+				android:textStyle="bold"
+				android:textSize="18sp"
+				android:paddingBottom="8dp" />
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/offline_maps_help_preload_desc"
+				android:paddingBottom="16dp" />
+
+			<!-- UPDATED: "Download Offline Map Data" -> "Map Exporter Tool" -->
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/offline_maps_help_download_title"
+				android:textStyle="bold"
+				android:textSize="18sp"
+				android:paddingBottom="8dp" />
+
+			<!-- UPDATED copy + keep steps -->
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/offline_maps_help_download_desc"
+				android:paddingBottom="16dp" />
+
+			<TextView
+				android:id="@+id/onion_link"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/offline_maps_onion_url"
+				android:textColor="?android:attr/textColorLink"
+				android:textIsSelectable="true"
+				android:autoLink="none"
+				android:linksClickable="false"
+				android:fontFamily="monospace"
+				android:breakStrategy="simple"
+				android:paddingBottom="8dp" />
+
+			<Button
+				android:id="@+id/copy_url_button"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/copy_url"
+				android:gravity="center" />
+
+			<Button
+				android:id="@+id/open_tor_browser_button"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/open_in_tor_browser"
+				android:layout_marginTop="12dp"/>
+
+			<!-- NEW: Copy Clearnet URL button -->
+			<Button
+				android:id="@+id/copy_clearnet_url_button"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/copy_clearnet_url"
+				android:layout_marginTop="12dp"
+				android:backgroundTint="@color/anon_orange_300"
+				android:textColor="@android:color/black" />
+
+			<!-- UPDATED: "Offline Map Data" section replaced with import instructions -->
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/offline_maps_help_data_title"
+				android:textStyle="bold"
+				android:textSize="18sp"
+				android:paddingTop="24dp"
+				android:paddingBottom="8dp" />
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/offline_maps_help_data_desc"
+				android:paddingBottom="16dp" />
+
+			<!-- Keep Zoom Levels (optionally improved text) -->
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/offline_maps_help_zoom_title"
+				android:textStyle="bold"
+				android:textSize="18sp"
+				android:paddingBottom="8dp" />
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/offline_maps_help_zoom_desc" />
+		</LinearLayout>
+	</ScrollView>
+</LinearLayout>

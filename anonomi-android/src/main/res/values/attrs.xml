@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<integer name="animationSpeed">@android:integer/config_mediumAnimTime</integer>
+
+	<integer name="splashScreenDuration">500</integer>
+
+	<declare-styleable name="BriarRecyclerView">
+		<attr name="scrollToEnd" format="boolean" />
+		<attr name="emptyImage" format="integer" />
+		<attr name="emptyText" format="string" />
+		<attr name="emptyAction" format="string" />
+	</declare-styleable>
+
+	<declare-styleable name="AuthorView">
+		<attr name="persona" format="enum">
+			<enum name="normal" value="0"/>
+			<enum name="reblogger" value="1"/>
+			<enum name="commenter" value="2"/>
+			<enum name="list" value="3"/>
+			<enum name="rss_feed" value="4"/>
+			<enum name="rss_feed_reblogged" value="5"/>
+		</attr>
+	</declare-styleable>
+
+	<declare-styleable name="EmojiTextInputView">
+		<attr name="textPaddingBottom" format="dimension"/>
+		<attr name="textPaddingEnd" format="dimension"/>
+		<attr name="maxTextLines" format="integer"/>
+	</declare-styleable>
+
+	<declare-styleable name="TextInputView">
+		<attr name="hint" format="string"/>
+		<attr name="allowEmptyText" format="boolean"/>
+	</declare-styleable>
+
+	<declare-styleable name="LargeTextInputView">
+		<attr name="buttonText" format="string"/>
+		<attr name="maxLines" format="integer"/>
+		<attr name="fillHeight" format="boolean" />
+	</declare-styleable>
+
+	<declare-styleable name="UnreadMessageButton">
+		<attr name="direction" format="enum">
+			<enum name="up" value="0" />
+			<enum name="down" value="1" />
+		</attr>
+	</declare-styleable>
+
+	<declare-styleable name="BriarButton">
+		<attr name="text" format="string" />
+		<attr name="buttonStyle" format="reference" />
+	</declare-styleable>
+
+
+
+	<!-- General -->
+	<attr name="anonAccentColor" format="color" />
+	<attr name="anonAccentDarkColor" format="color" />
+
+
+	<!-- Message Out -->
+	<attr name="msgOutBubbleBackground" format="color" />
+	<attr name="msgOutTextColor" format="color" />
+	<attr name="msgOutLinkTextColor" format="color" />
+	<attr name="msgOutMetaTextColor" format="color"/>
+	<attr name="msgOutStrokeColor" format="color"/>
+
+
+	<!-- Message In -->
+	<attr name="msgInBubbleBackground" format="color" />
+	<attr name="msgInTextColor" format="color" />
+	<attr name="msgInLinkTextColor" format="color" />
+	<attr name="msgInStrokeColor" format="color"/>
+	<attr name="msgInMetaTextColor" format="color"/>
+
+	<!-- Message Notice In -->
+	<attr name="msgNoticeInBubbleBackground" format="color"/>
+	<attr name="msgNoticeInStrokeColor" format="color"/>
+	<attr name="msgNoticeInLinkTextColor" format="color"/>
+	<attr name="msgNoticeInMetaTextColor" format="color"/>
+	<attr name="msgNoticeInTextColor" format="color"/>
+
+	<!-- Message Notice Out -->
+	<attr name="msgNoticeOutBubbleBackground" format="color"/>
+	<attr name="msgNoticeOutStrokeColor" format="color"/>
+	<attr name="msgNoticeOutTextColor" format="color" />
+	<attr name="msgNoticeOutTopTextColor" format="color" />
+	<attr name="msgNoticeOutMetaTextColor" format="color"/>
+
+
+	<!-- Request Msg -->
+	<attr name="requestBubbleBackground" format="color" />
+	<attr name="requestTextColor" format="color" />
+	<attr name="requestLinkTextColor" format="color" />
+	<attr name="requestStrokeColor" format="color" />
+	<attr name="requestMetaTextColor" format="color" />
+
+
+</resources>

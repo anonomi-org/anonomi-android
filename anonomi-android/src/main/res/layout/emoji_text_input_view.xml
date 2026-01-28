@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="horizontal"
+	tools:parentTag="android.widget.LinearLayout"
+	tools:showIn="@layout/fragment_reblog">
+
+	<com.vanniktech.emoji.EmojiEditText
+		android:id="@+id/input_text"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="bottom"
+		android:background="@android:color/transparent"
+		android:imeOptions="flagNoPersonalizedLearning|actionSend"
+		android:inputType="textMultiLine|textCapSentences|textAutoCorrect"
+		android:minHeight="@dimen/text_input_height"
+		android:textColor="?android:attr/textColorPrimary"
+		tools:text="Line 1\nLine 2\nLine 3" />
+
+</merge>
