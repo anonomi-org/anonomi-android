@@ -11,12 +11,16 @@ jobs:
   mirror:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Mirror to Codeberg
         run: |
           git remote add codeberg https://${{ secrets.CODEBERG_TOKEN }}@codeberg.org/Anonomi/anonomi-android.git
-          git push --mirror codeberg
+
+          # push branches
+          git push --force codeberg "refs/heads/*:refs/heads/*"
+
+          # push tags
+          git push --force codeberg "refs/tags/*:refs/tags/*"
