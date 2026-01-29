@@ -1,9 +1,9 @@
-# Anonomi
+# Anonomi Messenger
 
 **Decentralized messaging for high-threat environments.**  
 Online over Tor. Fully functional offline. No servers. No trackers.
 
-Anonomi is a privacy-first communication tool designed for situations where
+Anonomi Messenger is a privacy-first communication tool designed for situations where
 networks are monitored, infrastructure is hostile, and trust assumptions fail.
 It is built for people who cannot afford to be naive about surveillance,
 centralization, or metadata.
@@ -17,9 +17,9 @@ See the release notes for verification instructions.
 
 ---
 
-## What Anonomi is
+## What Anonomi Messenger is
 
-Anonomi is an **Android-only**, decentralized communications suite that provides:
+Anonomi Messenger is an **Android-only**, decentralized communications suite that provides:
 
 - **Secure messaging**  
   Peer-to-peer communication with no central servers to seize or subpoena.
@@ -39,13 +39,13 @@ Anonomi is an **Android-only**, decentralized communications suite that provides
 - **Offline maps & location sharing**  
   Share locations and navigate using imported map tiles — no external map servers.
 
-Anonomi is designed to **reduce metadata exposure**, not to promise magical or absolute anonymity.
+Anonomi Messenger is designed to **reduce metadata exposure**, not to promise magical or absolute anonymity.
 
 ---
 
 ## Threat model (high level)
 
-Anonomi assumes that, in serious cases:
+Anonomi Messenger assumes that, in serious cases:
 
 - Network traffic may be monitored
 - Blocking, throttling, and manipulation may occur
@@ -64,7 +64,7 @@ A full threat model is documented separately.
 
 ## Project philosophy
 
-Anonomi is:
+Anonomi Messenger is:
 
 - **Anti-authoritarian by design**  
   Incompatible with centralized control, mass surveillance, and coercive platforms.
@@ -89,7 +89,7 @@ Anonomi is:
 - ❌ **iOS** — intentionally not supported
 
 iOS imposes architectural and policy constraints that prevent the level of
-network control, offline operation, and user agency required by Anonomi’s
+network control, offline operation, and user agency required by Anonomi Messenger’s
 threat model. Supporting iOS would require compromises this project is not
 willing to make.
 
@@ -97,7 +97,7 @@ willing to make.
 
 ## Installation & releases
 
-Anonomi is distributed **outside centralized app stores**.
+Anonomi Messenger is distributed **outside centralized app stores**.
 
 - Signed APKs
 - Published checksums
@@ -109,7 +109,7 @@ Official releases are published via GitHub.
 
 ### About centralized app stores
 
-Anonomi’s threat model assumes that distribution channels themselves can
+Anonomi Messenger’s threat model assumes that distribution channels themselves can
 leak metadata and impose constraints that are incompatible with high-risk use.
 
 Centralized app stores, including Google Play, introduce risks such as:
@@ -130,13 +130,13 @@ Centralized app stores, including Google Play, introduce risks such as:
   Applications that include strong encryption, Tor integration, or mechanisms
   designed to bypass network blocking may face additional scrutiny or removal.
 
-### For these reasons, Anonomi prioritizes direct APK distribution and F-Droid (soon), where users can independently verify builds and minimize reliance on centralized infrastructure.
+### For these reasons, Anonomi Messenger prioritizes direct APK distribution and F-Droid (soon), where users can independently verify builds and minimize reliance on centralized infrastructure.
 
 ---
 
 ## Open source & verification
 
-Anonomi is developed transparently and in public.
+Anonomi Messenger is developed transparently and in public.
 
 Security relies on:
 - Public, auditable source code
@@ -147,7 +147,7 @@ Security relies on:
 
 ## Contributing
 
-Anonomi is under active development, with a strong focus on security,
+Anonomi Messenger is under active development, with a strong focus on security,
 resilience, and real-world adversarial environments.
 
 Contributions of all kinds are welcome:
@@ -165,14 +165,9 @@ Contributions of all kinds are welcome:
 ## Contact
 
 For security-related matters, responsible disclosure, or project coordination,
-you can contact the Anonomi maintainers at:
+you can contact the Anonomi Messenger maintainers at:
 
-**anonchatsec@protonmail.com**
-
-Proton Mail access:
-- Clearnet: https://proton.me
-- Tor (official Proton Mail Tor entry): 
-https://protonmailrmez3lotccipshtkleegetolb73fuirgj7r4o4vfu7ozyd.onion/
+**hello@anonomi.org**
 
 Please avoid sharing sensitive operational details unless strictly necessary,
 and prefer encrypted communication when appropriate.
@@ -181,7 +176,7 @@ and prefer encrypted communication when appropriate.
 
 ## Support & sustainability
 
-Anonomi is independent and community-supported.
+Anonomi Messenger is independent and community-supported.
 
 Support may include:
 - Code contributions
@@ -212,7 +207,7 @@ by running relays and bridges.
 
 ## License
 
-Anonomi is free and open source software, licensed under the
+Anonomi Messenger is free and open source software, licensed under the
 **GNU General Public License v3.0 (GPL-3.0)**.
 
 This means you are free to:
@@ -226,7 +221,7 @@ Under the following conditions:
 - License notices and attributions must be preserved
 - No additional restrictions may be imposed on users’ freedoms
 
-Anonomi derives from the Briar project and other GPL-licensed components.
+Anonomi Messenger derives from the Briar project and other GPL-licensed components.
 All required attributions and license notices are included in this repository.
 
 See the [LICENSE](./LICENSE) file for full details.
@@ -235,7 +230,7 @@ See the [LICENSE](./LICENSE) file for full details.
 
 ## Disclaimer
 
-Anonomi is designed for real-world adversarial environments, but no software
+Anonomi Messenger is designed for real-world adversarial environments, but no software
 can eliminate all risk.
 
 Users are responsible for understanding their own threat model,
