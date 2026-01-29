@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
-	<string name="app_name" translatable="false">Anonomi</string>
+	<string name="app_name" translatable="false">Anonomi Messenger</string>
 	<string name="app_package" translatable="false">org.anonomi.android</string>
 
 	<!-- Disappearing Messages -->
@@ -26,7 +26,7 @@
 	<string name="copy_content_to_clipboard">Copy Content</string>
 	<string name="copied_to_clipboard">Copied to clipboard</string>
 
-	<string name="more_info_title">Anonomi</string>
+	<string name="more_info_title">Anonomi Messenger</string>
 
 	<!-- Request XMR Screen -->
 	<string name="request_xmr_amount">XMR Amount</string>
@@ -57,22 +57,22 @@
 	<string name="no">No</string>
 	<string name="rate_updated">Rate updated successfully!</string>
 	<!-- Setup -->
-	<string name="setup_title">Welcome to Anonomi</string>
-	<string name="intro_desc">Anonomi is a privacy-first communication platform designed for anonymous,\nsecure, and decentralized discussions.\nNo phone numbers, no email addresses,\nand no personal identifiers are required.</string>
-	<string name="how_it_works_title">How Anonomi works</string>
+	<string name="setup_title">Welcome to Anonomi Messenger</string>
+	<string name="intro_desc">Anonomi Messenger is a privacy-first communication platform designed for anonymous, secure, and decentralized discussions.\nNo phone numbers, no email addresses, and no personal identifiers are required.</string>
+	<string name="how_it_works_title">How Anonomi Messenger works</string>
 	<string name="how_it_works_desc">
-		Anonomi connects users over privacy-preserving networks to enable secure conversations without revealing your identity.\nConnections are established automatically once the app is running.
+		Anonomi Messenger connects users over privacy-preserving networks to enable secure conversations without revealing your identity.\nConnections are established automatically once the app is running.
 	</string>
 
-	<string name="onion_link">http://627jvml2fultrmzw4xjs4hdcxlhlymht5xyzqujmak5wevsdh34btjad.onion/</string>
+	<string name="onion_link">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/</string>
 
 	<string name="onion_link_instructions">
-        You can visit the Anonomi website for updates, documentation, and support.\nAccess requires Tor Browser, as the site is hosted as an onion service.
+        You can visit the Anonomi Messenger website for updates, documentation, and support.\nAccess requires Tor Browser, as the site is hosted as an onion service.
 	</string>
 	<string name="nickname_title">About your nickname</string>
 
 	<string name="nickname_desc">
-        Your nickname is how other users will recognize you in Anonomi.\nIt will be visible to others and cannot be changed after your account is created.\nChoose something that does not reveal personal information.
+        Your nickname is how other users will recognize you in Anonomi Messenger.\nIt will be visible to others and cannot be changed after your account is created.\nChoose something that does not reveal personal information.
 	</string>
 	<string name="tor_browser_not_installed">Tor Browser is not installed. Please install it to open onion links.</string>
 	<string name="copy_url">Copy URL</string>
@@ -80,9 +80,9 @@
 	<string name="setup_name_explanation">Your nickname will be displayed alongside any content you post. It cannot be changed after your account is created.</string>
 	<string name="setup_next">Next</string>
 	<string name="setup_password_intro">Choose a Password</string>
-	<string name="setup_password_explanation">Your Anonomi account is stored encrypted on your device, not in the cloud. If you forget your password or uninstall Anonomi, there\'s no way to recover your account.\n\nChoose a long password that\'s hard to guess, such as four random words, or ten random letters, numbers and symbols.</string>
-	<string name="dnkm_doze_intro">To receive messages, Anonomi needs to stay connected in the background.</string>
-	<string name="dnkm_doze_explanation">To receive messages, Anonomi needs to stay connected in the background. Please disable battery optimizations so Anonomi can stay connected.</string>
+	<string name="setup_password_explanation">Your Anonomi Messenger account is stored encrypted on your device, not in the cloud. If you forget your password or uninstall Anonomi Messenger, there\'s no way to recover your account.\n\nChoose a long password that\'s hard to guess, such as four random words, or ten random letters, numbers and symbols.</string>
+	<string name="dnkm_doze_intro">To receive messages, Anonomi Messenger needs to stay connected in the background.</string>
+	<string name="dnkm_doze_explanation">To receive messages, Anonomi Messenger needs to stay connected in the background. Please disable battery optimizations so Anonomi Messenger can stay connected.</string>
 	<string name="choose_nickname">Choose your nickname</string>
 	<string name="choose_password">Choose your password</string>
 	<string name="confirm_password">Confirm your password</string>
@@ -95,45 +95,45 @@
 	<string name="more_info">More Information</string>
 	<string name="don_t_ask_again">Don\'t ask again</string>
 
-	<string name="dnkm_huawei_protected_text">Please tap the button below and make sure Anonomi is protected in the \"Protected Apps\" screen.</string>
-	<string name="dnkm_huawei_protected_button">Protect Anonomi</string>
-	<string name="dnkm_huawei_protected_help">If Anonomi is not added to the protected apps list, it will be unable to run in the background.</string>
-	<string name="dnkm_huawei_app_launch_text">Please tap the button below, open the \"App launch\" screen and make sure Anonomi is set to \"Manage manually\".</string>
-	<string name="dnkm_huawei_app_launch_help">If Anonomi is not set to \"Manage manually\" in the \"App launch\" screen, it will not be able to run in the background.</string>
-	<string name="dnkm_xiaomi_text">To run in the background, Anonomi needs to be locked to the recent apps list.</string>
-	<string name="dnkm_xiaomi_button">Protect Anonomi</string>
-	<string name="dnkm_xiaomi_help">If Anonomi is not locked to the recent apps list, it will be unable to run in the background.</string>
-	<string name="dnkm_xiaomi_dialog_body_old">1. Open the recent apps list (also called the app switcher)\n\n2. Swipe down on the image of Anonomi to show the padlock icon\n\n3. If the padlock is not locked, tap to lock it</string>
-	<string name="dnkm_xiaomi_dialog_body_new">1. Open the recent apps list (also called the app switcher)\n\n2. If Anonomi has a small image of a padlock next to its name then you don\'t need to do anything\n\n3. If there\'s no padlock, press and hold the image of Anonomi until the padlock button appears, then tap it</string>
-	<string name="dnkm_xiaomi_lock_apps_text">Please tap the button below to open the security settings. Tap \"Boost speed\", then tap \"Lock apps\", and make sure Anonomi is set to \"Locked\".</string>
-	<string name="dnkm_xiaomi_lock_apps_help">If Anonomi is not set to \"Locked\" in the \"Lock apps\" screen, it will be unable to run in the background.</string>
-	<string name="dnkm_warning_dozed_1">Anonomi was unable to run in the background</string>
+	<string name="dnkm_huawei_protected_text">Please tap the button below and make sure Anonomi Messenger is protected in the \"Protected Apps\" screen.</string>
+	<string name="dnkm_huawei_protected_button">Protect Anonomi Messenger</string>
+	<string name="dnkm_huawei_protected_help">If Anonomi Messenger is not added to the protected apps list, it will be unable to run in the background.</string>
+	<string name="dnkm_huawei_app_launch_text">Please tap the button below, open the \"App launch\" screen and make sure Anonomi Messenger is set to \"Manage manually\".</string>
+	<string name="dnkm_huawei_app_launch_help">If Anonomi Messenger is not set to \"Manage manually\" in the \"App launch\" screen, it will not be able to run in the background.</string>
+	<string name="dnkm_xiaomi_text">To run in the background, Anonomi Messenger needs to be locked to the recent apps list.</string>
+	<string name="dnkm_xiaomi_button">Protect Anonomi Messenger</string>
+	<string name="dnkm_xiaomi_help">If Anonomi Messenger is not locked to the recent apps list, it will be unable to run in the background.</string>
+	<string name="dnkm_xiaomi_dialog_body_old">1. Open the recent apps list (also called the app switcher)\n\n2. Swipe down on the image of Anonomi Messenger to show the padlock icon\n\n3. If the padlock is not locked, tap to lock it</string>
+	<string name="dnkm_xiaomi_dialog_body_new">1. Open the recent apps list (also called the app switcher)\n\n2. If Anonomi Messenger has a small image of a padlock next to its name then you don\'t need to do anything\n\n3. If there\'s no padlock, press and hold the image of Anonomi Messenger until the padlock button appears, then tap it</string>
+	<string name="dnkm_xiaomi_lock_apps_text">Please tap the button below to open the security settings. Tap \"Boost speed\", then tap \"Lock apps\", and make sure Anonomi Messenger is set to \"Locked\".</string>
+	<string name="dnkm_xiaomi_lock_apps_help">If Anonomi Messenger is not set to \"Locked\" in the \"Lock apps\" screen, it will be unable to run in the background.</string>
+	<string name="dnkm_warning_dozed_1">Anonomi Messenger was unable to run in the background</string>
 
 	<!-- Login -->
 	<string name="enter_password">Password</string>
 	<string name="try_again">Wrong password, try again</string>
 	<string name="dialog_title_cannot_check_password">Cannot Check Password</string>
-	<string name="dialog_message_cannot_check_password">Anonomi cannot check your password. Please try rebooting your device to solve this problem.</string>
-	<string name="sign_in_title">Sign into Anonomi</string>
+	<string name="dialog_message_cannot_check_password">Anonomi Messenger cannot check your password. Please try rebooting your device to solve this problem.</string>
+	<string name="sign_in_title">Sign into Anonomi Messenger</string>
 	<string name="sign_in_button">Sign In</string>
 	<string name="forgotten_password">Forgot your password?</string>
 	<string name="dialog_title_lost_password">Lost Password</string>
-	<string name="dialog_message_lost_password">Your Anonomi account is stored encrypted on your device, not in the cloud, so we can\'t reset your password. Would you like to delete your account and start again?\n\nCaution: Your identities, contacts and messages will be permanently lost.</string>
-	<string name="startup_failed_activity_title">Anonomi Startup Failure</string>
-	<string name="startup_failed_clock_error">Anonomi was unable to start because your device\'s clock is wrong.\n\nPlease set your device\'s clock to the right time and try again.</string>
-	<string name="startup_failed_db_error">Anonomi was unable to open the database containing your account, your contacts and your messages.\n\nPlease upgrade to the latest version of the app and try again, or set up a new account by choosing \'I have forgotten my password\' at the password prompt.</string>
+	<string name="dialog_message_lost_password">Your Anonomi Messenger account is stored encrypted on your device, not in the cloud, so we can\'t reset your password. Would you like to delete your account and start again?\n\nCaution: Your identities, contacts and messages will be permanently lost.</string>
+	<string name="startup_failed_activity_title">Anonomi Messenger Startup Failure</string>
+	<string name="startup_failed_clock_error">Anonomi Messenger was unable to start because your device\'s clock is wrong.\n\nPlease set your device\'s clock to the right time and try again.</string>
+	<string name="startup_failed_db_error">Anonomi Messenger was unable to open the database containing your account, your contacts and your messages.\n\nPlease upgrade to the latest version of the app and try again, or set up a new account by choosing \'I have forgotten my password\' at the password prompt.</string>
 	<string name="startup_failed_data_too_old_error">Your account was created with an old version of this app and cannot be opened with this version.\n\nYou must either reinstall the old version or set up a new account by choosing \'I have forgotten my password\' at the password prompt.</string>
 	<string name="startup_failed_data_too_new_error">Your account was created with a newer version of this app and cannot be opened with this version.\n\nPlease upgrade to the latest version and try again.</string>
-	<string name="startup_failed_service_error">Anonomi was unable to start a required component.\n\nPlease upgrade to the latest version of the app and try again.</string>
+	<string name="startup_failed_service_error">Anonomi Messenger was unable to start a required component.\n\nPlease upgrade to the latest version of the app and try again.</string>
 	<plurals name="expiry_warning">
-		<item quantity="one">This is a test version of Anonomi. Your account will expire in %d day and cannot be renewed.</item>
-		<item quantity="other">This is a test version of Anonomi. Your account will expire in %d days and cannot be renewed.</item>
+		<item quantity="one">This is a test version of Anonomi Messenger. Your account will expire in %d day and cannot be renewed.</item>
+		<item quantity="other">This is a test version of Anonomi Messenger. Your account will expire in %d days and cannot be renewed.</item>
 	</plurals>
 	<string name="expiry_date_reached">This software has expired.\nThank you for testing!</string>
-	<string name="download_briar">To continue using Anonomi, please download the latest release.</string>
+	<string name="download_briar">To continue using Anonomi Messenger, please download the latest release.</string>
 	<string name="create_new_account">You will need to create a new account, but you can use the same nickname.</string>
 	<string name="download_briar_button">Download Latest Release</string>
-	<string name="old_android_expiry_date_reached">Anonomi no longer runs on Android 4.\nPlease install Anonomi on a newer device.</string>
+	<string name="old_android_expiry_date_reached">Anonomi Messenger no longer runs on Android 4.\nPlease install Anonomi Messenger on a newer device.</string>
 	<string name="old_android_delete_account">You can tap the button below to delete your account from this device.</string>
 	<string name="delete_account_button">Delete Account</string>
 	<string name="startup_open_database">Decrypting Database…</string>
@@ -151,47 +151,47 @@
 	<string name="lock_button">Lock App</string>
 	<string name="settings_button">Settings</string>
 	<string name="sign_out_button">Sign Out</string>
-	<string name="transports_onboarding_text">Tap here to control how Anonomi connects to your contacts.</string>
+	<string name="transports_onboarding_text">Tap here to control how Anonomi Messenger connects to your contacts.</string>
 
 	<!-- Transports: Tor -->
 	<string name="transport_tor">Internet</string>
 	<string name="tor_device_status_online_wifi">Your phone has Internet access via Wi-Fi</string>
 	<string name="tor_device_status_online_mobile">Your phone has Internet access via mobile data</string>
 	<string name="tor_device_status_offline">Your phone does not have Internet access</string>
-	<string name="tor_plugin_status_enabling">Anonomi is connecting to the Internet</string>
-	<string name="tor_plugin_status_active">Anonomi is connected to the Internet</string>
-	<string name="tor_plugin_status_inactive">Anonomi can\'t connect to the Internet</string>
-	<string name="tor_plugin_status_disabled">Anonomi is configured not to use the Internet</string>
-	<string name="tor_plugin_status_disabled_mobile_data">Anonomi is configured not to use mobile data</string>
-	<string name="tor_plugin_status_disabled_battery">Anonomi is configured not to use the Internet when running on battery</string>
-	<string name="tor_plugin_status_disabled_country_blocked">Anonomi is configured not to use the Internet in this country</string>
+	<string name="tor_plugin_status_enabling">Anonomi Messenger is connecting to the Internet</string>
+	<string name="tor_plugin_status_active">Anonomi Messenger is connected to the Internet</string>
+	<string name="tor_plugin_status_inactive">Anonomi Messenger can\'t connect to the Internet</string>
+	<string name="tor_plugin_status_disabled">Anonomi Messenger is configured not to use the Internet</string>
+	<string name="tor_plugin_status_disabled_mobile_data">Anonomi Messenger is configured not to use mobile data</string>
+	<string name="tor_plugin_status_disabled_battery">Anonomi Messenger is configured not to use the Internet when running on battery</string>
+	<string name="tor_plugin_status_disabled_country_blocked">Anonomi Messenger is configured not to use the Internet in this country</string>
 
 	<!-- Transports: Wi-Fi -->
 	<string name="transport_lan">Wi-Fi</string>
 	<string name="transport_lan_long">Same Wi-Fi network</string>
 	<string name="lan_device_status_on">Your phone is connected to Wi-Fi</string>
 	<string name="lan_device_status_off">Your phone is not connected to Wi-Fi</string>
-	<string name="lan_plugin_status_enabling">Anonomi is connecting to the Wi-Fi network</string>
-	<string name="lan_plugin_status_active">Anonomi is connected to the Wi-Fi network</string>
-	<string name="lan_plugin_status_inactive">Anonomi can\'t connect to the Wi-Fi network</string>
-	<string name="lan_plugin_status_disabled">Anonomi is configured not to use the Wi-Fi network</string>
+	<string name="lan_plugin_status_enabling">Anonomi Messenger is connecting to the Wi-Fi network</string>
+	<string name="lan_plugin_status_active">Anonomi Messenger is connected to the Wi-Fi network</string>
+	<string name="lan_plugin_status_inactive">Anonomi Messenger can\'t connect to the Wi-Fi network</string>
+	<string name="lan_plugin_status_disabled">Anonomi Messenger is configured not to use the Wi-Fi network</string>
 
 	<!-- Transports: Bluetooth -->
 	<string name="transport_bt">Bluetooth</string>
 	<string name="bt_device_status_on">Your phone\'s Bluetooth is turned on</string>
 	<string name="bt_device_status_off">Your phone\'s Bluetooth is turned off</string>
-	<string name="bt_plugin_status_enabling">Anonomi is connecting to Bluetooth</string>
-	<string name="bt_plugin_status_active">Anonomi is connected to Bluetooth</string>
-	<string name="bt_plugin_status_inactive">Anonomi can\'t connect to Bluetooth</string>
-	<string name="bt_plugin_status_disabled">Anonomi is configured not to use Bluetooth</string>
+	<string name="bt_plugin_status_enabling">Anonomi Messenger is connecting to Bluetooth</string>
+	<string name="bt_plugin_status_active">Anonomi Messenger is connected to Bluetooth</string>
+	<string name="bt_plugin_status_inactive">Anonomi Messenger can\'t connect to Bluetooth</string>
+	<string name="bt_plugin_status_disabled">Anonomi Messenger is configured not to use Bluetooth</string>
 
 	<!-- Notifications -->
-	<string name="reminder_notification_title">Signed out of Anonomi</string>
+	<string name="reminder_notification_title">Signed out of Anonomi Messenger</string>
 	<string name="reminder_notification_text">Tap to sign back in.</string>
-	<string name="reminder_notification_channel_title">Anonomi Sign-in Reminder</string>
+	<string name="reminder_notification_channel_title">Anonomi Messenger Sign-in Reminder</string>
 	<string name="reminder_notification_dismiss">Dismiss</string>
-	<string name="ongoing_notification_title">Signed into Anonomi</string>
-	<string name="ongoing_notification_text">Touch to open Anonomi.</string>
+	<string name="ongoing_notification_title">Signed into Anonomi Messenger</string>
+	<string name="ongoing_notification_text">Touch to open Anonomi Messenger.</string>
 	<plurals name="private_message_notification_text">
 		<item quantity="one">New private message.</item>
 		<item quantity="other">%d new private messages.</item>
@@ -305,7 +305,7 @@
 	<string name="save_image_success">Image was saved</string>
 	<string name="save_image_error">Could not save image</string>
 	<string name="dialog_title_no_image_support">Images Unavailable</string>
-	<string name="dialog_message_no_image_support">Your contact\'s Anonomi does not yet support image attachments. Once they upgrade you\'ll see a different icon.</string>
+	<string name="dialog_message_no_image_support">Your contact\'s Anonomi Messenger does not yet support image attachments. Once they upgrade you\'ll see a different icon.</string>
 	<string name="dialog_title_image_support">You can now send images to this contact</string>
 	<string name="dialog_message_image_support">Tap this icon to attach images.</string>
 	<string name="messaging_too_many_attachments_toast">Only the first %d images will be sent</string>
@@ -324,15 +324,15 @@
 	<string name="contact_already_exists">Contact %s already exists</string>
 	<string name="contact_already_exists_general">Contact already exists</string>
 	<string name="qr_code_invalid">The QR code is invalid</string>
-	<string name="qr_code_too_old_1">The QR code you have scanned comes from an older version of Anonomi.\n\nPlease ask your contact to upgrade to the latest version and then try again.</string>
-	<string name="qr_code_too_new_1">The QR code you have scanned comes from a newer version of Anonomi.\n\nPlease upgrade to the latest version and then try again.</string>
-	<string name="mailbox_qr_code_for_contact">The QR code you have scanned comes from Anonomi Postbox.\n\nIf you want to link a Postbox, please choose Settings > Postbox from the Anonomi menu.</string>
-	<string name="qr_code_format_unknown">The QR code you have scanned is not meant for adding a Anonomi contact.\n\nPlease scan the QR code shown on your contact\'s screen.</string>
+	<string name="qr_code_too_old_1">The QR code you have scanned comes from an older version of Anonomi Messenger.\n\nPlease ask your contact to upgrade to the latest version and then try again.</string>
+	<string name="qr_code_too_new_1">The QR code you have scanned comes from a newer version of Anonomi Messenger.\n\nPlease upgrade to the latest version and then try again.</string>
+	<string name="mailbox_qr_code_for_contact">The QR code you have scanned comes from Anonomi Messenger Postbox.\n\nIf you want to link a Postbox, please choose Settings > Postbox from the Anonomi Messenger menu.</string>
+	<string name="qr_code_format_unknown">The QR code you have scanned is not meant for adding a Anonomi Messenger contact.\n\nPlease scan the QR code shown on your contact\'s screen.</string>
 	<string name="camera_error">Camera error</string>
 	<string name="connecting_to_device">Connecting to device\u2026</string>
 	<string name="authenticating_with_device">Authenticating with device\u2026</string>
 	<string name="connection_error_title">Could not connect to your contact</string>
-	<string name="connection_error_feedback">Please send feedback (with anonymous data) via the Anonomi app if the issue persists.</string>
+	<string name="connection_error_feedback">Please send feedback (with anonymous data) via the Anonomi Messenger app if the issue persists.</string>
 	<string name="info_both_must_scan">You must both scan each other\'s QR codes</string>
 
 	<!-- Adding Contacts Remotely -->
@@ -351,7 +351,7 @@
 	<string name="add_contact_choose_a_nickname">Enter a nickname</string>
 	<string name="nickname_intro">Give your contact a nickname. Only you can see it.</string>
 	<string name="your_link">Give this link to the contact you want to add</string>
-	<string name="link_clip_label">Anonomi link</string>
+	<string name="link_clip_label">Anonomi Messenger link</string>
 	<string name="link_copied_toast">Link copied</string>
 	<string name="adding_contact_error">There was an error adding the contact.</string>
 	<string name="pending_contact_requests_snackbar">There are pending contact requests</string>
@@ -366,7 +366,7 @@
 	<string name="own_link_error">Enter your contact\'s link, not your own</string>
 	<string name="nickname_missing">Please enter a nickname</string>
 	<string name="invalid_link">Invalid link</string>
-	<string name="unsupported_link">This link comes from a newer version of Anonomi. Please upgrade to the latest version and try again.</string>
+	<string name="unsupported_link">This link comes from a newer version of Anonomi Messenger. Please upgrade to the latest version and try again.</string>
 	<string name="intent_own_link">You opened your own link. Use the one of the contact you want to add!</string>
 	<string name="missing_link">Please enter a link</string>
 	<!-- This is a numeral indicating the first step in a series of screens -->
@@ -405,7 +405,7 @@
 	<!-- Introductions -->
 
 	<string name="introduction_onboarding_title">Introduce your contacts</string>
-	<string name="introduction_onboarding_text">Introduce your contacts to each other so they can connect on Anonomi.</string>
+	<string name="introduction_onboarding_text">Introduce your contacts to each other so they can connect on Anonomi Messenger.</string>
 	<string name="introduction_menu_item">Make Introduction</string>
 	<string name="introduction_activity_title">Select Contact</string>
 	<string name="introduction_not_possible">You already have one introduction in progress with these contacts. Please allow for this to finish first. If you or your contacts are rarely online, this can take some time.</string>
@@ -615,7 +615,7 @@
 
 	<!-- Settings Display -->
 	<string name="pref_language_title">Language &amp; region</string>
-	<string name="pref_language_changed">This setting will take effect when you restart Anonomi. Please sign out and restart Anonomi.</string>
+	<string name="pref_language_changed">This setting will take effect when you restart Anonomi Messenger. Please sign out and restart Anonomi Messenger.</string>
 	<string name="pref_language_default">System default</string>
 	<string name="display_settings_title">Display</string>
 	<string name="pref_theme_title">Theme</string>
@@ -634,7 +634,7 @@
 	<string name="tor_network_setting_without_bridges">Use Tor network without bridges</string>
 	<string name="tor_network_setting_with_bridges">Use Tor network with bridges</string>
 	<string name="tor_network_setting_never">Don\'t connect to the Internet</string>
-	<!-- How and when Anonomi will connect to Tor: E.g. "Don't connect to the Internet (in China)" or "Use Tor network with bridges (in Belarus)" -->
+	<!-- How and when Anonomi Messenger will connect to Tor: E.g. "Don't connect to the Internet (in China)" or "Use Tor network with bridges (in Belarus)" -->
 	<string name="tor_network_setting_summary">Automatic: %1$s (in %2$s)</string>
 	<string name="tor_mobile_data_title">Use mobile data</string>
 	<string name="tor_only_when_charging_title">Connect to the Internet only when charging</string>
@@ -643,11 +643,11 @@
 	<!-- Settings Security and Panic -->
 	<string name="security_settings_title">Security</string>
 	<string name="pref_lock_title">App lock</string>
-	<string name="pref_lock_summary">Use the device\'s screen lock to protect Anonomi while signed in</string>
+	<string name="pref_lock_summary">Use the device\'s screen lock to protect Anonomi Messenger while signed in</string>
 	<string name="pref_lock_disabled_summary">To use this feature, set up a screen lock for your device</string>
 	<string name="pref_lock_timeout_title">App lock inactivity timeout</string>
 	<!-- The %s placeholder is replaced with the following time spans, e.g. 5 Minutes, 1 Hour -->
-	<string name="pref_lock_timeout_summary">When not using Anonomi, automatically lock it after %s</string>
+	<string name="pref_lock_timeout_summary">When not using Anonomi Messenger, automatically lock it after %s</string>
 	<!-- Will be shown in a list of lock times. Should fit into the %s of "automatically lock it after %s" -->
 	<string name="pref_lock_timeout_1">1 minute</string>
 	<!-- Will be shown in a list of lock times. Should fit into the %s of "automatically lock it after %s" -->
@@ -659,7 +659,7 @@
 	<!-- Will be shown in a list of lock times. Should fit into the %s of "automatically lock it after %s" -->
 	<string name="pref_lock_timeout_60">1 hour</string>
 	<string name="pref_lock_timeout_never">Never</string>
-	<string name="pref_lock_timeout_never_summary">Never lock Anonomi automatically</string>
+	<string name="pref_lock_timeout_never_summary">Never lock Anonomi Messenger automatically</string>
 
 	<string name="calculator_passcode_title">Calculator Passcode</string>
 	<string name="set_calculator_passcode_title">Set Calculator Passcode</string>
@@ -673,9 +673,9 @@
 
 	<string name="stealth_mode_title">Stealth Mode</string>
 	<string name="stealth_mode_switch_title">Stealth Mode</string>
-	<string name="stealth_mode_switch_summary">When enabled, Anonomi appears as Calculator in the app drawer.</string>
+	<string name="stealth_mode_switch_summary">When enabled, Anonomi Messenger appears as Calculator in the app drawer.</string>
 	<string name="pref_stealth_mode_title">Stealth Mode</string>
-	<string name="pref_stealth_mode_summary">Hide the app under a Calculator icon and name. A secret unlock code reveals Anonomi.</string>
+	<string name="pref_stealth_mode_summary">Hide the app under a Calculator icon and name. A secret unlock code reveals Anonomi Messenger.</string>
 
 	<string name="no_passcode_configured">No passcode set. Please configure it in Security settings.</string>
 	<string name="invalid_saved_passcode">Error: Invalid saved passcode expression.</string>
@@ -685,7 +685,7 @@
 
 	<string name="action_send_location">Send Offline Location</string>
 	<string name="location_sent">Location sent</string>
-	<string name="unlocking_anonchat">Unlocking Anonomi...</string>
+	<string name="unlocking_anonchat">Unlocking Anonomi Messenger...</string>
 	<string name="stealth_mode_enabled">Stealth mode enabled.</string>
 
 	<string name="offline_maps_copy_onion_title">Where to get Offline Maps data</string>
@@ -710,12 +710,12 @@
 
 	<string name="install_tor_browser">Install Tor Browser</string>
 
-	<string name="offline_maps_help_intro">Anonomi offline maps work entirely without internet (no server requests or logs like most mapping apps), making them the most secure and private way to share a location.</string>
+	<string name="offline_maps_help_intro">Anonomi Messenger offline maps work entirely without internet (no server requests or logs like most mapping apps), making them the most secure and private way to share a location.</string>
 	<string name="offline_maps_help_preload_title">Pre-load Map Data</string>
-	<string name="offline_maps_help_preload_desc">To ensure no external server connections (and avoid leaking information such as your IP address, request metadata, etc.), Anonomi requires map data to be preloaded into the app.</string>
+	<string name="offline_maps_help_preload_desc">To ensure no external server connections (and avoid leaking information such as your IP address, request metadata, etc.), Anonomi Messenger requires map data to be preloaded into the app.</string>
 	<string name="offline_maps_help_download_title">Map Exporter tool</string>
 	<string name="offline_maps_help_download_desc">
-	Generate offline map packs using the Map Exporter, then import them into Anonomi.\n\n
+	Generate offline map packs using the Map Exporter, then import them into Anonomi Messenger.\n\n
 	1 - Copy the Map Exporter URL to your clipboard.\n\n
 	2 - Open Tor Browser, paste the URL, and access the service.
 	</string>
@@ -771,7 +771,7 @@
 	<string name="password_changed">Password has been changed.</string>
 	<string name="panic_setting">Panic button setup</string>
 	<string name="panic_setting_title">Panic button</string>
-	<string name="panic_setting_hint">Configure how Anonomi will react when you use a panic button app</string>
+	<string name="panic_setting_hint">Configure how Anonomi Messenger will react when you use a panic button app</string>
 	<string name="panic_app_setting_title">Panic Button App</string>
 	<string name="unknown_app">an unknown app</string>
 	<string name="panic_app_setting_summary">No app has been set</string>
@@ -780,9 +780,9 @@
 	<string name="dialog_message_connect_panic_app">Are you sure that you want to allow %1$s to trigger destructive panic button actions?</string>
 	<string name="panic_setting_destructive_action">Destructive Actions</string>
 	<string name="panic_setting_signout_title">Sign Out</string>
-	<string name="panic_setting_signout_summary">Sign out of Anonomi if a panic button is pressed</string>
+	<string name="panic_setting_signout_summary">Sign out of Anonomi Messenger if a panic button is pressed</string>
 	<string name="purge_setting_title">Delete Account</string>
-	<string name="purge_setting_summary">Delete your Anonomi account if a panic button is pressed. Caution: This will permanently delete your identities, contacts and messages</string>
+	<string name="purge_setting_summary">Delete your Anonomi Messenger account if a panic button is pressed. Caution: This will permanently delete your identities, contacts and messages</string>
 
 	<string name="offline_maps_title">Offline Maps</string>
 	<string name="offline_maps_import_title">Import Offline Maps</string>
@@ -829,32 +829,32 @@
 	<string name="pref_minor_index_hint">Enter the current index</string>
 
 	<!-- Postbox -->
-	<string name="mailbox_settings_title">Anonomi Postbox</string>
+	<string name="mailbox_settings_title">Anonomi Messenger Postbox</string>
 	<string name="mailbox_setup_title">Postbox setup</string>
 	<string name="mailbox_setup_intro">A Postbox enables your contacts to send you messages while you are offline. The Postbox will receive your messages and store them until you come online.\n
-		\nYou can install the Anonomi Postbox app on a spare device. Keep it connected to power and Wi-Fi so it\'s always online.</string>
-	<string name="mailbox_setup_download">First, install the Postbox app on another device by downloading \"Anonomi Postbox\" from where you downloaded Anonomi.\n
-		\nThen link your Postbox with Anonomi by scanning the QR code shown by the Postbox app.</string>
+		\nYou can install the Anonomi Messenger Postbox app on a spare device. Keep it connected to power and Wi-Fi so it\'s always online.</string>
+	<string name="mailbox_setup_download">First, install the Postbox app on another device by downloading \"Anonomi Messenger Postbox\" from where you downloaded Anonomi Messenger.\n
+		\nThen link your Postbox with Anonomi Messenger by scanning the QR code shown by the Postbox app.</string>
 	<string name="mailbox_setup_download_link">Share Download Link</string>
 	<string name="mailbox_setup_button_scan">Scan Postbox QR code</string>
 	<string name="permission_camera_qr_denied_body">You have denied access to the camera, but scanning a QR code requires using the camera.\n\nPlease consider granting access.</string>
 	<string name="mailbox_setup_connecting">Connecting to Postbox…</string>
 	<!-- This string is shown when connecting to a Postbox for the first time. The placeholder will be replaced with a duration, e.g. "2 minutes". -->
 	<string name="mailbox_setup_connecting_info">This may take up to %1s</string>
-	<string name="mailbox_qr_code_too_old">The QR code you have scanned comes from an older version of Anonomi Postbox.\n\nPlease upgrade Anonomi Postbox to the latest version and then try again.</string>
-	<string name="mailbox_qr_code_too_new">The QR code you have scanned comes from a newer version of Anonomi Postbox.\n\nPlease upgrade Anonomi to the latest version and then try again.</string>
-	<string name="contact_qr_code_for_mailbox">The QR code you have scanned is for adding a Anonomi contact.\n\nIf you want to add a contact, please go to the contact list and tap the + icon.</string>
-	<string name="mailbox_setup_qr_code_wrong_description">The QR code you have scanned does not come from Anonomi Postbox.\n\nPlease open the Anonomi Postbox app on your Postbox device and scan the QR code it presents.</string>
+	<string name="mailbox_qr_code_too_old">The QR code you have scanned comes from an older version of Anonomi Messenger Postbox.\n\nPlease upgrade Anonomi Messenger Postbox to the latest version and then try again.</string>
+	<string name="mailbox_qr_code_too_new">The QR code you have scanned comes from a newer version of Anonomi Messenger Postbox.\n\nPlease upgrade Anonomi Messenger to the latest version and then try again.</string>
+	<string name="contact_qr_code_for_mailbox">The QR code you have scanned is for adding a Anonomi Messenger contact.\n\nIf you want to add a contact, please go to the contact list and tap the + icon.</string>
+	<string name="mailbox_setup_qr_code_wrong_description">The QR code you have scanned does not come from Anonomi Messenger Postbox.\n\nPlease open the Anonomi Messenger Postbox app on your Postbox device and scan the QR code it presents.</string>
 	<string name="mailbox_setup_already_paired_title">Postbox already linked</string>
 	<string name="mailbox_setup_already_paired_description">Unlink the Postbox on your other device and try again.</string>
 	<string name="mailbox_setup_io_error_title">Could not connect</string>
 	<string name="mailbox_setup_io_error_description">Ensure that both devices are connected to the Internet and try again.</string>
 	<string name="mailbox_setup_assertion_error_title">Postbox error</string>
-	<string name="mailbox_setup_assertion_error_description">Please send feedback (with anonymous data) via the Anonomi app if the issue persists.</string>
+	<string name="mailbox_setup_assertion_error_description">Please send feedback (with anonymous data) via the Anonomi Messenger app if the issue persists.</string>
 	<string name="mailbox_setup_camera_error_title" translatable="false">@string/camera_error</string>
 	<string name="mailbox_setup_camera_error_description">Could not access camera. Try again, maybe after rebooting device.</string>
 	<string name="mailbox_setup_paired_title">Connected</string>
-	<string name="mailbox_setup_paired_description">Your Postbox has been successfully linked with Anonomi.\n
+	<string name="mailbox_setup_paired_description">Your Postbox has been successfully linked with Anonomi Messenger.\n
 		\nKeep your Postbox connected to power and Wi-Fi so it\'s always online.</string>
 	<string name="tor_offline_title">Offline</string>
 	<string name="tor_offline_description">Ensure that this device is online and connections to the Internet are allowed.\n
@@ -862,10 +862,10 @@
 	<string name="tor_offline_button_check">Check connection settings</string>
 	<string name="mailbox_status_title">Postbox status</string>
 	<string name="mailbox_status_connected_title">Postbox is running</string>
-	<string name="mailbox_status_problem_title">Anonomi is having trouble connecting to the Postbox</string>
+	<string name="mailbox_status_problem_title">Anonomi Messenger is having trouble connecting to the Postbox</string>
 	<string name="mailbox_status_failure_title">Postbox is unavailable</string>
-	<string name="mailbox_status_app_too_old_title">Anonomi is too old</string>
-	<string name="mailbox_status_app_too_old_message">Update Anonomi to the latest version of the app and try again.</string>
+	<string name="mailbox_status_app_too_old_title">Anonomi Messenger is too old</string>
+	<string name="mailbox_status_app_too_old_message">Update Anonomi Messenger to the latest version of the app and try again.</string>
 	<string name="mailbox_status_mailbox_too_old_title">Postbox is too old</string>
 	<string name="mailbox_status_mailbox_too_old_message">Update your Postbox to the latest version of the app and try again.</string>
 	<string name="mailbox_status_check_button">Check Connection</string>
@@ -876,13 +876,13 @@
 	<string name="mailbox_status_unlink_button">Unlink</string>
 	<string name="mailbox_status_unlink_dialog_title">Unlink mailbox?</string>
 	<string name="mailbox_status_unlink_dialog_question">Are you sure you want to unlink your Postbox?</string>
-	<string name="mailbox_status_unlink_dialog_warning">If you unlink your Postbox, you won\'t be able to receive messages while Anonomi is offline.</string>
+	<string name="mailbox_status_unlink_dialog_warning">If you unlink your Postbox, you won\'t be able to receive messages while Anonomi Messenger is offline.</string>
 	<string name="mailbox_status_unlink_no_wipe_title">Your Postbox has been unlinked</string>
 	<string name="mailbox_status_unlink_no_wipe_message">Next time you have access to your Postbox device, please open the Postbox app and tap the \"Unlink\" button to complete the process.\n\nIf you no longer have access to your Postbox device, don\'t worry. Your data is encrypted so it will remain secure even if you don\'t complete the process.</string>
 	<string name="mailbox_status_unlink_success">Your Postbox has been unlinked</string>
 
-	<string name="mailbox_error_notification_channel_title">Anonomi Postbox problem</string>
-	<string name="mailbox_error_notification_title">Anonomi Postbox is unavailable</string>
+	<string name="mailbox_error_notification_channel_title">Anonomi Messenger Postbox problem</string>
+	<string name="mailbox_error_notification_title">Anonomi Messenger Postbox is unavailable</string>
 	<string name="mailbox_error_notification_text">Tap to fix problem.</string>
 	<string name="mailbox_error_wizard_button">Fix problem</string>
 	<string name="mailbox_error_wizard_title">Postbox troubleshooting wizard</string>
@@ -898,17 +898,17 @@
 	<string name="mailbox_error_wizard_answer1_4">I see \"Device offline\"</string>
 	<string name="mailbox_error_wizard_info1_1_1">Please unlink your Postbox using the button below, then follow the instructions on the Postbox device to link it again.</string>
 	<string name="mailbox_error_wizard_info_1_1_2">Please unlink your Postbox using the button below, then scan the QR code to link it again.</string>
-	<string name="mailbox_error_wizard_info1_1_3">Please use the button below to check the connection between Anonomi and the Postbox.\n\n
+	<string name="mailbox_error_wizard_info1_1_3">Please use the button below to check the connection between Anonomi Messenger and the Postbox.\n\n
 		If the connection fails again:\n
-		\u2022 Check that the Postbox and Anonomi apps are updated to the latest version.\n
-		\u2022 Restart your Postbox and Anonomi devices and try again.</string>
-	<string name="mailbox_error_wizard_info1_1_4">Check that the mailbox device is properly connected to the Internet.\n\nCheck that the clock on the Postbox device shows the right time, date and timezone.\n\nCheck that the Postbox and Anonomi apps are updated to the latest version.\n\nRestart your Postbox and Anonomi devices and try again.</string>
+		\u2022 Check that the Postbox and Anonomi Messenger apps are updated to the latest version.\n
+		\u2022 Restart your Postbox and Anonomi Messenger devices and try again.</string>
+	<string name="mailbox_error_wizard_info1_1_4">Check that the mailbox device is properly connected to the Internet.\n\nCheck that the clock on the Postbox device shows the right time, date and timezone.\n\nCheck that the Postbox and Anonomi Messenger apps are updated to the latest version.\n\nRestart your Postbox and Anonomi Messenger devices and try again.</string>
 	<string name="mailbox_error_wizard_info2">Please come back to this screen when you have access to the device.</string>
 	<string name="mailbox_error_wizard_info3">Please unlink your mailbox using the button below.\n\nAfter unlinking your old Postbox, you can set up a new Postbox at any time.</string>
 
 	<!-- About -->
 	<string name="about_title">About</string>
-	<string name="anonomi_version">Anonomi version: %s</string>
+	<string name="anonomi_version">Anonomi Messenger version: %s</string>
 	<string name="tor_version">Tor version: %s</string>
 	<string name="links">Links</string>
 	<string name="briar_website">\u2022 <a href="">Website</a></string>
@@ -921,33 +921,33 @@
 
 
 	<string name="about_anonomi_body">
-Anonomi is a messaging application designed to resist surveillance, centralization, and infrastructure capture through its technical architecture.\n\n
-Rather than relying on institutional trust or policy guarantees, Anonomi embeds its assumptions directly into how communication, identity, and networking are implemented.\n\n
+Anonomi Messenger is a messaging application designed to resist surveillance, centralization, and infrastructure capture through its technical architecture.\n\n
+Rather than relying on institutional trust or policy guarantees, Anonomi Messenger embeds its assumptions directly into how communication, identity, and networking are implemented.\n\n
 Design assumptions\n\n
-Anonomi is built around a small set of explicit assumptions:\n
+Anonomi Messenger is built around a small set of explicit assumptions:\n
 • Networks may be monitored, filtered, or manipulated\n
 • Infrastructure may be seized, altered, or shut down\n
 • Platforms and intermediaries may act under coercion\n
 • Users may operate under varying levels of risk\n\n
 These conditions are treated as normal operating environments, not exceptional cases.\n\n
 Architecture over policy\n\n
-Anonomi does not depend on:\n
+Anonomi Messenger does not depend on:\n
 • Centralized servers\n
 • Global directories\n
 • Account-based identity systems\n
 • Recovery mechanisms tied to external providers\n\n
 Instead, communication happens directly between peers, using whatever transport is safest under current conditions.\n\n
 General-purpose communication\n\n
-Anonomi can be used as a general-purpose messenger, including one-to-one conversations, group chats, long-term contacts, and everyday communication.\n\n
+Anonomi Messenger can be used as a general-purpose messenger, including one-to-one conversations, group chats, long-term contacts, and everyday communication.\n\n
 Network resilience\n\n
-Anonomi is designed to function across unreliable networks, filtered or degraded connections, and environments where direct internet access is unsafe or unavailable.\n\n
+Anonomi Messenger is designed to function across unreliable networks, filtered or degraded connections, and environments where direct internet access is unsafe or unavailable.\n\n
 Open source and forkability\n\n
-Anonomi is open source so that its security claims can be independently verified and the project remains forkable if governance or direction diverges.\n\n
+Anonomi Messenger is open source so that its security claims can be independently verified and the project remains forkable if governance or direction diverges.\n\n
 Limits and responsibility\n\n
-Anonomi improves privacy and resilience, but it does not eliminate risk. It cannot protect against compromised devices, malware, or users voluntarily revealing identifying information.\n\n
+Anonomi Messenger improves privacy and resilience, but it does not eliminate risk. It cannot protect against compromised devices, malware, or users voluntarily revealing identifying information.\n\n
 Upstream project attribution\n\n
-Anonomi derives from the Briar project, developed by the Briar Project and licensed under the GNU General Public License v3.0.\n\n
-Anonomi is an independent project and is not affiliated with, endorsed by, or sponsored by the Briar Project.
+Anonomi Messenger derives from the Briar project, developed by the Briar Project and licensed under the GNU General Public License v3.0.\n\n
+Anonomi Messenger is an independent project and is not affiliated with, endorsed by, or sponsored by the Briar Project.
 </string>
 
 
@@ -970,7 +970,7 @@ Anonomi is an independent project and is not affiliated with, endorsed by, or sp
 	<!-- Settings Actions -->
 	<string name="pref_category_actions">Actions</string>
 	<string name="share_app_link">Share download link</string>
-	<string name="share_app_link_text">Download Anonomi at %s</string>
+	<string name="share_app_link_text">Download Anonomi Messenger at %s</string>
 	<string name="send_feedback">Send feedback</string>
 
 	<!-- Link Warning -->
@@ -980,10 +980,10 @@ Anonomi is an independent project and is not affiliated with, endorsed by, or sp
 	<string name="link_warning_open_link">Open Link</string>
 
 	<!-- Crash Reporter -->
-	<string name="crash_report_title">Anonomi Crash Report</string>
-	<string name="briar_crashed">Sorry, Anonomi has crashed</string>
+	<string name="crash_report_title">Anonomi Messenger Crash Report</string>
+	<string name="briar_crashed">Sorry, Anonomi Messenger has crashed</string>
 	<string name="not_your_fault">This is not your fault.</string>
-	<string name="please_send_report">Please help us build a better Anonomi by sending us a crash report.</string>
+	<string name="please_send_report">Please help us build a better Anonomi Messenger by sending us a crash report.</string>
 	<string name="report_is_encrypted">We promise that the report is encrypted and sent securely.</string>
 	<string name="feedback_title">Feedback</string>
 	<string name="describe_crash">Describe what happened (optional)</string>
@@ -1008,72 +1008,72 @@ Anonomi is an independent project and is not affiliated with, endorsed by, or sp
 	<string name="close">Close</string>
 	<string name="dev_report_sending">Sending feedback…</string>
 	<string name="dev_report_sent">Feedback sent</string>
-	<string name="dev_report_saved">Report saved. It will be sent the next time you log into Anonomi.</string>
+	<string name="dev_report_saved">Report saved. It will be sent the next time you log into Anonomi Messenger.</string>
 	<string name="dev_report_error">Error: Sending report failed</string>
 
 	<!-- Sign Out -->
-	<string name="progress_title_logout">Signing out of Anonomi…</string>
+	<string name="progress_title_logout">Signing out of Anonomi Messenger…</string>
 
 	<!-- Screen Filters & Tapjacking -->
 	<string name="screen_filter_title">Screen overlay detected</string>
-	<string name="screen_filter_body">Another app is drawing on top of Anonomi. To protect your security, Anonomi will not respond to touches when another app is drawing on top.\n\nThe following apps might be drawing on top:\n\n%1$s</string>
-	<string name="screen_filter_body_api_30">Another app is drawing on top of Anonomi. To protect your security, Anonomi will not respond to touches when another app is drawing on top.\n\nReview apps below to find the responsible app.</string>
+	<string name="screen_filter_body">Another app is drawing on top of Anonomi Messenger. To protect your security, Anonomi Messenger will not respond to touches when another app is drawing on top.\n\nThe following apps might be drawing on top:\n\n%1$s</string>
+	<string name="screen_filter_body_api_30">Another app is drawing on top of Anonomi Messenger. To protect your security, Anonomi Messenger will not respond to touches when another app is drawing on top.\n\nReview apps below to find the responsible app.</string>
 	<string name="screen_filter_allow">Allow these apps to draw on top</string>
 	<string name="screen_filter_review_apps">Review apps</string>
 
 	<!-- Permission Requests -->
 	<string name="permission_camera_title">Camera permission</string>
-	<string name="permission_camera_request_body">To scan the QR code, Anonomi needs access to the camera.</string>
+	<string name="permission_camera_request_body">To scan the QR code, Anonomi Messenger needs access to the camera.</string>
 	<string name="permission_location_title">Location permission</string>
 	<string name="permission_nearby_devices_title">Nearby devices permission</string>
-	<string name="permission_location_request_body">To discover Bluetooth devices, Anonomi needs permission to access your location.\n\nAnonomi does not store your location or share it with anyone.</string>
+	<string name="permission_location_request_body">To discover Bluetooth devices, Anonomi Messenger needs permission to access your location.\n\nAnonomi Messenger does not store your location or share it with anyone.</string>
 	<string name="permission_camera_location_title">Camera and location</string>
-	<string name="permission_camera_location_request_body">To scan the QR code, Anonomi needs access to the camera.\n\nTo discover Bluetooth devices, Anonomi needs permission to access your location.\n\nAnonomi does not store your location or share it with anyone.</string>
+	<string name="permission_camera_location_request_body">To scan the QR code, Anonomi Messenger needs access to the camera.\n\nTo discover Bluetooth devices, Anonomi Messenger needs permission to access your location.\n\nAnonomi Messenger does not store your location or share it with anyone.</string>
 	<string name="permission_camera_bluetooth_title">Camera and nearby devices</string>
-	<string name="permission_camera_bluetooth_request_body">To scan the QR code, Anonomi needs access to the camera.\n\nTo discover Bluetooth devices, Anonomi needs permission to find and connect to nearby devices.</string>
+	<string name="permission_camera_bluetooth_request_body">To scan the QR code, Anonomi Messenger needs access to the camera.\n\nTo discover Bluetooth devices, Anonomi Messenger needs permission to find and connect to nearby devices.</string>
 	<string name="permission_camera_denied_body">You have denied access to the camera, but adding contacts requires using the camera.\n\nPlease consider granting access.</string>
-	<string name="permission_location_denied_body">You have denied access to your location, but Anonomi needs this permission to discover Bluetooth devices.\n\nPlease consider granting access.</string>
+	<string name="permission_location_denied_body">You have denied access to your location, but Anonomi Messenger needs this permission to discover Bluetooth devices.\n\nPlease consider granting access.</string>
 	<string name="permission_location_setting_title">Location setting</string>
 	<string name="permission_location_setting_body">Your device\'s location setting must be turned on to find other devices via Bluetooth. Please enable location to continue. You can disable it again afterwards.</string>
 	<string name="permission_location_setting_hotspot_body">Your device\'s location setting must be turned on to create a Wi-Fi hotspot. Please enable location to continue. You can disable it again afterwards.</string>
 	<string name="permission_location_setting_button">Enable location</string>
 	<string name="permission_bluetooth_title">Nearby devices permission</string>
-	<string name="permission_bluetooth_body">To use Bluetooth communication, Anonomi needs permission to find and connect to nearby devices.</string>
-	<string name="permission_bluetooth_denied_body">You have denied access to nearby devices, but Anonomi needs this permission to use Bluetooth.\n\nPlease consider granting access.</string>
+	<string name="permission_bluetooth_body">To use Bluetooth communication, Anonomi Messenger needs permission to find and connect to nearby devices.</string>
+	<string name="permission_bluetooth_denied_body">You have denied access to nearby devices, but Anonomi Messenger needs this permission to use Bluetooth.\n\nPlease consider granting access.</string>
 
 	<string name="qr_code">QR code</string>
 	<string name="show_qr_code_fullscreen">Show QR code fullscreen</string>
 
 	<!-- App Locking -->
-	<string name="lock_unlock">Unlock Anonomi</string>
-	<string name="lock_unlock_verbose">Enter your device PIN, pattern or password to unlock Anonomi</string>
+	<string name="lock_unlock">Unlock Anonomi Messenger</string>
+	<string name="lock_unlock_verbose">Enter your device PIN, pattern or password to unlock Anonomi Messenger</string>
 	<string name="lock_unlock_fingerprint_description">Touch your fingerprint sensor with the registered finger to continue</string>
 	<string name="lock_unlock_password">Use Password</string>
-	<string name="lock_is_locked">Anonomi is locked</string>
+	<string name="lock_is_locked">Anonomi Messenger is locked</string>
 	<string name="lock_tap_to_unlock">Tap to unlock</string>
 
 	<!-- Connections Screen -->
-	<string name="transports_help_text">Anonomi can connect to your contacts via the Internet, Wi-Fi or Bluetooth.\n\nAll Internet connections go through the Tor network for privacy.\n\nIf a contact can be reached by multiple methods, Anonomi uses them in parallel.</string>
+	<string name="transports_help_text">Anonomi Messenger can connect to your contacts via the Internet, Wi-Fi or Bluetooth.\n\nAll Internet connections go through the Tor network for privacy.\n\nIf a contact can be reached by multiple methods, Anonomi Messenger uses them in parallel.</string>
 
 	<!-- Share app offline -->
 	<string name="hotspot_title">Share this app offline</string>
 	<string name="hotspot_intro">Share this app with someone nearby without an Internet connection by using your phone\'s Wi-Fi.
-		\n\nYour phone will start a Wi-Fi hotspot. People nearby can connect to the hotspot and download the Anonomi app from your phone.</string>
+		\n\nYour phone will start a Wi-Fi hotspot. People nearby can connect to the hotspot and download the Anonomi Messenger app from your phone.</string>
 	<string name="hotspot_button_start_sharing">Start hotspot</string>
 	<string name="hotspot_button_stop_sharing">Stop hotspot</string>
 	<string name="hotspot_progress_text_start">Setting up hotspot…</string>
 	<string name="hotspot_notification_channel_title">Wi-Fi hotspot</string>
-	<string name="hotspot_notification_title">Sharing Anonomi offline</string>
+	<string name="hotspot_notification_title">Sharing Anonomi Messenger offline</string>
 	<string name="hotspot_button_connected">Next</string>
 
-	<string name="permission_hotspot_location_request_body">To create a Wi-Fi hotspot, Anonomi needs permission to access your location.\n\nAnonomi does not store your location or share it with anyone.</string>
-	<string name="permission_hotspot_location_request_precise_body">To create a Wi-Fi hotspot, Anonomi needs permission to access your precise location.\n\nAnonomi does not store your location or share it with anyone.</string>
-	<string name="permission_hotspot_location_denied_body">You have denied access to your location, but Anonomi needs this permission to create a Wi-Fi hotspot.\n\nPlease consider granting access.</string>
-	<string name="permission_hotspot_location_denied_precise_body">You have denied access to your precise location, but Anonomi needs this permission to create a Wi-Fi hotspot.\n\nPlease consider granting access.</string>
-	<string name="permission_hotspot_nearby_wifi_request_body">To create a Wi-Fi hotspot, Anonomi needs permission to access nearby devices.</string>
-	<string name="permission_hotspot_nearby_wifi_denied_body">You have denied access to nearby devices, but Anonomi needs this permission to create a Wi-Fi hotspot.\n\nPlease consider granting access.</string>
+	<string name="permission_hotspot_location_request_body">To create a Wi-Fi hotspot, Anonomi Messenger needs permission to access your location.\n\nAnonomi Messenger does not store your location or share it with anyone.</string>
+	<string name="permission_hotspot_location_request_precise_body">To create a Wi-Fi hotspot, Anonomi Messenger needs permission to access your precise location.\n\nAnonomi Messenger does not store your location or share it with anyone.</string>
+	<string name="permission_hotspot_location_denied_body">You have denied access to your location, but Anonomi Messenger needs this permission to create a Wi-Fi hotspot.\n\nPlease consider granting access.</string>
+	<string name="permission_hotspot_location_denied_precise_body">You have denied access to your precise location, but Anonomi Messenger needs this permission to create a Wi-Fi hotspot.\n\nPlease consider granting access.</string>
+	<string name="permission_hotspot_nearby_wifi_request_body">To create a Wi-Fi hotspot, Anonomi Messenger needs permission to access nearby devices.</string>
+	<string name="permission_hotspot_nearby_wifi_denied_body">You have denied access to nearby devices, but Anonomi Messenger needs this permission to create a Wi-Fi hotspot.\n\nPlease consider granting access.</string>
 	<string name="wifi_settings_title">Wi-Fi setting</string>
-	<string name="wifi_settings_request_enable_body">To create a Wi-Fi hotspot, Anonomi needs to use Wi-Fi. Please enable it.</string>
+	<string name="wifi_settings_request_enable_body">To create a Wi-Fi hotspot, Anonomi Messenger needs to use Wi-Fi. Please enable it.</string>
 
 	<string name="hotspot_tab_manual">Manual</string>
 	<!-- The placeholder to be inserted into the string 'hotspot_manual_wifi': People can connect by %s -->
@@ -1086,9 +1086,9 @@ Anonomi is an independent project and is not affiliated with, endorsed by, or sp
 
 	<!-- Wi-Fi setup -->
 	<!-- The %s placeholder will be replaced with the translation of 'hotspot_scanning_a_qr_code' -->
-	<string name="hotspot_manual_wifi">Your phone is providing a Wi-Fi hotspot. People who want to download Anonomi can connect to the hotspot by adding it in their device\'s Wi-Fi settings using the details below or by %s. When they have connected to the hotspot, press \'Next\'.</string>
+	<string name="hotspot_manual_wifi">Your phone is providing a Wi-Fi hotspot. People who want to download Anonomi Messenger can connect to the hotspot by adding it in their device\'s Wi-Fi settings using the details below or by %s. When they have connected to the hotspot, press \'Next\'.</string>
 	<string name="hotspot_manual_wifi_ssid">Network name</string>
-	<string name="hotspot_qr_wifi">Your phone is providing a Wi-Fi hotspot. People who want to download Anonomi can connect to the hotspot by scanning this QR code. When they have connected to the hotspot, press \'Next\'.</string>
+	<string name="hotspot_qr_wifi">Your phone is providing a Wi-Fi hotspot. People who want to download Anonomi Messenger can connect to the hotspot by scanning this QR code. When they have connected to the hotspot, press \'Next\'.</string>
 	<string name="hotspot_no_peers_connected">No devices connected</string>
 	<plurals name="hotspot_peers_connected">
 		<item quantity="one">%s device connected</item>
@@ -1097,15 +1097,15 @@ Anonomi is an independent project and is not affiliated with, endorsed by, or sp
 
 	<!-- Download link -->
 	<!-- The %s placeholder will be replaced with the translation of 'hotspot_scanning_a_qr_code' -->
-	<string name="hotspot_manual_site">Your phone is providing a Wi-Fi hotspot. People who are connected to the hotspot can download Anonomi by typing the following link in a web browser or %s.</string>
+	<string name="hotspot_manual_site">Your phone is providing a Wi-Fi hotspot. People who are connected to the hotspot can download Anonomi Messenger by typing the following link in a web browser or %s.</string>
 	<string name="hotspot_manual_site_address">Address (URL)</string>
-	<string name="hotspot_qr_site">Your phone is providing a Wi-Fi hotspot. People who are connected to the hotspot can download Anonomi by scanning this QR code.</string>
+	<string name="hotspot_qr_site">Your phone is providing a Wi-Fi hotspot. People who are connected to the hotspot can download Anonomi Messenger by scanning this QR code.</string>
 
-	<!-- e.g. Download Anonomi 1.2.20 -->
-	<string name="website_download_title_1">Download Anonomi %s</string>
-	<string name="website_download_intro_1">Someone nearby shared Anonomi with you.</string>
-	<string name="website_download_button">Download Anonomi</string>
-	<string name="website_download_mailbox_button">Download Anonomi Postbox</string>
+	<!-- e.g. Download Anonomi Messenger 1.2.20 -->
+	<string name="website_download_title_1">Download Anonomi Messenger %s</string>
+	<string name="website_download_intro_1">Someone nearby shared Anonomi Messenger with you.</string>
+	<string name="website_download_button">Download Anonomi Messenger</string>
+	<string name="website_download_mailbox_button">Download Anonomi Messenger Postbox</string>
 	<string name="website_download_outro">After the download is complete, open the downloaded file and install it.</string>
 	<string name="website_troubleshooting_title">Troubleshooting</string>
 	<string name="website_troubleshooting_1">If you cannot download the app, try it with a different web browser app.</string>
@@ -1115,14 +1115,14 @@ Anonomi is an independent project and is not affiliated with, endorsed by, or sp
 	<string name="hotspot_help_wifi_title">Problems with connecting to Wi-Fi:</string>
 	<string name="hotspot_help_wifi_1">Try disabling and re-enabling Wi-Fi on both phones and try again.</string>
 	<string name="hotspot_help_wifi_2">If your phone complains that the Wi-Fi has no Internet, tell it that you want to stay connected anyway.</string>
-	<string name="hotspot_help_wifi_3">Restart the phone which is running the Wi-Fi hotspot, then start Anonomi and try sharing again.</string>
+	<string name="hotspot_help_wifi_3">Restart the phone which is running the Wi-Fi hotspot, then start Anonomi Messenger and try sharing again.</string>
 	<string name="hotspot_help_site_title">Problems visiting the local website:</string>
 	<string name="hotspot_help_site_1">Double check that you entered the address exactly as shown. A small error can make it fail.</string>
 	<string name="hotspot_help_site_2">Ensure that your phone is still connected to the correct Wi-Fi (see above) when you try to access the site.</string>
 	<string name="hotspot_help_site_3">If you have a firewall app, check that it isn\'t blocking access.</string>
-	<string name="hotspot_help_site_4">If you can visit the site, but not download the Anonomi app, try it with a different web browser app.</string>
+	<string name="hotspot_help_site_4">If you can visit the site, but not download the Anonomi Messenger app, try it with a different web browser app.</string>
 	<string name="hotspot_help_fallback_title">Nothing works?</string>
-	<string name="hotspot_help_fallback_intro">You can try to save the app as an .apk file to share in some other way. Once the file has been transferred to the other device, it can be used to install Anonomi.
+	<string name="hotspot_help_fallback_intro">You can try to save the app as an .apk file to share in some other way. Once the file has been transferred to the other device, it can be used to install Anonomi Messenger.
 		\n\nTip: For sharing via Bluetooth, you might need to rename the file to end with .zip first.</string>
 	<string name="hotspot_help_fallback_button">Save app</string>
 
@@ -1135,7 +1135,7 @@ Anonomi is an independent project and is not affiliated with, endorsed by, or sp
 	<string name="hotspot_error_start_callback_failed_unknown">Hotspot failed to start with an unknown error, reason %d</string>
 	<string name="hotspot_error_start_callback_no_group_info">Hotspot failed to start: no group info</string>
 	<string name="hotspot_error_web_server_start">Error starting web server</string>
-	<string name="hotspot_error_web_server_serve">Error presenting website.\n\nPlease send feedback (with anonymous data) via the Anonomi app if the issue persists.</string>
+	<string name="hotspot_error_web_server_serve">Error presenting website.\n\nPlease send feedback (with anonymous data) via the Anonomi Messenger app if the issue persists.</string>
 	<string name="hotspot_flag_test">Warning: This app was installed with Android Studio and can NOT be installed on another device.</string>
 	<string name="hotspot_error_framework_busy">Unable to start the hotspot.\n\nIf you have another hotspot running or are sharing your Internet connection via Wi-Fi, try stopping that and try again afterwards.</string>
 
@@ -1143,13 +1143,13 @@ Anonomi is an independent project and is not affiliated with, endorsed by, or sp
 	<!-- Transfer Data via Removable Drives -->
 
 	<string name="removable_drive_menu_title">Connect via Removable Drive</string>
-	<string name="removable_drive_intro">If you can\'t connect to your contact via the Internet, Wi-Fi or Bluetooth, Anonomi can also transfer messages on a removable drive such as a USB stick or an SD card.</string>
-	<string name="removable_drive_explanation">If you can\'t connect to your contact via the Internet, Wi-Fi or Bluetooth, Anonomi can also transfer messages on a removable drive such as a USB stick or an SD card.\n\nWhen you use the \"Send Data\" button, any data that\'s waiting to be sent to the contact will be written to the removable drive. This includes private messages, attachments, blogs, forums and private groups.\n\nEverything will be encrypted before it is written to the removable drive.\n\nWhen your contact receives the removable drive, they can use the \"Receive Data\" button to import the messages into Anonomi.</string>
+	<string name="removable_drive_intro">If you can\'t connect to your contact via the Internet, Wi-Fi or Bluetooth, Anonomi Messenger can also transfer messages on a removable drive such as a USB stick or an SD card.</string>
+	<string name="removable_drive_explanation">If you can\'t connect to your contact via the Internet, Wi-Fi or Bluetooth, Anonomi Messenger can also transfer messages on a removable drive such as a USB stick or an SD card.\n\nWhen you use the \"Send Data\" button, any data that\'s waiting to be sent to the contact will be written to the removable drive. This includes private messages, attachments, blogs, forums and private groups.\n\nEverything will be encrypted before it is written to the removable drive.\n\nWhen your contact receives the removable drive, they can use the \"Receive Data\" button to import the messages into Anonomi Messenger.</string>
 	<string name="removable_drive_title_send">Send data</string>
 	<string name="removable_drive_title_receive">Receive data</string>
 	<string name="removable_drive_send_intro">Tap the button below to create a new file containing the encrypted messages. You can choose where the file will be saved.\n\nIf you want to save the file on a removable drive, insert the drive now.</string>
 	<string name="removable_drive_send_no_data">There are currently no messages waiting to be sent to this contact.</string>
-	<string name="removable_drive_send_not_supported">This contact is using an old version of Anonomi or an old device which does not support this feature.</string>
+	<string name="removable_drive_send_not_supported">This contact is using an old version of Anonomi Messenger or an old device which does not support this feature.</string>
 	<string name="removable_drive_send_button">Choose file for export</string>
 	<string name="removable_drive_ongoing">Please wait for ongoing task to complete</string>
 	<string name="removable_drive_receive_intro">Tap the button below to choose the file that your contact sent you.\n\nIf the file is on a removable drive, insert the drive now.</string>
@@ -1159,9 +1159,9 @@ Anonomi is an independent project and is not affiliated with, endorsed by, or sp
 	<string name="removable_drive_success_receive_title">Import successful</string>
 	<string name="removable_drive_success_receive_text">All encrypted messages contained in this file have been received.</string>
 	<string name="removable_drive_error_send_title">Error exporting data</string>
-	<string name="removable_drive_error_send_text">There was an error writing data to the file.\n\nIf you are using a removable drive, ensure that it is properly inserted and try again.\n\nIf the error persists, please send feedback to let the Anonomi team know about the issue.</string>
+	<string name="removable_drive_error_send_text">There was an error writing data to the file.\n\nIf you are using a removable drive, ensure that it is properly inserted and try again.\n\nIf the error persists, please send feedback to let the Anonomi Messenger team know about the issue.</string>
 	<string name="removable_drive_error_receive_title">Error importing data</string>
-	<string name="removable_drive_error_receive_text">The selected file did not contain anything that Anonomi could recognize.\n\nPlease check that you chose the right file.\n\nIf your contact created the file more than 28 days ago, Anonomi will not be able to recognize it.</string>
+	<string name="removable_drive_error_receive_text">The selected file did not contain anything that Anonomi Messenger could recognize.\n\nPlease check that you chose the right file.\n\nIf your contact created the file more than 28 days ago, Anonomi Messenger will not be able to recognize it.</string>
 
 
 	<!-- Screenshots -->
@@ -1175,7 +1175,7 @@ Anonomi is an independent project and is not affiliated with, endorsed by, or sp
 	<!-- This is a message to be used in screenshots. Please use the same translation for Bob! -->
 	<string name="screenshot_message_1">Hi Bob!</string>
 	<!-- This is a message to be used in screenshots. Please use the same translation for Alice! -->
-	<string name="screenshot_message_2">Hi Alice! Thanks for telling me about Anonomi!</string>
+	<string name="screenshot_message_2">Hi Alice! Thanks for telling me about Anonomi Messenger!</string>
 	<!-- This is a message to be used in screenshots. -->
 	<string name="screenshot_message_3">No problem, hope you like it 😀</string>
 
