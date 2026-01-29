@@ -10,7 +10,7 @@ centralization, or metadata.
 
 ####
 ⬇️ **Download the latest release (APK):**  
-https://github.com/Anonomi/anonomi-android/releases/latest
+https://github.com/anonomi-org/anonomi-android/releases/latest
 
 🔐 **Verify checksums & signatures:**  
 See the release notes for verification instructions.
