@@ -188,7 +188,9 @@ Financial contributions are accepted in a privacy-respecting way:
 
 **Monero (XMR) — preferred**
 
-`85kkMcowoNwQwji3ugetQvfwismWuvGWWLWfhWoyLjqnDAcgsnpVMsWG76zMm3zEb9WfUcJqBCKZKQ8wVox58tfr7dY7CXF`
+https://anonomi.org/paylinks/d/#5ece7ffb-fcea-4a8f-9de9-73d1ec8a5ce7
+
+Powered by Anonomi Paylinks — each donation generates a fresh subaddress for privacy.
 
 **Bitcoin (BTC) — accepted (public by default)**
 
