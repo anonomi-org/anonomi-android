@@ -662,25 +662,21 @@
 	<string name="pref_lock_timeout_never_summary">Never lock Anonomi Messenger automatically</string>
 
 	<string name="passcode_invalid">Invalid expression. Use a simple math expression (e.g., 55+23).</string>
-
+	<string name="set_passcode_unlock_hint">To unlock Stealth Mode later, enter the expression and press and hold "=" for about 1 second.</string>
 	<string name="set_passcode_title">Set calculator passcode</string>
 	<string name="set_passcode_message">Create a calculator expression you’ll use to unlock Stealth Mode.</string>
 	<string name="passcode_confirm_failed">Passcode didn’t match.</string>
-
-	<string name="set_passcode_hint_1">Enter expression (e.g., 55+23)</string>
+	<string name="passcode_attention_label">Attention</string>
+	<string name="set_passcode_hint_1">Expression (e.g., 55+23)</string>
 	<string name="set_passcode_hint_2">Re-enter expression</string>
-
-
 	<string name="stealth_mode_title">Stealth Mode</string>
 	<string name="stealth_mode_switch_title">Stealth Mode</string>
 	<string name="stealth_mode_switch_summary">When enabled, Anonomi Messenger appears as Calculator in the app drawer.</string>
 	<string name="pref_stealth_mode_title">Stealth Mode</string>
 	<string name="pref_stealth_mode_summary">Hide the app under a Calculator icon and name. A secret unlock code reveals Anonomi Messenger.</string>
-
 	<string name="no_passcode_configured">Stealth Mode isn’t set up yet. Enable it to create a passcode.</string>
 	<string name="invalid_saved_passcode">Error: Invalid saved passcode expression.</string>
 	<string name="incorrect_passcode">Incorrect passcode. Try again.</string>
-
 
 	<string name="action_send_location">Send Offline Location</string>
 	<string name="location_sent">Location sent</string>

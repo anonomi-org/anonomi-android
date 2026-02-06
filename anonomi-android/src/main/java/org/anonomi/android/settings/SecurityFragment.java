@@ -36,10 +36,12 @@ import static org.anonomi.android.util.UiUtils.hasScreenLock;
 public class SecurityFragment extends PreferenceFragmentCompat {
 
 	public static final String PREF_SCREEN_LOCK = "pref_key_lock";
-	public static final String PREF_SCREEN_LOCK_TIMEOUT = "pref_key_lock_timeout";
+	public static final String PREF_SCREEN_LOCK_TIMEOUT =
+			"pref_key_lock_timeout";
 	public static final String PREF_KEY_STEALTH_MODE = "pref_key_stealth_mode";
 
-	public static final String PREF_KEY_CALCULATOR_PASSCODE = "pref_key_set_calculator_passcode";
+	public static final String PREF_KEY_CALCULATOR_PASSCODE =
+			"pref_key_set_calculator_passcode";
 
 	@Inject
 	ViewModelProvider.Factory viewModelFactory;
@@ -62,7 +64,8 @@ public class SecurityFragment extends PreferenceFragmentCompat {
 		getPreferenceManager().setPreferenceDataStore(viewModel.settingsStore);
 
 		screenLock = findPreference(PREF_SCREEN_LOCK);
-		screenLockTimeout = requireNonNull(findPreference(PREF_SCREEN_LOCK_TIMEOUT));
+		screenLockTimeout =
+				requireNonNull(findPreference(PREF_SCREEN_LOCK_TIMEOUT));
 
 		screenLockTimeout.setSummaryProvider(preference -> {
 			CharSequence timeout = screenLockTimeout.getValue();
@@ -70,41 +73,60 @@ public class SecurityFragment extends PreferenceFragmentCompat {
 			if (timeout.equals(never)) {
 				return getString(R.string.pref_lock_timeout_never_summary);
 			} else {
-				return getString(R.string.pref_lock_timeout_summary, screenLockTimeout.getEntry());
+				return getString(R.string.pref_lock_timeout_summary,
+						screenLockTimeout.getEntry());
 			}
 		});
 
 		// Set up stealth mode switch listener
-		SwitchPreferenceCompat stealthSwitch = findPreference(PREF_KEY_STEALTH_MODE);
+		SwitchPreferenceCompat stealthSwitch =
+				findPreference(PREF_KEY_STEALTH_MODE);
 		if (stealthSwitch != null) {
-			stealthSwitch.setOnPreferenceChangeListener((preference, newValue) -> {
-				boolean enableStealth = (Boolean) newValue;
+			stealthSwitch.setOnPreferenceChangeListener(
+					(preference, newValue) -> {
+						boolean enableStealth = (Boolean) newValue;
 
-				if (enableStealth) {
-					showSetPasscodeTwiceDialog(newPasscode -> {
-						SecurePrefsManager securePrefs = new SecurePrefsManager(requireContext());
-						securePrefs.putEncrypted(PREF_KEY_CALCULATOR_PASSCODE, newPasscode);
+						if (enableStealth) {
+							showSetPasscodeTwiceDialog(newPasscode -> {
+								SecurePrefsManager securePrefs =
+										new SecurePrefsManager(
+												requireContext());
+								securePrefs.putEncrypted(
+										PREF_KEY_CALCULATOR_PASSCODE,
+										newPasscode);
 
-						SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
-						prefs.edit().putBoolean(PREF_KEY_STEALTH_MODE, true).apply();
+								SharedPreferences prefs =
+										PreferenceManager.getDefaultSharedPreferences(
+												requireContext());
+								prefs.edit()
+										.putBoolean(PREF_KEY_STEALTH_MODE, true)
+										.apply();
 
-						stealthSwitch.setChecked(true);
-						enableStealthMode();
+								stealthSwitch.setChecked(true);
+								enableStealthMode();
 
-						Toast.makeText(requireContext(), R.string.stealth_mode_enabled, Toast.LENGTH_SHORT).show();
+								Toast.makeText(requireContext(),
+										R.string.stealth_mode_enabled,
+										Toast.LENGTH_SHORT).show();
+							});
+							return false; // we’ll enable only after successful set+confirm
+						} else {
+							// Optional cleanup: remove stored passcode when stealth mode is turned off
+							SecurePrefsManager securePrefs =
+									new SecurePrefsManager(requireContext());
+							securePrefs.putEncrypted(
+									PREF_KEY_CALCULATOR_PASSCODE, "");
+
+							disableStealthMode();
+							SharedPreferences prefs =
+									PreferenceManager.getDefaultSharedPreferences(
+											requireContext());
+							prefs.edit()
+									.putBoolean(PREF_KEY_STEALTH_MODE, false)
+									.apply();
+							return true;
+						}
 					});
-					return false; // we’ll enable only after successful set+confirm
-				} else {
-					// Optional cleanup: remove stored passcode when stealth mode is turned off
-					SecurePrefsManager securePrefs = new SecurePrefsManager(requireContext());
-					securePrefs.putEncrypted(PREF_KEY_CALCULATOR_PASSCODE, "");
-
-					disableStealthMode();
-					SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
-					prefs.edit().putBoolean(PREF_KEY_STEALTH_MODE, false).apply();
-					return true;
-				}
-			});
 		}
 	}
 
@@ -129,35 +151,63 @@ public class SecurityFragment extends PreferenceFragmentCompat {
 		hardenPasscodeInput(input1);
 		hardenPasscodeInput(input2);
 
-		android.widget.LinearLayout layout = new android.widget.LinearLayout(context);
+		android.widget.LinearLayout layout =
+				new android.widget.LinearLayout(context);
 		layout.setOrientation(android.widget.LinearLayout.VERTICAL);
-		int pad = (int) (16 * context.getResources().getDisplayMetrics().density);
+		int pad =
+				(int) (16 * context.getResources().getDisplayMetrics().density);
 		layout.setPadding(pad, pad, pad, pad);
 		layout.addView(input1);
 		layout.addView(input2);
 
+		android.util.TypedValue tv = new android.util.TypedValue();
+		context.getTheme().resolveAttribute(R.attr.anonAccentColor, tv, true);
+		int accentColor = tv.data;
+
+		android.widget.TextView attentionLabel = new android.widget.TextView(context);
+		attentionLabel.setText(R.string.passcode_attention_label);
+		attentionLabel.setTextSize(14);
+		attentionLabel.setAllCaps(true);
+		attentionLabel.setTypeface(attentionLabel.getTypeface(), android.graphics.Typeface.BOLD);
+		attentionLabel.setAlpha(0.95f);
+		attentionLabel.setPadding(0, pad, 0, 6);
+		attentionLabel.setTextColor(accentColor);
+
+		android.widget.TextView unlockHint = new android.widget.TextView(context);
+		unlockHint.setText(R.string.set_passcode_unlock_hint);
+// leave it completely default so it matches dialog message style
+
+		layout.addView(attentionLabel);
+		layout.addView(unlockHint);
+
 		androidx.appcompat.app.AlertDialog dialog =
 				new androidx.appcompat.app.AlertDialog.Builder(context)
 						.setTitle(R.string.set_passcode_title)
-						.setMessage(R.string.set_passcode_message)
+						.setMessage(getString(R.string.set_passcode_message))
 						.setView(layout)
-						.setPositiveButton(android.R.string.ok, null) // we override later
+						.setPositiveButton(android.R.string.ok,
+								null) // we override later
 						.setNegativeButton(android.R.string.cancel, null)
 						.setCancelable(false)
 						.create();
 
 		dialog.setOnShowListener(d -> {
-			android.widget.Button ok = dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE);
+			android.widget.Button ok = dialog.getButton(
+					androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE);
 			ok.setOnClickListener(v -> {
-				String p1 = input1.getText() == null ? "" : input1.getText().toString().trim();
-				String p2 = input2.getText() == null ? "" : input2.getText().toString().trim();
+				String p1 = input1.getText() == null ? "" :
+						input1.getText().toString().trim();
+				String p2 = input2.getText() == null ? "" :
+						input2.getText().toString().trim();
 
 				if (!isValidExpression(p1)) {
-					Toast.makeText(context, R.string.passcode_invalid, Toast.LENGTH_SHORT).show();
+					Toast.makeText(context, R.string.passcode_invalid,
+							Toast.LENGTH_SHORT).show();
 					return;
 				}
 				if (!p1.equals(p2)) {
-					Toast.makeText(context, R.string.passcode_confirm_failed, Toast.LENGTH_SHORT).show();
+					Toast.makeText(context, R.string.passcode_confirm_failed,
+							Toast.LENGTH_SHORT).show();
 					return;
 				}
 
@@ -169,8 +219,10 @@ public class SecurityFragment extends PreferenceFragmentCompat {
 		dialog.show();
 	}
 
-	private static void hardenPasscodeInput(androidx.appcompat.widget.AppCompatEditText input) {
-		input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+	private static void hardenPasscodeInput(
+			androidx.appcompat.widget.AppCompatEditText input) {
+		input.setInputType(InputType.TYPE_CLASS_TEXT |
+				InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
 		input.setAutofillHints((String) null);
 		input.setImportantForAutofill(View.IMPORTANT_FOR_AUTOFILL_NO);
 		input.setLongClickable(false);
@@ -240,9 +292,11 @@ public class SecurityFragment extends PreferenceFragmentCompat {
 		}
 	}
 
-	private void setStateIfNeeded(PackageManager pm, ComponentName cn, int state) {
+	private void setStateIfNeeded(PackageManager pm, ComponentName cn,
+			int state) {
 		if (pm.getComponentEnabledSetting(cn) != state) {
-			pm.setComponentEnabledSetting(cn, state, PackageManager.DONT_KILL_APP);
+			pm.setComponentEnabledSetting(cn, state,
+					PackageManager.DONT_KILL_APP);
 		}
 	}
 
@@ -260,11 +314,13 @@ public class SecurityFragment extends PreferenceFragmentCompat {
 		PackageManager pm = requireContext().getPackageManager();
 
 		// 1) Enable the new launcher FIRST
-		setStateIfNeeded(pm, calcAlias(), PackageManager.COMPONENT_ENABLED_STATE_ENABLED);
+		setStateIfNeeded(pm, calcAlias(),
+				PackageManager.COMPONENT_ENABLED_STATE_ENABLED);
 
 		// 2) Disable the old launcher AFTER a tick (prevents task teardown on A15)
 		new android.os.Handler(android.os.Looper.getMainLooper()).post(() ->
-				setStateIfNeeded(pm, splash(), PackageManager.COMPONENT_ENABLED_STATE_DISABLED)
+				setStateIfNeeded(pm, splash(),
+						PackageManager.COMPONENT_ENABLED_STATE_DISABLED)
 		);
 	}
 
@@ -272,11 +328,13 @@ public class SecurityFragment extends PreferenceFragmentCompat {
 		PackageManager pm = requireContext().getPackageManager();
 
 		// 1) Enable the normal launcher FIRST
-		setStateIfNeeded(pm, splash(), PackageManager.COMPONENT_ENABLED_STATE_ENABLED);
+		setStateIfNeeded(pm, splash(),
+				PackageManager.COMPONENT_ENABLED_STATE_ENABLED);
 
 		// 2) Then disable the calculator alias
 		new android.os.Handler(android.os.Looper.getMainLooper()).post(() ->
-				setStateIfNeeded(pm, calcAlias(), PackageManager.COMPONENT_ENABLED_STATE_DISABLED)
+				setStateIfNeeded(pm, calcAlias(),
+						PackageManager.COMPONENT_ENABLED_STATE_DISABLED)
 		);
 	}
 }
