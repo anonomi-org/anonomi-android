@@ -100,14 +100,18 @@ public class CalculatorActivity extends AppCompatActivity {
 
 	private void onOperator(char op) {
 		if (!currentDisplay.isEmpty()) {
+			// Append operator to expression for passcode checking UX
 			rawExpression.append(op);
-			ACTION = op;
+
 			operation();
+			ACTION = op;
+
 			if (val1 == (long) val1) {
 				display.setText(String.format("%d", (long) val1));
 			} else {
 				display.setText(String.valueOf(val1));
 			}
+
 			currentDisplay = "";
 		} else {
 			display.setText(getString(R.string.error));
