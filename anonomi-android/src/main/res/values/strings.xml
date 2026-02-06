@@ -661,15 +661,15 @@
 	<string name="pref_lock_timeout_never">Never</string>
 	<string name="pref_lock_timeout_never_summary">Never lock Anonomi Messenger automatically</string>
 
-	<string name="calculator_passcode_title">Calculator Passcode</string>
-	<string name="set_calculator_passcode_title">Set Calculator Passcode</string>
-	<string name="set_calculator_passcode_summary">Set a math expression (e.g., 45 * 94) as your unlock passcode.</string>
-	<string name="passcode_input_hint">Enter math expression (e.g., 45 * 94)</string>
-	<string name="passcode_saved_success">Passcode saved successfully!</string>
-	<string name="passcode_invalid">Invalid expression. Please enter a valid math formula (like 45 * 94).</string>
+	<string name="passcode_invalid">Invalid expression. Use a simple math expression (e.g., 55+23).</string>
 
-	<string name="no_passcode_set_summary">No passcode set</string>
-	<string name="current_passcode_summary">Current passcode: %1$s</string>
+	<string name="set_passcode_title">Set calculator passcode</string>
+	<string name="set_passcode_message">Create a calculator expression you’ll use to unlock Stealth Mode.</string>
+	<string name="passcode_confirm_failed">Passcode didn’t match.</string>
+
+	<string name="set_passcode_hint_1">Enter expression (e.g., 55+23)</string>
+	<string name="set_passcode_hint_2">Re-enter expression</string>
+
 
 	<string name="stealth_mode_title">Stealth Mode</string>
 	<string name="stealth_mode_switch_title">Stealth Mode</string>
@@ -677,11 +677,10 @@
 	<string name="pref_stealth_mode_title">Stealth Mode</string>
 	<string name="pref_stealth_mode_summary">Hide the app under a Calculator icon and name. A secret unlock code reveals Anonomi Messenger.</string>
 
-	<string name="no_passcode_configured">No passcode set. Please configure it in Security settings.</string>
+	<string name="no_passcode_configured">Stealth Mode isn’t set up yet. Enable it to create a passcode.</string>
 	<string name="invalid_saved_passcode">Error: Invalid saved passcode expression.</string>
 	<string name="incorrect_passcode">Incorrect passcode. Try again.</string>
 
-	<string name="show_passcode_dialog_title">Here’s your calculation passcode:</string>
 
 	<string name="action_send_location">Send Offline Location</string>
 	<string name="location_sent">Location sent</string>

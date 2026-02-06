@@ -1,19 +1,21 @@
 package org.anonomi.android.settings;
+
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.InputType;
 import android.view.View;
 
 import org.anonomi.R;
+import org.anonomi.android.util.SecurePrefsManager;
 import org.briarproject.nullsafety.MethodsNotNullByDefault;
 import org.briarproject.nullsafety.ParametersNotNullByDefault;
 
 import javax.inject.Inject;
 
-import org.anonomi.android.util.SecurePrefsManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,12 +25,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.ListPreference;
 import androidx.preference.SwitchPreferenceCompat;
 import androidx.preference.PreferenceFragmentCompat;
-import androidx.preference.EditTextPreference;
 
 import static java.util.Objects.requireNonNull;
 import static org.anonomi.android.AppModule.getAndroidComponent;
 import static org.anonomi.android.settings.SettingsActivity.enableAndPersist;
 import static org.anonomi.android.util.UiUtils.hasScreenLock;
+
 @MethodsNotNullByDefault
 @ParametersNotNullByDefault
 public class SecurityFragment extends PreferenceFragmentCompat {
@@ -78,94 +80,101 @@ public class SecurityFragment extends PreferenceFragmentCompat {
 			stealthSwitch.setOnPreferenceChangeListener((preference, newValue) -> {
 				boolean enableStealth = (Boolean) newValue;
 
-				SecurePrefsManager securePrefs = new SecurePrefsManager(requireContext());
-				String decryptedPasscode = securePrefs.getDecrypted(PREF_KEY_CALCULATOR_PASSCODE);
-
 				if (enableStealth) {
-					if (decryptedPasscode == null || decryptedPasscode.trim().isEmpty()) {
-						Toast.makeText(requireContext(), R.string.no_passcode_set_summary, Toast.LENGTH_SHORT).show();
-						return false;  // block enabling stealth mode
-					} else {
-						showPasscodeDialog(decryptedPasscode, () -> {
-							SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
-							prefs.edit().putBoolean(PREF_KEY_STEALTH_MODE, true).apply();
-							stealthSwitch.setChecked(true);
-							enableStealthMode();
-						});
-						return false;  // we’ll handle enabling after dialog
-					}
+					showSetPasscodeTwiceDialog(newPasscode -> {
+						SecurePrefsManager securePrefs = new SecurePrefsManager(requireContext());
+						securePrefs.putEncrypted(PREF_KEY_CALCULATOR_PASSCODE, newPasscode);
+
+						SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
+						prefs.edit().putBoolean(PREF_KEY_STEALTH_MODE, true).apply();
+
+						stealthSwitch.setChecked(true);
+						enableStealthMode();
+
+						Toast.makeText(requireContext(), R.string.stealth_mode_enabled, Toast.LENGTH_SHORT).show();
+					});
+					return false; // we’ll enable only after successful set+confirm
 				} else {
+					// Optional cleanup: remove stored passcode when stealth mode is turned off
+					SecurePrefsManager securePrefs = new SecurePrefsManager(requireContext());
+					securePrefs.putEncrypted(PREF_KEY_CALCULATOR_PASSCODE, "");
+
 					disableStealthMode();
 					SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
 					prefs.edit().putBoolean(PREF_KEY_STEALTH_MODE, false).apply();
 					return true;
 				}
-
-//				// Save preference immediately
-//				SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
-//				prefs.edit().putBoolean(PREF_KEY_STEALTH_MODE, enableStealth).apply();
-//				return true;
-			});
-		}
-
-		EditTextPreference passcodePref = findPreference(PREF_KEY_CALCULATOR_PASSCODE);
-		if (passcodePref != null) {
-			SecurePrefsManager securePrefs = new SecurePrefsManager(requireContext());
-			String decryptedPasscode = securePrefs.getDecrypted(PREF_KEY_CALCULATOR_PASSCODE);
-			if (decryptedPasscode != null) {
-				passcodePref.setText(decryptedPasscode);  // prefill value
-			}
-
-			// Add the hint text above the input field
-			passcodePref.setDialogMessage(R.string.set_calculator_passcode_summary);
-
-			// Let the SummaryProvider automatically show the current value or fallback
-			passcodePref.setSummaryProvider(preference -> {
-				String value = ((EditTextPreference) preference).getText();
-				if (value == null || value.trim().isEmpty()) {
-					return getString(R.string.no_passcode_set_summary);
-				} else {
-					return getString(R.string.current_passcode_summary, value);
-				}
-			});
-
-			passcodePref.setPersistent(false);  // we handle storage ourselves
-
-			passcodePref.setOnPreferenceChangeListener((preference, newValue) -> {
-				String expression = (String) newValue;
-				if (isValidExpression(expression)) {
-					securePrefs.putEncrypted(PREF_KEY_CALCULATOR_PASSCODE, expression);
-					Toast.makeText(requireContext(), R.string.passcode_saved_success, Toast.LENGTH_SHORT).show();
-					return true;  // accept change, updates summary automatically
-				} else {
-					Toast.makeText(requireContext(), R.string.passcode_invalid, Toast.LENGTH_SHORT).show();
-					return false;  // reject change
-				}
 			});
 		}
 	}
 
-	private void showPasscodeDialog(String passcode, Runnable onOk) {
+	private interface PasscodeCallback {
+		void onPasscode(String passcode);
+	}
+
+	private void showSetPasscodeTwiceDialog(PasscodeCallback onConfirmed) {
 		Context context = requireContext();
 
-		int accentColor = context.getResources().getColor(R.color.colorAccent, null);
+		final androidx.appcompat.widget.AppCompatEditText input1 =
+				new androidx.appcompat.widget.AppCompatEditText(context);
+		input1.setHint(R.string.set_passcode_hint_1);
+		input1.setSingleLine(true);
 
-		android.widget.TextView passcodeView = new android.widget.TextView(context);
-		passcodeView.setText(passcode);
-		passcodeView.setTextSize(24);
-		passcodeView.setTextColor(accentColor);
-		passcodeView.setPadding(40, 40, 40, 40);
-		passcodeView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+		final androidx.appcompat.widget.AppCompatEditText input2 =
+				new androidx.appcompat.widget.AppCompatEditText(context);
+		input2.setHint(R.string.set_passcode_hint_2);
+		input2.setSingleLine(true);
 
-		new androidx.appcompat.app.AlertDialog.Builder(context)
-				.setTitle(R.string.show_passcode_dialog_title)
-				.setView(passcodeView)
-				.setPositiveButton(android.R.string.ok, (dialog, which) -> {
-					onOk.run();
-					Toast.makeText(context, R.string.stealth_mode_enabled, Toast.LENGTH_SHORT).show();
-				})
-				.setCancelable(false)
-				.show();
+		// Prevent keyboard suggestions/autofill learning the passcode
+		hardenPasscodeInput(input1);
+		hardenPasscodeInput(input2);
+
+		android.widget.LinearLayout layout = new android.widget.LinearLayout(context);
+		layout.setOrientation(android.widget.LinearLayout.VERTICAL);
+		int pad = (int) (16 * context.getResources().getDisplayMetrics().density);
+		layout.setPadding(pad, pad, pad, pad);
+		layout.addView(input1);
+		layout.addView(input2);
+
+		androidx.appcompat.app.AlertDialog dialog =
+				new androidx.appcompat.app.AlertDialog.Builder(context)
+						.setTitle(R.string.set_passcode_title)
+						.setMessage(R.string.set_passcode_message)
+						.setView(layout)
+						.setPositiveButton(android.R.string.ok, null) // we override later
+						.setNegativeButton(android.R.string.cancel, null)
+						.setCancelable(false)
+						.create();
+
+		dialog.setOnShowListener(d -> {
+			android.widget.Button ok = dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE);
+			ok.setOnClickListener(v -> {
+				String p1 = input1.getText() == null ? "" : input1.getText().toString().trim();
+				String p2 = input2.getText() == null ? "" : input2.getText().toString().trim();
+
+				if (!isValidExpression(p1)) {
+					Toast.makeText(context, R.string.passcode_invalid, Toast.LENGTH_SHORT).show();
+					return;
+				}
+				if (!p1.equals(p2)) {
+					Toast.makeText(context, R.string.passcode_confirm_failed, Toast.LENGTH_SHORT).show();
+					return;
+				}
+
+				onConfirmed.onPasscode(p1);
+				dialog.dismiss();
+			});
+		});
+
+		dialog.show();
+	}
+
+	private static void hardenPasscodeInput(androidx.appcompat.widget.AppCompatEditText input) {
+		input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+		input.setAutofillHints((String) null);
+		input.setImportantForAutofill(View.IMPORTANT_FOR_AUTOFILL_NO);
+		input.setLongClickable(false);
+		input.setTextIsSelectable(false);
 	}
 
 	private boolean isValidExpression(String expr) {
@@ -270,5 +279,4 @@ public class SecurityFragment extends PreferenceFragmentCompat {
 				setStateIfNeeded(pm, calcAlias(), PackageManager.COMPONENT_ENABLED_STATE_DISABLED)
 		);
 	}
-
 }

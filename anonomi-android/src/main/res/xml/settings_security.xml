@@ -62,13 +62,6 @@
 			android:defaultValue="false"
 			app:iconSpaceReserved="false" />
 
-		<EditTextPreference
-			android:key="pref_key_set_calculator_passcode"
-			android:title="@string/set_calculator_passcode_title"
-			android:summary="@string/set_calculator_passcode_summary"
-			android:inputType="text"
-			app:iconSpaceReserved="false" />
-
 	</PreferenceCategory>
 
 </PreferenceScreen>
