@@ -326,7 +326,7 @@
 	<string name="qr_code_invalid">The QR code is invalid</string>
 	<string name="qr_code_too_old_1">The QR code you have scanned comes from an older version of Anonomi Messenger.\n\nPlease ask your contact to upgrade to the latest version and then try again.</string>
 	<string name="qr_code_too_new_1">The QR code you have scanned comes from a newer version of Anonomi Messenger.\n\nPlease upgrade to the latest version and then try again.</string>
-	<string name="mailbox_qr_code_for_contact">The QR code you have scanned comes from Anonomi Messenger Postbox.\n\nIf you want to link a Postbox, please choose Settings > Postbox from the Anonomi Messenger menu.</string>
+	<string name="mailbox_qr_code_for_contact">The QR code you have scanned comes from Anonomi Postbox.\n\nIf you want to link a Postbox, please choose Settings > Postbox from the Anonomi Messenger menu.</string>
 	<string name="qr_code_format_unknown">The QR code you have scanned is not meant for adding a Anonomi Messenger contact.\n\nPlease scan the QR code shown on your contact\'s screen.</string>
 	<string name="camera_error">Camera error</string>
 	<string name="connecting_to_device">Connecting to device\u2026</string>
@@ -824,11 +824,11 @@
 	<string name="pref_minor_index_hint">Enter the current index</string>
 
 	<!-- Postbox -->
-	<string name="mailbox_settings_title">Anonomi Messenger Postbox</string>
+	<string name="mailbox_settings_title">Anonomi Postbox</string>
 	<string name="mailbox_setup_title">Postbox setup</string>
 	<string name="mailbox_setup_intro">A Postbox enables your contacts to send you messages while you are offline. The Postbox will receive your messages and store them until you come online.\n
-		\nYou can install the Anonomi Messenger Postbox app on a spare device. Keep it connected to power and Wi-Fi so it\'s always online.</string>
-	<string name="mailbox_setup_download">First, install the Postbox app on another device by downloading \"Anonomi Messenger Postbox\" from where you downloaded Anonomi Messenger.\n
+		\nYou can install the Anonomi Postbox app on a spare device. Keep it connected to power and Wi-Fi so it\'s always online.</string>
+	<string name="mailbox_setup_download">First, install the Postbox app on another device by downloading \"Anonomi Postbox\" from where you downloaded Anonomi Messenger.\n
 		\nThen link your Postbox with Anonomi Messenger by scanning the QR code shown by the Postbox app.</string>
 	<string name="mailbox_setup_download_link">Share Download Link</string>
 	<string name="mailbox_setup_button_scan">Scan Postbox QR code</string>
@@ -836,10 +836,10 @@
 	<string name="mailbox_setup_connecting">Connecting to Postbox…</string>
 	<!-- This string is shown when connecting to a Postbox for the first time. The placeholder will be replaced with a duration, e.g. "2 minutes". -->
 	<string name="mailbox_setup_connecting_info">This may take up to %1s</string>
-	<string name="mailbox_qr_code_too_old">The QR code you have scanned comes from an older version of Anonomi Messenger Postbox.\n\nPlease upgrade Anonomi Messenger Postbox to the latest version and then try again.</string>
-	<string name="mailbox_qr_code_too_new">The QR code you have scanned comes from a newer version of Anonomi Messenger Postbox.\n\nPlease upgrade Anonomi Messenger to the latest version and then try again.</string>
+	<string name="mailbox_qr_code_too_old">The QR code you have scanned comes from an older version of Anonomi Postbox.\n\nPlease upgrade Anonomi Postbox to the latest version and then try again.</string>
+	<string name="mailbox_qr_code_too_new">The QR code you have scanned comes from a newer version of Anonomi Postbox.\n\nPlease upgrade Anonomi Messenger to the latest version and then try again.</string>
 	<string name="contact_qr_code_for_mailbox">The QR code you have scanned is for adding a Anonomi Messenger contact.\n\nIf you want to add a contact, please go to the contact list and tap the + icon.</string>
-	<string name="mailbox_setup_qr_code_wrong_description">The QR code you have scanned does not come from Anonomi Messenger Postbox.\n\nPlease open the Anonomi Messenger Postbox app on your Postbox device and scan the QR code it presents.</string>
+	<string name="mailbox_setup_qr_code_wrong_description">The QR code you have scanned does not come from Anonomi Postbox.\n\nPlease open the Anonomi Postbox app on your Postbox device and scan the QR code it presents.</string>
 	<string name="mailbox_setup_already_paired_title">Postbox already linked</string>
 	<string name="mailbox_setup_already_paired_description">Unlink the Postbox on your other device and try again.</string>
 	<string name="mailbox_setup_io_error_title">Could not connect</string>
@@ -876,8 +876,8 @@
 	<string name="mailbox_status_unlink_no_wipe_message">Next time you have access to your Postbox device, please open the Postbox app and tap the \"Unlink\" button to complete the process.\n\nIf you no longer have access to your Postbox device, don\'t worry. Your data is encrypted so it will remain secure even if you don\'t complete the process.</string>
 	<string name="mailbox_status_unlink_success">Your Postbox has been unlinked</string>
 
-	<string name="mailbox_error_notification_channel_title">Anonomi Messenger Postbox problem</string>
-	<string name="mailbox_error_notification_title">Anonomi Messenger Postbox is unavailable</string>
+	<string name="mailbox_error_notification_channel_title">Anonomi Postbox problem</string>
+	<string name="mailbox_error_notification_title">Anonomi Postbox is unavailable</string>
 	<string name="mailbox_error_notification_text">Tap to fix problem.</string>
 	<string name="mailbox_error_wizard_button">Fix problem</string>
 	<string name="mailbox_error_wizard_title">Postbox troubleshooting wizard</string>
@@ -1100,7 +1100,7 @@ Anonomi Messenger is an independent project and is not affiliated with, endorsed
 	<string name="website_download_title_1">Download Anonomi Messenger %s</string>
 	<string name="website_download_intro_1">Someone nearby shared Anonomi Messenger with you.</string>
 	<string name="website_download_button">Download Anonomi Messenger</string>
-	<string name="website_download_mailbox_button">Download Anonomi Messenger Postbox</string>
+	<string name="website_download_mailbox_button">Download Anonomi Postbox</string>
 	<string name="website_download_outro">After the download is complete, open the downloaded file and install it.</string>
 	<string name="website_troubleshooting_title">Troubleshooting</string>
 	<string name="website_troubleshooting_1">If you cannot download the app, try it with a different web browser app.</string>
