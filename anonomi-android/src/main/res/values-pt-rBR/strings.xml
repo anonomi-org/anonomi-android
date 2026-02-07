@@ -1040,8 +1040,8 @@ Primeiro, instale o app Anonomi Postbox em outro dispositivo a partir do mesmo l
     <string name="how_it_works_title">Como funciona o Anonomi</string>
     <string name="how_it_works_desc">O Anonomi conecta usuários por meio de redes que preservam a privacidade para permitir conversas seguras sem revelar sua identidade.\nAs conexões são estabelecidas automaticamente assim que o aplicativo é executado.</string>
     <string name="choose_forum_name">Escolha um nome para o seu grupo aberto</string>
-    <string name="offline_maps_onion_url">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/maps/export/</string>
-    <string name="offline_maps_clearnet_url">https://anonomi.org/maps/export/</string>
+    <string name="offline_maps_onion_url">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/maps/</string>
+    <string name="offline_maps_clearnet_url">https://anonomi.org/maps/</string>
     <string name="copy_clearnet_url">Copiar URL da Clearnet</string>
     <string name="open_in_tor_browser">Abrir no Tor Browser</string>
     <string name="tor_browser_required_title">Tor Browser necessário</string>
@@ -1062,4 +1062,11 @@ Primeiro, instale o app Anonomi Postbox em outro dispositivo a partir do mesmo l
     <string name="scan_qr_code">Digitalizar código QR</string>
     <string name="camera_permission_denied">Permissão da câmera negada.</string>
     <string name="load_qr_code">Carregar código QR</string>
+    <string name="set_passcode_unlock_hint">Para desbloquear o Modo Stealth posteriormente, insira a expressão e mantenha pressionado = por cerca de 1 segundo.</string>
+    <string name="set_passcode_title">Definir senha da calculadora</string>
+    <string name="set_passcode_message">Crie uma expressão de calculadora que você usará para desbloquear o Modo Stealth.</string>
+    <string name="passcode_confirm_failed">A senha não correspondeu.</string>
+    <string name="passcode_attention_label">Atenção</string>
+    <string name="set_passcode_hint_1">Expressão (por exemplo, 55+23)</string>
+    <string name="set_passcode_hint_2">Reintroduzir expressão</string>
 </resources>
