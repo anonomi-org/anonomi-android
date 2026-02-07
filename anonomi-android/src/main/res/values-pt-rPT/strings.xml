@@ -1023,8 +1023,8 @@ O teu contacto também pode alterar esta configuração para ambos.</string>
     <string name="slide_to_cancel_with_timer">A gravar... Deslize para cancelar – %1$d/12s</string>
     <string name="recording_timer">A gravar: %1$d s</string>
     <string name="recording_max_reached">Máx: 12 s</string>
-    <string name="offline_maps_onion_url">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/maps/export/</string>
-    <string name="offline_maps_clearnet_url">https://anonomi.org/maps/export/</string>
+    <string name="offline_maps_onion_url">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/maps/</string>
+    <string name="offline_maps_clearnet_url">https://anonomi.org/maps/</string>
     <string name="error_generating_qr">Erro ao gerar o código QR</string>
     <string name="please_generate_qr_first">Gere primeiro o código QR por favor</string>
     <string name="error_saving_image">Erro ao guardar imagem</string>
@@ -1061,4 +1061,11 @@ O teu contacto também pode alterar esta configuração para ambos.</string>
     <string name="scan_qr_code">Digitalizar código QR</string>
     <string name="camera_permission_denied">Permissão da câmara negada.</string>
     <string name="load_qr_code">Carregar código QR</string>
+    <string name="set_passcode_unlock_hint">Para desbloquear o Modo Stealth posteriormente, introduza a expressão e mantenha pressionado = por cerca de 1 segundo.</string>
+    <string name="set_passcode_title">Definir senha da calculadora</string>
+    <string name="set_passcode_message">Crie uma expressão de calculadora que usará para desbloquear o Modo Stealth.</string>
+    <string name="passcode_confirm_failed">As expressões não são iguais.</string>
+    <string name="passcode_attention_label">Atenção</string>
+    <string name="set_passcode_hint_1">Expressão (por exemplo, 55+23)</string>
+    <string name="set_passcode_hint_2">Reintroduzir expressão</string>
 </resources>
