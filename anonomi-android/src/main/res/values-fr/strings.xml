@@ -1047,4 +1047,10 @@ copies des messages que vous envoyez.
     <string name="scan_qr_code">Scanner le code QR</string>
     <string name="camera_permission_denied">Autorisation d\'accès à l\'appareil photo refusée.</string>
     <string name="load_qr_code">Charger le code QR</string>
+    <string name="request_xmr_manual">Manuel</string>
+    <string name="request_xmr_send">Envoyer</string>
+    <string name="choose_forum_name">Choisissez un nom pour votre forum</string>
+    <string name="button_delete">Supprimer</string>
+    <string name="button_cancel">Annuler</string>
+    <string name="status_imported">Importés :</string>
 </resources>
