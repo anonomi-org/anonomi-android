@@ -963,8 +963,8 @@
     <string name="unlocking_anonchat">Desbloqueando Anonomi...</string>
     <string name="stealth_mode_enabled">Modo sigiloso activado.</string>
     <string name="offline_maps_copy_onion_title">Dónde obtener datos de mapas sin conexión</string>
-    <string name="offline_maps_onion_url">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/maps/export/</string>
-    <string name="offline_maps_clearnet_url">https://anonomi.org/maps/export/</string>
+    <string name="offline_maps_onion_url">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/maps/</string>
+    <string name="offline_maps_clearnet_url">https://anonomi.org/maps/</string>
     <string name="copy_clearnet_url">Copiar URL de Clearnet</string>
     <string name="offline_maps_copy_url_title">Copiar la URL onion del repositorio de datos de mapas sin conexión.</string>
     <string name="offline_maps_copy_url_summary">Toque para copiar la URL del servicio Onion para descargar datos de mapas sin conexión.</string>
@@ -1056,4 +1056,11 @@
     <string name="scan_qr_code">Escanear código QR</string>
     <string name="camera_permission_denied">Permiso de cámara denegado.</string>
     <string name="load_qr_code">Cargar código QR</string>
+    <string name="set_passcode_unlock_hint">Para desbloquear el modo sigiloso más tarde, introduzca la expresión y mantenga pulsado = durante aproximadamente 1 segundo.</string>
+    <string name="set_passcode_title">Establecer contraseña de la calculadora</string>
+    <string name="set_passcode_message">Cree una expresión de calculadora que utilizará para desbloquear el modo sigiloso.</string>
+    <string name="passcode_confirm_failed">La contraseña no coincide.</string>
+    <string name="passcode_attention_label">Atención</string>
+    <string name="set_passcode_hint_1">Expresión (por ejemplo, 55+23)</string>
+    <string name="set_passcode_hint_2">Vuelva a introducir la expresión.</string>
 </resources>
