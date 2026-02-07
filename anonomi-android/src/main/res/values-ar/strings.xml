@@ -1003,8 +1003,8 @@
     <string name="unlocking_anonchat">فتح Anonomi...</string>
     <string name="stealth_mode_enabled">تم تمكين وضع التخفي.</string>
     <string name="offline_maps_copy_onion_title">أين يمكن الحصول على بيانات الخرائط دون اتصال بالإنترنت</string>
-    <string name="offline_maps_onion_url">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/maps/export/</string>
-    <string name="offline_maps_clearnet_url">https://anonomi.org/maps/export/</string>
+    <string name="offline_maps_onion_url">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/maps/</string>
+    <string name="offline_maps_clearnet_url">https://anonomi.org/maps/</string>
     <string name="copy_clearnet_url">نسخ عنوان URL الخاص بشبكة Clearnet</string>
     <string name="offline_maps_copy_url_title">نسخ عنوان URL البصل لمستودع بيانات الخرائط غير المتصلة بالإنترنت</string>
     <string name="offline_maps_copy_url_summary">انقر لنسخ عنوان URL لخدمة البصل لتنزيل بيانات الخرائط دون اتصال بالإنترنت.</string>
@@ -1096,4 +1096,11 @@
     <string name="scan_qr_code">امسح رمز الاستجابة السريعة</string>
     <string name="camera_permission_denied">رفض إذن الكاميرا.</string>
     <string name="load_qr_code">تحميل رمز الاستجابة السريعة</string>
+    <string name="set_passcode_unlock_hint">لإلغاء قفل وضع التخفي لاحقًا، أدخل التعبير واضغط مع الاستمرار على = لمدة ثانية واحدة تقريبًا.</string>
+    <string name="set_passcode_title">تعيين رمز مرور الآلة الحاسبة</string>
+    <string name="set_passcode_message">أنشئ تعبيرًا حسابيًا ستستخدمه لفتح وضع التخفي.</string>
+    <string name="passcode_confirm_failed">رمز المرور غير متطابق.</string>
+    <string name="passcode_attention_label">انتباه</string>
+    <string name="set_passcode_hint_1">التعبير (على سبيل المثال، 55+23)</string>
+    <string name="set_passcode_hint_2">أعد إدخال التعبير</string>
 </resources>

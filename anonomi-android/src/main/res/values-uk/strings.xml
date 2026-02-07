@@ -976,8 +976,8 @@
     <string name="unlocking_anonchat">Розблокування Anonomi...</string>
     <string name="stealth_mode_enabled">Увімкнено режим стелс.</string>
     <string name="offline_maps_copy_onion_title">Де отримати дані офлайн-карт</string>
-    <string name="offline_maps_onion_url">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/maps/export/</string>
-    <string name="offline_maps_clearnet_url">https://anonomi.org/maps/export/</string>
+    <string name="offline_maps_onion_url">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/maps/</string>
+    <string name="offline_maps_clearnet_url">https://anonomi.org/maps/</string>
     <string name="copy_clearnet_url">Копіювати URL Clearnet</string>
     <string name="offline_maps_copy_url_title">Скопіюйте URL-адресу Onion сховища даних офлайн-карт</string>
     <string name="offline_maps_copy_url_summary">Натисніть, щоб скопіювати URL-адресу Onion service для завантаження даних офлайн-карт.</string>
@@ -1069,4 +1069,11 @@
     <string name="scan_qr_code">Сканувати QR-код</string>
     <string name="camera_permission_denied">Дозвіл на використання камери відхилено.</string>
     <string name="load_qr_code">Завантажити QR-код</string>
+    <string name="set_passcode_unlock_hint">Щоб пізніше розблокувати режим стелс, введіть вираз і натисніть та утримуйте = приблизно 1 секунду.</string>
+    <string name="set_passcode_title">Встановити пароль калькулятора</string>
+    <string name="set_passcode_message">Створіть вираз для калькулятора, який ви будете використовувати для розблокування режиму стелс.</string>
+    <string name="passcode_confirm_failed">Пароль не збігається.</string>
+    <string name="passcode_attention_label">Увага</string>
+    <string name="set_passcode_hint_1">Вираз (наприклад, 55+23)</string>
+    <string name="set_passcode_hint_2">Повторно введіть вираз</string>
 </resources>
