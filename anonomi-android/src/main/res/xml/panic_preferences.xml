@@ -2,33 +2,20 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto">
 
-	<SwitchPreferenceCompat
-		android:defaultValue="true"
-		android:key="pref_key_lock"
-		android:summary="@string/panic_setting_signout_summary"
-		android:title="@string/panic_setting_signout_title"
+	<Preference
+		android:key="pref_key_record_sequence"
+		android:title="@string/panic_record_sequence_title"
+		android:summary="@string/panic_sequence_not_set"
 		app:iconSpaceReserved="false"
 		app:singleLineTitle="false" />
 
-	<PreferenceCategory
-		android:layout="@layout/preferences_category"
-		android:title="@string/panic_setting_destructive_action">
-
-		<ListPreference
-			android:icon="@android:drawable/ic_menu_close_clear_cancel"
-			android:key="pref_key_panic_app"
-			android:summary="@string/panic_app_setting_summary"
-			android:title="@string/panic_app_setting_title" />
-
-		<SwitchPreferenceCompat
-			android:defaultValue="false"
-			android:enabled="false"
-			android:key="pref_key_purge"
-			android:summary="@string/purge_setting_summary"
-			android:title="@string/purge_setting_title"
-			app:iconSpaceReserved="false"
-			app:singleLineTitle="false" />
-
-	</PreferenceCategory>
+	<ListPreference
+		android:key="pref_key_panic_action"
+		android:title="@string/panic_action_title"
+		android:entries="@array/panic_action_entries"
+		android:entryValues="@array/panic_action_values"
+		android:defaultValue="sign_out"
+		app:iconSpaceReserved="false"
+		app:singleLineTitle="false" />
 
 </PreferenceScreen>

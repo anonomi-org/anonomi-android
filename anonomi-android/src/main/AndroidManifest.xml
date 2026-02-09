@@ -496,15 +496,10 @@
 
 		<activity
 			android:name="org.anonomi.android.panic.PanicResponderActivity"
-			android:exported="true"
+			android:exported="false"
 			android:noHistory="true"
-			android:theme="@style/TranslucentTheme">
-			<!-- this can never have launchMode singleTask or singleInstance! -->
-			<intent-filter>
-				<action android:name="info.guardianproject.panic.action.TRIGGER" />
-				<category android:name="android.intent.category.DEFAULT" />
-			</intent-filter>
-		</activity>
+			android:theme="@style/TranslucentTheme" />
+
 
 		<activity
 			android:name="org.anonomi.android.logout.ExitActivity"
@@ -587,8 +582,6 @@
 	</application>
 
 	<queries>
-		<package android:name="info.guardianproject.ripple" />
-
 		<intent>
 			<action android:name="android.intent.action.VIEW" />
 			<data android:scheme="https" />

@@ -144,4 +144,15 @@
 		<item>259200000</item>      <!-- 3 days -->
 		<item>604800000</item>      <!-- 7 days -->
 	</integer-array>
+
+	<string-array name="panic_action_entries">
+		<item>@string/panic_option_sign_out</item>
+		<item>@string/panic_option_delete_account</item>
+		<item>@string/panic_action_dialog_summary</item>
+	</string-array>
+	<string-array name="panic_action_values">
+		<item>sign_out</item>
+		<item>delete_account</item>
+		<item>show_dialog</item>
+	</string-array>
 </resources>

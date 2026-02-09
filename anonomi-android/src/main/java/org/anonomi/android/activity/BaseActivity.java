@@ -1,7 +1,9 @@
 package org.anonomi.android.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -15,6 +17,8 @@ import org.anonomi.android.controller.ActivityLifecycleController;
 import org.anonomi.android.fragment.BaseFragment;
 import org.anonomi.android.fragment.ScreenFilterDialogFragment;
 import org.anonomi.android.util.UiUtils;
+import org.anonomi.android.panic.PanicResponderActivity;
+import org.anonomi.android.panic.PanicSequenceDetector;
 import org.anonomi.android.widget.TapSafeFrameLayout;
 import org.anonomi.android.widget.TapSafeFrameLayout.OnTapFilteredListener;
 import org.anonchatsecure.anonchat.api.android.ScreenFilterMonitor;
@@ -127,6 +131,8 @@ public abstract class BaseActivity extends AppCompatActivity
 
 		if (SDK_INT >= 31) getWindow().setHideOverlayWindows(true);
 
+		PanicSequenceDetector.getInstance().loadSequence(this);
+
 		for (ActivityLifecycleController alc : lifecycleControllers) {
 			alc.onActivityCreate(this);
 		}
@@ -170,19 +176,29 @@ public abstract class BaseActivity extends AppCompatActivity
 	}
 
 	@Override
+	public boolean dispatchKeyEvent(KeyEvent event) {
+		if (PanicSequenceDetector.getInstance().onKeyEvent(event)) {
+			return true;
+		}
+		return super.dispatchKeyEvent(event);
+	}
+
+	@Override
 	protected void onResume() {
 		super.onResume();
-		// if (LOG.isLoggable(INFO)) {
-		//	LOG.info("Resuming " + getClass().getSimpleName());
-		// }
+		PanicSequenceDetector.getInstance().setListener(() -> {
+			Intent i = new Intent(BaseActivity.this,
+					PanicResponderActivity.class);
+			i.setAction(PanicResponderActivity.ACTION_INTERNAL_PANIC);
+			i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(i);
+		});
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		// if (LOG.isLoggable(INFO)) {
-		//	LOG.info("Pausing " + getClass().getSimpleName());
-		// }
+		PanicSequenceDetector.getInstance().setListener(null);
 	}
 
 	@Override

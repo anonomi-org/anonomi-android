@@ -59,6 +59,8 @@ public abstract class BriarActivity extends BaseActivity {
 	private static final Logger LOG =
 			getLogger(BriarActivity.class.getName());
 
+	protected boolean skipSignInCheck = false;
+
 	@Inject
 	AnonChatController briarController;
 	@Deprecated
@@ -103,6 +105,7 @@ public abstract class BriarActivity extends BaseActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
+		if (skipSignInCheck) return;
 		if (!briarController.accountSignedIn() && !isFinishing()) {
 			// Also check that the activity isn't finishing already.
 			// This is possible if we finished in onActivityResult().

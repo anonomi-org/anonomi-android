@@ -2,6 +2,7 @@ package org.anonomi.android.splash;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -9,6 +10,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.anonomi.R;
+import org.anonomi.android.panic.PanicResponderActivity;
+import org.anonomi.android.panic.PanicSequenceDetector;
 import org.anonomi.android.settings.SecurityFragment;
 import org.anonomi.android.util.SecurePrefsManager;
 
@@ -163,6 +166,33 @@ public class CalculatorActivity extends AppCompatActivity {
 		if (cleanedSavedExpr.equals(cleanedUserExpr)) {
 			unlockApp();
 		}
+	}
+
+	@Override
+	public boolean dispatchKeyEvent(KeyEvent event) {
+		if (PanicSequenceDetector.getInstance().onKeyEvent(event)) {
+			return true;
+		}
+		return super.dispatchKeyEvent(event);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		PanicSequenceDetector.getInstance().loadSequence(this);
+		PanicSequenceDetector.getInstance().setListener(() -> {
+			Intent i = new Intent(CalculatorActivity.this,
+					PanicResponderActivity.class);
+			i.setAction(PanicResponderActivity.ACTION_INTERNAL_PANIC);
+			i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(i);
+		});
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		PanicSequenceDetector.getInstance().setListener(null);
 	}
 
 	private void unlockApp() {
