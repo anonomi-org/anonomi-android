@@ -578,7 +578,7 @@
     <string name="password_changed">Le mot de passe a été changé.</string>
     <string name="panic_setting">Paramètres du bouton d’urgence</string>
     <string name="panic_setting_title">Bouton d’urgence</string>
-    <string name="panic_setting_hint">Configurer la réaction de Anonomi quand vous utilisez une application de bouton d’urgence</string>
+    <string name="panic_setting_hint">Configurer une séquence de boutons de volume pour déclencher le mode panique.</string>
     <string name="panic_app_setting_title">Application de bouton d’urgence</string>
     <string name="unknown_app">une appli inconnue</string>
     <string name="panic_app_setting_summary">Aucune appli n’a été définie</string>
@@ -1052,4 +1052,23 @@ copies des messages que vous envoyez.
     <string name="button_delete">Supprimer</string>
     <string name="button_cancel">Annuler</string>
     <string name="status_imported">Importés :</string>
+    <string name="panic_enabled_title">Activer le déclencheur d\'urgence</string>
+    <string name="panic_enabled_summary">Détecter la séquence des boutons de volume pour déclencher le mode panique.</string>
+    <string name="panic_record_sequence_title">Enregistrer la séquence de panique</string>
+    <string name="panic_sequence_not_set">Aucune séquence configurée</string>
+    <string name="panic_sequence_too_short">La séquence doit comporter au moins 3 étapes.</string>
+    <string name="panic_action_title">Action de panique</string>
+    <string name="panic_dialog_title">Mode panique</string>
+    <string name="panic_option_sign_out">Déconnexion</string>
+    <string name="panic_option_delete_account">Supprimer le compte</string>
+    <string name="panic_record_dialog_title">Enregistrer la séquence de panique</string>
+    <string name="panic_record_dialog_instruction">Appuyez sur les boutons d\'augmentation/réduction du volume dans l\'ordre souhaité. Appui court (&lt; 0,5 s) ou appui long (&gt;= 0,5 s). Minimum 3 étapes requises.</string>
+    <string name="panic_record_save">Enregistrer</string>
+    <string name="panic_record_clear">Clair</string>
+    <string name="panic_action_sign_out_summary">Se déconnecter d\'Anonomi Messenger</string>
+    <string name="panic_action_delete_summary">Supprimer définitivement votre compte, vos contacts et vos messages</string>
+    <string name="panic_action_dialog_summary">Afficher une boîte de dialogue de choix (Se déconnecter / Supprimer le compte / Annuler)</string>
+    <string name="panic_status_signing_out">Envoi de messages d\'urgence et déconnexion…</string>
+    <string name="panic_status_deleting">Envoi de messages d\'urgence et suppression du compte…</string>
+    <string name="website_http_notice">Votre navigateur peut vous avertir que cette connexion n\'est pas sécurisée. Cela est normal : la page est servie localement via votre connexion Wi-Fi directe et ne transite pas par Internet.</string>
 </resources>

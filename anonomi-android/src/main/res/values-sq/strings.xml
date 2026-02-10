@@ -885,4 +885,18 @@ Anonomi-i i përdor ato paralelisht.</string>
     <!--This is a message to be used in screenshots.-->
   <string name="screenshot_message_3">Asgjë, shpresoj të të pëlqejë 😀</string>
     <string name="panic_message">⚠️‼️ MODUL I PANIKUT AKTIVIZUAR! ‼️⚠️ Ky është një alarm paniku automatik.</string>
+    <string name="more_info_title">Lidhje Anonomi</string>
+    <string name="request_xmr_manual">Dorazi</string>
+    <string name="request_xmr_send">Dërgoje</string>
+    <string name="error_creating_message">Gabim në dërgim mesazhi</string>
+    <string name="choose_forum_name">Zgjidhni një emër për forumin tuaj</string>
+    <string name="location_sent">Rregullime vendndodhjeje</string>
+    <string name="unlocking_anonchat">Shkyçe Anonomi-in</string>
+    <string name="button_delete">Fshije</string>
+    <string name="button_cancel">Anuloje</string>
+    <string name="status_imported">Të importuara:</string>
+    <string name="camera_permission_denied">Leje mbi kamerën</string>
+    <string name="panic_option_sign_out">Dilni</string>
+    <string name="panic_option_delete_account">Fshi Llogarinë</string>
+    <string name="panic_action_sign_out_summary">U dol nga Anonomi-i</string>
 </resources>

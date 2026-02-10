@@ -488,4 +488,55 @@
     <!--This is a message to be used in screenshots.-->
   <string name="screenshot_message_3">Nema problema, nadam se da ti se sviđa 😀</string>
     <string name="panic_message">⚠️‼️ AKTIVIRAN NAČIN PANICE! ‼️⚠️ Ovo je automatsko upozorenje za paniku.</string>
+    <string name="more_info_title">Anonomi link</string>
+    <string name="request_xmr_send">Pošalji</string>
+    <string name="dnkm_xiaomi_button">Zaštiti Anonomi</string>
+    <string name="dnkm_xiaomi_help">Ako Anonomi nije dodat u listu zaštićenih aplikacija - protected apps, neće moći da radi u pozadinskom modu.</string>
+    <string name="dnkm_xiaomi_lock_apps_help">Ako Anonomi nije dodat u listu zaštićenih aplikacija - protected apps, neće moći da radi u pozadinskom modu.</string>
+    <string name="sign_in_title">Prijavljeni ste u Anonomi</string>
+    <string name="info">Više informacija</string>
+    <string name="menu_contact">Kontakti</string>
+    <string name="contact_already_exists_general">Kontakt %s već postoji</string>
+    <string name="qr_code_too_new_1">Ovaj link dolazi sa nove verzije Anonomi-a. Molim vas ažurirajte aplikaciju na posljednju verziju, a zatim pokušajte ponovo.</string>
+    <string name="duplicate_link_dialog_text_1_contact">Već imate kontakta na čekanju sa ovim linkom: %s</string>
+    <string name="choose_forum_name">Izaberite ime za vaš forum</string>
+    <string name="blogs_rss_feeds_import_progress">Uvezi RSS kanal</string>
+    <string name="network_settings_title">Konektovanje…</string>
+    <string name="button_cancel">Odustani</string>
+    <string name="unlocking_anonchat">Otključaj Anonomi</string>
+    <string name="button_delete">Obriši</string>
+    <string name="status_imported">Uvezeno:</string>
+    <string name="dev_report_sending">Šalji povratne informacije</string>
+    <string name="tor_offline_title">Offline</string>
+    <plurals name="duration_minutes">
+        <item quantity="one"></item>
+        <item quantity="few">5 minuta</item>
+        <item quantity="other">5 minuta</item>
+    </plurals>
+    <plurals name="messages">
+        <item quantity="one"></item>
+        <item quantity="few">Nema postova</item>
+        <item quantity="other">Nema postova</item>
+    </plurals>
+    <plurals name="posts">
+        <item quantity="one"></item>
+        <item quantity="few">Nema postova</item>
+        <item quantity="other">Nema postova</item>
+    </plurals>
+    <string name="panic_option_sign_out">Odjava</string>
+    <string name="panic_action_sign_out_summary">Odjavljeni ste iz Anonomi Messenger</string>
+    <string name="permission_camera_qr_denied_body">Uskratili ste pristup kameri, ali dodavanje kontakata zahtijeva pristup kameri.\n\nMolim vas da uzmete u obzir odobravanja pristupa.</string>
+    <string name="mailbox_setup_assertion_error_description">Ako se problem nastavi, pošaljite povratne informacije (s anonimnim podacima) putem aplikacije Anonomi.</string>
+    <string name="mailbox_status_app_too_old_title">Anonomi je zaključan</string>
+    <string name="mailbox_status_connected_never">Nikad</string>
+    <string name="dev_report_logcat">Zaključavanje applikacije</string>
+    <string name="screen_filter_body_api_30">Druga aplikacija precrtava preko Anonomi Messenger. Da bi vas zaštitio, Anonomi Messenger neće reagovati na dodir dok druga aplikacija precrtava preko ekrana.\n\nSlijedeće aplikacije mogu precrtavati preko:\n\n%1$s</string>
+    <string name="hotspot_button_connected">Dalje</string>
+    <string name="permission_hotspot_location_request_body">Da bi otkrio Bluetooth uređaj, Brair treba douzvolu za pristup vašoj lokaciji.\n\nAnonomi neće snimati vašu lokaciju ili je dijeliti sa bilo kime.</string>
+    <string name="permission_hotspot_location_request_precise_body">Da bi otkrio Bluetooth uređaj, Brair treba douzvolu za pristup vašoj lokaciji.\n\nAnonomi neće snimati vašu lokaciju ili je dijeliti sa bilo kime.</string>
+    <string name="website_download_button">Otključaj Anonomi</string>
+    <string name="hotspot_error_web_server_serve">Ako se problem nastavi, pošaljite povratne informacije (s anonimnim podacima) putem aplikacije Anonomi.</string>
+    <string name="camera_permission_denied">Dozvole kamere</string>
+    <string name="delete_account_button">Izbriši račun</string>
+    <string name="panic_option_delete_account">Izbriši račun</string>
 </resources>

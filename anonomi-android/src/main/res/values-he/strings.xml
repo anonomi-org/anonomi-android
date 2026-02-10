@@ -1,648 +1,1071 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<!--Setup-->
+    <!--Setup-->
 	<string name="setup_title">ברוך בואך אל Anonomi</string>
-	<string name="setup_name_explanation">כינויך יוראה ליד תוכן כלשהו שתכתוב. אינך יכול לשנות אותו לאחר יצירת חשבונך.</string>
-	<string name="setup_next">הבא</string>
-	<string name="setup_password_intro">נא לבחור סיסמה</string>
-	<string name="setup_password_explanation">חשבון Anonomi שלך מאוחסן באופן מוצפן במכשירך, לא בענן. אם תשכח את סיסמתך או תסיר את Anonomi, אין דרך להשיב את חשבונך.\n\nבחר סיסמה ארוכה שקשה לנחש אותה, כגון ארבע מילים אקראיות, או עשרה תווים אקראיים של אותיות, מספרים וסמלים.</string>
-	<string name="dnkm_doze_title">חיבורי רקע</string>
-	<string name="dnkm_doze_intro">כדי לקבל הודעות, Anonomi צריך להישאר מחובר ברקע.</string>
-	<string name="dnkm_doze_explanation">כדי לקבל הודעות, Anonomi צריך להישאר מחובר ברקע. אנא השבת מיטובי סוללה כך ש־Anonomi יוכל להישאר מחובר.</string>
-	<string name="dnkm_doze_button">התר חיבורים</string>
-	<string name="choose_nickname">נא לבחור את הכינוי שלך</string>
-	<string name="choose_password">בחר סיסמה</string>
-	<string name="confirm_password">אשר סיסמה</string>
-	<string name="name_too_long">השם ארוך מדי</string>
-	<string name="password_too_weak">הסיסמה חלשה מדי</string>
-	<string name="passwords_do_not_match">הסיסמאות לא תואמות</string>
-	<string name="create_account_button">יצירת חשבון</string>
-	<string name="more_info">מידע נוסף</string>
-	<string name="don_t_ask_again">לא לשאול שוב</string>
-	<string name="dnkm_huawei_protected_text">נא להקיש על הכפתור למטה וולוודא כי Anonomi מוגן במסך \"יישומים מוגנים\".</string>
-	<string name="dnkm_huawei_protected_button">הגן על Anonomi</string>
-	<string name="dnkm_huawei_protected_help">אם Anonomi אינו מוסף אל רשימת היישומים המוגנים, הוא לא יוכל לרוץ ברקע.</string>
-	<string name="dnkm_xiaomi_button">הגן על Anonomi</string>
-	<string name="dnkm_warning_dozed">%s לא היה יכול לרוץ ברקע</string>
-
-  <string name="disappearing_message_duration">משך</string>
-  <string name="auto_delete_1_minute">דקה אחת</string>
-  <string name="auto_delete_5_minutes">5 דקות</string>
-  <string name="auto_delete_30_minutes">30 דקות</string>
-  <string name="auto_delete_1_hour">שעה אחת</string>
-  <string name="auto_delete_1_day">יום אחד</string>
-  <string name="auto_delete_3_days">3 ימים</string>
-  <string name="auto_delete_7_days">7 ימים</string>
-
-  <!--Login-->
+    <string name="setup_name_explanation">כינויך יוראה ליד תוכן כלשהו שתכתוב. אינך יכול לשנות אותו לאחר יצירת חשבונך.</string>
+    <string name="setup_next">הבא</string>
+    <string name="setup_password_intro">נא לבחור סיסמה</string>
+    <string name="setup_password_explanation">חשבון Anonomi שלך מאוחסן באופן מוצפן במכשירך, לא בענן. אם תשכח את סיסמתך או תסיר את Anonomi, אין דרך להשיב את חשבונך.\n\nבחר סיסמה ארוכה שקשה לנחש אותה, כגון ארבע מילים אקראיות, או עשרה תווים אקראיים של אותיות, מספרים וסמלים.</string>
+    <string name="dnkm_doze_title">חיבורי רקע</string>
+    <string name="dnkm_doze_intro">כדי לקבל הודעות, Anonomi צריך להישאר מחובר ברקע.</string>
+    <string name="dnkm_doze_explanation">כדי לקבל הודעות, Anonomi צריך להישאר מחובר ברקע. אנא השבת מיטובי סוללה כך ש־Anonomi יוכל להישאר מחובר.</string>
+    <string name="dnkm_doze_button">התר חיבורים</string>
+    <string name="choose_nickname">נא לבחור את הכינוי שלך</string>
+    <string name="choose_password">בחר סיסמה</string>
+    <string name="confirm_password">אשר סיסמה</string>
+    <string name="name_too_long">השם ארוך מדי</string>
+    <string name="password_too_weak">הסיסמה חלשה מדי</string>
+    <string name="passwords_do_not_match">הסיסמאות לא תואמות</string>
+    <string name="create_account_button">יצירת חשבון</string>
+    <string name="more_info">מידע נוסף</string>
+    <string name="don_t_ask_again">לא לשאול שוב</string>
+    <string name="dnkm_huawei_protected_text">נא להקיש על הכפתור למטה וולוודא כי Anonomi מוגן במסך \"יישומים מוגנים\".</string>
+    <string name="dnkm_huawei_protected_button">הגן על Anonomi</string>
+    <string name="dnkm_huawei_protected_help">אם Anonomi אינו מוסף אל רשימת היישומים המוגנים, הוא לא יוכל לרוץ ברקע.</string>
+    <string name="dnkm_xiaomi_button">הגן על Anonomi</string>
+    <string name="dnkm_warning_dozed">%s לא היה יכול לרוץ ברקע</string>
+    <string name="disappearing_message_duration">משך</string>
+    <string name="auto_delete_1_minute">דקה אחת</string>
+    <string name="auto_delete_5_minutes">5 דקות</string>
+    <string name="auto_delete_30_minutes">30 דקות</string>
+    <string name="auto_delete_1_hour">שעה אחת</string>
+    <string name="auto_delete_1_day">יום אחד</string>
+    <string name="auto_delete_3_days">3 ימים</string>
+    <string name="auto_delete_7_days">7 ימים</string>
+    <!--Login-->
 	<string name="enter_password">סיסמה</string>
-	<string name="try_again">סיסמה שגויה, נסה שוב</string>
-	<string name="dialog_title_cannot_check_password">לא יכול לבדוק סיסמה</string>
-	<string name="dialog_message_cannot_check_password">Anonomi לא יכול לבדוק את הסיסמה שלך. אנא נסה לאתחל מחדש את המכשיר שלך כדי לפתור בעיה זאת.</string>
-	<string name="sign_in_button">כניסה</string>
-	<string name="forgotten_password">שכחתי את הסיסמה שלי</string>
-  <string name="dialog_title_lost_password">סיסמה אבודה</string>
-  <string name="dialog_message_lost_password">חשבון Anonomi שלך מאוחסן באופן מוצפן על המכשיר שלך, לא בענן, כך שאנחנו לא יכולים לאפס את הסיסמה שלך. האם תרצה למחוק את החשבון שלך ולהתחיל מחדש?\n\nזהירות: הזהויות, אנשי הקשר וההודעות שלך יאבדו לצמיתות.</string>
-  <string name="startup_failed_activity_title">כישלון הזנק Anonomi</string>
-  <plurals name="expiry_warning">
-    <item quantity="one">זאת גרסת בחינה של Anonomi. חשבונך יפוג תוך יום %d ואינו יכול להתחדש.</item>
-    <item quantity="two">זאת גרסת בחינה של Anonomi. חשבונך יפוג תוך %d ימים ואינו יכול להתחדש.</item>
-    <item quantity="many">זאת גרסת בחינה של Anonomi. חשבונך יפוג תוך %d ימים ואינו יכול להתחדש.</item>
-    <item quantity="other">זאת גרסת בחינה של Anonomi. חשבונך יפוג תוך %d ימים ואינו יכול להתחדש.</item>
-  </plurals>
-  <string name="expiry_date_reached">תוכנה זו פגה.\nתודה על הבדיקה!</string>
-  <string name="download_briar">כדי להמשיך להשתמש ב־Anonomi, אנא הורד את השחרור האחרון.</string>
-  <string name="create_new_account">יהיה צריך ליצור חשבון חדש, אבל אפשר להשתמש באותו הכינוי.</string>
-  <string name="download_briar_button">הורד שחרור אחרון</string>
-  <string name="delete_account_button">מחק חשבון</string>
-  <string name="startup_open_database">מפענח מסד נתונים…</string>
-  <string name="startup_migrate_database">משדרג מסד נתונים…</string>
-  <string name="startup_compact_database">מצופף מסד נתונים…</string>
-  <!--Navigation Drawer-->
+    <string name="try_again">סיסמה שגויה, נסה שוב</string>
+    <string name="dialog_title_cannot_check_password">לא יכול לבדוק סיסמה</string>
+    <string name="dialog_message_cannot_check_password">Anonomi לא יכול לבדוק את הסיסמה שלך. אנא נסה לאתחל מחדש את המכשיר שלך כדי לפתור בעיה זאת.</string>
+    <string name="sign_in_button">כניסה</string>
+    <string name="forgotten_password">שכחתי את הסיסמה שלי</string>
+    <string name="dialog_title_lost_password">סיסמה אבודה</string>
+    <string name="dialog_message_lost_password">חשבון Anonomi שלך מאוחסן באופן מוצפן על המכשיר שלך, לא בענן, כך שאנחנו לא יכולים לאפס את הסיסמה שלך. האם תרצה למחוק את החשבון שלך ולהתחיל מחדש?\n\nזהירות: הזהויות, אנשי הקשר וההודעות שלך יאבדו לצמיתות.</string>
+    <string name="startup_failed_activity_title">כישלון הזנק Anonomi</string>
+    <plurals name="expiry_warning">
+        <item quantity="one">זאת גרסת בחינה של Anonomi. חשבונך יפוג תוך יום %d ואינו יכול להתחדש.</item>
+        <item quantity="two">זאת גרסת בחינה של Anonomi. חשבונך יפוג תוך %d ימים ואינו יכול להתחדש.</item>
+        <item quantity="many">זאת גרסת בחינה של Anonomi. חשבונך יפוג תוך %d ימים ואינו יכול להתחדש.</item>
+        <item quantity="other">זאת גרסת בחינה של Anonomi. חשבונך יפוג תוך %d ימים ואינו יכול להתחדש.</item>
+    </plurals>
+    <string name="expiry_date_reached">תוכנה זו פגה.\nתודה על הבדיקה!</string>
+    <string name="download_briar">כדי להמשיך להשתמש ב־Anonomi, אנא הורד את השחרור האחרון.</string>
+    <string name="create_new_account">יהיה צריך ליצור חשבון חדש, אבל אפשר להשתמש באותו הכינוי.</string>
+    <string name="download_briar_button">הורד שחרור אחרון</string>
+    <string name="delete_account_button">מחק חשבון</string>
+    <string name="startup_open_database">מפענח מסד נתונים…</string>
+    <string name="startup_migrate_database">משדרג מסד נתונים…</string>
+    <string name="startup_compact_database">מצופף מסד נתונים…</string>
+    <!--Navigation Drawer-->
   <string name="nav_drawer_open_description">פתח את מגירת הניווט</string>
-  <string name="nav_drawer_close_description">סגור את מגירת הניווט</string>
-  <string name="contact_list_button">אנשי קשר</string>
-  <string name="groups_button">קבוצות פרטיות</string>
-  <string name="forums_button">קבוצות פתוחות</string>
-  <string name="blogs_button">בלוגים</string>
-  <!--This is part of the main menu. The app will be locked when this is tapped.-->
+    <string name="nav_drawer_close_description">סגור את מגירת הניווט</string>
+    <string name="contact_list_button">אנשי קשר</string>
+    <string name="groups_button">קבוצות פרטיות</string>
+    <string name="forums_button">קבוצות פתוחות</string>
+    <string name="blogs_button">בלוגים</string>
+    <!--This is part of the main menu. The app will be locked when this is tapped.-->
   <string name="lock_button">נעל יישום</string>
-  <string name="settings_button">הגדרות</string>
-  <string name="sign_out_button">יציאה</string>
-  <string name="transports_onboarding_text">הקש כאן כדי לשלוט איך Anonomi מתחבר אל אנשי הקשר שלך.</string>
-  <!--Transports: Tor-->
+    <string name="settings_button">הגדרות</string>
+    <string name="sign_out_button">יציאה</string>
+    <string name="transports_onboarding_text">הקש כאן כדי לשלוט איך Anonomi מתחבר אל אנשי הקשר שלך.</string>
+    <!--Transports: Tor-->
   <string name="transport_tor">אינטרנט</string>
-  <string name="tor_device_status_online_wifi">לטלפון שלך גישה לאינטרנט באמצעות רשת אלחוטית</string>
-  <string name="tor_device_status_online_mobile">לטלפון שלך גישה לאינטרנט באמצעות נתונים ניידים</string>
-  <string name="tor_device_status_offline">לטלפון שלך אין גישה לאינטרנט</string>
-  <string name="tor_plugin_status_enabling">Anonomi מתחבר אל האינטרנט</string>
-  <string name="tor_plugin_status_active">Anonomi מחובר אל האינטרנט</string>
-  <string name="tor_plugin_status_inactive">Anonomi אינו יכול להתחבר אל האינטרנט</string>
-  <string name="tor_plugin_status_disabled">Anonomi מתוצר לא להשתמש באינטרנט</string>
-  <string name="tor_plugin_status_disabled_mobile_data">Anonomi מתוצר לא להשתמש בנתונים סלולריים</string>
-  <string name="tor_plugin_status_disabled_battery">Anonomi מתוצר לא להשתמש באינטרנט בעת הרצה על סוללה</string>
-  <string name="tor_plugin_status_disabled_country_blocked">Anonomi מתוצר לא להשתמש באינטרנט במדינה זו</string>
-  <!--Transports: Wi-Fi-->
+    <string name="tor_device_status_online_wifi">לטלפון שלך גישה לאינטרנט באמצעות רשת אלחוטית</string>
+    <string name="tor_device_status_online_mobile">לטלפון שלך גישה לאינטרנט באמצעות נתונים ניידים</string>
+    <string name="tor_device_status_offline">לטלפון שלך אין גישה לאינטרנט</string>
+    <string name="tor_plugin_status_enabling">Anonomi מתחבר אל האינטרנט</string>
+    <string name="tor_plugin_status_active">Anonomi מחובר אל האינטרנט</string>
+    <string name="tor_plugin_status_inactive">Anonomi אינו יכול להתחבר אל האינטרנט</string>
+    <string name="tor_plugin_status_disabled">Anonomi מתוצר לא להשתמש באינטרנט</string>
+    <string name="tor_plugin_status_disabled_mobile_data">Anonomi מתוצר לא להשתמש בנתונים סלולריים</string>
+    <string name="tor_plugin_status_disabled_battery">Anonomi מתוצר לא להשתמש באינטרנט בעת הרצה על סוללה</string>
+    <string name="tor_plugin_status_disabled_country_blocked">Anonomi מתוצר לא להשתמש באינטרנט במדינה זו</string>
+    <!--Transports: Wi-Fi-->
   <string name="transport_lan">רשת אלחוטית</string>
-  <string name="transport_lan_long">אותה הרשת האלחוטית</string>
-  <string name="lan_device_status_on">הטלפון שלך מחובר לרשת אלחוטית</string>
-  <string name="lan_device_status_off">הטלפון שלך אינו מחובר לרשת האלחוטית</string>
-  <string name="lan_plugin_status_enabling">Anonomi מתחבר לרשת האלחוטית</string>
-  <string name="lan_plugin_status_active">Anonomi מחובר לרשת האלחוטית</string>
-  <string name="lan_plugin_status_inactive">אין באפשרות Anonomi להתחבר לרשת האלחוטית</string>
-  <string name="lan_plugin_status_disabled">Anonomi מוגדר לא להשתמש ברשת האלחוטית</string>
-  <!--Transports: Bluetooth-->
+    <string name="transport_lan_long">אותה הרשת האלחוטית</string>
+    <string name="lan_device_status_on">הטלפון שלך מחובר לרשת אלחוטית</string>
+    <string name="lan_device_status_off">הטלפון שלך אינו מחובר לרשת האלחוטית</string>
+    <string name="lan_plugin_status_enabling">Anonomi מתחבר לרשת האלחוטית</string>
+    <string name="lan_plugin_status_active">Anonomi מחובר לרשת האלחוטית</string>
+    <string name="lan_plugin_status_inactive">אין באפשרות Anonomi להתחבר לרשת האלחוטית</string>
+    <string name="lan_plugin_status_disabled">Anonomi מוגדר לא להשתמש ברשת האלחוטית</string>
+    <!--Transports: Bluetooth-->
   <string name="transport_bt">Bluetooth</string>
-  <string name="bt_device_status_on">Bluetooth של הטלפון שלך מופעל</string>
-  <string name="bt_device_status_off">Bluetooth של הטלפון שלך מכובה</string>
-  <string name="bt_plugin_status_enabling">Anonomi מתחבר אל Bluetooth</string>
-  <string name="bt_plugin_status_active">Anonomi מחובר אל Bluetooth</string>
-  <string name="bt_plugin_status_inactive">Anonomi אינו יכול להתחבר אל Bluetooth</string>
-  <string name="bt_plugin_status_disabled">Anonomi מתוצר לא להשתמש ב־Bluetooth</string>
-  <!--Notifications-->
+    <string name="bt_device_status_on">Bluetooth של הטלפון שלך מופעל</string>
+    <string name="bt_device_status_off">Bluetooth של הטלפון שלך מכובה</string>
+    <string name="bt_plugin_status_enabling">Anonomi מתחבר אל Bluetooth</string>
+    <string name="bt_plugin_status_active">Anonomi מחובר אל Bluetooth</string>
+    <string name="bt_plugin_status_inactive">Anonomi אינו יכול להתחבר אל Bluetooth</string>
+    <string name="bt_plugin_status_disabled">Anonomi מתוצר לא להשתמש ב־Bluetooth</string>
+    <!--Notifications-->
   <string name="reminder_notification_title">נותקת מן Anonomi</string>
-  <string name="reminder_notification_text">הקש כדי להתחבר חזרה.</string>
-  <string name="reminder_notification_channel_title">תזכורת התחברות של Anonomi</string>
-  <string name="reminder_notification_dismiss">שחרר</string>
-  <string name="ongoing_notification_title">מחובר אל Anonomi</string>
-  <string name="ongoing_notification_text">גע כדי לפתוח את Anonomi.</string>
-  <plurals name="private_message_notification_text">
-    <item quantity="one">הודעה פרטית חדשה.</item>
-    <item quantity="two">%d הודעות פרטיות חדשות.</item>
-    <item quantity="many">%d הודעות פרטיות חדשות.</item>
-    <item quantity="other">%d הודעות פרטיות חדשות.</item>
-  </plurals>
-  <plurals name="group_message_notification_text">
-    <item quantity="one">הודעה קבוצתית חדשה.</item>
-    <item quantity="two">%d הודעות קבוצתיות חדשות.</item>
-    <item quantity="many">%d הודעות קבוצתיות חדשות.</item>
-    <item quantity="other">%d הודעות קבוצתיות חדשות.</item>
-  </plurals>
-  <plurals name="forum_post_notification_text">
-    <item quantity="one">רשומת קבוצה פתוחה חדשה.</item>
-    <item quantity="two">%d הודעות קבוצה פתוחה חדשות.</item>
-    <item quantity="many">%d הודעות קבוצה פתוחה חדשות.</item>
-    <item quantity="other">%d הודעות קבוצה פתוחה חדשות.</item>
-  </plurals>
-  <plurals name="blog_post_notification_text">
-    <item quantity="one">רשומת בלוג חדשה.</item>
-    <item quantity="two">%d הודעות בלוג חדשות.</item>
-    <item quantity="many">%d הודעות בלוג חדשות.</item>
-    <item quantity="other">%d הודעות בלוג חדשות.</item>
-  </plurals>
-  <!--Misc-->
+    <string name="reminder_notification_text">הקש כדי להתחבר חזרה.</string>
+    <string name="reminder_notification_channel_title">תזכורת התחברות של Anonomi</string>
+    <string name="reminder_notification_dismiss">שחרר</string>
+    <string name="ongoing_notification_title">מחובר אל Anonomi</string>
+    <string name="ongoing_notification_text">גע כדי לפתוח את Anonomi.</string>
+    <plurals name="private_message_notification_text">
+        <item quantity="one">הודעה פרטית חדשה.</item>
+        <item quantity="two">%d הודעות פרטיות חדשות.</item>
+        <item quantity="many">%d הודעות פרטיות חדשות.</item>
+        <item quantity="other">%d הודעות פרטיות חדשות.</item>
+    </plurals>
+    <plurals name="group_message_notification_text">
+        <item quantity="one">הודעה קבוצתית חדשה.</item>
+        <item quantity="two">%d הודעות קבוצתיות חדשות.</item>
+        <item quantity="many">%d הודעות קבוצתיות חדשות.</item>
+        <item quantity="other">%d הודעות קבוצתיות חדשות.</item>
+    </plurals>
+    <plurals name="forum_post_notification_text">
+        <item quantity="one">רשומת קבוצה פתוחה חדשה.</item>
+        <item quantity="two">%d הודעות קבוצה פתוחה חדשות.</item>
+        <item quantity="many">%d הודעות קבוצה פתוחה חדשות.</item>
+        <item quantity="other">%d הודעות קבוצה פתוחה חדשות.</item>
+    </plurals>
+    <plurals name="blog_post_notification_text">
+        <item quantity="one">רשומת בלוג חדשה.</item>
+        <item quantity="two">%d הודעות בלוג חדשות.</item>
+        <item quantity="many">%d הודעות בלוג חדשות.</item>
+        <item quantity="other">%d הודעות בלוג חדשות.</item>
+    </plurals>
+    <!--Misc-->
   <string name="now">עכשיו</string>
-  <string name="show">הראה</string>
-  <string name="hide">הסתר</string>
-  <string name="ok">אישור</string>
-  <string name="cancel">ביטול</string>
-  <string name="got_it">הבנתי</string>
-  <string name="delete">מחיקה</string>
-  <string name="accept">קבל</string>
-  <string name="decline">סרב</string>
-  <string name="online">מחובר</string>
-  <string name="offline">לא מקוון</string>
-  <string name="send">שליחה</string>
-  <string name="allow">התר</string>
-  <string name="open">פתיחה</string>
-  <string name="change">שינוי</string>
-  <string name="start">התחל</string>
-  <string name="finish">סיים</string>
-  <string name="no_data">אין נתונים</string>
-  <string name="ellipsis">…</string>
-  <string name="text_too_long">הטקסט המוכנס ארוך מדי</string>
-  <string name="show_onboarding">הצגת דו־שיח עזרה</string>
-  <string name="fix">תקן</string>
-  <string name="help">עזרה</string>
-  <string name="sorry">עמך הסליחה</string>
-  <string name="error_start_activity">בלתי זמין במערכת שלך</string>
-  <string name="status_heading">מצב</string>
-  <string name="error">שגיאה</string>
-  <!--Contacts and Private Conversations-->
+    <string name="show">הראה</string>
+    <string name="hide">הסתר</string>
+    <string name="ok">אישור</string>
+    <string name="cancel">ביטול</string>
+    <string name="got_it">הבנתי</string>
+    <string name="delete">מחיקה</string>
+    <string name="accept">קבל</string>
+    <string name="decline">סרב</string>
+    <string name="online">מחובר</string>
+    <string name="offline">לא מקוון</string>
+    <string name="send">שליחה</string>
+    <string name="allow">התר</string>
+    <string name="open">פתיחה</string>
+    <string name="change">שינוי</string>
+    <string name="start">התחל</string>
+    <string name="finish">סיים</string>
+    <string name="no_data">אין נתונים</string>
+    <string name="ellipsis">…</string>
+    <string name="text_too_long">הטקסט המוכנס ארוך מדי</string>
+    <string name="show_onboarding">הצגת דו־שיח עזרה</string>
+    <string name="fix">תקן</string>
+    <string name="help">עזרה</string>
+    <string name="sorry">עמך הסליחה</string>
+    <string name="error_start_activity">בלתי זמין במערכת שלך</string>
+    <string name="status_heading">מצב</string>
+    <string name="error">שגיאה</string>
+    <!--Contacts and Private Conversations-->
   <string name="no_contacts">אין אנשי קשר להראות</string>
-  <string name="no_contacts_action">הקש על הצלמית + כדי להוסיף איש קשר</string>
-  <string name="date_no_private_messages">אין הודעות.</string>
-  <string name="no_private_messages">אין הודעות להראות</string>
-  <string name="message_hint">הודעה חדשה</string>
-  <string name="image_caption_hint">הוסף כיתוב (רשותי)</string>
-  <string name="image_attach">צרף תמונה</string>
-  <string name="image_attach_error">לא היה ניתן לצרף תמונה (או תמונות)</string>
-  <string name="image_attach_error_too_big">התמונה גדולה מדי. המגבלה היא %d מ״ב.</string>
-  <string name="image_attach_error_invalid_mime_type">תסדיר תמונה בלתי נתמך: %s</string>
-  <string name="panic_contact_checkbox">איש קשר לבהלה</string>
-  <string name="set_contact_alias">הגדרות איש קשר</string>
-  <string name="set_contact_alias_hint">שם איש הקשר</string>
-  <!--The first placeholder will show a duration like "7 days". The second placeholder at the end will add "Tap to learn more."-->
+    <string name="no_contacts_action">הקש על הצלמית + כדי להוסיף איש קשר</string>
+    <string name="date_no_private_messages">אין הודעות.</string>
+    <string name="no_private_messages">אין הודעות להראות</string>
+    <string name="message_hint">הודעה חדשה</string>
+    <string name="image_caption_hint">הוסף כיתוב (רשותי)</string>
+    <string name="image_attach">צרף תמונה</string>
+    <string name="image_attach_error">לא היה ניתן לצרף תמונה (או תמונות)</string>
+    <string name="image_attach_error_too_big">התמונה גדולה מדי. המגבלה היא %d מ״ב.</string>
+    <string name="image_attach_error_invalid_mime_type">תסדיר תמונה בלתי נתמך: %s</string>
+    <string name="panic_contact_checkbox">איש קשר לבהלה</string>
+    <string name="set_contact_alias">הגדרות איש קשר</string>
+    <string name="set_contact_alias_hint">שם איש הקשר</string>
+    <!--The first placeholder will show a duration like "7 days". The second placeholder at the end will add "Tap to learn more."-->
   <!--The placeholder at the end will add "Tap to learn more."-->
   <!--The first placeholder will show a contact's name. The second placeholder will show a duration like "7 days". The third placeholder at the end will add "Tap to learn more."-->
   <!--The first placeholder will show a contact's name. The second placeholder at the end will add "Tap to learn more."-->
   <string name="delete_all_messages">מחיקת כל ההודעות</string>
-  <string name="dialog_title_delete_all_messages">אשר מחיקת הודעה</string>
-  <string name="dialog_message_delete_all_messages">האם אכן ברצונך למחוק את כל ההודעות?</string>
-  <string name="dialog_title_not_all_messages_deleted">לא היה ניתן למחוק את כל ההודעות</string>
-  <string name="dialog_message_not_deleted_ongoing_both">הודעות שקשורות אל הזמנות והיכרויות מתמשכות אינן יכולות להימחק עד שההיכרויות או ההזמנות יסוימו.</string>
-  <string name="dialog_message_not_deleted_ongoing_introductions">הודעות שקשורות אל היכרויות מתמשכות אינן יכולות להימחק עד שהההיכרויות יסוימו.</string>
-  <string name="dialog_message_not_deleted_ongoing_invitations">הודעות שקשורות אל הזמנות מתמשכות אינן יכולות להימחק עד שההזמנות יסוימו.</string>
-  <string name="dialog_message_not_deleted_not_all_selected_both">כדי למחוק הזמנה או היכרות, צריך לבחור את הבקשה והתגובה.</string>
-  <string name="dialog_message_not_deleted_not_all_selected_introductions">כדי למחוק את ההיכרות, צריך לבחור את הבקשה והתגובה.</string>
-  <string name="dialog_message_not_deleted_not_all_selected_invitations">כדי למחוק את ההזמנה, צריך לבחור את הבקשה והתגובה.</string>
-  <string name="delete_contact">מחק איש קשר</string>
-  <string name="dialog_title_delete_contact">אשר מחיקת איש קשר</string>
-  <string name="dialog_message_delete_contact">האם אכן ברצונך למחוק איש קשר זה ואת כל ההודעות שהוחלפו עם איש קשר זה?</string>
-  <string name="contact_deleted_toast">איש קשר נמחק</string>
-  <!--This is shown in the action bar when opening an image in fullscreen that the user sent-->
+    <string name="dialog_title_delete_all_messages">אשר מחיקת הודעה</string>
+    <string name="dialog_message_delete_all_messages">האם אכן ברצונך למחוק את כל ההודעות?</string>
+    <string name="dialog_title_not_all_messages_deleted">לא היה ניתן למחוק את כל ההודעות</string>
+    <string name="dialog_message_not_deleted_ongoing_both">הודעות שקשורות אל הזמנות והיכרויות מתמשכות אינן יכולות להימחק עד שההיכרויות או ההזמנות יסוימו.</string>
+    <string name="dialog_message_not_deleted_ongoing_introductions">הודעות שקשורות אל היכרויות מתמשכות אינן יכולות להימחק עד שהההיכרויות יסוימו.</string>
+    <string name="dialog_message_not_deleted_ongoing_invitations">הודעות שקשורות אל הזמנות מתמשכות אינן יכולות להימחק עד שההזמנות יסוימו.</string>
+    <string name="dialog_message_not_deleted_not_all_selected_both">כדי למחוק הזמנה או היכרות, צריך לבחור את הבקשה והתגובה.</string>
+    <string name="dialog_message_not_deleted_not_all_selected_introductions">כדי למחוק את ההיכרות, צריך לבחור את הבקשה והתגובה.</string>
+    <string name="dialog_message_not_deleted_not_all_selected_invitations">כדי למחוק את ההזמנה, צריך לבחור את הבקשה והתגובה.</string>
+    <string name="delete_contact">מחק איש קשר</string>
+    <string name="dialog_title_delete_contact">אשר מחיקת איש קשר</string>
+    <string name="dialog_message_delete_contact">האם אכן ברצונך למחוק איש קשר זה ואת כל ההודעות שהוחלפו עם איש קשר זה?</string>
+    <string name="contact_deleted_toast">איש קשר נמחק</string>
+    <!--This is shown in the action bar when opening an image in fullscreen that the user sent-->
   <string name="you">את/ה</string>
-  <string name="save_image">שמור תמונה</string>
-  <string name="dialog_title_save_image">לשמור את התמונה?</string>
-  <string name="dialog_message_save_image">שמירת תמונה זו תאפשר ליישומים אחרים לגשת אליה.\n\nהאם אכן ברצונך לשמור?</string>
-  <string name="save_image_success">התמונה נשמרה</string>
-  <string name="save_image_error">לא היה ניתן לשמור תמונה</string>
-  <string name="dialog_title_no_image_support">תמונות בלתי זמינות</string>
-  <string name="dialog_message_no_image_support">Anonomi של איש הקשר שלך אינו תומך בצרופות תמונה. ברגע שהוא ישדרג, תראה צלמית שונה.</string>
-  <string name="dialog_title_image_support">כעת אפשר לשלוח תמונות אל איש קשר זה</string>
-  <string name="dialog_message_image_support">הקש על צלמית זו כדי לצרף תמונות.</string>
-  <string name="messaging_too_many_attachments_toast">רק %d התמונות הראשונות יישלחו</string>
-  <string name="menu_contact">צרו קשר</string>
-  <!--Adding Contacts-->
+    <string name="save_image">שמור תמונה</string>
+    <string name="dialog_title_save_image">לשמור את התמונה?</string>
+    <string name="dialog_message_save_image">שמירת תמונה זו תאפשר ליישומים אחרים לגשת אליה.\n\nהאם אכן ברצונך לשמור?</string>
+    <string name="save_image_success">התמונה נשמרה</string>
+    <string name="save_image_error">לא היה ניתן לשמור תמונה</string>
+    <string name="dialog_title_no_image_support">תמונות בלתי זמינות</string>
+    <string name="dialog_message_no_image_support">Anonomi של איש הקשר שלך אינו תומך בצרופות תמונה. ברגע שהוא ישדרג, תראה צלמית שונה.</string>
+    <string name="dialog_title_image_support">כעת אפשר לשלוח תמונות אל איש קשר זה</string>
+    <string name="dialog_message_image_support">הקש על צלמית זו כדי לצרף תמונות.</string>
+    <string name="messaging_too_many_attachments_toast">רק %d התמונות הראשונות יישלחו</string>
+    <string name="menu_contact">צרו קשר</string>
+    <!--Adding Contacts-->
   <string name="add_contact_title">הוסף איש קשר בקרבה</string>
-  <string name="face_to_face">אתה חייב להיפגש עם האדם שאותו אתה רוצה להוסיף כאיש קשר.\n\nזה ימנע מכל אחד להתחזות אליך או לקרוא את ההודעות שלך בעתיד.</string>
-  <string name="continue_button">המשך</string>
-  <string name="try_again_button">ניסיון חוזר</string>
-  <string name="waiting_for_contact_to_scan">ממתין שאיש הקשר יסרוק ויתחבר\u2026</string>
-  <string name="exchanging_contact_details">מחליף פרטי איש קשר\u2026</string>
-  <string name="contact_added_toast">נוסף איש קשר: %s</string>
-  <string name="contact_already_exists">איש הקשר %s קיים כבר</string>
-  <string name="qr_code_invalid">קוד ה־QR אינו תקף</string>
-  <string name="qr_code_too_old">קוד ה־QR שסרקת מגיע מגרסה ישנה יותר של %s.\n\nאנא בקש מאיש הקשר שלך לשדרג את הגרסה האחרונה ואז נסה שוב.</string>
-  <string name="qr_code_too_new">קוד ה־QR שסרקת מגיע מגרסה חדשה יותר של %s.\n\nאנא שדרג אל הגרסה האחרונה ואז נסה שוב.</string>
-  <string name="camera_error">שגיאת מצלמה</string>
-  <string name="connecting_to_device">מתחבר אל מכשיר\u2026</string>
-  <string name="authenticating_with_device">מזדהה מול המכשיר\u2026</string>
-  <string name="connection_error_title">לא היה ניתן להתחבר אל איש הקשר שלך</string>
-  <string name="connection_error_feedback">אנא שלח משוב (עם נתונים אנונימיים) דרך אפליקציית Anonomi אם הבעיה נמשכת.</string>
-  <!--Adding Contacts Remotely-->
+    <string name="face_to_face">אתה חייב להיפגש עם האדם שאותו אתה רוצה להוסיף כאיש קשר.\n\nזה ימנע מכל אחד להתחזות אליך או לקרוא את ההודעות שלך בעתיד.</string>
+    <string name="continue_button">המשך</string>
+    <string name="try_again_button">ניסיון חוזר</string>
+    <string name="waiting_for_contact_to_scan">ממתין שאיש הקשר יסרוק ויתחבר\u2026</string>
+    <string name="exchanging_contact_details">מחליף פרטי איש קשר\u2026</string>
+    <string name="contact_added_toast">נוסף איש קשר: %s</string>
+    <string name="contact_already_exists">איש הקשר %s קיים כבר</string>
+    <string name="qr_code_invalid">קוד ה־QR אינו תקף</string>
+    <string name="qr_code_too_old">קוד ה־QR שסרקת מגיע מגרסה ישנה יותר של %s.\n\nאנא בקש מאיש הקשר שלך לשדרג את הגרסה האחרונה ואז נסה שוב.</string>
+    <string name="qr_code_too_new">קוד ה־QR שסרקת מגיע מגרסה חדשה יותר של %s.\n\nאנא שדרג אל הגרסה האחרונה ואז נסה שוב.</string>
+    <string name="camera_error">שגיאת מצלמה</string>
+    <string name="connecting_to_device">מתחבר אל מכשיר\u2026</string>
+    <string name="authenticating_with_device">מזדהה מול המכשיר\u2026</string>
+    <string name="connection_error_title">לא היה ניתן להתחבר אל איש הקשר שלך</string>
+    <string name="connection_error_feedback">אנא שלח משוב (עם נתונים אנונימיים) דרך אפליקציית Anonomi אם הבעיה נמשכת.</string>
+    <!--Adding Contacts Remotely-->
   <string name="add_contact_remotely_title_case">הוסף איש קשר בקרבה</string>
-  <string name="add_contact_nearby_title">הוסף איש קשר בקרבה</string>
-  <string name="add_contact_remotely_title">הוסף איש קשר במרחק</string>
-  <string name="contact_link_intro">הכנס את הקישור מאיש הקשר שלך כאן</string>
-  <string name="contact_link_hint">קישור של איש קשר</string>
-  <string name="paste_button">הדבק</string>
-  <string name="add_contact_button">הוסף איש קשר</string>
-  <string name="copy_button">העתק</string>
-  <string name="share_button">שיתוף</string>
-  <string name="send_link_title">החלף קישורים</string>
-  <string name="add_contact_choose_nickname">בחר כינוי</string>
-  <string name="add_contact_choose_a_nickname">הכנס כינוי</string>
-  <string name="nickname_intro">יש לתת את הכינוי לאיש הקשר שלך. רק את/ה יכול/ה לראות אותו.</string>
-  <string name="your_link">יש לתת את הקישור הזה לאיש הקשר שברצונך להוסיף</string>
-  <string name="link_clip_label">קישור Anonomi</string>
-  <string name="link_copied_toast">קישור הועתק</string>
-  <string name="adding_contact_error">הייתה שגיאה בהוספת איש הקשר.</string>
-  <string name="pending_contact_requests_snackbar">יש בקשות ממתינות של אנשי קשר</string>
-  <string name="pending_contact_requests">בקשות ממתינות של אנשי קשר</string>
-  <string name="no_pending_contacts">אין בקשות ממתינות של אנשי קשר</string>
-  <string name="waiting_for_contact_to_come_online">ממתין להתחברות איש הקשר…</string>
-  <string name="connecting">מתחבר…</string>
-  <string name="adding_contact">מוסיף איש קשר…</string>
-  <string name="adding_contact_failed">הוספת איש קשר נכשלה</string>
-  <string name="dialog_title_remove_pending_contact">אשר הסרה</string>
-  <string name="dialog_message_remove_pending_contact">איש קשר זה מתווסף. אם תסיר אותו כעת, הוא לא יתווסף.</string>
-  <string name="own_link_error">הכנס את הקישור של איש הקשר שלך, לא את שלך</string>
-  <string name="nickname_missing">אנא הכנס כינוי</string>
-  <string name="invalid_link">קישור בלתי תקף</string>
-  <string name="unsupported_link">קישור זה מגיע מגרסה חדשה יותר של Anonomi. אנא שדרג אל הגרסה האחרונה ונסה שוב.</string>
-  <string name="intent_own_link">פתחת את הקישור של עצמך. יש להשתמש בקישור של איש הקשר שברצונך להוסיף!</string>
-  <string name="missing_link">אנא הכנס קישור</string>
-  <!--This is a numeral indicating the first step in a series of screens-->
+    <string name="add_contact_nearby_title">הוסף איש קשר בקרבה</string>
+    <string name="add_contact_remotely_title">הוסף איש קשר במרחק</string>
+    <string name="contact_link_intro">הכנס את הקישור מאיש הקשר שלך כאן</string>
+    <string name="contact_link_hint">קישור של איש קשר</string>
+    <string name="paste_button">הדבק</string>
+    <string name="add_contact_button">הוסף איש קשר</string>
+    <string name="copy_button">העתק</string>
+    <string name="share_button">שיתוף</string>
+    <string name="send_link_title">החלף קישורים</string>
+    <string name="add_contact_choose_nickname">בחר כינוי</string>
+    <string name="add_contact_choose_a_nickname">הכנס כינוי</string>
+    <string name="nickname_intro">יש לתת את הכינוי לאיש הקשר שלך. רק את/ה יכול/ה לראות אותו.</string>
+    <string name="your_link">יש לתת את הקישור הזה לאיש הקשר שברצונך להוסיף</string>
+    <string name="link_clip_label">קישור Anonomi</string>
+    <string name="link_copied_toast">קישור הועתק</string>
+    <string name="adding_contact_error">הייתה שגיאה בהוספת איש הקשר.</string>
+    <string name="pending_contact_requests_snackbar">יש בקשות ממתינות של אנשי קשר</string>
+    <string name="pending_contact_requests">בקשות ממתינות של אנשי קשר</string>
+    <string name="no_pending_contacts">אין בקשות ממתינות של אנשי קשר</string>
+    <string name="waiting_for_contact_to_come_online">ממתין להתחברות איש הקשר…</string>
+    <string name="connecting">מתחבר…</string>
+    <string name="adding_contact">מוסיף איש קשר…</string>
+    <string name="adding_contact_failed">הוספת איש קשר נכשלה</string>
+    <string name="dialog_title_remove_pending_contact">אשר הסרה</string>
+    <string name="dialog_message_remove_pending_contact">איש קשר זה מתווסף. אם תסיר אותו כעת, הוא לא יתווסף.</string>
+    <string name="own_link_error">הכנס את הקישור של איש הקשר שלך, לא את שלך</string>
+    <string name="nickname_missing">אנא הכנס כינוי</string>
+    <string name="invalid_link">קישור בלתי תקף</string>
+    <string name="unsupported_link">קישור זה מגיע מגרסה חדשה יותר של Anonomi. אנא שדרג אל הגרסה האחרונה ונסה שוב.</string>
+    <string name="intent_own_link">פתחת את הקישור של עצמך. יש להשתמש בקישור של איש הקשר שברצונך להוסיף!</string>
+    <string name="missing_link">אנא הכנס קישור</string>
+    <!--This is a numeral indicating the first step in a series of screens-->
   <string name="step_1">1</string>
-  <!--This is a numeral indicating the second step in a series of screens-->
+    <!--This is a numeral indicating the second step in a series of screens-->
   <string name="step_2">2</string>
-  <plurals name="contact_added_notification_text">
-    <item quantity="one">איש קשר התווסף.</item>
-    <item quantity="two">%dאנשי קשר חדשים התווספו. </item>
-    <item quantity="many">%dאנשי קשר חדשים התווספו. </item>
-    <item quantity="other">%d אנשי קשר חדשים התווספו.</item>
-  </plurals>
-  <string name="offline_state">אין חיבור אינטרנט</string>
-  <string name="duplicate_link_dialog_title">קישור כפול</string>
-  <string name="duplicate_link_dialog_text_1">יש לך כבר איש קשר ממתין עם קישור זה: %s</string>
-  <string name="duplicate_link_dialog_text_1_contact">יש לך כבר איש קשר עם קישור זה: %s</string>
-  <!--This is a question asking whether two nicknames refer to the same person-->
+    <plurals name="contact_added_notification_text">
+        <item quantity="one">איש קשר התווסף.</item>
+        <item quantity="two">%dאנשי קשר חדשים התווספו. </item>
+        <item quantity="many">%dאנשי קשר חדשים התווספו. </item>
+        <item quantity="other">%d אנשי קשר חדשים התווספו.</item>
+    </plurals>
+    <string name="offline_state">אין חיבור אינטרנט</string>
+    <string name="duplicate_link_dialog_title">קישור כפול</string>
+    <string name="duplicate_link_dialog_text_1">יש לך כבר איש קשר ממתין עם קישור זה: %s</string>
+    <string name="duplicate_link_dialog_text_1_contact">יש לך כבר איש קשר עם קישור זה: %s</string>
+    <!--This is a question asking whether two nicknames refer to the same person-->
   <!--This is a button for answering that two nicknames do indeed refer to the same person. This
 	string will be used in a dialog button, so if the translation of this string is longer than 20
 	characters, please use "Yes" instead, and use "No" for the "Different Person" button-->
   <string name="same_person_button">אותו איש</string>
-  <!--This is a button for answering that two nicknames refer to different people. This string
+    <!--This is a button for answering that two nicknames refer to different people. This string
 	will be used in a dialog button, so if the translation of this string longer than 20 characters,
 	please use "No" instead, and use "Yes" for the "Same Person" button-->
   <string name="different_person_button">איש שונה</string>
-  <string name="pending_contact_updated_toast">איש קשר ממתין עודכן</string>
-  <!--Introductions-->
+    <string name="pending_contact_updated_toast">איש קשר ממתין עודכן</string>
+    <!--Introductions-->
   <string name="introduction_onboarding_title">הכר בין אנשי הקשר שלך</string>
-  <string name="introduction_onboarding_text">אפשר להכיר בין אנשי הקשר שלך אחד עם השני, כך שהם לא צריכים להיפגש פנים מול פנים כדי להתחבר ב־Anonomi.</string>
-  <string name="introduction_menu_item">בצע היכרות</string>
-  <string name="introduction_activity_title">בחר איש קשר</string>
-  <string name="introduction_not_possible">יש לך כבר היכרות אחת בתהליך עם אנשי קשר אלו. אנא התר לה תחילה לסיים. אם אתה או אנשי הקשר שלך לעיתים נדירות מחוברים, זה עשוי לקחת זמן מה.</string>
-  <string name="introduction_message_title">הכר בין אנשי קשר</string>
-  <string name="introduction_message_hint">הוסף הודעה (רשותי)</string>
-  <string name="introduction_button">בצע היכרות</string>
-  <string name="introduction_sent">ההיכרות שלך נשלחה.</string>
-  <string name="introduction_error">הייתה שגיאה בעת ביצוע ההיכרות.</string>
-  <string name="introduction_request_sent">ביקשת להכיר את %1$s בפני %2$s.</string>
-  <string name="introduction_request_received">%1$s ביקש להכיר אותך בפני %2$s. האם אתה רוצה להוסיף את %2$s אל רשימת אנשי הקשר שלך?</string>
-  <string name="introduction_request_exists_received">%1$s ביקש להכיר אותך בפני %2$s, אבל %2$s כבר ברשימת אנשי הקשר שלך. מאחר שכנראה %1$s לא יודע זאת, עדיין אפשר להגיב:</string>
-  <string name="introduction_request_answered_received">%1$s ביקש להכיר אותך בפני %2$s.</string>
-  <string name="introduction_response_accepted_sent">הסכמת אל ההיכרות בפני %1$s.</string>
-  <string name="introduction_response_accepted_sent_info">בטרם %1$s יוכל להתווסף אל אנשי הקשר שלך, הוא צריך לקבל את ההיכרות בנוסף. זה עשוי לקחת זמן מה.</string>
-  <string name="introduction_response_declined_sent">סירבת אל ההיכרות בפני %1$s.</string>
-  <string name="introduction_response_accepted_received">%1$s הסכים אל ההיכרות בפני %2$s.</string>
-  <string name="introduction_response_declined_received">%1$s סירב אל ההיכרות בפני %2$s.</string>
-  <string name="introduction_response_declined_received_by_introducee">%1$s אומר כי %2$s סירב אל ההיכרות.</string>
-  <!--Connect via Bluetooth-->
+    <string name="introduction_onboarding_text">אפשר להכיר בין אנשי הקשר שלך אחד עם השני, כך שהם לא צריכים להיפגש פנים מול פנים כדי להתחבר ב־Anonomi.</string>
+    <string name="introduction_menu_item">בצע היכרות</string>
+    <string name="introduction_activity_title">בחר איש קשר</string>
+    <string name="introduction_not_possible">יש לך כבר היכרות אחת בתהליך עם אנשי קשר אלו. אנא התר לה תחילה לסיים. אם אתה או אנשי הקשר שלך לעיתים נדירות מחוברים, זה עשוי לקחת זמן מה.</string>
+    <string name="introduction_message_title">הכר בין אנשי קשר</string>
+    <string name="introduction_message_hint">הוסף הודעה (רשותי)</string>
+    <string name="introduction_button">בצע היכרות</string>
+    <string name="introduction_sent">ההיכרות שלך נשלחה.</string>
+    <string name="introduction_error">הייתה שגיאה בעת ביצוע ההיכרות.</string>
+    <string name="introduction_request_sent">ביקשת להכיר את %1$s בפני %2$s.</string>
+    <string name="introduction_request_received">%1$s ביקש להכיר אותך בפני %2$s. האם אתה רוצה להוסיף את %2$s אל רשימת אנשי הקשר שלך?</string>
+    <string name="introduction_request_exists_received">%1$s ביקש להכיר אותך בפני %2$s, אבל %2$s כבר ברשימת אנשי הקשר שלך. מאחר שכנראה %1$s לא יודע זאת, עדיין אפשר להגיב:</string>
+    <string name="introduction_request_answered_received">%1$s ביקש להכיר אותך בפני %2$s.</string>
+    <string name="introduction_response_accepted_sent">הסכמת אל ההיכרות בפני %1$s.</string>
+    <string name="introduction_response_accepted_sent_info">בטרם %1$s יוכל להתווסף אל אנשי הקשר שלך, הוא צריך לקבל את ההיכרות בנוסף. זה עשוי לקחת זמן מה.</string>
+    <string name="introduction_response_declined_sent">סירבת אל ההיכרות בפני %1$s.</string>
+    <string name="introduction_response_accepted_received">%1$s הסכים אל ההיכרות בפני %2$s.</string>
+    <string name="introduction_response_declined_received">%1$s סירב אל ההיכרות בפני %2$s.</string>
+    <string name="introduction_response_declined_received_by_introducee">%1$s אומר כי %2$s סירב אל ההיכרות.</string>
+    <!--Connect via Bluetooth-->
   <string name="menu_item_connect_via_bluetooth">התחבר באמצעות שן כחולה</string>
-  <string name="connect_via_bluetooth_title">התחבר באמצעות שן כחולה</string>
-  <!--Private Groups-->
+    <string name="connect_via_bluetooth_title">התחבר באמצעות שן כחולה</string>
+    <!--Private Groups-->
   <string name="groups_list_empty">אין קבוצות להראות</string>
-  <string name="groups_list_empty_action">הקש על הצלמית + כדי ליצור קבוצה, או בקש מאנשי הקשר שלך לשתף איתך קבוצות</string>
-  <string name="groups_created_by">נוצר על ידי %s</string>
-  <plurals name="messages">
-    <item quantity="one">הודעה %d</item>
-    <item quantity="two">%d הודעות</item>
-    <item quantity="many">%d הודעות</item>
-    <item quantity="other">%d הודעות</item>
-  </plurals>
-  <string name="groups_group_is_empty">קבוצה זו ריקה</string>
-  <string name="groups_group_is_dissolved">קבוצה זו פורקה</string>
-  <string name="groups_remove">הסר</string>
-  <string name="groups_create_group_title">צור קבוצה פרטית</string>
-  <string name="groups_create_group_button">צור קבוצה</string>
-  <string name="groups_create_group_invitation_button">שלח הזמנה</string>
-  <string name="groups_create_group_hint">נא לבחור שם לקבוצה הפרטית שלך</string>
-  <string name="groups_invitation_sent">הזמנה קבוצתית נשלחה</string>
-  <string name="groups_member_list">רשימת חברי קבוצה</string>
-  <string name="groups_invite_members">הזמן חברי קבוצה</string>
-  <string name="groups_member_created_you">יצרת את הקבוצה</string>
-  <string name="groups_member_created">%s יצר את הקבוצה</string>
-  <string name="groups_member_joined_you">הצטרפת אל הקבוצה</string>
-  <string name="groups_member_joined">%s הצטרף אל הקבוצה</string>
-  <string name="groups_leave">עזוב קבוצה</string>
-  <string name="groups_leave_dialog_title">אשר עזיבת קבוצה</string>
-  <string name="groups_leave_dialog_message">האם אכן ברצונך לעזוב קבוצה זו?</string>
-  <string name="groups_dissolve">פרק קבוצה</string>
-  <string name="groups_dissolve_dialog_title">אשר פירוק קבוצה</string>
-  <string name="groups_dissolve_dialog_message">האם אכן ברצונך לפרק את הקבוצה הזאת?\n\nכל חברי הקבוצה האחרים לא יוכלו להמשיך בשיחתם וכנראה לא יקבלו את ההודעות האחרונות.</string>
-  <string name="groups_dissolve_button">פרק</string>
-  <string name="groups_dissolved_dialog_title">הקבוצה פורקה</string>
-  <string name="groups_dissolved_dialog_message">היוצר של הקבוצה הזאת פירק אותה.\n\nאי אפשר לכתוב הודעות לקבוצה יותר וכנראה שלא ייתקבלו כל ההודעות שנכתבו.</string>
-  <!--Private Group Invitations-->
+    <string name="groups_list_empty_action">הקש על הצלמית + כדי ליצור קבוצה, או בקש מאנשי הקשר שלך לשתף איתך קבוצות</string>
+    <string name="groups_created_by">נוצר על ידי %s</string>
+    <plurals name="messages">
+        <item quantity="one">הודעה %d</item>
+        <item quantity="two">%d הודעות</item>
+        <item quantity="many">%d הודעות</item>
+        <item quantity="other">%d הודעות</item>
+    </plurals>
+    <string name="groups_group_is_empty">קבוצה זו ריקה</string>
+    <string name="groups_group_is_dissolved">קבוצה זו פורקה</string>
+    <string name="groups_remove">הסר</string>
+    <string name="groups_create_group_title">צור קבוצה פרטית</string>
+    <string name="groups_create_group_button">צור קבוצה</string>
+    <string name="groups_create_group_invitation_button">שלח הזמנה</string>
+    <string name="groups_create_group_hint">נא לבחור שם לקבוצה הפרטית שלך</string>
+    <string name="groups_invitation_sent">הזמנה קבוצתית נשלחה</string>
+    <string name="groups_member_list">רשימת חברי קבוצה</string>
+    <string name="groups_invite_members">הזמן חברי קבוצה</string>
+    <string name="groups_member_created_you">יצרת את הקבוצה</string>
+    <string name="groups_member_created">%s יצר את הקבוצה</string>
+    <string name="groups_member_joined_you">הצטרפת אל הקבוצה</string>
+    <string name="groups_member_joined">%s הצטרף אל הקבוצה</string>
+    <string name="groups_leave">עזוב קבוצה</string>
+    <string name="groups_leave_dialog_title">אשר עזיבת קבוצה</string>
+    <string name="groups_leave_dialog_message">האם אכן ברצונך לעזוב קבוצה זו?</string>
+    <string name="groups_dissolve">פרק קבוצה</string>
+    <string name="groups_dissolve_dialog_title">אשר פירוק קבוצה</string>
+    <string name="groups_dissolve_dialog_message">האם אכן ברצונך לפרק את הקבוצה הזאת?\n\nכל חברי הקבוצה האחרים לא יוכלו להמשיך בשיחתם וכנראה לא יקבלו את ההודעות האחרונות.</string>
+    <string name="groups_dissolve_button">פרק</string>
+    <string name="groups_dissolved_dialog_title">הקבוצה פורקה</string>
+    <string name="groups_dissolved_dialog_message">היוצר של הקבוצה הזאת פירק אותה.\n\nאי אפשר לכתוב הודעות לקבוצה יותר וכנראה שלא ייתקבלו כל ההודעות שנכתבו.</string>
+    <!--Private Group Invitations-->
   <string name="groups_invitations_title">הזמנות לקבוצה</string>
-  <string name="groups_invitations_invitation_sent">הזמנת את %1$s להצטרף אל הקבוצה \"%2$s\".</string>
-  <string name="groups_invitations_invitation_received">%1$s הזמין אותך להצטרף אל הקבוצה \"%2$s\".</string>
-  <string name="groups_invitations_joined">הצטרף אל קבוצה</string>
-  <string name="groups_invitations_declined">הזמנה קבוצתית סורבה</string>
-  <plurals name="groups_invitations_open">
-    <item quantity="one">הזמנה קבוצתית פתוחה %d</item>
-    <item quantity="two">%d הזמנות קבוצתיות פתוחות</item>
-    <item quantity="many">%d הזמנות קבוצתיות פתוחות</item>
-    <item quantity="other">%d הזמנות קבוצתיות פתוחות</item>
-  </plurals>
-  <string name="groups_invitations_response_accepted_sent">הסכמת אל ההזמנה הקבוצתית מאת %s.</string>
-  <string name="groups_invitations_response_declined_sent">סירבת אל ההזמנה הקבוצתית מאת %s.</string>
-  <string name="groups_invitations_response_accepted_received">%s הסכים אל ההזמנה הקבוצתית.</string>
-  <string name="groups_invitations_response_declined_received">%s סירב אל ההזמנה הקבוצתית.</string>
-  <string name="sharing_status_groups">רק היוצר יכול להזמין חברי קבוצה חדשים אל הקבוצה. להלן כל חברי הקבוצה הנוכחיים.</string>
-  <!--Private Groups Revealing Contacts-->
+    <string name="groups_invitations_invitation_sent">הזמנת את %1$s להצטרף אל הקבוצה \"%2$s\".</string>
+    <string name="groups_invitations_invitation_received">%1$s הזמין אותך להצטרף אל הקבוצה \"%2$s\".</string>
+    <string name="groups_invitations_joined">הצטרף אל קבוצה</string>
+    <string name="groups_invitations_declined">הזמנה קבוצתית סורבה</string>
+    <plurals name="groups_invitations_open">
+        <item quantity="one">הזמנה קבוצתית פתוחה %d</item>
+        <item quantity="two">%d הזמנות קבוצתיות פתוחות</item>
+        <item quantity="many">%d הזמנות קבוצתיות פתוחות</item>
+        <item quantity="other">%d הזמנות קבוצתיות פתוחות</item>
+    </plurals>
+    <string name="groups_invitations_response_accepted_sent">הסכמת אל ההזמנה הקבוצתית מאת %s.</string>
+    <string name="groups_invitations_response_declined_sent">סירבת אל ההזמנה הקבוצתית מאת %s.</string>
+    <string name="groups_invitations_response_accepted_received">%s הסכים אל ההזמנה הקבוצתית.</string>
+    <string name="groups_invitations_response_declined_received">%s סירב אל ההזמנה הקבוצתית.</string>
+    <string name="sharing_status_groups">רק היוצר יכול להזמין חברי קבוצה חדשים אל הקבוצה. להלן כל חברי הקבוצה הנוכחיים.</string>
+    <!--Private Groups Revealing Contacts-->
   <string name="groups_reveal_contacts">חשוף אנשי קשר</string>
-  <string name="groups_reveal_dialog_message">אתם יכולים לבחור אם לחשוף את אנשי הקשר שלכם למשתתפים הנוכחיים והעתידיים של קבוצה זו.
+    <string name="groups_reveal_dialog_message">אתם יכולים לבחור אם לחשוף את אנשי הקשר שלכם למשתתפים הנוכחיים והעתידיים של קבוצה זו.
 
 חשיפת אנשי הקשר תגרום לחיבור עם הקבוצה להיות מהיר ואמין יותר, כי תוכלו לתקשר עם אנשי הקשר שנחשפו גם אם יוצר הקבוצה אינו מחובר.</string>
-  <string name="groups_reveal_visible">יחסים עם אנשי קשר גלויים לקבוצה</string>
-  <string name="groups_reveal_visible_revealed_by_us">יחסים עם אנשי קשר גלויים לקבוצה (נחשפים על ידך)</string>
-  <string name="groups_reveal_visible_revealed_by_contact">יחסים עם אנשי קשר גלויים לקבוצה (נחשפים על ידי %s)</string>
-  <string name="groups_reveal_invisible">יחסים עם אנשי קשר אינם גלויים לקבוצה</string>
-  <!--Forums-->
+    <string name="groups_reveal_visible">יחסים עם אנשי קשר גלויים לקבוצה</string>
+    <string name="groups_reveal_visible_revealed_by_us">יחסים עם אנשי קשר גלויים לקבוצה (נחשפים על ידך)</string>
+    <string name="groups_reveal_visible_revealed_by_contact">יחסים עם אנשי קשר גלויים לקבוצה (נחשפים על ידי %s)</string>
+    <string name="groups_reveal_invisible">יחסים עם אנשי קשר אינם גלויים לקבוצה</string>
+    <!--Forums-->
   <string name="no_forums">אין קבוצות פתוחות להראות</string>
-  <string name="no_forums_action">הקש על הצלמית + כדי ליצור קבוצה פתוחה, או בקש מאנשי הקשר שלך לשתף איתך קבוצות פתוחות</string>
-  <string name="create_forum_title">צור קבוצה פתוחה</string>
-  <string name="choose_forum_hint">בחר שם עבור הקבוצה פתוחה שלך</string>
-  <string name="create_forum_button">צור קבוצה פתוחה</string>
-  <string name="forum_created_toast">קבוצה פתוחה נוצר</string>
-  <string name="no_forum_posts">אין הודעות להראות</string>
-  <string name="no_posts">אין הודעות</string>
-  <plurals name="posts">
-    <item quantity="one">רשומה %d</item>
-    <item quantity="two">%d הודעות</item>
-    <item quantity="many">%d הודעות</item>
-    <item quantity="other">%d הודעות</item>
-  </plurals>
-  <string name="forum_new_message_hint">רשומה חדשה</string>
-  <string name="forum_message_reply_hint">תשובה חדשה</string>
-  <string name="btn_reply">השב</string>
-  <string name="forum_leave">עזוב קבוצה פתוחה</string>
-  <string name="dialog_title_leave_forum">אשר עזיבת קבוצה פתוחה</string>
-  <string name="dialog_message_leave_forum">האם אכן ברצונך לעזוב קבוצה פתוחה זה?\n\nכל אנשי הקשר ששיתפת איתם קבוצה פתוחה זה עשויים להפסיק לקבל עדכונים.</string>
-  <string name="dialog_button_leave">עזיבה</string>
-  <string name="forum_left_toast">עזב קבוצה פתוחה</string>
-  <!--Forum Sharing-->
+    <string name="no_forums_action">הקש על הצלמית + כדי ליצור קבוצה פתוחה, או בקש מאנשי הקשר שלך לשתף איתך קבוצות פתוחות</string>
+    <string name="create_forum_title">צור קבוצה פתוחה</string>
+    <string name="choose_forum_hint">בחר שם עבור הקבוצה פתוחה שלך</string>
+    <string name="create_forum_button">צור קבוצה פתוחה</string>
+    <string name="forum_created_toast">קבוצה פתוחה נוצר</string>
+    <string name="no_forum_posts">אין הודעות להראות</string>
+    <string name="no_posts">אין הודעות</string>
+    <plurals name="posts">
+        <item quantity="one">רשומה %d</item>
+        <item quantity="two">%d הודעות</item>
+        <item quantity="many">%d הודעות</item>
+        <item quantity="other">%d הודעות</item>
+    </plurals>
+    <string name="forum_new_message_hint">רשומה חדשה</string>
+    <string name="forum_message_reply_hint">תשובה חדשה</string>
+    <string name="btn_reply">השב</string>
+    <string name="forum_leave">עזוב קבוצה פתוחה</string>
+    <string name="dialog_title_leave_forum">אשר עזיבת קבוצה פתוחה</string>
+    <string name="dialog_message_leave_forum">האם אכן ברצונך לעזוב קבוצה פתוחה זה?\n\nכל אנשי הקשר ששיתפת איתם קבוצה פתוחה זה עשויים להפסיק לקבל עדכונים.</string>
+    <string name="dialog_button_leave">עזיבה</string>
+    <string name="forum_left_toast">עזב קבוצה פתוחה</string>
+    <!--Forum Sharing-->
   <string name="forum_share_button">שתף קבוצה פתוחה</string>
-  <string name="contacts_selected">אנשי קשר נבחרו</string>
-  <string name="activity_share_toolbar_header">בחר אנשי קשר</string>
-  <string name="no_contacts_selector">אין אנשי קשר להראות</string>
-  <string name="no_contacts_selector_action">אנא חזור לכאן לאחר הוספת איש קשר</string>
-  <string name="forum_shared_snackbar">קבוצה פתוחה שותף עם אנשי קשר נבחרים</string>
-  <string name="forum_share_message">הוסף הודעה (רשותי)</string>
-  <string name="forum_share_error">הייתה שגיאה בשיתוף קבוצה פתוחה זה.</string>
-  <string name="forum_invitation_received">%1$s שיתף את הקבוצה פתוחה \"%2$s\" איתך.</string>
-  <string name="forum_invitation_sent">שיתפת את הקבוצה פתוחה \"%1$s\" עם %2$s.</string>
-  <string name="forum_invitations_title">הזמנות לקבוצה פתוחה</string>
-  <string name="forum_invitation_exists">הסכמת כבר אל הזמנה לקבוצה פתוחה זה.\n\nהסכמה אל יותר הזמנות תהפוך את החיבור שלך אל הקבוצה פתוחה למהיר יותר ולאמין יותר.</string>
-  <string name="forum_joined_toast">הצטרף אל קבוצה פתוחה</string>
-  <string name="forum_declined_toast">הזמנה סורבה</string>
-  <string name="shared_by_format">שותף  על ידי %s</string>
-  <string name="forum_invitation_already_sharing">משתף כבר</string>
-  <string name="forum_invitation_response_accepted_sent">הסכמת אל ההזמנה לקבוצה פתוחה מאת %s.</string>
-  <string name="forum_invitation_response_declined_sent">סירבת אל ההזמנה לקבוצה פתוחה מאת %s.</string>
-  <string name="forum_invitation_response_accepted_received">%s הסכים אל ההזמנה לקבוצה פתוחה.</string>
-  <string name="forum_invitation_response_declined_received">%s סירב אל ההזמנה לקבוצה פתוחה.</string>
-  <string name="sharing_status">מעמד שיתוף</string>
-  <string name="sharing_status_forum">כל חבר קבוצה פתוחה יכול לשתף את הקבוצה פתוחה עם אנשי הקשר שלו. אתה משתף קבוצה פתוחה זה עם אנשי הקשר הבאים. יתכן שיש חברי קבוצה פתוחה אחרים שאינך יכול לראות.</string>
-  <string name="shared_with">משותף עם %1$d (%2$d מחוברים)</string>
-  <plurals name="forums_shared">
-    <item quantity="one">קבוצה פתוחה %d משותף ע״י אנשי קשר</item>
-    <item quantity="two">%d קבוצות פתוחות משותפים ע״י אנשי קשר</item>
-    <item quantity="many">%d קבוצות פתוחות משותפים ע״י אנשי קשר</item>
-    <item quantity="other">%d קבוצות פתוחות משותפים ע״י אנשי קשר</item>
-  </plurals>
-  <string name="nobody">אף אחד</string>
-  <!--Blogs-->
+    <string name="contacts_selected">אנשי קשר נבחרו</string>
+    <string name="activity_share_toolbar_header">בחר אנשי קשר</string>
+    <string name="no_contacts_selector">אין אנשי קשר להראות</string>
+    <string name="no_contacts_selector_action">אנא חזור לכאן לאחר הוספת איש קשר</string>
+    <string name="forum_shared_snackbar">קבוצה פתוחה שותף עם אנשי קשר נבחרים</string>
+    <string name="forum_share_message">הוסף הודעה (רשותי)</string>
+    <string name="forum_share_error">הייתה שגיאה בשיתוף קבוצה פתוחה זה.</string>
+    <string name="forum_invitation_received">%1$s שיתף את הקבוצה פתוחה \"%2$s\" איתך.</string>
+    <string name="forum_invitation_sent">שיתפת את הקבוצה פתוחה \"%1$s\" עם %2$s.</string>
+    <string name="forum_invitations_title">הזמנות לקבוצה פתוחה</string>
+    <string name="forum_invitation_exists">הסכמת כבר אל הזמנה לקבוצה פתוחה זה.\n\nהסכמה אל יותר הזמנות תהפוך את החיבור שלך אל הקבוצה פתוחה למהיר יותר ולאמין יותר.</string>
+    <string name="forum_joined_toast">הצטרף אל קבוצה פתוחה</string>
+    <string name="forum_declined_toast">הזמנה סורבה</string>
+    <string name="shared_by_format">שותף  על ידי %s</string>
+    <string name="forum_invitation_already_sharing">משתף כבר</string>
+    <string name="forum_invitation_response_accepted_sent">הסכמת אל ההזמנה לקבוצה פתוחה מאת %s.</string>
+    <string name="forum_invitation_response_declined_sent">סירבת אל ההזמנה לקבוצה פתוחה מאת %s.</string>
+    <string name="forum_invitation_response_accepted_received">%s הסכים אל ההזמנה לקבוצה פתוחה.</string>
+    <string name="forum_invitation_response_declined_received">%s סירב אל ההזמנה לקבוצה פתוחה.</string>
+    <string name="sharing_status">מעמד שיתוף</string>
+    <string name="sharing_status_forum">כל חבר קבוצה פתוחה יכול לשתף את הקבוצה פתוחה עם אנשי הקשר שלו. אתה משתף קבוצה פתוחה זה עם אנשי הקשר הבאים. יתכן שיש חברי קבוצה פתוחה אחרים שאינך יכול לראות.</string>
+    <string name="shared_with">משותף עם %1$d (%2$d מחוברים)</string>
+    <plurals name="forums_shared">
+        <item quantity="one">קבוצה פתוחה %d משותף ע״י אנשי קשר</item>
+        <item quantity="two">%d קבוצות פתוחות משותפים ע״י אנשי קשר</item>
+        <item quantity="many">%d קבוצות פתוחות משותפים ע״י אנשי קשר</item>
+        <item quantity="other">%d קבוצות פתוחות משותפים ע״י אנשי קשר</item>
+    </plurals>
+    <string name="nobody">אף אחד</string>
+    <!--Blogs-->
   <string name="blogs_other_blog_empty_state">אין הודעות להראות</string>
-  <string name="read_more">קרא עוד</string>
-  <string name="blogs_write_blog_post">כתוב רשומת בלוג</string>
-  <string name="blogs_write_blog_post_body_hint">הקלד את רשומת הבלוג שלך</string>
-  <string name="blogs_publish_blog_post">פרסום</string>
-  <string name="blogs_blog_post_created">רשומת בלוג נוצרה</string>
-  <string name="blogs_blog_post_received">רשומת בלוג חדשה התקבלה</string>
-  <string name="blogs_blog_post_scroll_to">גלול אל</string>
-  <string name="blogs_feed_empty_state">אין הודעות להראות</string>
-  <string name="blogs_feed_empty_state_action">הודעות מאנשי הקשר שלך ומבלוגים שאתה רשום כמנוי אליהם יופיעו כאן
+    <string name="read_more">קרא עוד</string>
+    <string name="blogs_write_blog_post">כתוב רשומת בלוג</string>
+    <string name="blogs_write_blog_post_body_hint">הקלד את רשומת הבלוג שלך</string>
+    <string name="blogs_publish_blog_post">פרסום</string>
+    <string name="blogs_blog_post_created">רשומת בלוג נוצרה</string>
+    <string name="blogs_blog_post_received">רשומת בלוג חדשה התקבלה</string>
+    <string name="blogs_blog_post_scroll_to">גלול אל</string>
+    <string name="blogs_feed_empty_state">אין הודעות להראות</string>
+    <string name="blogs_feed_empty_state_action">הודעות מאנשי הקשר שלך ומבלוגים שאתה רשום כמנוי אליהם יופיעו כאן
 
 הקש על צלמית העט כדי לכתוב רשומה</string>
-  <string name="blogs_remove_blog">הסר בלוג</string>
-  <string name="blogs_remove_blog_dialog_message">האם אתה בטוח שאתה רוצה להסיר בלוג זה?\n\nהודעות יוסרו ממכשירך אבל לא ממכשירים של אנשים אחרים.\n\nאנשי קשר כלשהם ששיתפת איתם בלוג זה עלולים להפסיק לקבל עדכונים.</string>
-  <string name="blogs_remove_blog_ok">הסר</string>
-  <string name="blogs_blog_removed">בלוג הוסר</string>
-  <string name="blogs_reblog_comment_hint">הוספת תגובה (רשות)</string>
-  <string name="blogs_reblog_button">פרסם מחדש</string>
-  <!--Blog Sharing-->
+    <string name="blogs_remove_blog">הסר בלוג</string>
+    <string name="blogs_remove_blog_dialog_message">האם אתה בטוח שאתה רוצה להסיר בלוג זה?\n\nהודעות יוסרו ממכשירך אבל לא ממכשירים של אנשים אחרים.\n\nאנשי קשר כלשהם ששיתפת איתם בלוג זה עלולים להפסיק לקבל עדכונים.</string>
+    <string name="blogs_remove_blog_ok">הסר</string>
+    <string name="blogs_blog_removed">בלוג הוסר</string>
+    <string name="blogs_reblog_comment_hint">הוספת תגובה (רשות)</string>
+    <string name="blogs_reblog_button">פרסם מחדש</string>
+    <!--Blog Sharing-->
   <string name="blogs_sharing_share">שתף בלוג</string>
-  <string name="blogs_sharing_error">הייתה שגיאה בשיתוף בלוג זה.</string>
-  <string name="blogs_sharing_button">שתף בלוג</string>
-  <string name="blogs_sharing_snackbar">בלוג שותף עם אנשי קשר נבחרים</string>
-  <string name="blogs_sharing_response_accepted_sent">הסכמת אל ההזמנה לבלוג מאת %s.</string>
-  <string name="blogs_sharing_response_declined_sent">סירבת אל ההזמנה לבלוג מאת %s.</string>
-  <string name="blogs_sharing_response_accepted_received">%s הסכים אל ההזמנה לבלוג.</string>
-  <string name="blogs_sharing_response_declined_received">%s סירב אל ההזמנה לבלוג.</string>
-  <string name="blogs_sharing_invitation_received">%1$s שיתף את הבלוג \"%2$s\" איתך.</string>
-  <string name="blogs_sharing_invitation_sent">שיתפת את הבלוג \"%1$s\" עם %2$s.</string>
-  <string name="blogs_sharing_invitations_title">הזמנות לבלוג</string>
-  <string name="blogs_sharing_joined_toast">רשום כמנוי אל בלוג</string>
-  <string name="blogs_sharing_declined_toast">הזמנה סורבה</string>
-  <string name="sharing_status_blog">כל אחד שנרשם כמנוי אל בלוג יכול לשתף אותו עם אנשי הקשר שלו. אתה משתף בלוג זה עם אנשי הקשר הבאים. יתכן שיש מנויים אחרים שאינך יכול לראות.</string>
-  <!--RSS Feeds-->
+    <string name="blogs_sharing_error">הייתה שגיאה בשיתוף בלוג זה.</string>
+    <string name="blogs_sharing_button">שתף בלוג</string>
+    <string name="blogs_sharing_snackbar">בלוג שותף עם אנשי קשר נבחרים</string>
+    <string name="blogs_sharing_response_accepted_sent">הסכמת אל ההזמנה לבלוג מאת %s.</string>
+    <string name="blogs_sharing_response_declined_sent">סירבת אל ההזמנה לבלוג מאת %s.</string>
+    <string name="blogs_sharing_response_accepted_received">%s הסכים אל ההזמנה לבלוג.</string>
+    <string name="blogs_sharing_response_declined_received">%s סירב אל ההזמנה לבלוג.</string>
+    <string name="blogs_sharing_invitation_received">%1$s שיתף את הבלוג \"%2$s\" איתך.</string>
+    <string name="blogs_sharing_invitation_sent">שיתפת את הבלוג \"%1$s\" עם %2$s.</string>
+    <string name="blogs_sharing_invitations_title">הזמנות לבלוג</string>
+    <string name="blogs_sharing_joined_toast">רשום כמנוי אל בלוג</string>
+    <string name="blogs_sharing_declined_toast">הזמנה סורבה</string>
+    <string name="sharing_status_blog">כל אחד שנרשם כמנוי אל בלוג יכול לשתף אותו עם אנשי הקשר שלו. אתה משתף בלוג זה עם אנשי הקשר הבאים. יתכן שיש מנויים אחרים שאינך יכול לראות.</string>
+    <!--RSS Feeds-->
   <string name="blogs_rss_feeds_import">ייבא הזנת RSS</string>
-  <string name="blogs_rss_feeds_import_button">ייבא</string>
-  <string name="blogs_rss_feeds_import_hint">הכנס את כתובת האתר של הזנת ה־RSS</string>
-  <string name="blogs_rss_feeds_import_error">אנחנו מצטערים! הייתה שגיאה ביבוא ההזנה שלך.</string>
-  <string name="blogs_rss_feeds">הזנות RSS</string>
-  <string name="blogs_rss_feeds_manage_imported">מיובא:</string>
-  <string name="blogs_rss_feeds_manage_author">מחבר:</string>
-  <string name="blogs_rss_feeds_manage_updated">עודכן לאחרונה:</string>
-  <string name="blogs_rss_remove_feed">הסר הזנה</string>
-  <string name="blogs_rss_remove_feed_dialog_message">האם אכן ברצונך להסיר הזנה זו?\n\nהודעות יוסרו ממכשירך אבל לא ממכשירים של אנשים אחרים.\n\nאנשי קשר כלשהם ששיתפת איתם הזנה זו עלולים להפסיק לקבל עדכונים.</string>
-  <string name="blogs_rss_remove_feed_ok">הסר</string>
-  <string name="blogs_rss_feeds_manage_empty_state">אין הזנות RSS להראות\n\nהקש על הצלמית + כדי לייבא הזנה</string>
-  <string name="blogs_rss_feeds_manage_error">הייתה בעיה בטעינת ההזנות שלך. אנא נסה שוב מאוחר יותר.</string>
-  <!--Settings Profile Picture-->
+    <string name="blogs_rss_feeds_import_button">ייבא</string>
+    <string name="blogs_rss_feeds_import_hint">הכנס את כתובת האתר של הזנת ה־RSS</string>
+    <string name="blogs_rss_feeds_import_error">אנחנו מצטערים! הייתה שגיאה ביבוא ההזנה שלך.</string>
+    <string name="blogs_rss_feeds">הזנות RSS</string>
+    <string name="blogs_rss_feeds_manage_imported">מיובא:</string>
+    <string name="blogs_rss_feeds_manage_author">מחבר:</string>
+    <string name="blogs_rss_feeds_manage_updated">עודכן לאחרונה:</string>
+    <string name="blogs_rss_remove_feed">הסר הזנה</string>
+    <string name="blogs_rss_remove_feed_dialog_message">האם אכן ברצונך להסיר הזנה זו?\n\nהודעות יוסרו ממכשירך אבל לא ממכשירים של אנשים אחרים.\n\nאנשי קשר כלשהם ששיתפת איתם הזנה זו עלולים להפסיק לקבל עדכונים.</string>
+    <string name="blogs_rss_remove_feed_ok">הסר</string>
+    <string name="blogs_rss_feeds_manage_empty_state">אין הזנות RSS להראות\n\nהקש על הצלמית + כדי לייבא הזנה</string>
+    <string name="blogs_rss_feeds_manage_error">הייתה בעיה בטעינת ההזנות שלך. אנא נסה שוב מאוחר יותר.</string>
+    <!--Settings Profile Picture-->
   <string name="change_profile_picture">הקש כדי לשנות את תמונת הפרופיל שלך</string>
-  <string name="dialog_confirm_profile_picture_title">שנה תמונת פרופיל</string>
-  <string name="dialog_confirm_profile_picture_remark">רק אנשי הקשר שלך יכולים לראות את התמונה הזו</string>
-  <string name="change_profile_picture_failed_message">אנו מצטערים משהו השתבש בעת עדכון תמונת הפרופיל שלך</string>
-  <!--Settings Display-->
+    <string name="dialog_confirm_profile_picture_title">שנה תמונת פרופיל</string>
+    <string name="dialog_confirm_profile_picture_remark">רק אנשי הקשר שלך יכולים לראות את התמונה הזו</string>
+    <string name="change_profile_picture_failed_message">אנו מצטערים משהו השתבש בעת עדכון תמונת הפרופיל שלך</string>
+    <!--Settings Display-->
   <string name="pref_language_title">שפה ואזור</string>
-  <string name="pref_language_changed">הגדרה זו תיכנס לתוקף כשתפעיל מחדש את Anonomi. אנא התנתק והפעל מחדש את Anonomi.</string>
-  <string name="pref_language_default">ברירת מחדל של מערכת</string>
-  <string name="display_settings_title">תצוגה</string>
-  <string name="pref_theme_title">ערכת נושא</string>
-  <string name="pref_theme_light">בהיר</string>
-  <string name="pref_theme_dark">כהה</string>
-  <string name="pref_theme_auto">אוטומטי (שעות יום)</string>
-  <string name="pref_theme_system">ברירת מחדל של מערכת</string>
-  <!--Settings Connections-->
+    <string name="pref_language_changed">הגדרה זו תיכנס לתוקף כשתפעיל מחדש את Anonomi. אנא התנתק והפעל מחדש את Anonomi.</string>
+    <string name="pref_language_default">ברירת מחדל של מערכת</string>
+    <string name="display_settings_title">תצוגה</string>
+    <string name="pref_theme_title">ערכת נושא</string>
+    <string name="pref_theme_light">בהיר</string>
+    <string name="pref_theme_dark">כהה</string>
+    <string name="pref_theme_auto">אוטומטי (שעות יום)</string>
+    <string name="pref_theme_system">ברירת מחדל של מערכת</string>
+    <!--Settings Connections-->
   <string name="network_settings_title">חיבורים</string>
-  <string name="bluetooth_setting">התחבר אל אנשי קשר באמצעות Bluetooth</string>
-  <string name="wifi_setting">התחבר אל אנשי קשר באותה הרשת האלחוטית</string>
-  <string name="tor_enable_title">התחבר אל אנשי קשר באמצעות האינטרנט</string>
-  <string name="tor_enable_summary">כל החיבורים עוברים דרך רשת Tor למען פרטיות</string>
-  <string name="tor_network_setting">שיטת חיבור עבור רשת Tor</string>
-  <string name="tor_network_setting_automatic">אוטומטי על סמך מיקום</string>
-  <string name="tor_network_setting_without_bridges">השתמש ברשת Tor בלי גשרים</string>
-  <string name="tor_network_setting_with_bridges">השתמש ברשת Tor עם גשרים</string>
-  <string name="tor_network_setting_never">אל תתחבר אל האינטרנט</string>
-  <!--How and when Anonomi will connect to Tor: E.g. "Don't connect to the Internet (in China)" or "Use Tor network with bridges (in Belarus)"-->
+    <string name="bluetooth_setting">התחבר אל אנשי קשר באמצעות Bluetooth</string>
+    <string name="wifi_setting">התחבר אל אנשי קשר באותה הרשת האלחוטית</string>
+    <string name="tor_enable_title">התחבר אל אנשי קשר באמצעות האינטרנט</string>
+    <string name="tor_enable_summary">כל החיבורים עוברים דרך רשת Tor למען פרטיות</string>
+    <string name="tor_network_setting">שיטת חיבור עבור רשת Tor</string>
+    <string name="tor_network_setting_automatic">אוטומטי על סמך מיקום</string>
+    <string name="tor_network_setting_without_bridges">השתמש ברשת Tor בלי גשרים</string>
+    <string name="tor_network_setting_with_bridges">השתמש ברשת Tor עם גשרים</string>
+    <string name="tor_network_setting_never">אל תתחבר אל האינטרנט</string>
+    <!--How and when Anonomi will connect to Tor: E.g. "Don't connect to the Internet (in China)" or "Use Tor network with bridges (in Belarus)"-->
   <string name="tor_network_setting_summary">אוטומטי: %1$s (תוך %2$s)</string>
-  <string name="tor_mobile_data_title">השתמש בנתונים סלולריים</string>
-  <string name="tor_only_when_charging_title">התחבר אל האינטרנט רק בעת טעינה</string>
-  <string name="tor_only_when_charging_summary">משבית חיבור אינטרנט כשהמכשיר עובד על סוללה</string>
-  <!--Settings Security and Panic-->
+    <string name="tor_mobile_data_title">השתמש בנתונים סלולריים</string>
+    <string name="tor_only_when_charging_title">התחבר אל האינטרנט רק בעת טעינה</string>
+    <string name="tor_only_when_charging_summary">משבית חיבור אינטרנט כשהמכשיר עובד על סוללה</string>
+    <!--Settings Security and Panic-->
   <string name="security_settings_title">אבטחה</string>
-  <string name="pref_lock_title">נעילת יישום</string>
-  <string name="pref_lock_summary">השתמש במסך הנעילה של המכשיר כדי להגן על Anonomi כשאתה מחובר</string>
-  <string name="pref_lock_disabled_summary">כדי להשתמש במאפיין זה, הגדר לראשונה מסך נעילה עבור מכשירך</string>
-  <string name="pref_lock_timeout_title">הפוגת אי־פעילות של נעילת יישום</string>
-  <!--The %s placeholder is replaced with the following time spans, e.g. 5 Minutes, 1 Hour-->
+    <string name="pref_lock_title">נעילת יישום</string>
+    <string name="pref_lock_summary">השתמש במסך הנעילה של המכשיר כדי להגן על Anonomi כשאתה מחובר</string>
+    <string name="pref_lock_disabled_summary">כדי להשתמש במאפיין זה, הגדר לראשונה מסך נעילה עבור מכשירך</string>
+    <string name="pref_lock_timeout_title">הפוגת אי־פעילות של נעילת יישום</string>
+    <!--The %s placeholder is replaced with the following time spans, e.g. 5 Minutes, 1 Hour-->
   <string name="pref_lock_timeout_summary">בעת אי־שימוש ב־Anonomi, נעל אותו באופן אוטומטי לאחר %s</string>
-  <!--Will be shown in a list of lock times. Should fit into the %s of "automatically lock it after %s"-->
+    <!--Will be shown in a list of lock times. Should fit into the %s of "automatically lock it after %s"-->
   <string name="pref_lock_timeout_1">דקה 1</string>
-  <!--Will be shown in a list of lock times. Should fit into the %s of "automatically lock it after %s"-->
+    <!--Will be shown in a list of lock times. Should fit into the %s of "automatically lock it after %s"-->
   <string name="pref_lock_timeout_5">5 דקות</string>
-  <!--Will be shown in a list of lock times. Should fit into the %s of "automatically lock it after %s"-->
+    <!--Will be shown in a list of lock times. Should fit into the %s of "automatically lock it after %s"-->
   <string name="pref_lock_timeout_15">15 דקות</string>
-  <!--Will be shown in a list of lock times. Should fit into the %s of "automatically lock it after %s"-->
+    <!--Will be shown in a list of lock times. Should fit into the %s of "automatically lock it after %s"-->
   <string name="pref_lock_timeout_30">30 דקות</string>
-  <!--Will be shown in a list of lock times. Should fit into the %s of "automatically lock it after %s"-->
+    <!--Will be shown in a list of lock times. Should fit into the %s of "automatically lock it after %s"-->
   <string name="pref_lock_timeout_60">שעה 1</string>
-  <string name="pref_lock_timeout_never">לעולם לא</string>
-  <string name="pref_lock_timeout_never_summary">לעולם אל תנעל את Anonomi באופן אוטומטי</string>
-  <string name="change_password">שינוי הסיסמה</string>
-  <string name="current_password">סיסמה נוכחית</string>
-  <string name="choose_new_password">סיסמה חדשה</string>
-  <string name="confirm_new_password">אשר סיסמה חדשה</string>
-  <string name="password_changed">סיסמה שונתה.</string>
-  <string name="panic_setting">הגדרה ראשונית של כפתור בהלה</string>
-  <string name="panic_setting_title">כפתור בהלה</string>
-  <string name="panic_setting_hint">קבע כיצד Anonomi יגיב כשתשתמש ביישום כפתור בהלה</string>
-  <string name="panic_app_setting_title">יישום כפתור בהלה</string>
-  <string name="unknown_app">יישום בלתי ידוע</string>
-  <string name="panic_app_setting_summary">יישום לא הוגדר</string>
-  <string name="panic_app_setting_none">כלום</string>
-  <string name="dialog_title_connect_panic_app">אשר יישום בהלה</string>
-  <string name="dialog_message_connect_panic_app">האם אתה בטוח שאתה רוצה להתיר אל %1$s לעורר פעולות הרסניות של כפתור בהלה?</string>
-  <string name="panic_setting_destructive_action">פעולות הרסניות</string>
-  <string name="panic_setting_signout_title">התנתק</string>
-  <string name="panic_setting_signout_summary">התנתק מן Anonomi אם כפתור בהלה נלחץ</string>
-  <string name="purge_setting_title">מחק חשבון</string>
-  <string name="purge_setting_summary">מחק את חשבון Anonomi שלך אם כפתור בהלה נלחץ. זהירות: זה ימחק לצמיתות את הזהויות, אנשי הקשר וההודעות שלך</string>
-  <!--Settings Notifications-->
+    <string name="pref_lock_timeout_never">לעולם לא</string>
+    <string name="pref_lock_timeout_never_summary">לעולם אל תנעל את Anonomi באופן אוטומטי</string>
+    <string name="change_password">שינוי הסיסמה</string>
+    <string name="current_password">סיסמה נוכחית</string>
+    <string name="choose_new_password">סיסמה חדשה</string>
+    <string name="confirm_new_password">אשר סיסמה חדשה</string>
+    <string name="password_changed">סיסמה שונתה.</string>
+    <string name="panic_setting">הגדרה ראשונית של כפתור בהלה</string>
+    <string name="panic_setting_title">כפתור בהלה</string>
+    <string name="panic_setting_hint">קבע כיצד Anonomi יגיב כשתשתמש ביישום כפתור בהלה</string>
+    <string name="panic_app_setting_title">יישום כפתור בהלה</string>
+    <string name="unknown_app">יישום בלתי ידוע</string>
+    <string name="panic_app_setting_summary">יישום לא הוגדר</string>
+    <string name="panic_app_setting_none">כלום</string>
+    <string name="dialog_title_connect_panic_app">אשר יישום בהלה</string>
+    <string name="dialog_message_connect_panic_app">האם אתה בטוח שאתה רוצה להתיר אל %1$s לעורר פעולות הרסניות של כפתור בהלה?</string>
+    <string name="panic_setting_destructive_action">פעולות הרסניות</string>
+    <string name="panic_setting_signout_title">התנתק</string>
+    <string name="panic_setting_signout_summary">התנתק מן Anonomi אם כפתור בהלה נלחץ</string>
+    <string name="purge_setting_title">מחק חשבון</string>
+    <string name="purge_setting_summary">מחק את חשבון Anonomi שלך אם כפתור בהלה נלחץ. זהירות: זה ימחק לצמיתות את הזהויות, אנשי הקשר וההודעות שלך</string>
+    <!--Settings Notifications-->
   <string name="notification_settings_title">התראות</string>
-  <string name="notify_sign_in_title">הזכר לי להתחבר</string>
-  <string name="notify_sign_in_summary">הראה תזכורת כשהטלפון מתחיל או כשהיישום יעודכן</string>
-  <string name="notify_private_messages_setting_title">הודעות פרטיות</string>
-  <string name="notify_private_messages_setting_summary">הראה התרעות עבור הודעות פרטיות</string>
-  <string name="notify_private_messages_setting_summary_26">הגדר התרעות עבור הודעות פרטיות</string>
-  <string name="notify_group_messages_setting_title">הודעות קבוצתיות</string>
-  <string name="notify_group_messages_setting_summary">הראה התרעות עבור הודעות קבוצתיות</string>
-  <string name="notify_group_messages_setting_summary_26">הגדר התרעות עבור הודעות קבוצתיות</string>
-  <string name="notify_forum_posts_setting_title">הודעות קבוצה פתוחה</string>
-  <string name="notify_forum_posts_setting_summary">הראה התראות עבור הודעות קבוצה פתוחה</string>
-  <string name="notify_forum_posts_setting_summary_26">הגדר התראות עבור הודעות קבוצה פתוחה</string>
-  <string name="notify_blog_posts_setting_title">הודעות בלוג</string>
-  <string name="notify_blog_posts_setting_summary">הראה התראות עבור הודעות בלוג</string>
-  <string name="notify_blog_posts_setting_summary_26">הגדר התראות עבור הודעות בלוג</string>
-  <string name="notify_vibration_setting">רטט</string>
-  <string name="notify_sound_setting">צליל</string>
-  <string name="notify_sound_setting_default">צלצול ברירת מחדל</string>
-  <string name="notify_sound_setting_disabled">כלום</string>
-  <string name="choose_ringtone_title">בחר צלצול</string>
-  <string name="cannot_load_ringtone">לא ניתן לטעון צלצול</string>
-  <!--Conversation Settings-->
+    <string name="notify_sign_in_title">הזכר לי להתחבר</string>
+    <string name="notify_sign_in_summary">הראה תזכורת כשהטלפון מתחיל או כשהיישום יעודכן</string>
+    <string name="notify_private_messages_setting_title">הודעות פרטיות</string>
+    <string name="notify_private_messages_setting_summary">הראה התרעות עבור הודעות פרטיות</string>
+    <string name="notify_private_messages_setting_summary_26">הגדר התרעות עבור הודעות פרטיות</string>
+    <string name="notify_group_messages_setting_title">הודעות קבוצתיות</string>
+    <string name="notify_group_messages_setting_summary">הראה התרעות עבור הודעות קבוצתיות</string>
+    <string name="notify_group_messages_setting_summary_26">הגדר התרעות עבור הודעות קבוצתיות</string>
+    <string name="notify_forum_posts_setting_title">הודעות קבוצה פתוחה</string>
+    <string name="notify_forum_posts_setting_summary">הראה התראות עבור הודעות קבוצה פתוחה</string>
+    <string name="notify_forum_posts_setting_summary_26">הגדר התראות עבור הודעות קבוצה פתוחה</string>
+    <string name="notify_blog_posts_setting_title">הודעות בלוג</string>
+    <string name="notify_blog_posts_setting_summary">הראה התראות עבור הודעות בלוג</string>
+    <string name="notify_blog_posts_setting_summary_26">הגדר התראות עבור הודעות בלוג</string>
+    <string name="notify_vibration_setting">רטט</string>
+    <string name="notify_sound_setting">צליל</string>
+    <string name="notify_sound_setting_default">צלצול ברירת מחדל</string>
+    <string name="notify_sound_setting_disabled">כלום</string>
+    <string name="choose_ringtone_title">בחר צלצול</string>
+    <string name="cannot_load_ringtone">לא ניתן לטעון צלצול</string>
+    <!--Conversation Settings-->
   <string name="learn_more">למד עוד</string>
-  <!--Settings Actions-->
+    <!--Settings Actions-->
   <string name="pref_category_actions">פעולות</string>
-  <string name="send_feedback">שלח משוב</string>
-  <!--Link Warning-->
+    <string name="send_feedback">שלח משוב</string>
+    <!--Link Warning-->
   <string name="link_warning_title">אזהרת קישור</string>
-  <string name="link_warning_intro">הקישור הבא עומד להיפתח עם יישום חיצוני.</string>
-  <string name="link_warning_text">זה יכול לשמש כדי לזהות אותך. נא לחשוב האם הנך בוטח/ת באיש ששלח לך את הקישור הזה ולשקול לפתוח את הקישור עם דפדפן Tor.</string>
-  <string name="link_warning_open_link">פתח קישור</string>
-  <!--Crash Reporter-->
+    <string name="link_warning_intro">הקישור הבא עומד להיפתח עם יישום חיצוני.</string>
+    <string name="link_warning_text">זה יכול לשמש כדי לזהות אותך. נא לחשוב האם הנך בוטח/ת באיש ששלח לך את הקישור הזה ולשקול לפתוח את הקישור עם דפדפן Tor.</string>
+    <string name="link_warning_open_link">פתח קישור</string>
+    <!--Crash Reporter-->
   <string name="crash_report_title">דוח קריסת Anonomi</string>
-  <string name="not_your_fault">זאת לא אשמתך.</string>
-  <string name="please_send_report">אנא עזור לנו לבנות Anonomi טוב יותר ע״י שליחת דוח קריסה אלינו.</string>
-  <string name="report_is_encrypted">אנו מבטיחים שהדוח הזה מוצפן ונשלח באופן מאובטח.</string>
-  <string name="feedback_title">משוב</string>
-  <string name="describe_crash">תאר מה קרה (רשותי)</string>
-  <string name="enter_feedback">נא לתת את המשוב שלך</string>
-  <string name="optional_contact_email">כתובת הדוא״ל שלך (רשותי)</string>
-  <string name="include_debug_report_crash">כלול נתונים אלמוניים לגבי הקריסה</string>
-  <string name="include_debug_report_feedback">כלול נתונים אלמוניים לגבי מכשיר זה</string>
-  <string name="dev_report_basic_info">מידע בסיסי</string>
-  <string name="dev_report_device_info">מידע מכשיר</string>
-  <string name="dev_report_stacktrace">מחסנית עקיבה (Stacktrace)</string>
-  <string name="dev_report_time_info">מידע זמן</string>
-  <string name="dev_report_memory">זיכרון</string>
-  <string name="dev_report_storage">אחסון</string>
-  <string name="dev_report_connectivity">קישוריות</string>
-  <string name="dev_report_build_config">תצורת בנייה</string>
-  <string name="dev_report_logcat">יומן יישום</string>
-  <string name="dev_report_device_features">מאפייני מכשיר</string>
-  <string name="send_report">שלח דוח</string>
-  <string name="close">סגירה</string>
-  <string name="dev_report_sending">שולח משוב…</string>
-  <string name="dev_report_sent">משוב נשלח</string>
-  <string name="dev_report_saved">הדוח נשמר. הוא יישלח בפעם הבאה שתתחבר אל Anonomi.</string>
-  <string name="dev_report_error">שגיאה: שליחת דוח נכשלה</string>
-  <!--Sign Out-->
+    <string name="not_your_fault">זאת לא אשמתך.</string>
+    <string name="please_send_report">אנא עזור לנו לבנות Anonomi טוב יותר ע״י שליחת דוח קריסה אלינו.</string>
+    <string name="report_is_encrypted">אנו מבטיחים שהדוח הזה מוצפן ונשלח באופן מאובטח.</string>
+    <string name="feedback_title">משוב</string>
+    <string name="describe_crash">תאר מה קרה (רשותי)</string>
+    <string name="enter_feedback">נא לתת את המשוב שלך</string>
+    <string name="optional_contact_email">כתובת הדוא״ל שלך (רשותי)</string>
+    <string name="include_debug_report_crash">כלול נתונים אלמוניים לגבי הקריסה</string>
+    <string name="include_debug_report_feedback">כלול נתונים אלמוניים לגבי מכשיר זה</string>
+    <string name="dev_report_basic_info">מידע בסיסי</string>
+    <string name="dev_report_device_info">מידע מכשיר</string>
+    <string name="dev_report_stacktrace">מחסנית עקיבה (Stacktrace)</string>
+    <string name="dev_report_time_info">מידע זמן</string>
+    <string name="dev_report_memory">זיכרון</string>
+    <string name="dev_report_storage">אחסון</string>
+    <string name="dev_report_connectivity">קישוריות</string>
+    <string name="dev_report_build_config">תצורת בנייה</string>
+    <string name="dev_report_logcat">יומן יישום</string>
+    <string name="dev_report_device_features">מאפייני מכשיר</string>
+    <string name="send_report">שלח דוח</string>
+    <string name="close">סגירה</string>
+    <string name="dev_report_sending">שולח משוב…</string>
+    <string name="dev_report_sent">משוב נשלח</string>
+    <string name="dev_report_saved">הדוח נשמר. הוא יישלח בפעם הבאה שתתחבר אל Anonomi.</string>
+    <string name="dev_report_error">שגיאה: שליחת דוח נכשלה</string>
+    <!--Sign Out-->
   <string name="progress_title_logout">יוצא מ־Anonomi…</string>
-  <!--Screen Filters & Tapjacking-->
+    <!--Screen Filters & Tapjacking-->
   <string name="screen_filter_title">ציפוי מסך התגלה</string>
-  <string name="screen_filter_body">יישום אחר מציירת מעל Anonomi. כדי להגן על אבטחתך, Anonomi לא יגיב לנגיעות כאשר יישום אחר מצייר מעל.\n\nהיישומים הבאים יכולים לצייר מעל:\n\n%1$s</string>
-  <string name="screen_filter_body_api_30">יישום אחר מצייר מעל Anonomi. כדי להגן על אבטחתך, Anonomi לא יגיב לנגיעות כאשר יישום אחר מצייר מעל.\n\nסקור יישומים למטה כדי למצוא את היישום האחראי.</string>
-  <string name="screen_filter_allow">התר ליישומים אלו לצייר מעל</string>
-  <string name="screen_filter_review_apps">סקור יישומים</string>
-  <!--Permission Requests-->
+    <string name="screen_filter_body">יישום אחר מציירת מעל Anonomi. כדי להגן על אבטחתך, Anonomi לא יגיב לנגיעות כאשר יישום אחר מצייר מעל.\n\nהיישומים הבאים יכולים לצייר מעל:\n\n%1$s</string>
+    <string name="screen_filter_body_api_30">יישום אחר מצייר מעל Anonomi. כדי להגן על אבטחתך, Anonomi לא יגיב לנגיעות כאשר יישום אחר מצייר מעל.\n\nסקור יישומים למטה כדי למצוא את היישום האחראי.</string>
+    <string name="screen_filter_allow">התר ליישומים אלו לצייר מעל</string>
+    <string name="screen_filter_review_apps">סקור יישומים</string>
+    <!--Permission Requests-->
   <string name="permission_camera_title">הרשאת מצלמה</string>
-  <string name="permission_camera_request_body">כדי לסרוק את קוד ה־QR, היישום Anonomi צריך גישה אל המצלמה.</string>
-  <string name="permission_location_title">הרשאת מיקום</string>
-  <string name="permission_location_request_body">כדי לגלות מכשירי Bluetooth, היישום Anonomi צריך הרשאה להשיג גישה אל מיקומך.\n\nAnonomi אינו מאחסן את מיקומך או משתף אותו עם אף אחד.</string>
-  <string name="permission_camera_location_title">מצלמה ומיקום</string>
-  <string name="permission_camera_location_request_body">כדי לסרוק את קוד ה־QR, היישום Anonomi צריך הרשאה אל המצלמה.\n\nכדי לגלות מכשירי שן־כחולה, Anonomi צריך הרשאה להשיג גישה אל מיקומך.\n\nAnonomi אינו מאחסן את מיקומך או משתף אותו עם אף אחד.</string>
-  <string name="permission_camera_denied_body">דחית גישה אל המצלמה, אבל הוספת אנשי קשר דורשת שימוש במצלמה.\n\nאנא שקול הענקת גישה.</string>
-  <string name="permission_location_denied_body">דחית גישה אל המיקום שלך, אבל Anonomi צריך הרשאה זו כדי לגלות מכשירי Bluetooth.\n\nאנא שקול להעניק גישה.</string>
-  <string name="qr_code">קוד QR</string>
-  <string name="show_qr_code_fullscreen">הראה קוד QR במסך מלא</string>
-  <!--App Locking-->
+    <string name="permission_camera_request_body">כדי לסרוק את קוד ה־QR, היישום Anonomi צריך גישה אל המצלמה.</string>
+    <string name="permission_location_title">הרשאת מיקום</string>
+    <string name="permission_location_request_body">כדי לגלות מכשירי Bluetooth, היישום Anonomi צריך הרשאה להשיג גישה אל מיקומך.\n\nAnonomi אינו מאחסן את מיקומך או משתף אותו עם אף אחד.</string>
+    <string name="permission_camera_location_title">מצלמה ומיקום</string>
+    <string name="permission_camera_location_request_body">כדי לסרוק את קוד ה־QR, היישום Anonomi צריך הרשאה אל המצלמה.\n\nכדי לגלות מכשירי שן־כחולה, Anonomi צריך הרשאה להשיג גישה אל מיקומך.\n\nAnonomi אינו מאחסן את מיקומך או משתף אותו עם אף אחד.</string>
+    <string name="permission_camera_denied_body">דחית גישה אל המצלמה, אבל הוספת אנשי קשר דורשת שימוש במצלמה.\n\nאנא שקול הענקת גישה.</string>
+    <string name="permission_location_denied_body">דחית גישה אל המיקום שלך, אבל Anonomi צריך הרשאה זו כדי לגלות מכשירי Bluetooth.\n\nאנא שקול להעניק גישה.</string>
+    <string name="qr_code">קוד QR</string>
+    <string name="show_qr_code_fullscreen">הראה קוד QR במסך מלא</string>
+    <!--App Locking-->
   <string name="lock_unlock">בטל נעילת Anonomi</string>
-  <string name="lock_unlock_verbose">אנא הכנס PIN, דפוס או סיסמה של מכשריך כדי לבטל נעילת Anonomi</string>
-  <string name="lock_unlock_fingerprint_description">גע בחיישן טביעת האצבע שלך עם האצבע הרשומה כדי להמשיך</string>
-  <string name="lock_unlock_password">השתמש בסיסמה</string>
-  <string name="lock_is_locked">Anonomi נעול</string>
-  <string name="lock_tap_to_unlock">הקשה תבטל את הנעילה</string>
-  <!--Connections Screen-->
+    <string name="lock_unlock_verbose">אנא הכנס PIN, דפוס או סיסמה של מכשריך כדי לבטל נעילת Anonomi</string>
+    <string name="lock_unlock_fingerprint_description">גע בחיישן טביעת האצבע שלך עם האצבע הרשומה כדי להמשיך</string>
+    <string name="lock_unlock_password">השתמש בסיסמה</string>
+    <string name="lock_is_locked">Anonomi נעול</string>
+    <string name="lock_tap_to_unlock">הקשה תבטל את הנעילה</string>
+    <!--Connections Screen-->
   <string name="transports_help_text">Anonomi יכול להתחבר אל אנשי הקשר שלך באמצעות האינטרנט, הרשת האלחוטית או Bluetooth.\n\nכל חיבורי האינטרנט עוברים דרך רשת Tor למען פרטיות.\n\nאם איש קשר ניתן להשגה באמצעות שיטות רבות, Anonomi משתמש בהן במקביל.</string>
-  <!--Share app offline-->
+    <!--Share app offline-->
   <string name="hotspot_notification_channel_title">נקודה חמה של Wi-Fi</string>
-  <string name="hotspot_button_connected">הבא</string>
-  <!--The placeholder to be inserted into the string 'hotspot_manual_wifi': People can connect by %s-->
+    <string name="hotspot_button_connected">הבא</string>
+    <!--The placeholder to be inserted into the string 'hotspot_manual_wifi': People can connect by %s-->
   <!--Wi-Fi setup-->
   <!--The %s placeholder will be replaced with the translation of 'hotspot_scanning_a_qr_code'-->
   <!--Download link-->
   <!--The %s placeholder will be replaced with the translation of 'hotspot_scanning_a_qr_code'-->
   <!--e.g. Download Anonomi 1.2.20-->
   <string name="website_troubleshooting_title">פתרון תקלות</string>
-  <!--error handling-->
+    <!--error handling-->
   <!--Transfer Data via Removable Drives-->
   <!--Screenshots-->
   <!--This is a name to be used in screenshots. Feel free to change it to a local name.-->
   <string name="screenshot_alice">נועה</string>
-  <!--This is a name to be used in screenshots. Feel free to change it to a local name.-->
+    <!--This is a name to be used in screenshots. Feel free to change it to a local name.-->
   <string name="screenshot_bob">יהונתן</string>
-  <!--This is a name to be used in screenshots. Feel free to change it to a local name.-->
+    <!--This is a name to be used in screenshots. Feel free to change it to a local name.-->
   <string name="screenshot_carol">דניאל</string>
-  <!--This is a message to be used in screenshots. Please use the same translation for Bob!-->
+    <!--This is a message to be used in screenshots. Please use the same translation for Bob!-->
   <string name="screenshot_message_1">היי יהונתן!</string>
-  <!--This is a message to be used in screenshots. Please use the same translation for Alice!-->
+    <!--This is a message to be used in screenshots. Please use the same translation for Alice!-->
   <string name="screenshot_message_2">היי נועה! תודה שסיפרת לי על Anonomi!</string>
-  <!--This is a message to be used in screenshots.-->
+    <!--This is a message to be used in screenshots.-->
   <string name="screenshot_message_3">על לא דבר, מקווה שאתה אוהב אותו 😀</string>
-  <string name="panic_message">⚠️‼️ מצב פאניקה הופעל! ‼️⚠️ זוהי התראת פאניקה אוטומטית.</string>
+    <string name="panic_message">⚠️‼️ מצב פאניקה הופעל! ‼️⚠️ זוהי התראת פאניקה אוטומטית.</string>
+    <string name="action_request_xmr">בקשה XMR</string>
+    <string name="invalid_monero_address">פורמט כתובת Monero לא חוקי.</string>
+    <string name="invalid_monero_private_view_key">פורמט מפתח תצוגה פרטי Monero לא חוקי.</string>
+    <string name="invalid_monero_minor_index_key">אינדקס כתובת משנה Monero לא חוקי.</string>
+    <string name="missing_monero_addressor_view_key">כתובת Monero או מפתח תצוגה פרטי חסרים.</string>
+    <string name="monero_primary_address_not_set">כתובת ראשית לא הוגדרה.</string>
+    <string name="qr_decode_error">לא הצלחנו לפענח את קוד ה-QR</string>
+    <string name="copy_content_to_clipboard">העתק תוכן</string>
+    <string name="copied_to_clipboard">הועתק ללוח</string>
+    <string name="more_info_title">Anonomi Messenger</string>
+    <string name="request_xmr_amount">סכום XMR</string>
+    <string name="request_xmr_amount_hint">לדוגמה, 0.5</string>
+    <string name="request_xmr_fiat_rate">שער פיאט (לדוגמה, 242 EUR/XMR)</string>
+    <string name="request_xmr_fiat_rate_hint">לדוגמה, 140</string>
+    <string name="request_xmr_converted_amount">סכום המרה (פיאט)</string>
+    <string name="request_xmr_converted_amount_hint">לדוגמה, 70.00</string>
+    <string name="request_xmr_optional_message">הודעה אופציונלית</string>
+    <string name="request_xmr_optional_message_hint">לדוגמה, תשלום עבור שירות</string>
+    <string name="request_xmr_subaddress_mode">מצב כתובת משנה</string>
+    <string name="request_xmr_sequential">רצף</string>
+    <string name="request_xmr_manual">מדריך</string>
+    <string name="request_xmr_manual_index_hint">הזן # (1 - 1,000,000)</string>
+    <string name="request_xmr_generate_qr_code">הפק קוד QR</string>
+    <string name="error_generating_qr">שגיאה ביצירת קוד QR</string>
+    <string name="please_generate_qr_first">אנא צרו קוד QR תחילה.</string>
+    <string name="error_saving_image">שגיאה בשמירת תמונה</string>
+    <string name="share_qr_code">שתף קוד QR</string>
+    <string name="error_creating_message">שגיאה ביצירת הודעה</string>
+    <string name="request_sent">הבקשה נשלחה</string>
+    <string name="converted_amount">סכום המרה: %1$s</string>
+    <string name="update_rate_title">קצב עדכון</string>
+    <string name="update_rate_message">האם ברצונך לשמור את התעריף החדש לבקשות עתידיות?</string>
+    <string name="yes">כן</string>
+    <string name="no">לא</string>
+    <string name="rate_updated">הדירוג עודכן בהצלחה!</string>
+    <string name="intro_desc">Anonomi Messenger היא פלטפורמת תקשורת המציבה את הפרטיות בראש סדר העדיפויות, המיועדת לדיונים אנונימיים, מאובטחים ומבוזרים.\nאין צורך במספרי טלפון, כתובות דוא\"ל או מזהים אישיים.</string>
+    <string name="how_it_works_title">איך Anonomi Messenger עובדת</string>
+    <string name="how_it_works_desc">Anonomi Messenger מחבר בין משתמשים ברשתות השומרות על פרטיות כדי לאפשר שיחות מאובטחות מבלי לחשוף את זהותכם.\nהחיבורים נוצרים באופן אוטומטי ברגע שהאפליקציה פועלת.</string>
+    <string name="onion_link">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/</string>
+    <string name="onion_link_instructions">ניתן לבקר באתר Anonomi Messenger לקבלת עדכונים, תיעוד ותמיכה.\nהגישה דורשת דפדפן Tor, מכיוון שהאתר מתארח כשירות בצל.</string>
+    <string name="nickname_title">אודות הכינוי שלך</string>
+    <string name="info">מידע</string>
+    <string name="nickname_desc">הכינוי שלך הוא האופן שבו משתמשים אחרים יזהו אותך ב-Anonomi Messenger.\nהוא יהיה גלוי לאחרים ולא ניתן לשנותו לאחר יצירת החשבון.\nבחר שם שאינו חושף מידע אישי.</string>
+    <string name="tor_browser_not_installed">דפדפן Tor אינו מותקן. אנא התקן אותו כדי לפתוח קישורי בצל.</string>
+    <string name="copy_url">העתק URL</string>
+    <string name="url_copied_to_clipboard">ה-URL הועתק ללוח</string>
+    <string name="password_quite_strong">סיסמה זה בסדר.</string>
+    <string name="password_strong">הסיסמה חזקה</string>
+    <string name="dnkm_huawei_app_launch_text">אנא הקש על הכפתור למטה, פתח את מסך \"הפעלת אפליקציה\" וודא ש-Anonomi Messenger מוגדר ל\"ניהול ידני\".</string>
+    <string name="dnkm_huawei_app_launch_help">אם Anonomi Messenger אינו מוגדר ל\"ניהול ידני\" במסך \"הפעלת אפליקציה\", הוא לא יוכל לפעול ברקע.</string>
+    <string name="dnkm_xiaomi_text">כדי לפעול ברקע, Anonomi Messenger צריך להיות נעול ברשימת האפליקציות האחרונות.</string>
+    <string name="dnkm_xiaomi_dialog_body_old">1. פתח את רשימת האפליקציות האחרונות (המכונה גם מחליף אפליקציות)\n\n2. החלק מטה על תמונת Anonomi Messenger כדי להציג את סמל המנעול\n\n3. אם המנעול אינו נעול, הקש עליו כדי לנעול אותו</string>
+    <string name="dnkm_xiaomi_dialog_body_new">1. פתח את רשימת האפליקציות האחרונות (המכונה גם מחליף אפליקציות)\n\n2. אם ליד שם Anonomi Messenger מופיעה תמונה קטנה של מנעול, אין צורך לעשות דבר\n\n3. אם אין מנעול, לחץ והחזק את תמונת Anonomi Messenger עד שיופיע כפתור המנעול, ואז הקש עליו</string>
+    <string name="dnkm_xiaomi_lock_apps_text">אנא הקש על הכפתור למטה כדי לפתוח את הגדרות האבטחה. הקש על \"הגבר מהירות\", לאחר מכן הקש על \"נעל אפליקציות\" וודא ש-Anonomi Messenger מוגדר כ\"נעול\".</string>
+    <string name="dnkm_xiaomi_lock_apps_help">אם Anonomi Messenger אינו מוגדר כ\"נעול\" במסך \"נעילת אפליקציות\", הוא לא יוכל לפעול ברקע.</string>
+    <string name="dnkm_warning_dozed_1">Anonomi Messenger לא הצליח לפעול ברקע</string>
+    <string name="startup_failed_clock_error">Anonomi Messenger לא הצליח להפעיל כי השעון במכשיר שלך לא נכון.\n\nאנא כוון את השעון במכשיר שלך לשעה הנכונה ונסה שוב.</string>
+    <string name="startup_failed_db_error">Anonomi Messenger לא הצליחה לפתוח את מסד הנתונים המכיל את החשבון, אנשי הקשר וההודעות שלך.\n\nאנא שדרג לגרסה האחרונה של האפליקציה ונסה שוב, או הגדר חשבון חדש על ידי בחירת \'שכחתי את הסיסמה שלי\' בהודעת הסיסמה.</string>
+    <string name="startup_failed_data_too_old_error">החשבון שלך נוצר בגרסה ישנה של אפליקציה זו ולא ניתן לפתוח אותו בגרסה זו.\n\nעליך להתקין מחדש את הגרסה הישנה או להגדיר חשבון חדש על ידי בחירה באפשרות \'שכחתי את הסיסמה שלי\' בהודעת הסיסמה.</string>
+    <string name="startup_failed_data_too_new_error">החשבון שלך נוצר בגרסה חדשה יותר של אפליקציה זו ולא ניתן לפתוח אותו בגרסה זו.\n\nאנא שדרג לגרסה האחרונה ונסה שוב.</string>
+    <string name="startup_failed_service_error">Anonomi Messenger לא הצליחה להפעיל רכיב נדרש.\n\nאנא שדרג לגרסה האחרונה של האפליקציה ונסה שוב.</string>
+    <string name="old_android_expiry_date_reached">Anonomi Messenger כבר לא פועל ב-Android 4.\nאנא התקן את Anonomi Messenger במכשיר חדש יותר.</string>
+    <string name="old_android_delete_account">ניתן ללחוץ על הכפתור למטה כדי למחוק את החשבון מהמכשיר הזה.</string>
+    <string name="message_hint_auto_delete">הודעה חדשה שנעלמת</string>
+    <string name="message_error">שגיאה בשליחת הודעה</string>
+    <string name="menu_item_disappearing_messages">הודעות נעלמות</string>
+    <string name="auto_delete_msg_you_enabled">ההודעות שלך ייעלמו לאחר %1$s. %2$s</string>
+    <string name="auto_delete_msg_you_disabled">ההודעות שלך לא ייעלמו. %1$s</string>
+    <string name="auto_delete_msg_contact_enabled">ההודעות ב-%1$s ייעלמו לאחר %2$s. %3$s</string>
+    <string name="auto_delete_msg_contact_disabled">ההודעות ב-%1$s לא ייעלמו. %2$s</string>
+    <string name="tap_to_learn_more">הקש כדי ללמוד עוד.</string>
+    <string name="auto_delete_changed_warning_title">הודעות נעלמות שונו</string>
+    <string name="auto_delete_changed_warning_message_enabled">מאז שהתחלת לכתוב את ההודעה, הודעות נעלמות הופעלו.</string>
+    <string name="auto_delete_changed_warning_message_disabled">מאז שהתחלת לכתוב את ההודעה, הודעות נעלמות הושבתו.</string>
+    <string name="auto_delete_changed_warning_send">שלח בכל מקרה</string>
+    <string name="add_contact_error_two_way">האם שניכם סרקתם את קודי ה-QR אחד של השני?</string>
+    <string name="qr_code_too_old_1">קוד ה-QR שסרק/ה את/ה מקורו בגרסה ישנה יותר של Anonomi Messenger.\n\nאנא בקש/י מאנשי הקשר שלך לשדרג לגרסה האחרונה ואז נסה/י שוב.</string>
+    <string name="qr_code_too_new_1">קוד ה-QR שסרק/ה את/ה מקורו בגרסה חדשה יותר של Anonomi Messenger.\n\nאנא שדרג/י לגרסה האחרונה ונסה/י שוב.</string>
+    <string name="mailbox_qr_code_for_contact">הקוד QR שסרק/ה את/ה מקורו ב-Anonomi Postbox.\n\nאם ברצונך לקשר Postbox, בחר/י הגדרות &gt; Postbox מתפריט Anonomi Messenger.</string>
+    <string name="qr_code_format_unknown">הקוד QR שסרק/ה לא מיועד להוספת איש קשר ב-Anonomi Messenger.\n\nאנא סרוק/י את הקוד QR המופיע על מסך איש הקשר שלך.</string>
+    <string name="info_both_must_scan">עליכם לסרוק את קודי ה-QR של זה את זה.</string>
+    <string name="duplicate_link_dialog_text_2">האם %1$s ו-%2$s הם אותו אדם?</string>
+    <string name="duplicate_link_dialog_text_3">%1$s ו-%2$s שלחו לך את אותו הקישור.\n\nאחד מהם עשוי לנסות לגלות מי הם אנשי הקשר שלך.\n\nאל תגיד להם שקיבלת את אותו הקישור ממישהו אחר.</string>
+    <string name="info_both_must_enter_links">עליכם להוסיף את הקישורים של זה לזה.</string>
+    <string name="peer_trust_level_unverified">אנשי קשר לא מאומתים</string>
+    <string name="peer_trust_level_verified">אנשי קשר מאומתים</string>
+    <string name="peer_trust_level_ourselves">אני</string>
+    <string name="peer_trust_level_stranger">זר</string>
+    <string name="introduction_response_declined_auto">ההקדמה ל-%1$s נדחתה אוטומטית.</string>
+    <string name="connect_via_bluetooth_intro">במקרה שחיבורי Bluetooth אינם פועלים באופן אוטומטי, ניתן להשתמש במסך זה כדי להתחבר באופן ידני.\n\nעל איש הקשר שלך להיות בקרבת מקום כדי שהפעולה תצליח.\n\nעליך ועל איש הקשר שלך ללחוץ על \"התחל\" בו-זמנית.</string>
+    <string name="connect_via_bluetooth_already_discovering">כבר מנסה להתחבר באמצעות Bluetooth. אנא נסה שוב בקרוב.</string>
+    <string name="connect_via_bluetooth_no_location_permission">לא ניתן להמשיך ללא אישור מיקום</string>
+    <string name="connect_via_bluetooth_no_bluetooth_permission">לא ניתן להמשיך ללא אישור ממכשירים סמוכים</string>
+    <string name="connect_via_bluetooth_success">התחבר בהצלחה באמצעות Bluetooth</string>
+    <string name="connect_via_bluetooth_error">לא ניתן להתחבר באמצעות Bluetooth.</string>
+    <string name="connect_via_bluetooth_error_not_supported">המכשיר אינו תומך ב-Bluetooth.</string>
+    <string name="groups_invitations_response_declined_auto">ההזמנה לקבוצה מ-%s נדחתה אוטומטית.</string>
+    <string name="offline_maps_url_copied_dialog_title">URL הועתק</string>
+    <string name="forum_invitation_already_invited">ההזמנה כבר נשלחה</string>
+    <string name="forum_invitation_invite_received">ההזמנה כבר התקבלה</string>
+    <string name="forum_invitation_not_supported">לא נתמך על ידי איש הקשר הזה</string>
+    <string name="forum_invitation_error">שגיאה. זו תקלה ולא אשמתך.</string>
+    <string name="forum_invitation_response_declined_auto">ההזמנה לקבוצה הפתוחה מ-%s נדחתה אוטומטית.</string>
+    <string name="blogs_sharing_response_declined_auto">ההזמנה לבלוג מ-%s נדחתה אוטומטית.</string>
+    <string name="blogs_rss_feeds_import_progress">ייבוא עדכון RSS…</string>
+    <string name="blogs_rss_feeds_import_title">ייבוא פיד מקובץ</string>
+    <string name="passcode_invalid">ביטוי לא חוקי. השתמש בביטוי מתמטי פשוט (לדוגמה, 55+23).</string>
+    <string name="set_passcode_unlock_hint">כדי לבטל את נעילת מצב הסתר מאוחר יותר, הזן את הביטוי ולחץ והחזק את = למשך כ-1 שנייה.</string>
+    <string name="set_passcode_title">הגדר סיסמת מחשבון</string>
+    <string name="set_passcode_message">צרו ביטוי מחשבון שתשתמשו בו כדי לבטל את נעילת מצב הסתר.</string>
+    <string name="passcode_confirm_failed">הקוד לא תואם.</string>
+    <string name="passcode_attention_label">שימו לב</string>
+    <string name="set_passcode_hint_1">ביטוי (לדוגמה, 55+23)</string>
+    <string name="set_passcode_hint_2">הזן מחדש את הביטוי</string>
+    <string name="stealth_mode_title">מצב התגנבות</string>
+    <string name="stealth_mode_switch_title">מצב התגנבות</string>
+    <string name="stealth_mode_switch_summary">כאשר האפליקציה מופעלת, Anonomi Messenger מופיעה כ-Calculator במגירת האפליקציות.</string>
+    <string name="pref_stealth_mode_title">מצב התגנבות</string>
+    <string name="pref_stealth_mode_summary">הסתר את האפליקציה תחת סמל ושם של מחשבון. קוד נעילה סודי חושף את Anonomi Messenger.</string>
+    <string name="no_passcode_configured">מצב התגנבות עדיין לא הוגדר. הפעל אותו כדי ליצור סיסמה.</string>
+    <string name="invalid_saved_passcode">שגיאה: ביטוי סיסמה שמור לא חוקי.</string>
+    <string name="incorrect_passcode">קוד גישה שגוי. נסה שוב.</string>
+    <string name="action_send_location">שלח מיקום לא מקוון</string>
+    <string name="location_sent">מיקום שנשלח</string>
+    <string name="unlocking_anonchat">ביטול נעילת Anonomi Messenger...</string>
+    <string name="stealth_mode_enabled">מצב התגנבות מופעל.</string>
+    <string name="offline_maps_copy_onion_title">היכן ניתן להשיג נתוני מפות לא מקוונות</string>
+    <string name="copy_clearnet_url">העתק כתובת URL של Clearnet</string>
+    <string name="offline_maps_copy_url_title">העתק את כתובת ה-URL של מאגר נתוני המפות הלא מקוונות</string>
+    <string name="offline_maps_copy_url_summary">הקש כדי להעתיק את כתובת ה-URL של שירות Onion להורדת נתוני מפות לא מקוונות.</string>
+    <string name="play">הפעל</string>
+    <string name="offline_maps_url_copied_dialog_message">כתובת ה-URL של שירות הבצל הועתקה ללוח. כעת פתח את דפדפן Tor, הדבק את כתובת ה-URL וגש למאגר המפות הלא מקוונות.</string>
+    <string name="offline_maps_help_title">מפות לא מקוונות</string>
+    <string name="offline_maps_help_main_title">מפות לא מקוונות מאובטחות</string>
+    <string name="open_in_tor_browser">פתח בדפדפן Tor</string>
+    <string name="tor_browser_required_title">נדרש דפדפן Tor</string>
+    <string name="tor_browser_required_message">קישור זה הוא שירות Onion ודורש דפדפן Tor.\n\n פתיחת גרסת clearnet עלולה לחשוף את כתובת ה-IP והמטא-נתונים של הרשת שלך.</string>
+    <string name="open_clearnet_warning">כתובת URL ברשת פתוחה (פחות פרטית)</string>
+    <string name="install_tor_browser">התקן את דפדפן Tor</string>
+    <string name="offline_maps_help_intro">המפות המנותקות של Anonomi Messenger פועלות ללא אינטרנט (ללא בקשות לשרת או יומנים כמו ברוב אפליקציות המפות), מה שהופך אותן לדרך הבטוחה והפרטית ביותר לשיתוף מיקום.</string>
+    <string name="offline_maps_help_preload_title">טען מראש נתוני מפה</string>
+    <string name="offline_maps_help_preload_desc">כדי להבטיח שלא יהיו חיבורים לשרתים חיצוניים (וכדי למנוע דליפת מידע כגון כתובת ה-IP שלך, מטא-נתונים של בקשות וכו\'), Anonomi Messenger דורשת טעינה מראש של נתוני מפות לאפליקציה.</string>
+    <string name="offline_maps_help_download_title">כלי מייצא מפות</string>
+    <string name="offline_maps_help_download_desc">צרו חבילות מפות לא מקוונות באמצעות Map Exporter, ואז ייבאו אותן ל-Anonomi Messenger.\n\n 1 - העתיקו את כתובת ה-URL של Map Exporter ללוח.\n\n 2 - פתחו את דפדפן Tor, הדביקו את כתובת ה-URL וגששו לשירות.</string>
+    <string name="offline_maps_help_data_title">ייבוא נתוני מפה מיוצאים</string>
+    <string name="offline_maps_help_data_desc">לאחר ייצוא חבילת מפות:\n\n 1 - חזור אחורה והקש על \"ייבא נתוני מפה לא מקוונים\".\n 2 - בחר את קובץ ה-ZIP שברצונך לייבא.\n 3 - המתן עד לסיום הייבוא — חבילות גדולות עשויות לקחת זמן מה, בהתאם לגודל הקובץ ולמכשיר שלך.</string>
+    <string name="offline_maps_help_zoom_title">רמות זום</string>
+    <string name="offline_maps_help_zoom_desc">רמות הזום שולטות בפרטי המפה ובגודל הקובץ.\n זום נמוך יותר = שטח גדול יותר, פחות פרטים.\n זום גבוה יותר = יותר פרטים, הורדות גדולות יותר.</string>
+    <string name="offline_maps_help_summary">למד כיצד להוריד ולהשתמש במפות לא מקוונות בצורה מאובטחת.</string>
+    <string name="send_offline_location_title">שלח מיקום לא מקוון</string>
+    <string name="dropped_pin">סיכה שנפלה</string>
+    <string name="label_input_hint">תווית (לדוגמה, נקודת מפגש)</string>
+    <string name="importing_map_message">מייבאים מפה... אנא המתן. בהתאם לגודל הייבוא, התהליך עשוי לארוך זמן מה.</string>
+    <string name="delete_offline_map_title">מחק מפה לא מקוונת</string>
+    <string name="delete_offline_map_message">האם ברצונך למחוק את המפה הלא מקוונת: %1$s? פעולה זו תסיר את כל הנתונים שלה.</string>
+    <string name="offline_map_deleted">מפת המצב \'%1$s\' במצב לא מקוון נמחקה.</string>
+    <string name="no_offline_maps">עדיין לא יובאו מפות לא מקוונות.</string>
+    <string name="offline_map_summary">רמות זום:%1$s\n\n%2$s</string>
+    <string name="import_completed_for">הייבוא הושלם עבור: %1$s</string>
+    <string name="failed_to_parse_metadata">לא הצלחנו לנתח את המטא-נתונים עבור: %1$s</string>
+    <string name="failed_to_load_map_info">לא הצלחנו לטעון את פרטי המפה</string>
+    <string name="pref_key_import_offline_maps">pref_key_import_offline_maps</string>
+    <string name="pref_title_import_offline_maps">ייבוא נתוני מפה לא מקוונים</string>
+    <string name="pref_summary_import_offline_maps">בחרו וייבאו אריחי מפה לא מקוונים מקובץ ZIP.</string>
+    <string name="pref_category_offline_maps">ניהול מפות לא מקוונות</string>
+    <string name="pref_category_offline_maps_list">מפות לא מקוונות מיובאות</string>
+    <string name="pref_key_offline_maps_title">מפות לא מקוונות</string>
+    <string name="pref_key_offline_maps_summary">נהל נתוני מפות לא מקוונים.</string>
+    <string name="offline_maps_title">מפות לא מקוונות</string>
+    <string name="offline_maps_import_title">ייבוא מפות לא מקוונות</string>
+    <string name="offline_maps_import_success">%1$d אריחים יובאו בהצלחה.</string>
+    <string name="offline_maps_import_failed">נכשל בייבוא מפות לא מקוונות.</string>
+    <string name="offline_maps_clearnet_url">https://anonomi.org/maps/</string>
+    <string name="offline_maps_onion_url">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/maps/</string>
+    <plurals name="duration_minutes">
+        <item quantity="one">%d דקה</item>
+        <item quantity="two">%d דקות</item>
+        <item quantity="other">%d דקות</item>
+    </plurals>
+    <plurals name="duration_hours">
+        <item quantity="one">%d שעה</item>
+        <item quantity="two">%d שעות</item>
+        <item quantity="other">%d שעות</item>
+    </plurals>
+    <plurals name="duration_days">
+        <item quantity="one">%d יום</item>
+        <item quantity="two">%d ימים</item>
+        <item quantity="other">%d ימים</item>
+    </plurals>
+    <string name="panic_enabled_title">אפשר הפעלת מצב פאניקה</string>
+    <string name="panic_enabled_summary">זהה את רצף לחצני עוצמת הקול כדי להפעיל את מצב הפאניקה.</string>
+    <string name="panic_record_sequence_title">הקלט רצף פאניקה</string>
+    <string name="panic_sequence_not_set">אין רצף מוגדר</string>
+    <string name="panic_sequence_too_short">הרצף חייב להיות בן 3 שלבים לפחות.</string>
+    <string name="panic_action_title">פעולת פאניקה</string>
+    <string name="panic_dialog_title">מצב פאניקה</string>
+    <string name="panic_record_dialog_title">הקלט רצף פאניקה</string>
+    <string name="panic_record_dialog_instruction">לחצו על כפתורי הגברת/הנמכת עוצמת הקול בסדר הרצוי. לחיצה קצרה (&lt; 0.5 שניות) או לחיצה ארוכה (&gt;= 0.5 שניות). נדרשים לפחות 3 שלבים.</string>
+    <string name="panic_record_save">שמור</string>
+    <string name="panic_record_clear">ברור</string>
+    <string name="panic_action_delete_summary">מחק לצמיתות את חשבונך, אנשי הקשר וההודעות שלך</string>
+    <string name="panic_action_dialog_summary">הצג תיבת דו-שיח לבחירה (התנתק / מחק חשבון / בטל)</string>
+    <string name="panic_status_signing_out">שליחת הודעות פאניקה ויציאה מהחשבון…</string>
+    <string name="panic_status_deleting">שליחת הודעות פאניקה ומחיקת חשבון…</string>
+    <string name="monero_settings_title">Monero (XMR)</string>
+    <string name="pref_primary_address_title">כתובת Monero ראשית</string>
+    <string name="pref_primary_address_hint">הזן את כתובת Monero שלך (4...)</string>
+    <string name="pref_private_view_key_title">מפתח תצוגה פרטית</string>
+    <string name="pref_private_view_key_hint">הזן את מפתח התצוגה הפרטי שלך (64 תווים הקסדצימליים)</string>
+    <string name="pref_monero_rate_title">שער המטבע Monero</string>
+    <string name="pref_monero_rate_hint">הזן את שער ה-XMR (לדוגמה, 120.50)</string>
+    <string name="pref_minor_index_title">אינדקס כתובות משנה</string>
+    <string name="pref_minor_index_hint">הזן את המדד הנוכחי</string>
+    <string name="mailbox_settings_title">Anonomi Postbox</string>
+    <string name="mailbox_setup_title">הגדרת תיבת דואר</string>
+    <string name="mailbox_setup_intro">תיבת דואר מאפשרת לאנשי הקשר שלך לשלוח לך הודעות בזמן שאתה לא מחובר. תיבת הדואר תקבל את ההודעות שלך ותאחסן אותן עד שתתחבר.\n \nניתן להתקין את אפליקציית Anonomi Postbox במכשיר רזרבי. השאר אותו מחובר לחשמל ול-Wi-Fi כדי שיהיה מחובר תמיד.</string>
+    <string name="mailbox_setup_download">ראשית, התקן את אפליקציית Postbox במכשיר אחר על ידי הורדת \"Anonomi Postbox\" מהמקום שבו הורדת את Anonomi Messenger.\n \nלאחר מכן, קשר את Postbox שלך ל-Anonomi Messenger על ידי סריקת קוד ה-QR המוצג באפליקציית Postbox.</string>
+    <string name="mailbox_setup_download_link">שתף קישור להורדה</string>
+    <string name="mailbox_setup_button_scan">סרוק את קוד ה-QR של Postbox</string>
+    <string name="mailbox_setup_connecting">התחברות ל-Postbox…</string>
+    <string name="mailbox_setup_connecting_info">זה עשוי לקחת עד %1s</string>
+    <string name="mailbox_qr_code_too_old">הקוד QR שסרק/ה את/ה מקורו בגרסה ישנה יותר של Anonomi Postbox.\n\nאנא שדרג/י את Anonomi Postbox לגרסה האחרונה ונסה/י שוב.</string>
+    <string name="mailbox_qr_code_too_new">קוד ה-QR שסרק/ה את/ה מקורו בגרסה חדשה יותר של Anonomi Postbox.\n\nאנא שדרג/י את Anonomi Messenger לגרסה האחרונה ונסה/י שוב.</string>
+    <string name="contact_qr_code_for_mailbox">הקוד QR שסרק/ה את/ה מיועד להוספת איש קשר ב-Anonomi Messenger.\n\nאם ברצונך להוסיף איש קשר, עבור לרשימת אנשי הקשר והקש על סמל +.</string>
+    <string name="mailbox_setup_qr_code_wrong_description">הקוד QR שסרק לא מגיע מ-Anonomi Postbox.\n\nאנא פתח את אפליקציית Anonomi Postbox במכשיר Postbox שלך וסרוק את קוד ה-QR המוצג בה.</string>
+    <string name="mailbox_setup_already_paired_title">תיבת דואר שכבר מקושרת</string>
+    <string name="mailbox_setup_already_paired_description">בטל את הקישור ל-Postbox במכשיר האחר שלך ונסה שוב.</string>
+    <string name="mailbox_setup_io_error_title">לא ניתן להתחבר</string>
+    <string name="mailbox_setup_io_error_description">ודא ששני המכשירים מחוברים לאינטרנט ונסה שוב.</string>
+    <string name="mailbox_setup_assertion_error_title">שגיאת תיבת דואר</string>
+    <string name="mailbox_setup_camera_error_description">לא ניתן לגשת למצלמה. נסה שוב, אולי לאחר אתחול מחדש של המכשיר.</string>
+    <string name="mailbox_setup_paired_title">מחובר</string>
+    <string name="mailbox_setup_paired_description">תיבת הדואר שלך חוברה בהצלחה ל-Anonomi Messenger.\n \nהשאר את תיבת הדואר מחוברת לחשמל ול-Wi-Fi כדי שתהיה תמיד מקוונת.</string>
+    <string name="tor_offline_description">ודא שהמכשיר מחובר לאינטרנט ושהחיבור לאינטרנט מותר.\n \nלאחר מכן, המתן עד שהסמל של הגלובוס במסך הגדרות החיבור יהפוך לירוק.</string>
+    <string name="tor_offline_button_check">בדוק את הגדרות החיבור</string>
+    <string name="mailbox_status_title">סטטוס תיבת דואר</string>
+    <string name="mailbox_status_connected_title">Postbox פועל</string>
+    <string name="mailbox_status_problem_title">Anonomi Messenger מתקשה להתחבר ל-Postbox</string>
+    <string name="mailbox_status_failure_title">Postbox אינו זמין</string>
+    <string name="mailbox_status_app_too_old_title">Anonomi Messenger ישן מדי</string>
+    <string name="mailbox_status_app_too_old_message">עדכן את Anonomi Messenger לגרסה האחרונה של האפליקציה ונסה שוב.</string>
+    <string name="mailbox_status_mailbox_too_old_title">Postbox ישן מדי</string>
+    <string name="mailbox_status_mailbox_too_old_message">עדכן את Postbox לגרסה האחרונה של האפליקציה ונסה שוב.</string>
+    <string name="mailbox_status_check_button">בדוק את החיבור</string>
+    <string name="mailbox_status_connected_info">חיבור אחרון: %s</string>
+    <string name="mailbox_status_unlink_button">ניתוק</string>
+    <string name="mailbox_status_unlink_dialog_title">ניתוק תיבת דואר?</string>
+    <string name="mailbox_status_unlink_dialog_question">האם אתה בטוח שברצונך לבטל את הקישור לתיבת הדואר שלך?</string>
+    <string name="mailbox_status_unlink_dialog_warning">אם תנתק את ה-Postbox שלך, לא תוכל לקבל הודעות בזמן ש-Anonomi Messenger במצב לא מקוון.</string>
+    <string name="mailbox_status_unlink_no_wipe_title">התיבה שלך ב-Postbox נותקה</string>
+    <string name="mailbox_status_unlink_no_wipe_message">בפעם הבאה שתהיה לך גישה למכשיר Postbox שלך, פתח את אפליקציית Postbox והקש על כפתור \"Unlink\" (ביטול קישור) כדי להשלים את התהליך.\n\nאם אין לך יותר גישה למכשיר Postbox שלך, אל תדאג. הנתונים שלך מוצפנים, כך שהם יישארו מאובטחים גם אם לא תשלים את התהליך.</string>
+    <string name="mailbox_status_unlink_success">התיבה שלך ב-Postbox נותקה</string>
+    <string name="mailbox_error_notification_channel_title">בעיה ב-Anonomi Postbox</string>
+    <string name="mailbox_error_notification_title">Anonomi Postbox אינו זמין</string>
+    <string name="mailbox_error_notification_text">הקש כדי לתקן את הבעיה.</string>
+    <string name="mailbox_error_wizard_button">תקן את הבעיה</string>
+    <string name="mailbox_error_wizard_title">אשף פתרון בעיות ב-Postbox</string>
+    <string name="mailbox_error_wizard_question1">האם יש לך גישה למכשיר Postbox שלך?</string>
+    <string name="mailbox_error_wizard_answer1">כן, יש לי גישה אליו כרגע.</string>
+    <string name="mailbox_error_wizard_answer2">לא כרגע, אבל אוכל לקבל גישה אליו מאוחר יותר.</string>
+    <string name="mailbox_error_wizard_answer3">לא, אין לי יותר גישה אליו.</string>
+    <string name="mailbox_error_wizard_info1_1">ודא שהמכשיר Postbox מופעל ומחובר לאינטרנט.</string>
+    <string name="mailbox_error_wizard_question1_1">פתחו את אפליקציית Postbox. מה אתם רואים?</string>
+    <string name="mailbox_error_wizard_answer1_1">אני רואה הוראות להגדרת תיבת הדואר</string>
+    <string name="mailbox_error_wizard_answer1_2">אני רואה קוד QR</string>
+    <string name="mailbox_error_wizard_answer1_3">אני רואה \"Postbox פועל\"</string>
+    <string name="mailbox_error_wizard_answer1_4">אני רואה \"המכשיר במצב לא מקוון\"</string>
+    <string name="mailbox_error_wizard_info1_1_1">אנא בטל את הקישור של Postbox באמצעות הכפתור שלמטה, ואז פעל לפי ההוראות במכשיר Postbox כדי לקשר אותו שוב.</string>
+    <string name="mailbox_error_wizard_info_1_1_2">אנא בטל את הקישור ל-Postbox שלך באמצעות הכפתור שלמטה, ואז סרוק את קוד ה-QR כדי לקשר אותו שוב.</string>
+    <string name="mailbox_error_wizard_info1_1_3">אנא השתמשו בלחצן שלמטה כדי לבדוק את החיבור בין Anonomi Messenger ל-Postbox.\n\n אם החיבור נכשל שוב:\n • ודאו שאפליקציות Postbox ו-Anonomi Messenger מעודכנות לגרסה האחרונה.\n • הפעל מחדש את מכשירי Postbox ו-Anonomi Messenger ונסה שוב.</string>
+    <string name="mailbox_error_wizard_info1_1_4">בדוק שהמכשיר של תיבת הדואר מחובר כהלכה לאינטרנט.\n\nבדוק שהשעון במכשיר Postbox מציג את השעה, התאריך ואזור הזמן הנכונים.\n\nבדוק שאפליקציות Postbox ו-Anonomi Messenger מעודכנות לגרסה האחרונה.\n\nהפעל מחדש את מכשירי Postbox ו-Anonomi Messenger ונסה שוב.</string>
+    <string name="mailbox_error_wizard_info2">אנא חזור למסך זה כאשר תהיה לך גישה למכשיר.</string>
+    <string name="mailbox_error_wizard_info3">אנא בטל את הקישור לתיבת הדואר שלך באמצעות הכפתור שלמטה.\n\nלאחר ביטול הקישור לתיבת הדואר הישנה שלך, תוכל להגדיר תיבת דואר חדשה בכל עת.</string>
+    <string name="about_title">אודות</string>
+    <string name="anonomi_version">גרסת Anonomi Messenger: %s</string>
+    <string name="tor_version">גרסת Tor: %s</string>
+    <string name="links">קישורים</string>
+    <string name="briar_website">• <a href=""> אתר אינטרנט </a></string>
+    <string name="briar_source_code">• <a href=""> קוד מקור </a></string>
+    <string name="briar_changelog">• <a href=""> יומן שינויים </a></string>
+    <string name="briar_privacy_policy">• <a href=""> מדיניות פרטיות </a></string>
+    <string name="translator_thanks">תודה לכל התורמים במעבדת הלוקליזציה.</string>
+    <string name="anonchat_url">http://qeaknqubhyki4xlrslaalb5h6vmvcdt4bmse436ivk7mugjgxvkucvyd.onion/</string>
+    <string name="anonchat_url_note">כתובת URL זו נגישה רק דרך רשת Tor. השתמש בדפדפן Tor או בשירות תואם כדי לפתוח אותה בצורה מאובטחת.</string>
+    <string name="about_anonomi_body">Anonomi Messenger היא אפליקציית הודעות שתוכננה להתנגד למעקב, ריכוזיות ותפיסת תשתיות באמצעות הארכיטקטורה הטכנית שלה.\n\n במקום להסתמך על אמון מוסדי או ערבויות מדיניות, Anonomi Messenger משלבת את הנחות היסוד שלה ישירות באופן שבו מיושמים תקשורת, זהות ורשתות.\n\n הנחות עיצוב\n\n Anonomi Messenger בנויה סביב קבוצה קטנה של הנחות מפורשות:\n • רשתות עשויות להיות מנוטרות, מסוננות או מנוהלות\n • התשתית עשויה להילקח, להשתנות או להיסגר\n • פלטפורמות ומתווכים עשויים לפעול תחת כפייה\n • משתמשים עשויים לפעול תחת רמות סיכון שונות\n\n תנאים אלה מטופלים כסביבות הפעלה רגילות, ולא כמקרים חריגים.\n\n ארכיטקטורה על פני מדיניות\n\n Anonomi Messenger אינו תלוי ב:\n • שרתים מרכזיים\n • ספריות גלובליות\n • מערכות זהות מבוססות חשבון\n • מנגנוני שחזור הקשורים לספקים חיצוניים\n\n במקום זאת, התקשורת מתבצעת ישירות בין עמיתים, תוך שימוש באמצעי התקשורת הבטוח ביותר בתנאים הנוכחיים.\n\n תקשורת למטרות כלליות\n\n Anonomi Messenger יכול לשמש כמסנג\'ר למטרות כלליות, כולל שיחות אחד על אחד, צ\'אטים קבוצתיים, אנשי קשר לטווח ארוך ותקשורת יומיומית.\n\n עמידות הרשת\n\n Anonomi Messenger תוכנן לתפקד ברשתות לא אמינות, בחיבורים מסוננים או פגומים, ובסביבות שבהן הגישה הישירה לאינטרנט אינה בטוחה או אינה זמינה.\n\n קוד פתוח ויכולת פיצול\n\nAnonomi Messenger הוא קוד פתוח, כך שניתן לאמת את טענות האבטחה שלו באופן עצמאי והפרויקט נשאר ניתן לפיצול אם הממשל או הכיוון משתנים.\n\nמגבלות ואחריות\n\nAnonomi Messenger משפר את הפרטיות והעמידות, אך אינו מבטל את הסיכון. הוא אינו יכול להגן מפני מכשירים שנפרצו, תוכנות זדוניות או משתמשים החושפים מרצונם מידע מזהה.\n\n ייחוס לפרויקט מקור\n\n Anonomi Messenger נגזר מפרויקט Briar, שפותח על ידי Briar Project ומורשה תחת GNU General Public License v3.0.\n\n Anonomi Messenger הוא פרויקט עצמאי ואינו קשור, מאושר או ממומן על ידי Briar Project.</string>
+    <string name="disappearing_messages_title">הודעות נעלמות</string>
+    <string name="disappearing_messages_explanation_long">הפעלת הגדרה זו תגרום להודעות חדשות בשיחה זו להיעלם אוטומטית. \n\nהספירה לאחור עבור העותק של ההודעה אצל השולח מתחילה לאחר שההודעה נמסרה. הספירה לאחור מתחילה עבור הנמען לאחר שקרא את ההודעה. \n\nהודעות שייעלמו מסומנות בסמל פצצה. \n\nזכרו שהנמענים עדיין יכולים ליצור עותקים של ההודעות שאתם שולחים. \n\nאם תשנו הגדרה זו, היא תחול על ההודעות החדשות שלכם באופן מיידי ועל ההודעות של אנשי הקשר שלכם ברגע שיקבלו את ההודעה הבאה שלכם. אנשי הקשר שלכם יכולים גם לשנות הגדרה זו עבור שניכם.</string>
+    <string name="disappearing_messages_summary">הודעות עתידיות בשיחה זו ייעלמו אוטומטית.</string>
+    <string name="share_app_link">שתף קישור להורדה</string>
+    <string name="share_app_link_text">הורד את Anonomi Messenger בכתובת %s</string>
+    <string name="briar_crashed">מצטערים, Anonomi Messenger קרס</string>
+    <string name="privacy_policy">על ידי שליחת נתונים אלינו, אתה מסכים למדיניות הפרטיות שלנו <a href=""> </a></string>
+    <string name="dev_report_user_info">מידע על המשתמש</string>
+    <string name="dev_report_network_usage">שימוש ברשת</string>
+    <string name="permission_nearby_devices_title">הרשאת מכשירים סמוכים</string>
+    <string name="permission_camera_bluetooth_title">מצלמה ומכשירים סמוכים</string>
+    <string name="permission_camera_bluetooth_request_body">כדי לסרוק את קוד ה-QR, Anonomi Messenger זקוק לגישה למצלמה.\n\nכדי לאתר מכשירי Bluetooth, Anonomi Messenger זקוק לאישור לאתר ולהתחבר למכשירים סמוכים.</string>
+    <string name="permission_location_setting_title">הגדרת מיקום</string>
+    <string name="permission_location_setting_body">הגדרת המיקום במכשיר שלך חייבת להיות מופעלת כדי לאתר מכשירים אחרים באמצעות Bluetooth. אנא הפעל את המיקום כדי להמשיך. תוכל להשבית אותו שוב לאחר מכן.</string>
+    <string name="permission_location_setting_hotspot_body">הגדרת המיקום של המכשיר שלך חייבת להיות מופעלת כדי ליצור נקודת גישה אלחוטית. אנא הפעל את המיקום כדי להמשיך. תוכל להשבית אותו שוב לאחר מכן.</string>
+    <string name="permission_location_setting_button">אפשר מיקום</string>
+    <string name="permission_bluetooth_title">הרשאת מכשירים סמוכים</string>
+    <string name="permission_bluetooth_body">כדי להשתמש בתקשורת Bluetooth, Anonomi Messenger זקוק לאישור לאיתור והתחברות למכשירים סמוכים.</string>
+    <string name="permission_bluetooth_denied_body">דחית את הגישה למכשירים סמוכים, אך Anonomi Messenger זקוק להרשאה זו כדי להשתמש ב-Bluetooth.\n\nאנא שקול לאשר את הגישה.</string>
+    <string name="hotspot_title">שתף אפליקציה זו במצב לא מקוון</string>
+    <string name="hotspot_intro">שתפו את האפליקציה עם מישהו בקרבתכם שאין לו חיבור לאינטרנט באמצעות ה-Wi-Fi של הטלפון שלכם. \n\nהטלפון שלכם יפעיל נקודת גישה אלחוטית. אנשים בקרבתכם יוכלו להתחבר לנקודת הגישה ולהוריד את אפליקציית Anonomi Messenger מהטלפון שלכם.</string>
+    <string name="hotspot_button_start_sharing">התחל נקודת גישה</string>
+    <string name="hotspot_button_stop_sharing">עצור נקודת גישה</string>
+    <string name="hotspot_progress_text_start">הגדרת נקודת גישה…</string>
+    <string name="hotspot_notification_title">שיתוף Anonomi Messenger במצב לא מקוון</string>
+    <string name="permission_hotspot_location_request_body">כדי ליצור נקודת גישה אלחוטית, Anonomi Messenger זקוק לאישור לגשת למיקומך.\n\nAnonomi Messenger אינו שומר את מיקומך ואינו משתף אותו עם אף אחד.</string>
+    <string name="permission_hotspot_location_request_precise_body">כדי ליצור נקודת גישה אלחוטית, Anonomi Messenger זקוק לאישור לגשת למיקומך המדויק.\n\nAnonomi Messenger אינו שומר את מיקומך ואינו משתף אותו עם אף אחד.</string>
+    <string name="permission_hotspot_location_denied_body">סירבת לאפשר גישה למיקומך, אך Anonomi Messenger זקוק להרשאה זו כדי ליצור נקודת גישה אלחוטית.\n\nאנא שקול לאפשר גישה.</string>
+    <string name="permission_hotspot_location_denied_precise_body">סירבת לאפשר גישה למיקומך המדויק, אך Anonomi Messenger זקוק להרשאה זו כדי ליצור נקודת גישה אלחוטית.\n\nאנא שקול לאפשר גישה.</string>
+    <string name="permission_hotspot_nearby_wifi_request_body">כדי ליצור נקודת גישה אלחוטית, Anonomi Messenger זקוק לאישור לגשת למכשירים סמוכים.</string>
+    <string name="permission_hotspot_nearby_wifi_denied_body">דחית את הגישה למכשירים סמוכים, אך Anonomi Messenger זקוק להרשאה זו כדי ליצור נקודת גישה אלחוטית.\n\nאנא שקול לאשר את הגישה.</string>
+    <string name="wifi_settings_title">הגדרת Wi-Fi</string>
+    <string name="wifi_settings_request_enable_body">כדי ליצור נקודת גישה אלחוטית, Anonomi Messenger צריך להשתמש ב-Wi-Fi. אנא הפעל אותו.</string>
+    <string name="hotspot_tab_manual">מדריך</string>
+    <string name="hotspot_scanning_a_qr_code">סריקת קוד QR</string>
+    <string name="website_download_monerujo_button">הורד את אפליקציית Monerujo</string>
+    <string name="website_download_orbot_button">הורד את אפליקציית Orbot</string>
+    <string name="website_download_torbrowser_button">הורד את אפליקציית Tor Browser</string>
+    <string name="hotspot_manual_wifi">הטלפון שלך מספק נקודת גישה אלחוטית. אנשים שרוצים להוריד את Anonomi Messenger יכולים להתחבר לנקודת הגישה על ידי הוספתה בהגדרות ה-Wi-Fi של המכשיר שלהם באמצעות הפרטים שלהלן או על ידי %s. לאחר שהתחברו לנקודת הגישה, לחצו על \'הבא\'.</string>
+    <string name="hotspot_manual_wifi_ssid">שם הרשת</string>
+    <string name="hotspot_qr_wifi">הטלפון שלך מספק נקודת גישה אלחוטית. אנשים שרוצים להוריד את Anonomi Messenger יכולים להתחבר לנקודת הגישה על ידי סריקת קוד QR זה. לאחר שהתחברו לנקודת הגישה, לחצו על \'הבא\'.</string>
+    <string name="hotspot_no_peers_connected">אין מכשירים מחוברים</string>
+    <plurals name="hotspot_peers_connected">
+        <item quantity="one">%s מכשיר מחובר</item>
+        <item quantity="two">%s מכשירים מחוברים</item>
+        <item quantity="other">%s מכשירים מחוברים</item>
+    </plurals>
+    <string name="hotspot_manual_site">הטלפון שלך מספק נקודת גישה אלחוטית. אנשים המחוברים לנקודת הגישה יכולים להוריד את Anonomi Messenger על ידי הקלדת הקישור הבא בדפדפן אינטרנט או %s.</string>
+    <string name="hotspot_manual_site_address">כתובת (URL)</string>
+    <string name="hotspot_qr_site">הטלפון שלך מספק נקודת גישה אלחוטית. אנשים המחוברים לנקודת הגישה יכולים להוריד את Anonomi Messenger על ידי סריקת קוד QR זה.</string>
+    <string name="website_download_title_1">הורד את Anonomi Messenger %s</string>
+    <string name="website_download_intro_1">מישהו בקרבתך שיתף איתך את Anonomi Messenger.</string>
+    <string name="website_http_notice">הדפדפן שלך עשוי להזהיר כי חיבור זה אינו מאובטח. זה צפוי — הדף מוצג באופן מקומי באמצעות חיבור Wi-Fi ישיר ואינו עובר דרך האינטרנט.</string>
+    <string name="website_download_button">הורד את Anonomi Messenger</string>
+    <string name="website_download_mailbox_button">הורד את Anonomi Postbox</string>
+    <string name="website_download_outro">לאחר השלמת ההורדה, פתח את הקובץ שהורדת והתקן אותו.</string>
+    <string name="website_troubleshooting_1">אם אינך מצליח להוריד את האפליקציה, נסה להשתמש בדפדפן אינטרנט אחר.</string>
+    <string name="website_troubleshooting_2_old">כדי להתקין את האפליקציה שהורדת, ייתכן שתצטרך לאפשר התקנת אפליקציות מ\"מקורות לא ידועים\" בהגדרות המערכת. לאחר מכן, ייתכן שתצטרך להוריד את האפליקציה שוב. אנו ממליצים להשבית את ההגדרה \"מקורות לא ידועים\" לאחר התקנת האפליקציה.</string>
+    <string name="website_troubleshooting_2_new">כדי להתקין את האפליקציה שהורדת, ייתכן שתצטרך לאפשר לדפדפן שלך להתקין אפליקציות לא מוכרות. לאחר התקנת האפליקציה, אנו ממליצים להסיר את ההרשאה של הדפדפן להתקין אפליקציות לא מוכרות.</string>
+    <string name="hotspot_help_wifi_title">בעיות בחיבור ל-Wi-Fi:</string>
+    <string name="hotspot_help_wifi_1">נסו להשבית ולהפעיל מחדש את ה-Wi-Fi בשני הטלפונים ונסו שוב.</string>
+    <string name="hotspot_help_wifi_2">אם הטלפון שלך מתלונן שה-Wi-Fi לא מחובר לאינטרנט, אמור לו שאתה רוצה להישאר מחובר בכל מקרה.</string>
+    <string name="hotspot_help_wifi_3">הפעל מחדש את הטלפון שמריץ את נקודת הגישה האלחוטית, ואז הפעל את Anonomi Messenger ונסה לשתף שוב.</string>
+    <string name="hotspot_help_site_title">בעיות בביקור באתר המקומי:</string>
+    <string name="removable_drive_error_send_title">שגיאה בייצוא נתונים</string>
+    <string name="hotspot_help_site_1">בדוק שוב שהזנת את הכתובת בדיוק כפי שמופיעה. טעות קטנה עלולה לגרום לכישלון.</string>
+    <string name="hotspot_help_site_2">ודא שהטלפון שלך עדיין מחובר ל-Wi-Fi הנכון (ראה לעיל) כשאתה מנסה לגשת לאתר.</string>
+    <string name="hotspot_help_site_3">אם יש לכם אפליקציית חומת אש, בדקו שהיא לא חוסמת את הגישה.</string>
+    <string name="hotspot_help_site_4">אם אתה יכול לבקר באתר, אך לא להוריד את אפליקציית Anonomi Messenger, נסה להשתמש בדפדפן אינטרנט אחר.</string>
+    <string name="hotspot_help_fallback_title">שום דבר לא עובד?</string>
+    <string name="hotspot_help_fallback_intro">ניתן לנסות לשמור את האפליקציה כקובץ .apk כדי לשתף אותה בדרך אחרת. לאחר שהקובץ הועבר למכשיר אחר, ניתן להשתמש בו כדי להתקין את Anonomi Messenger. \n\nטיפ: לשיתוף באמצעות Bluetooth, ייתכן שיהיה צורך לשנות את שם הקובץ כך שיסתיים ב-.zip.</string>
+    <string name="hotspot_help_fallback_button">שמור אפליקציה</string>
+    <string name="hotspot_error_intro">אירעה שגיאה בעת ניסיון לשתף את האפליקציה באמצעות Wi-Fi:</string>
+    <string name="hotspot_error_no_wifi_direct">המכשיר אינו תומך ב-Wi-Fi Direct.</string>
+    <string name="hotspot_error_start_callback_failed">הנקודה החמה לא הצליחה להפעיל: שגיאה %s</string>
+    <string name="hotspot_error_start_callback_failed_unknown">נקודת הגישה לא הצליחה להפעיל בשל שגיאה לא ידועה, סיבה%d</string>
+    <string name="hotspot_error_start_callback_no_group_info">נקודת הגישה נכשלה בהפעלה: אין מידע על הקבוצה</string>
+    <string name="hotspot_error_web_server_start">שגיאה בהפעלת שרת האינטרנט</string>
+    <string name="hotspot_error_web_server_serve">שגיאה בהצגת אתר האינטרנט.\n\nאנא שלחו משוב (עם נתונים אנונימיים) באמצעות אפליקציית Anonomi Messenger אם הבעיה נמשכת.</string>
+    <string name="hotspot_flag_test">אזהרה: אפליקציה זו הותקנה באמצעות Android Studio ואינה ניתנת להתקנה במכשיר אחר.</string>
+    <string name="hotspot_error_framework_busy">לא ניתן להפעיל את נקודת הגישה.\n\nאם יש לך נקודת גישה אחרת הפועלת או שאתה משתף את חיבור האינטרנט שלך באמצעות Wi-Fi, נסה לעצור אותה ונסה שוב לאחר מכן.</string>
+    <string name="removable_drive_menu_title">התחבר באמצעות כונן נשלף</string>
+    <string name="removable_drive_intro">אם אינך יכול להתחבר לאנשי הקשר שלך דרך האינטרנט, Wi-Fi או Bluetooth, Anonomi Messenger יכול גם להעביר הודעות בכונן נשלף כגון מקל USB או כרטיס SD.</string>
+    <string name="removable_drive_explanation">אם אינך יכול להתחבר לאיש הקשר שלך דרך האינטרנט, Wi-Fi או Bluetooth, Anonomi Messenger יכול גם להעביר הודעות בכונן נשלף כגון מקל USB או כרטיס SD.\n\nכאשר אתה משתמש בלחצן \"שלח נתונים\", כל הנתונים הממתינים לשליחה לאיש הקשר יכתבו בכונן הנשלף. זה כולל הודעות פרטיות, קבצים מצורפים, בלוגים, פורומים וקבוצות פרטיות.\n\nהכל יוצפן לפני שייכתב לכונן הנשלף.\n\nכאשר איש הקשר שלך יקבל את הכונן הנשלף, הוא יוכל להשתמש בכפתור \"קבל נתונים\" כדי לייבא את ההודעות ל-Anonomi Messenger.</string>
+    <string name="removable_drive_title_send">שלח נתונים</string>
+    <string name="removable_drive_title_receive">קבל נתונים</string>
+    <string name="removable_drive_send_intro">הקש על הכפתור למטה כדי ליצור קובץ חדש המכיל את ההודעות המוצפנות. באפשרותך לבחור היכן לשמור את הקובץ.\n\nאם ברצונך לשמור את הקובץ בכונן נשלף, הכנס את הכונן כעת.</string>
+    <string name="removable_drive_send_no_data">כרגע אין הודעות הממתינות לשליחה לאיש הקשר הזה.</string>
+    <string name="removable_drive_send_not_supported">אנשי הקשר הללו משתמשים בגרסה ישנה של Anonomi Messenger או במכשיר ישן שאינו תומך בתכונה זו.</string>
+    <string name="removable_drive_send_button">בחר קובץ לייצוא</string>
+    <string name="removable_drive_ongoing">אנא המתן עד להשלמת המשימה.</string>
+    <string name="removable_drive_receive_intro">הקש על הכפתור למטה כדי לבחור את הקובץ שנשלח אליך על ידי איש הקשר שלך.\n\nאם הקובץ נמצא בכונן נשלף, הכנס את הכונן כעת.</string>
+    <string name="removable_drive_receive_button">בחר קובץ לייבוא</string>
+    <string name="removable_drive_success_send_title">ייצוא מוצלח</string>
+    <string name="removable_drive_success_send_text">הנתונים ייצאו בהצלחה. כעת יש לך 28 ימים להעביר את הקובץ לאיש הקשר שלך.\n\nאם הקובץ נמצא בכונן נשלף, השתמש בהודעה בשורת המצב כדי להוציא את הכונן לפני ניתוקו.</string>
+    <string name="removable_drive_success_receive_title">ייבוא מוצלח</string>
+    <string name="removable_drive_success_receive_text">כל ההודעות המוצפנות הכלולות בקובץ זה התקבלו.</string>
+    <string name="removable_drive_error_send_text">אירעה שגיאה בכתיבת נתונים לקובץ.\n\nאם אתה משתמש בכונן נשלף, ודא שהוא מחובר כהלכה ונסה שוב.\n\nאם השגיאה נמשכת, אנא שלח משוב כדי ליידע את צוות Anonomi Messenger על הבעיה.</string>
+    <string name="removable_drive_error_receive_title">שגיאה בייבוא נתונים</string>
+    <string name="removable_drive_error_receive_text">הקובץ שנבחר לא הכיל דבר ש-Anonomi Messenger יכול לזהות.\n\nאנא בדוק שבחרת את הקובץ הנכון.\n\nאם איש הקשר שלך יצר את הקובץ לפני יותר מ-28 יום, Anonomi Messenger לא יוכל לזהות אותו.</string>
+    <string name="play_voice_message">הפעל הודעה קולית</string>
+    <string name="pause">השהה</string>
+    <string name="voice_record">הקלטה קולית</string>
+    <string name="slide_to_cancel">הקלטה... החלק כדי לבטל</string>
+    <string name="recording_cancelled">ההקלטה בוטלה</string>
+    <string name="distorted_voice_checkbox">הודעות אודיו מעוותות</string>
+    <string name="audio_sent">השמע נשלח!</string>
+    <string name="audio_send_failed">נכשל בשליחת אודיו</string>
+    <string name="recording_error">שגיאת הקלטה</string>
+    <string name="microphone_permission_required">נדרשת הרשאת מיקרופון</string>
+    <string name="distortion_failed">העיוות נכשל</string>
+    <string name="voice_sent">קול שנשלח</string>
+    <string name="send_failed">השליחה נכשלה</string>
+    <string name="general_sendaudio_failure">שבור על catchall</string>
+    <string name="conversion_failed">ההמרה נכשלה</string>
+    <string name="processing_error">שגיאת עיבוד</string>
+    <string name="unsupported_file_type">סוג קובץ שאינו נתמך</string>
+    <string name="recording_too_short">אודיו קצר מדי, התעלמות משליחה</string>
+    <string name="slide_to_cancel_with_timer">הקלטה... החלק כדי לבטל – %1$d /12s</string>
+    <string name="recording_timer">%1$d sec</string>
+    <string name="recording_max_reached">מקסימום: 12 שניות</string>
+    <string name="scan_qr_code">סרוק את קוד ה-QR</string>
+    <string name="camera_permission_denied">הרשאת המצלמה נדחתה.</string>
+    <string name="load_qr_code">טען קוד QR</string>
+    <string name="request_xmr_send">שליחה</string>
+    <string name="dnkm_xiaomi_help">אם Anonomi אינו מוסף אל רשימת היישומים המוגנים, הוא לא יוכל לרוץ ברקע.</string>
+    <string name="sign_in_title">מחובר אל Anonomi</string>
+    <string name="contact_already_exists_general">איש הקשר %s קיים כבר</string>
+    <string name="connect_via_bluetooth_start">התחבר באמצעות שן כחולה</string>
+    <string name="choose_forum_name">בחר שם עבור הקבוצה פתוחה שלך</string>
+    <string name="button_delete">מחיקה</string>
+    <string name="button_cancel">ביטול</string>
+    <string name="status_imported">מיובא:</string>
+    <string name="panic_option_sign_out">יציאה</string>
+    <string name="panic_option_delete_account">מחק חשבון</string>
+    <string name="panic_action_sign_out_summary">נותקת מן Anonomi</string>
+    <string name="permission_camera_qr_denied_body">דחית גישה אל המצלמה, אבל הוספת אנשי קשר דורשת שימוש במצלמה.\n\nאנא שקול הענקת גישה.</string>
+    <string name="mailbox_setup_assertion_error_description">אנא שלח משוב (עם נתונים אנונימיים) דרך אפליקציית Anonomi אם הבעיה נמשכת.</string>
+    <string name="tor_offline_title">לא מקוון</string>
+    <string name="mailbox_status_connected_never">לעולם לא</string>
 </resources>

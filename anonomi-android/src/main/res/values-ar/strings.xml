@@ -618,7 +618,7 @@
     <string name="password_changed">تم تغيير كلمة المرور.</string>
     <string name="panic_setting">إعداد زر الذعر</string>
     <string name="panic_setting_title">زر الذعر</string>
-    <string name="panic_setting_hint">اضبط كيف يتصرف Anonomi (براير) عندما تضغط زر الذعر</string>
+    <string name="panic_setting_hint">قم بتكوين تسلسل أزرار الصوت لتشغيل وضع الذعر.</string>
     <string name="panic_app_setting_title">تطبيق زر الذعر</string>
     <string name="unknown_app">تطبيق غير معروف</string>
     <string name="panic_app_setting_summary">لا تطبيق قد تم إعداده</string>
@@ -1102,4 +1102,23 @@
     <string name="passcode_attention_label">انتباه</string>
     <string name="set_passcode_hint_1">التعبير (على سبيل المثال، 55+23)</string>
     <string name="set_passcode_hint_2">أعد إدخال التعبير</string>
+    <string name="panic_enabled_title">تمكين تشغيل وضع الذعر</string>
+    <string name="panic_enabled_summary">اكتشاف تسلسل أزرار الصوت لتشغيل وضع الذعر</string>
+    <string name="panic_record_sequence_title">تسجيل تسلسل الذعر</string>
+    <string name="panic_sequence_not_set">لم يتم تكوين أي تسلسل</string>
+    <string name="panic_sequence_too_short">يجب أن تتكون التسلسل من 3 خطوات على الأقل.</string>
+    <string name="panic_action_title">إجراء الذعر</string>
+    <string name="panic_dialog_title">وضع الذعر</string>
+    <string name="panic_option_sign_out">تسجيل الخروج</string>
+    <string name="panic_option_delete_account">حذف الحساب</string>
+    <string name="panic_record_dialog_title">تسجيل تسلسل الذعر</string>
+    <string name="panic_record_dialog_instruction">اضغط على أزرار رفع/خفض الصوت بالترتيب الذي تريده. اضغط لفترة قصيرة (&lt; 0.5 ثانية) أو اضغط لفترة طويلة (&gt;= 0.5 ثانية). مطلوب 3 خطوات على الأقل.</string>
+    <string name="panic_record_save">حفظ</string>
+    <string name="panic_record_clear">واضح</string>
+    <string name="panic_action_sign_out_summary">تسجيل الخروج من Anonomi Messenger</string>
+    <string name="panic_action_delete_summary">احذف حسابك وجهات الاتصال والرسائل نهائيًا</string>
+    <string name="panic_action_dialog_summary">اعرض مربع حوار الاختيار (تسجيل الخروج / حذف الحساب / إلغاء)</string>
+    <string name="panic_status_signing_out">إرسال رسائل الذعر وتسجيل الخروج…</string>
+    <string name="panic_status_deleting">إرسال رسائل الذعر وحذف الحساب…</string>
+    <string name="website_http_notice">قد يحذرك متصفحك من أن هذا الاتصال غير آمن. هذا أمر متوقع — يتم تقديم الصفحة محليًا عبر اتصالك المباشر بشبكة Wi-Fi ولا تنتقل عبر الإنترنت.</string>
 </resources>

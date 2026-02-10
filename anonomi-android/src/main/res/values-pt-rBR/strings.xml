@@ -623,7 +623,7 @@
     <string name="password_changed">Senha alterada com sucesso.</string>
     <string name="panic_setting">Configurações do botão de pânico</string>
     <string name="panic_setting_title">Botão de pânico</string>
-    <string name="panic_setting_hint">Configurar como o Anonomi irá reagir quando você usar um aplicativo de botão de pânico</string>
+    <string name="panic_setting_hint">Configure uma sequência de botões de volume para ativar o modo de pânico.</string>
     <string name="panic_app_setting_title">Aplicativo de botão de pânico</string>
     <string name="unknown_app">um aplicativo desconhecido</string>
     <string name="panic_app_setting_summary">Nenhum aplicativo foi selecionado</string>
@@ -1068,4 +1068,23 @@ Primeiro, instale o app Anonomi Postbox em outro dispositivo a partir do mesmo l
     <string name="passcode_attention_label">Atenção</string>
     <string name="set_passcode_hint_1">Expressão (por exemplo, 55+23)</string>
     <string name="set_passcode_hint_2">Reintroduzir expressão</string>
+    <string name="panic_enabled_title">Ativar gatilho de pânico</string>
+    <string name="panic_enabled_summary">Detecte a sequência do botão de volume para ativar o modo de pânico.</string>
+    <string name="panic_record_sequence_title">Registre a sequência de pânico.</string>
+    <string name="panic_sequence_not_set">Nenhuma sequência configurada</string>
+    <string name="panic_sequence_too_short">A sequência deve ter pelo menos três etapas.</string>
+    <string name="panic_action_title">Ação de pânico</string>
+    <string name="panic_dialog_title">Modo de pânico</string>
+    <string name="panic_option_sign_out">Desconectar</string>
+    <string name="panic_option_delete_account">Apagar a Conta</string>
+    <string name="panic_record_dialog_title">Grave a sequência de pânico</string>
+    <string name="panic_record_dialog_instruction">Pressione os botões de aumentar/diminuir o volume na ordem desejada. Pressione rapidamente (&lt; 0,5 s) ou pressione por mais tempo (&gt;= 0,5 s). São necessários no mínimo 3 passos.</string>
+    <string name="panic_record_save">Salvar</string>
+    <string name="panic_record_clear">Claro</string>
+    <string name="panic_action_sign_out_summary">Sair do Anonomi Messenger</string>
+    <string name="panic_action_delete_summary">Exclua permanentemente sua conta, contatos e mensagens.</string>
+    <string name="panic_action_dialog_summary">Mostre uma caixa de diálogo de escolha (Sair / Excluir conta / Cancelar)</string>
+    <string name="panic_status_signing_out">Enviando mensagens de pânico e saindo da conta…</string>
+    <string name="panic_status_deleting">Enviando mensagens de pânico e excluindo conta…</string>
+    <string name="website_http_notice">Seu navegador pode avisar que esta conexão não é segura. Isso é esperado — a página é servida localmente através de sua conexão Wi-Fi direta e não trafega pela internet.</string>
 </resources>
