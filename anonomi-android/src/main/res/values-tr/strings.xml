@@ -882,4 +882,18 @@
     <!--This is a message to be used in screenshots.-->
   <string name="screenshot_message_3">Sorun değil, umarım beğenirsin 😀</string>
     <string name="panic_message">⚠️‼️ PANİK MODU ETKİNLEŞTİRİLDİ! ‼️⚠️ Bu otomatik bir panik uyarısıdır.</string>
+    <string name="more_info_title">Anonomi bağlantısı</string>
+    <string name="request_xmr_manual">El ile</string>
+    <string name="request_xmr_send">Gönder</string>
+    <string name="error_creating_message">İleti gönderilirken sorun çıktı</string>
+    <string name="choose_forum_name">Forumunuza bir ad verin</string>
+    <string name="location_sent">Konum ayarı</string>
+    <string name="unlocking_anonchat">Anonomi kilidini aç</string>
+    <string name="button_delete">Sil</string>
+    <string name="button_cancel">İptal</string>
+    <string name="status_imported">İçe aktarıldı:</string>
+    <string name="camera_permission_denied">Kameraya erişme izni</string>
+    <string name="panic_option_sign_out">Oturumu kapat</string>
+    <string name="panic_option_delete_account">Hesabı sil</string>
+    <string name="panic_action_sign_out_summary">Anonomi oturumu kapatıldı</string>
 </resources>
