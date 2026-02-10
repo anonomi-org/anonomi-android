@@ -1072,4 +1072,13 @@
     <string name="recording_too_short">Zvuk je příliš krátký, ignoruje odeslání</string>
     <string name="slide_to_cancel_with_timer">Nahrávání... Posunutím zrušíte – %1$d /12s</string>
     <string name="recording_timer">%1$d sec</string>
+    <string name="request_xmr_manual">Manuálně</string>
+    <string name="request_xmr_send">Odeslat</string>
+    <string name="choose_forum_name">Vybrat jméno pro vaše fórum</string>
+    <string name="button_delete">Odstranit</string>
+    <string name="button_cancel">Zrušit</string>
+    <string name="status_imported">Importováno:</string>
+    <string name="panic_option_sign_out">Odhlásit se</string>
+    <string name="panic_option_delete_account">Odstranit účet</string>
+    <string name="panic_action_sign_out_summary">Byl jste odhlášen z Anonomi</string>
 </resources>
