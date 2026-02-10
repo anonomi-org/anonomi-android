@@ -910,4 +910,18 @@ Pirmiausia, įdiekite „Anonomi Postbox“ programėlę į kitą įrenginį iš
     <!--This is a message to be used in screenshots.-->
   <string name="screenshot_message_3">Jokių problemų, tikiuosi tau patiks 😀</string>
     <string name="panic_message">⚠️‼️ PANIKOS REŽIMAS ĮJUNGTAS! ‼️⚠️ Tai yra automatinis panikos signalas.</string>
+    <string name="more_info_title">Anonomi nuoroda</string>
+    <string name="request_xmr_manual">Rankinis</string>
+    <string name="request_xmr_send">Siųsti</string>
+    <string name="error_creating_message">Klaida, siunčiant žinutę</string>
+    <string name="choose_forum_name">Pasirinkite savo forumo pavadinimą</string>
+    <string name="location_sent">Įrenginio vietovės nustatymas</string>
+    <string name="unlocking_anonchat">Atrakinti Anonomi</string>
+    <string name="button_delete">Ištrinti</string>
+    <string name="button_cancel">Atsisakyti</string>
+    <string name="status_imported">Importuota:</string>
+    <string name="camera_permission_denied">Kameros leidimas</string>
+    <string name="panic_option_sign_out">Atsijungti</string>
+    <string name="panic_option_delete_account">Ištrinti paskyrą</string>
+    <string name="panic_action_sign_out_summary">Atsijungta iš Anonomi</string>
 </resources>
