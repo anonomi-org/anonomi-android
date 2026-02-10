@@ -850,4 +850,31 @@ Installera först Anonomi Postbox-appen på en annan enhet genom att hämta den 
     <!--This is a message to be used in screenshots.-->
   <string name="screenshot_message_3">Ingen orsak, hoppas att du gillar den :-)</string>
     <string name="panic_message">⚠️‼️ PANIKLÄGE AKTIVERAT! ‼️⚠️ Detta är ett automatiskt paniklarm.</string>
+    <string name="more_info_title">Anonomi-länk</string>
+    <string name="request_xmr_manual">Manuellt</string>
+    <string name="request_xmr_send">Skicka</string>
+    <string name="error_creating_message">Fel vid sändning av meddelanden</string>
+    <string name="sign_in_title">Inloggad på Anonomi</string>
+    <string name="info_both_must_scan">Skannade ni båda varandras QR-koder?</string>
+    <string name="connect_via_bluetooth_no_bluetooth_permission">Kan inte fortsätta utan platsrättigheter</string>
+    <string name="choose_forum_name">Sätt ett namn på ditt forum</string>
+    <string name="blogs_rss_feeds_import_progress">Importera RSS-flöde</string>
+    <string name="location_sent">Platsinställningar</string>
+    <string name="unlocking_anonchat">Lås upp Anonomi</string>
+    <string name="button_delete">Radera</string>
+    <string name="button_cancel">Avbryt</string>
+    <string name="status_imported">Importerade:</string>
+    <string name="panic_option_delete_account">Radera kontot</string>
+    <string name="panic_option_sign_out">Logga ut</string>
+    <string name="panic_action_sign_out_summary">Utloggad från Anonomi</string>
+    <string name="mailbox_qr_code_too_old">QR-koden som du har skannat kommer från en äldre version av Anonomi.\n\nVänligen uppgradera till den senaste versionen och försök igen.</string>
+    <string name="mailbox_qr_code_too_new">QR-koden som du har skannat kommer från en äldre version av Anonomi.\n\nVänligen uppgradera till den senaste versionen och försök igen.</string>
+    <string name="share_app_link">Dela hämtningslänk</string>
+    <string name="share_app_link_text">Ladda ner Anonomi %s</string>
+    <string name="permission_location_setting_hotspot_body">Din enhets platsinställning måste vara påslagen för att hitta andra enheter via Bluetooth. Aktivera plats för att fortsätta. Du kan inaktivera den igen efteråt.</string>
+    <string name="permission_bluetooth_denied_body">Du har nekat åtkomst till din plats, men Anonomi behöver detta tillstånd för att upptäcka Bluetooth-enheter.\n\nVänligen överväg att ge åtkomst.</string>
+    <string name="permission_hotspot_location_request_precise_body">För att skapa en Wi-Fi-hotspot måste Anonomi ha tillåtelse att komma åt din plats.\n\nAnonomi sparar inte din plats eller delar den med någon.</string>
+    <string name="permission_hotspot_location_denied_precise_body">Du har nekat åtkomst till din plats, men Anonomi behöver denna tilltåelse för att skapa en Wi-Fi-hotspot.\n\nÖverväg att bevilja åtkomst.</string>
+    <string name="permission_hotspot_nearby_wifi_denied_body">Du har nekat åtkomst till din plats, men Anonomi behöver denna tilltåelse för att skapa en Wi-Fi-hotspot.\n\nÖverväg att bevilja åtkomst.</string>
+    <string name="camera_permission_denied">Kameraåtkomst</string>
 </resources>
