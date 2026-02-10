@@ -621,4 +621,43 @@
     <!--This is a message to be used in screenshots.-->
   <string name="screenshot_message_3">Geen probleem, ik hoop dat je het handig vindt! 😀</string>
     <string name="panic_message">⚠️‼️ PANIEKMODUS GEACTIVEERD! ‼️⚠️ Dit is een automatisch paniekmelding.</string>
+    <string name="info">Meer informatie</string>
+    <string name="more_info_title">Anonomi-link</string>
+    <string name="request_xmr_manual">Handmatig</string>
+    <string name="request_xmr_send">Verstuur</string>
+    <string name="dnkm_xiaomi_help">Als Anonomi niet is toegevoegd aan de beschermde apps, is het niet mogelijk om het in de achtergrond uit te voeren.</string>
+    <string name="dnkm_xiaomi_lock_apps_help">Als Anonomi niet is toegevoegd aan de beschermde apps, is het niet mogelijk om het in de achtergrond uit te voeren.</string>
+    <string name="sign_in_title">Ingelogd op Anonomi</string>
+    <string name="contact_already_exists_general">Contact %s bestaat al</string>
+    <string name="qr_code_too_new_1">Deze link komt van een nieuwe versie van Anonomi. Upgrade alsjeblieft naar de laatste versie en probeer het nog eens.</string>
+    <string name="connect_via_bluetooth_start">Verbind via Bluetooth</string>
+    <string name="choose_forum_name">Voer een naam in voor je forum</string>
+    <string name="blogs_rss_feeds_import_progress">Importeer RSS-feed</string>
+    <string name="unlocking_anonchat">Ontgrendel Anonomi</string>
+    <string name="button_delete">Verwijder</string>
+    <string name="button_cancel">Annuleer</string>
+    <string name="status_imported">Geïmporteerd:</string>
+    <string name="panic_option_sign_out">Log uit</string>
+    <string name="panic_option_delete_account">Verwijder account</string>
+    <plurals name="duration_minutes">
+        <item quantity="one">1 minuut</item>
+        <item quantity="other">5 minuten</item>
+    </plurals>
+    <string name="panic_action_sign_out_summary">Uitgelogd van Anonomi</string>
+    <string name="permission_camera_qr_denied_body">Je hebt toegang tot de camera niet vrijgegeven, terwijl het toevoegen van contacten de camera nodig heeft.\n\nOverweeg alsjeblieft toegang vrij te geven.</string>
+    <string name="mailbox_setup_assertion_error_description">Als dit probleem aanhoudt, stuur dan feedback (met anonieme gegevens) via de Anonomi-app.</string>
+    <string name="tor_offline_title">Offline</string>
+    <string name="mailbox_status_app_too_old_title">Anonomi is vergrendeld</string>
+    <string name="mailbox_status_connected_never">Nooit</string>
+    <string name="dev_report_user_info">Tijdsinformatie</string>
+    <string name="permission_bluetooth_denied_body">Je hebt geen toegang tot je locatie gegeven, maar Anonomi heeft deze rechten nodig om apparaten via bluetooth te vinden.\n\nOverweeg a.u.b. deze rechten te geven.</string>
+    <string name="permission_hotspot_location_request_body">Om bluetoothapparaten te ontdekken heeft Anonomi toestemming nodig tot je locatie.\n\nAnonomi slaat je locatie niet op en deelt het met niemand.</string>
+    <string name="permission_hotspot_location_request_precise_body">Om bluetoothapparaten te ontdekken heeft Anonomi toestemming nodig tot je locatie.\n\nAnonomi slaat je locatie niet op en deelt het met niemand.</string>
+    <string name="permission_hotspot_location_denied_body">Je hebt geen toegang tot je locatie gegeven, maar Anonomi heeft deze rechten nodig om apparaten via bluetooth te vinden.\n\nOverweeg a.u.b. deze rechten te geven.</string>
+    <string name="permission_hotspot_location_denied_precise_body">Je hebt geen toegang tot je locatie gegeven, maar Anonomi heeft deze rechten nodig om apparaten via bluetooth te vinden.\n\nOverweeg a.u.b. deze rechten te geven.</string>
+    <string name="permission_hotspot_nearby_wifi_denied_body">Je hebt geen toegang tot je locatie gegeven, maar Anonomi heeft deze rechten nodig om apparaten via bluetooth te vinden.\n\nOverweeg a.u.b. deze rechten te geven.</string>
+    <string name="website_download_button">Ontgrendel Anonomi</string>
+    <string name="hotspot_error_web_server_serve">Als dit probleem aanhoudt, stuur dan feedback (met anonieme gegevens) via de Anonomi-app.</string>
+    <string name="removable_drive_success_send_title">Importeren geslaagd</string>
+    <string name="camera_permission_denied">Cameratoestemming</string>
 </resources>
