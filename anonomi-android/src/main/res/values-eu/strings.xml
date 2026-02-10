@@ -592,4 +592,6 @@
     <string name="website_download_button">Desblokeatu Anonomi</string>
     <string name="hotspot_error_web_server_serve">Arazoa mantentzen bada, mesedez bidali iruzkina (anonimoa) Anonomi aplikazioaren bidez.</string>
     <string name="camera_permission_denied">Kamera erabiltzeko baimena</string>
+    <string name="delete_account_button">Ezabatu kontua</string>
+    <string name="panic_option_delete_account">Ezabatu kontua</string>
 </resources>
