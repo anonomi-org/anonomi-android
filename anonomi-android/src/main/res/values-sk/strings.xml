@@ -1081,4 +1081,13 @@ Najprv nainštalujte aplikáciu Anonomi Postbox do iného zariadenia z rovnakéh
     <string name="scan_qr_code">Naskenujte QR kód</string>
     <string name="camera_permission_denied">Povolenie fotoaparátu bolo zamietnuté.</string>
     <string name="load_qr_code">Načítať QR kód</string>
+    <string name="request_xmr_manual">Manuálne</string>
+    <string name="request_xmr_send">Odoslať</string>
+    <string name="choose_forum_name">Vyberte si názov pre vaše fórum</string>
+    <string name="button_delete">Odstrániť</string>
+    <string name="button_cancel">Zrušiť</string>
+    <string name="status_imported">Importované:</string>
+    <string name="panic_action_sign_out_summary">Odhlásený z aplikácie Anonomi</string>
+    <string name="panic_option_sign_out">Odhlásiť sa</string>
+    <string name="panic_option_delete_account">Vymazať účet</string>
 </resources>
