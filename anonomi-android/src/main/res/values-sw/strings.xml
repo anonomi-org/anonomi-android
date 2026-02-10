@@ -615,4 +615,6 @@ Umepoteza nenosiri.</string>
     <string name="website_download_button">Fungua Anonomi</string>
     <string name="hotspot_error_web_server_serve">Kama hilo tatizo linaendelea, tafadhali tuma maoni (pamoja na data isiyojulikana) kupitia programu ya Anonomi.</string>
     <string name="camera_permission_denied">Ruhusa ya Kamera</string>
+    <string name="delete_account_button">Futa Akaunti.</string>
+    <string name="panic_option_delete_account">Futa Akaunti.</string>
 </resources>
