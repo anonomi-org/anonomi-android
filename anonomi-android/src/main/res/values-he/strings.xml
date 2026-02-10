@@ -1052,4 +1052,20 @@
     <string name="scan_qr_code">סרוק את קוד ה-QR</string>
     <string name="camera_permission_denied">הרשאת המצלמה נדחתה.</string>
     <string name="load_qr_code">טען קוד QR</string>
+    <string name="request_xmr_send">שליחה</string>
+    <string name="dnkm_xiaomi_help">אם Anonomi אינו מוסף אל רשימת היישומים המוגנים, הוא לא יוכל לרוץ ברקע.</string>
+    <string name="sign_in_title">מחובר אל Anonomi</string>
+    <string name="contact_already_exists_general">איש הקשר %s קיים כבר</string>
+    <string name="connect_via_bluetooth_start">התחבר באמצעות שן כחולה</string>
+    <string name="choose_forum_name">בחר שם עבור הקבוצה פתוחה שלך</string>
+    <string name="button_delete">מחיקה</string>
+    <string name="button_cancel">ביטול</string>
+    <string name="status_imported">מיובא:</string>
+    <string name="panic_option_sign_out">יציאה</string>
+    <string name="panic_option_delete_account">מחק חשבון</string>
+    <string name="panic_action_sign_out_summary">נותקת מן Anonomi</string>
+    <string name="permission_camera_qr_denied_body">דחית גישה אל המצלמה, אבל הוספת אנשי קשר דורשת שימוש במצלמה.\n\nאנא שקול הענקת גישה.</string>
+    <string name="mailbox_setup_assertion_error_description">אנא שלח משוב (עם נתונים אנונימיים) דרך אפליקציית Anonomi אם הבעיה נמשכת.</string>
+    <string name="tor_offline_title">לא מקוון</string>
+    <string name="mailbox_status_connected_never">לעולם לא</string>
 </resources>
