@@ -571,4 +571,48 @@ Umepoteza nenosiri.</string>
     <!--This is a message to be used in screenshots.-->
   <string name="screenshot_message_3">Hakuna tatizo, natumaini umeipenda 😀</string>
     <string name="panic_message">⚠️‼️ HALI YA KUTISHA IMEWASHWA! ‼️⚠️ Hii ni arifa ya tahadhari ya kiotomatiki.</string>
+    <string name="more_info_title">Kiunga cha Anonomi</string>
+    <string name="request_xmr_send">Tuma</string>
+    <string name="dnkm_xiaomi_help">Kama Anonomi haija wekwa kwenye orotha programu ulizi, haitaweza kufanya kazi kwenye nyuma ya mkongo</string>
+    <string name="dnkm_xiaomi_lock_apps_help">Kama Anonomi haija wekwa kwenye orotha programu ulizi, haitaweza kufanya kazi kwenye nyuma ya mkongo</string>
+    <string name="sign_in_title">Ingia kwenye Anonomi</string>
+    <string name="info">Habari za ziada</string>
+    <string name="message_hint">Chapisho jipaya</string>
+    <string name="menu_contact">Mawasiliano</string>
+    <string name="contact_already_exists_general">Wasiliano%s tayari lipo.</string>
+    <string name="qr_code_too_new_1">Hichi kiunga kimetoka kwenye tolea jipya Bria. Tafathali boresha kuwa kwenye Tolea jipya na ujaribu tena .</string>
+    <string name="connect_via_bluetooth_start">Unganisha kwa Bluetooth</string>
+    <string name="choose_forum_name">Chagua jina la mkutano wako</string>
+    <string name="blogs_rss_feeds_import_progress">Ingiza RSS taarifa</string>
+    <string name="unlocking_anonchat">Fungua Anonomi</string>
+    <string name="button_delete">futa</string>
+    <string name="button_cancel">ghairi</string>
+    <string name="status_imported">Zilizoingizwa</string>
+    <plurals name="group_message_notification_text">
+        <item quantity="one">chapisho Ukumbi</item>
+        <item quantity="other"></item>
+    </plurals>
+    <plurals name="duration_minutes">
+        <item quantity="one">Dakika 1</item>
+        <item quantity="other">dakika 5</item>
+    </plurals>
+    <plurals name="posts">
+        <item quantity="one">1%d jumbe</item>
+        <item quantity="other">1%d jumbe</item>
+    </plurals>
+    <string name="panic_option_sign_out">Kutoka</string>
+    <string name="panic_action_sign_out_summary">Toka Anonomi</string>
+    <string name="permission_camera_qr_denied_body">Umekataa ufikiaji wa kamera, lakini kuongeza anwani kunahitaji kutumia kamera. \n\nTafadhali fikiria kutoa idhini ya kufikia.</string>
+    <string name="mailbox_setup_assertion_error_description">Kama hilo tatizo linaendelea, tafadhali tuma maoni (pamoja na data isiyojulikana) kupitia programu ya Anonomi.</string>
+    <string name="tor_offline_title">Nje ya mkondo</string>
+    <string name="mailbox_status_app_too_old_title">Anonomi imefungwa</string>
+    <string name="mailbox_status_connected_never">Kamwe</string>
+    <string name="dev_report_logcat">Funga programu</string>
+    <string name="screen_filter_body_api_30">Programu nyingine inachorwa juu ya Anonomi. Ili kulinda usalama wako, Anonomi haitajibu kugusa wakati programu nyingine inachorwa juu. \n\nProgramu zifuatazo zinaweza kuchorwa juu:\n\n%1$s</string>
+    <string name="hotspot_button_connected">Ifuatayo</string>
+    <string name="permission_hotspot_location_request_body">ilikugundua vifaa vya Bluetooth, Anonomi inahitaji idhini ya kufikia eneo lako. \n nAnonomi hahifadhi eneo lako au kushiriki na mtu yeyote.</string>
+    <string name="permission_hotspot_location_request_precise_body">ilikugundua vifaa vya Bluetooth, Anonomi inahitaji idhini ya kufikia eneo lako. \n nAnonomi hahifadhi eneo lako au kushiriki na mtu yeyote.</string>
+    <string name="website_download_button">Fungua Anonomi</string>
+    <string name="hotspot_error_web_server_serve">Kama hilo tatizo linaendelea, tafadhali tuma maoni (pamoja na data isiyojulikana) kupitia programu ya Anonomi.</string>
+    <string name="camera_permission_denied">Ruhusa ya Kamera</string>
 </resources>
