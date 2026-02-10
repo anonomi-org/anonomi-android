@@ -786,4 +786,35 @@
     <!--This is a message to be used in screenshots.-->
   <string name="screenshot_message_3">Ekki málið, vona að þér líki það 😀</string>
     <string name="panic_message">⚠️‼️ PANÍKHAMUR VIRKJAÐUR! ‼️⚠️ Þetta eru sjálfvirk neyðarskilaboð.</string>
+    <string name="more_info_title">Anonomi tengill</string>
+    <string name="request_xmr_manual">Handvirkt</string>
+    <string name="request_xmr_send">Senda</string>
+    <string name="error_creating_message">Villa við að senda skilaboð</string>
+    <string name="dnkm_xiaomi_lock_apps_help">Ef Anonomi er ekki læst við listann yfir nýleg forrit, mun það ekki geta keyrt í bakgrunni.</string>
+    <string name="sign_in_title">Skráð inn í Anonomi</string>
+    <string name="info">Nánari upplýsingar</string>
+    <string name="contact_already_exists_general">Tengiliðurinn %s er þegar til</string>
+    <string name="qr_code_too_new_1">Þessi tengill kemur frá nýrri útgáfu af Anonomi.\n\nUppfærðu í nýjustu útgáfuna og prófaðu síðan aftur.</string>
+    <string name="connect_via_bluetooth_no_bluetooth_permission">Get ekki haldið áfram án heimildar til að nota staðsetningu</string>
+    <string name="choose_forum_name">Veldu nafn á spjallsvæðið þitt</string>
+    <string name="blogs_rss_feeds_import_progress">Flytja inn RSS-streymi</string>
+    <string name="location_sent">Stilling staðsetningar</string>
+    <string name="unlocking_anonchat">Aflæsa Anonomi</string>
+    <string name="button_delete">Eyða</string>
+    <string name="button_cancel">Hætta við</string>
+    <string name="status_imported">Flutt inn:</string>
+    <string name="panic_option_sign_out">Skrá út</string>
+    <string name="panic_option_delete_account">Eyða notandaaðgangi</string>
+    <string name="panic_action_sign_out_summary">Skráð út úr Anonomi</string>
+    <string name="mailbox_status_app_too_old_title">Anonomi er læst</string>
+    <string name="mailbox_error_notification_title">Pósthólf er ekki tiltækt</string>
+    <string name="mailbox_error_wizard_answer1_3">Pósthólf er í gangi</string>
+    <string name="share_app_link">Deila niðurhalstengli</string>
+    <string name="permission_location_setting_hotspot_body">Kveikt þarf að vera á staðsetningu tækisins þíns til að geta fundið önnur tæki með Bluetooth. Virkjaðu staðsetningu til að halda áfram. Þú getur svo gert hana óvirka aftur á eftir.</string>
+    <string name="permission_bluetooth_denied_body">Þú hefur hafnað aðgangi að staðsetningu, en Anonomi þarf þessa heimild til að geta fundið Bluetooth-tæki.\n\nÍhugaðu að veita þennan aðgang.</string>
+    <string name="permission_hotspot_location_request_precise_body">Til að útbúa Wi-Fi aðgangsstað, þarf Anonomi heimild til að nota staðsetningu þína.\n\nAnonomi geymir ekki staðsetningar eða deilir þeim með neinum.</string>
+    <string name="permission_hotspot_location_denied_precise_body">Þú hefur hafnað aðgangi að staðsetningu, en Anonomi þarf þessa heimild til að geta útbúið Wi-Fi-aðgangsstað.\n\nÍhugaðu að veita þennan aðgang.</string>
+    <string name="permission_hotspot_nearby_wifi_denied_body">Þú hefur hafnað aðgangi að staðsetningu, en Anonomi þarf þessa heimild til að geta útbúið Wi-Fi-aðgangsstað.\n\nÍhugaðu að veita þennan aðgang.</string>
+    <string name="website_download_button">Aflæsa Anonomi</string>
+    <string name="camera_permission_denied">Heimildir á myndavél</string>
 </resources>
