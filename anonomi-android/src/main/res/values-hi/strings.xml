@@ -575,4 +575,6 @@
     <string name="website_download_button">Anonomi अनलॉक करें</string>
     <string name="hotspot_error_web_server_serve">यदि यह समस्या बनी रहती है, तो कृपया Anonomi ऐप के माध्यम से (गुमनाम डेटा के साथ) फ़ीडबैक भेजें।</string>
     <string name="camera_permission_denied">कैमरा अनुमति</string>
+    <string name="delete_account_button">खाता हटा दो</string>
+    <string name="panic_option_delete_account">खाता हटा दो</string>
 </resources>
