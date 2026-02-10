@@ -1065,4 +1065,13 @@ Per prima cosa, installa l\'app Anonomi Postbox su un altro dispositivo da dove 
     <string name="scan_qr_code">Scansiona il codice QR</string>
     <string name="camera_permission_denied">Autorizzazione fotocamera negata.</string>
     <string name="load_qr_code">Carica codice QR</string>
+    <string name="request_xmr_manual">Manuale</string>
+    <string name="request_xmr_send">Invia</string>
+    <string name="choose_forum_name">Scegli un nome per il tuo forum</string>
+    <string name="button_delete">Cancella</string>
+    <string name="button_cancel">Annulla</string>
+    <string name="status_imported">Importato:</string>
+    <string name="panic_option_delete_account">Cancella Account</string>
+    <string name="panic_option_sign_out">Esci</string>
+    <string name="panic_action_sign_out_summary">Uscito da Anonomi</string>
 </resources>
