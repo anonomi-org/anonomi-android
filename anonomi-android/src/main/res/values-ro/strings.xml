@@ -896,4 +896,18 @@
     <!--This is a message to be used in screenshots.-->
   <string name="screenshot_message_3">Cu plăcere. Sper să îți placă. 😀</string>
     <string name="panic_message">⚠️‼️ MODUL PANICĂ ACTIVAT! ‼️⚠️ Aceasta este o alertă de panică automată.</string>
+    <string name="more_info_title">Link Anonomi</string>
+    <string name="request_xmr_manual">Manual</string>
+    <string name="request_xmr_send">Trimiteți</string>
+    <string name="error_creating_message">Eroare la trimiterea mesajului</string>
+    <string name="choose_forum_name">Alegeți un nume pentru forumul dvs.</string>
+    <string name="location_sent">Setări privind locația</string>
+    <string name="unlocking_anonchat">Deblocarea Anonomi</string>
+    <string name="button_delete">Ștergeți</string>
+    <string name="button_cancel">Anulați</string>
+    <string name="status_imported">Importat:</string>
+    <string name="camera_permission_denied">Acces la camera foto</string>
+    <string name="panic_option_sign_out">Deconectare</string>
+    <string name="panic_option_delete_account">Ștergeți contul</string>
+    <string name="panic_action_sign_out_summary">V-ați deconectat din Anonomi</string>
 </resources>
