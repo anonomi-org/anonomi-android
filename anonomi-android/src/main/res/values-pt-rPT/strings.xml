@@ -623,7 +623,7 @@
     <string name="password_changed">A palavra-passe foi alterada.</string>
     <string name="panic_setting">Configuração do botão de pânico</string>
     <string name="panic_setting_title">Botão de pânico</string>
-    <string name="panic_setting_hint">Configura a forma como o Anonomi irá reagir quando utilizares uma aplicação de botão de pânico</string>
+    <string name="panic_setting_hint">Configure uma sequência de botões de volume para ativar o modo de pânico.</string>
     <string name="panic_app_setting_title">Aplicação de botão de pânico</string>
     <string name="unknown_app">uma aplicação desconhecida</string>
     <string name="panic_app_setting_summary">Não foi definida nenhuma aplicação</string>
@@ -1067,4 +1067,23 @@ O teu contacto também pode alterar esta configuração para ambos.</string>
     <string name="passcode_attention_label">Atenção</string>
     <string name="set_passcode_hint_1">Expressão (por exemplo, 55+23)</string>
     <string name="set_passcode_hint_2">Reintroduzir expressão</string>
+    <string name="panic_enabled_title">Ativar gatilho de pânico</string>
+    <string name="panic_enabled_summary">Detetar a sequência do botão de volume para ativar o modo de pânico</string>
+    <string name="panic_record_sequence_title">Grave a sequência de pânico</string>
+    <string name="panic_sequence_not_set">Nenhuma sequência configurada</string>
+    <string name="panic_sequence_too_short">A sequência deve ter pelo menos 3 etapas.</string>
+    <string name="panic_action_title">Ação de pânico</string>
+    <string name="panic_dialog_title">Modo de pânico</string>
+    <string name="panic_option_sign_out">Sair</string>
+    <string name="panic_option_delete_account">Eliminar conta</string>
+    <string name="panic_record_dialog_title">Grave a sequência de pânico</string>
+    <string name="panic_record_dialog_instruction">Pressione os botões de aumentar/diminuir o volume na ordem que desejar. Pressão curta (&lt; 0,5 s) ou pressão longa (&gt;= 0,5 s). São necessários no mínimo 3 passos.</string>
+    <string name="panic_record_save">Guardar</string>
+    <string name="panic_record_clear">Claro</string>
+    <string name="panic_action_sign_out_summary">Sair do Anonomi Messenger</string>
+    <string name="panic_action_delete_summary">Elimine permanentemente a sua conta, contactos e mensagens</string>
+    <string name="panic_action_dialog_summary">Mostrar uma caixa de diálogo de escolha (Sair / Eliminar conta / Cancelar)</string>
+    <string name="panic_status_signing_out">Enviar mensagens de pânico e sair da conta…</string>
+    <string name="panic_status_deleting">Enviando mensagens de pânico e eliminando conta…</string>
+    <string name="website_http_notice">O seu navegador pode avisar que esta ligação não é segura. Isso é esperado — a página é servida localmente através da sua ligação Wi-Fi direta e não viaja pela Internet.</string>
 </resources>
