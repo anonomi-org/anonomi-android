@@ -1050,4 +1050,13 @@
     <string name="scan_qr_code">QR-Code scannen</string>
     <string name="camera_permission_denied">Kamera-Berechtigung verweigert.</string>
     <string name="load_qr_code">QR-Code laden</string>
+    <string name="request_xmr_manual">Manuell</string>
+    <string name="request_xmr_send">Senden</string>
+    <string name="choose_forum_name">Wähle einen Namen für dein Forum</string>
+    <string name="status_imported">Importiert:</string>
+    <string name="button_delete">Löschen</string>
+    <string name="button_cancel">Abbrechen</string>
+    <string name="panic_option_sign_out">Abmelden</string>
+    <string name="panic_option_delete_account">Konto löschen</string>
+    <string name="panic_action_sign_out_summary">Von Anonomi abgemeldet</string>
 </resources>
