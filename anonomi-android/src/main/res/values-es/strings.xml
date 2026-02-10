@@ -578,7 +578,7 @@
     <string name="password_changed">La contraseña ha sido cambiada.</string>
     <string name="panic_setting">Configuración del botón de pánico</string>
     <string name="panic_setting_title">Botón de pánico</string>
-    <string name="panic_setting_hint">Configura cómo reaccionará Anonomi cuando uses una aplicación de botón de pánico</string>
+    <string name="panic_setting_hint">Configurar una secuencia de botones de volumen para activar el modo pánico.</string>
     <string name="panic_app_setting_title">Aplicación botón de pánico</string>
     <string name="unknown_app">una aplicación desconocida</string>
     <string name="panic_app_setting_summary">No se ha seleccionado aplicación</string>
@@ -1062,4 +1062,23 @@
     <string name="passcode_attention_label">Atención</string>
     <string name="set_passcode_hint_1">Expresión (por ejemplo, 55+23)</string>
     <string name="set_passcode_hint_2">Vuelva a introducir la expresión.</string>
+    <string name="panic_enabled_title">Habilitar activador de pánico.</string>
+    <string name="panic_enabled_summary">Detectar la secuencia de botones de volumen para activar el modo pánico.</string>
+    <string name="panic_record_sequence_title">Grabar secuencia de pánico.</string>
+    <string name="panic_sequence_not_set">No hay secuencia configurada.</string>
+    <string name="panic_sequence_too_short">La secuencia debe tener al menos 3 pasos.</string>
+    <string name="panic_action_title">Acción de pánico</string>
+    <string name="panic_dialog_title">Modo pánico</string>
+    <string name="panic_option_sign_out">Cerrar sesión</string>
+    <string name="panic_option_delete_account">Borrar cuenta</string>
+    <string name="panic_record_dialog_title">Grabar secuencia de pánico</string>
+    <string name="panic_record_dialog_instruction">Pulsa los botones de subir/bajar volumen en el orden que desees. Pulsación corta (&lt; 0,5 s) o pulsación larga (&gt;= 0,5 s). Se requieren un mínimo de 3 pasos.</string>
+    <string name="panic_record_save">Guardar</string>
+    <string name="panic_record_clear">Claro.</string>
+    <string name="panic_action_sign_out_summary">Cerrar sesión en Anonomi Messenger</string>
+    <string name="panic_action_delete_summary">Elimine de forma permanente su cuenta, sus contactos y sus mensajes.</string>
+    <string name="panic_action_dialog_summary">Mostrar un cuadro de diálogo de opciones (Cerrar sesión / Eliminar cuenta / Cancelar).</string>
+    <string name="panic_status_signing_out">Enviar mensajes de pánico y cerrar sesión…</string>
+    <string name="panic_status_deleting">Envío de mensajes de pánico y eliminación de la cuenta…</string>
+    <string name="website_http_notice">Es posible que su navegador le advierta de que esta conexión no es segura. Esto es normal, ya que la página se sirve localmente a través de su conexión Wi-Fi directa y no viaja por Internet.</string>
 </resources>
