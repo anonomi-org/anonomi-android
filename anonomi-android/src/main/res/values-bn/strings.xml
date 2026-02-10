@@ -881,4 +881,18 @@
     <!--This is a message to be used in screenshots.-->
   <string name="screenshot_message_3">সমস্যা নেই, আশা করি আপনি এটি পছন্দ করেন 😀</string>
     <string name="panic_message">⚠️‼️ আতঙ্ক মোড সক্রিয় করা হয়েছে! ‼️⚠️ এটি একটি স্বয়ংক্রিয় আতঙ্ক সতর্কতা।</string>
+    <string name="more_info_title">Anonomi লিংক</string>
+    <string name="request_xmr_manual">নিজে করুন</string>
+    <string name="request_xmr_send">পাঠান</string>
+    <string name="error_creating_message">বার্তা পাঠাতে সমস্যা</string>
+    <string name="choose_forum_name">আপনার ফোরামের জন্য একটি নাম নির্বাচন করুন</string>
+    <string name="location_sent">অবস্থানের সেটিং</string>
+    <string name="unlocking_anonchat">Anonomi আনলক করুন</string>
+    <string name="button_delete">মুছুন</string>
+    <string name="button_cancel">বাতিল</string>
+    <string name="status_imported">আমদানি:</string>
+    <string name="panic_option_sign_out">সাইন আউট</string>
+    <string name="panic_option_delete_account">অ্যাকাউন্ট মুছে ফেলুন</string>
+    <string name="panic_action_sign_out_summary">Anonomi থেকে সাইন আউট করুন</string>
+    <string name="camera_permission_denied">ক্যামেরার অনুমতি</string>
 </resources>
