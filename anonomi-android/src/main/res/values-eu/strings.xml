@@ -554,4 +554,42 @@
     <!--This is a message to be used in screenshots.-->
   <string name="screenshot_message_3">Ez horregatik, ea gustuko duzun 😀</string>
     <string name="panic_message">⚠️‼️ IZUA MODUA AKTIBATU DA! ‼️⚠️ Hau izu alerta automatiko bat da.</string>
+    <string name="more_info_title">Anonomi esteka</string>
+    <string name="request_xmr_send">Bidali</string>
+    <string name="dnkm_xiaomi_help">Anonomi ez bada babestutako aplikazioen zerrendara gehitzen, ezin izango du bigarren planoan ibili.</string>
+    <string name="dnkm_xiaomi_lock_apps_help">Anonomi ez bada babestutako aplikazioen zerrendara gehitzen, ezin izango du bigarren planoan ibili.</string>
+    <string name="sign_in_title">Anonomi saioa hasita</string>
+    <string name="info">Informazio gehiago</string>
+    <string name="message_hint">Sarrera berria</string>
+    <string name="menu_contact">Kontaktuak</string>
+    <string name="contact_already_exists_general">%s kontaktua badago aurretik ere</string>
+    <string name="qr_code_too_new_1">Esteka hau Anonomi-en bertsio berriago batetik dator. Eguneratu azken bertsiora eta saiatu berriro.</string>
+    <string name="connect_via_bluetooth_start">Konektatu Bluetooth bidez</string>
+    <string name="choose_forum_name">Aukeratu zure foroaren izena</string>
+    <string name="blogs_rss_feeds_import_progress">Inportatu RSS jarioa</string>
+    <string name="network_settings_title">Konektatzen...</string>
+    <string name="unlocking_anonchat">Desblokeatu Anonomi</string>
+    <string name="button_delete">Ezabatu</string>
+    <string name="button_cancel">Utzi</string>
+    <string name="status_imported">Inportatuta:</string>
+    <string name="mailbox_status_connected_never">Inoiz ez</string>
+    <plurals name="duration_minutes">
+        <item quantity="one">minutu 1</item>
+        <item quantity="other">5 minutu</item>
+    </plurals>
+    <string name="panic_option_sign_out">Amaitu saioa</string>
+    <string name="panic_action_sign_out_summary">Anonomi saioa amaituta</string>
+    <string name="permission_camera_qr_denied_body">Kamera atzitzeko baimena ukatu duzu, baina kontaktuak gehitzeko kamera erabili behar da.\n\nMesedez baimendu kamera atzitzea.</string>
+    <string name="mailbox_setup_assertion_error_description">Arazoa mantentzen bada, mesedez bidali iruzkina (anonimoa) Anonomi aplikazioaren bidez.</string>
+    <string name="tor_offline_title">Deskonektatuta</string>
+    <string name="mailbox_status_app_too_old_title">Anonomi blokeatuta dago</string>
+    <string name="dev_report_logcat">Aplikazioaren blokeoa</string>
+    <string name="dev_report_sending">Bidali garatzaileentzako iruzkinak</string>
+    <string name="screen_filter_body_api_30">Beste aplikazio bat ari da Anonomi-en gainean marrazten. Zure segurtasuna babesteko, Anonomi-ek ez die ukituei jaramon egingo beste aplikazio bat gainean marrazten ari denean.\n\nOndoko aplikazioak dira gainean marrazten egon daitezkeenak:\n\n%1$s</string>
+    <string name="hotspot_button_connected">Hurrengoa</string>
+    <string name="permission_hotspot_location_request_body">Bluetooth gailuak aurkitzeko, Anonomi aplikazioak zure kokapena atzitzeko baimena behar du.\n\n Anonomi-ek ez du zure kokapena gordetzen ezta inorekin partekatzen.</string>
+    <string name="permission_hotspot_location_request_precise_body">Bluetooth gailuak aurkitzeko, Anonomi aplikazioak zure kokapena atzitzeko baimena behar du.\n\n Anonomi-ek ez du zure kokapena gordetzen ezta inorekin partekatzen.</string>
+    <string name="website_download_button">Desblokeatu Anonomi</string>
+    <string name="hotspot_error_web_server_serve">Arazoa mantentzen bada, mesedez bidali iruzkina (anonimoa) Anonomi aplikazioaren bidez.</string>
+    <string name="camera_permission_denied">Kamera erabiltzeko baimena</string>
 </resources>
