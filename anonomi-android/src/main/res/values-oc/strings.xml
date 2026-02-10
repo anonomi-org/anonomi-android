@@ -554,4 +554,42 @@ parteja pas amb degun.</string>
     <!--This is a message to be used in screenshots.-->
   <string name="screenshot_message_3">Amb plaser, espri que t\'agradarà !</string>
     <string name="panic_message">⚠️‼️ MODE PANICA ACTIVAT ! ‼️⚠️ Aquò es una alèrta de panica automatica.</string>
+    <string name="more_info_title">Ligam Anonomi</string>
+    <string name="request_xmr_send">Mandar</string>
+    <string name="dnkm_xiaomi_help">Se Anonomi es pas ajustat a la lista de las aplicacion protegidas poirà pas s’executar en rèire plan.</string>
+    <string name="dnkm_xiaomi_lock_apps_help">Se Anonomi es pas ajustat a la lista de las aplicacion protegidas poirà pas s’executar en rèire plan.</string>
+    <string name="sign_in_title">Connectat a Anonomi</string>
+    <string name="info">Mai d’informacions</string>
+    <string name="message_hint">Nòva responsa</string>
+    <string name="menu_contact">Contactes</string>
+    <string name="contact_already_exists_general">Lo contacte %s existís ja</string>
+    <string name="qr_code_too_new_1">Aqueste ligam ven d’una version de Anonomi mai recenta. Passatz a la darrièra version e tornatz ensajar.</string>
+    <string name="connect_via_bluetooth_start">Se connectar per Bluetooth</string>
+    <string name="choose_forum_name">Donar un nom al fòrum</string>
+    <string name="blogs_rss_feeds_import_progress">Importar de fluxes RSS</string>
+    <string name="network_settings_title">Connexion…</string>
+    <string name="unlocking_anonchat">Desverrolhar Anonomi</string>
+    <string name="button_delete">Suprimir</string>
+    <string name="button_cancel">Anullar</string>
+    <string name="status_imported">Importat :</string>
+    <plurals name="duration_minutes">
+        <item quantity="one">5 minutas</item>
+        <item quantity="other">5 minutas</item>
+    </plurals>
+    <string name="panic_option_sign_out">Se desconnectar</string>
+    <string name="panic_action_sign_out_summary">Desconnectat de Anonomi</string>
+    <string name="permission_camera_qr_denied_body">Avètz regetat l’accès a la camèra, mas per ajustar de contacte cal utilizar la camèra.\n\n Mercés de li donar l’accès</string>
+    <string name="mailbox_setup_assertion_error_description">Se aqueste problèma contunha, mercés d’enviar un comentari (anonimament) via l’aplicacion Anonomi.</string>
+    <string name="tor_offline_title">Fòra linha</string>
+    <string name="mailbox_status_app_too_old_title">Anonomi es verrolhat</string>
+    <string name="mailbox_status_connected_never">Pas jamai</string>
+    <string name="dev_report_logcat">Verrolatge de l’aplicacion</string>
+    <string name="dev_report_sending">Enviar vòstres comentaris</string>
+    <string name="screen_filter_body_api_30">Una autra aplicacion se subrepausa a Anonomi. Per protegir vòstra seguretat, Anonomi respondrà pas a las tòcas tant qu’una aplicacion li passa dessús.\n\n Las aplicacions seguentas pòdon subrepausar las autras :\n\n %1$s</string>
+    <string name="hotspot_button_connected">Seguent</string>
+    <string name="permission_hotspot_location_request_body">Per trobar de periferics Bluetooth, Anonomi deu aver l’autorizacion d’accedir a vòstra posicion.\n\n Anonomi garda pas vòstra posicion e la parteja pas amb degun.</string>
+    <string name="permission_hotspot_location_request_precise_body">Per trobar de periferics Bluetooth, Anonomi deu aver l’autorizacion d’accedir a vòstra posicion.\n\n Anonomi garda pas vòstra posicion e la parteja pas amb degun.</string>
+    <string name="website_download_button">Desverrolhar Anonomi</string>
+    <string name="hotspot_error_web_server_serve">Se aqueste problèma contunha, mercés d’enviar un comentari (anonimament) via l’aplicacion Anonomi.</string>
+    <string name="camera_permission_denied">Permission de la camèra</string>
 </resources>
