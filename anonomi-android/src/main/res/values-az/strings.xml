@@ -497,4 +497,43 @@
     <!--This is a message to be used in screenshots.-->
   <string name="screenshot_message_3">Problem yoxdur, bunu ümüd edirəm 😀</string>
     <string name="panic_message">⚠️‼️ PANİK REJİMİ AKTİV EDİLDİ! ‼️⚠️ Bu avtomatik panik siqnalıdır.</string>
+    <string name="more_info_title">Anonomi link</string>
+    <string name="request_xmr_send">Göndər</string>
+    <string name="dnkm_xiaomi_button">Anonomi-ın qorunması</string>
+    <string name="dnkm_xiaomi_help">Anonomi qorunan tətbiqlər siyahısına əlavə olunmasa, arxa planda işləməyəcəkdir.</string>
+    <string name="dnkm_xiaomi_lock_apps_help">Anonomi qorunan tətbiqlər siyahısına əlavə olunmasa, arxa planda işləməyəcəkdir.</string>
+    <string name="sign_in_title">Anonomi-da imza olundu</string>
+    <string name="info">Digər məlumatlar</string>
+    <string name="menu_contact">Kontaktlar</string>
+    <string name="contact_already_exists_general">Kontakt %s artıq mövcuddur</string>
+    <string name="qr_code_too_new_1">Bu link Anonomi-ın daha yeni versiyasından gəlir. Ən son versiyaya keçin və yenidən cəhd edin.</string>
+    <string name="introduction_response_accepted_received">%1$s-ə qəbul olundunuz</string>
+    <string name="introduction_response_declined_received">%1$s-ə girişdən imtina etdiniz</string>
+    <string name="groups_reveal_visible_revealed_by_contact">Kontakt əlaqəsi qrupda görür (sizin üçün görsənir)</string>
+    <string name="choose_forum_name">Forum üçün ad seçin</string>
+    <string name="sharing_status_blog">Bir forumun hər hansı bir üzvü onu əlaqə ilə paylaşa bilər. Bu forumu aşağıdakı əlaqələrlə bölüşürsünüz. Görməyən digər üzvlər də ola bilər.</string>
+    <string name="blogs_rss_feeds_import_progress">RSS Feed idxalı</string>
+    <string name="blogs_rss_remove_feed_dialog_message">Bu blogu silmək istədiyinizə əminsinizmi? \n\n Onalarınız cihazınızdan silinəcək, lakin digər cihazların cihazlarından silinəcəkdir. \n\n Bu blogu paylaşdığınız hər hansı əlaqələr yenilikləri almağa davam edə bilər.</string>
+    <string name="network_settings_title">Qoşulur...</string>
+    <string name="unlocking_anonchat">Anonomi kilidini aç</string>
+    <string name="button_delete">Sil</string>
+    <string name="button_cancel">Ləğv et</string>
+    <string name="status_imported">İdxal olundu:</string>
+    <string name="dev_report_logcat">Tətbiq kilidi</string>
+    <string name="dev_report_sending">Rəy göndər</string>
+    <string name="camera_permission_denied">Camera izni</string>
+    <plurals name="duration_minutes">
+        <item quantity="one">1 dəqiqə</item>
+        <item quantity="other">5 dəqiqə</item>
+    </plurals>
+    <string name="panic_option_sign_out">Çıxış</string>
+    <string name="panic_action_sign_out_summary">Anonomi-dan çıxdı</string>
+    <string name="permission_camera_qr_denied_body">Kameraya daxil olmağı rədd etdiniz, lakin əlaqə əlavə etmək kameradan istifadə etməyi tələb edir. \n\nİcazə verilməsini düşünün.</string>
+    <string name="mailbox_setup_assertion_error_description">Bu problem davam edərsə, anonim məlumatlarla birlikdə rəyinizi Anonomi tətbiqi vasitəsilə göndərin.</string>
+    <string name="tor_offline_title">Offline</string>
+    <string name="mailbox_status_app_too_old_title">Anonomi kilidləndi</string>
+    <string name="mailbox_status_connected_never">Heç vaxt</string>
+    <string name="hotspot_button_connected">Növbəti</string>
+    <string name="website_download_button">Anonomi kilidini aç</string>
+    <string name="hotspot_error_web_server_serve">Bu problem davam edərsə, anonim məlumatlarla birlikdə rəyinizi Anonomi tətbiqi vasitəsilə göndərin.</string>
 </resources>
