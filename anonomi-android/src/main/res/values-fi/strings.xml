@@ -1028,4 +1028,6 @@
     <string name="hotspot_button_connected">Seuraava</string>
     <string name="panic_option_sign_out">Kirjaudu ulos</string>
     <string name="panic_action_sign_out_summary">Uloskirjautunut Anonomi Messengerista</string>
+    <string name="delete_account_button">Poista tili</string>
+    <string name="panic_option_delete_account">Poista tili</string>
 </resources>
