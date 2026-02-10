@@ -1044,4 +1044,13 @@
     <string name="recording_max_reached">Максимум: 12 секунди</string>
     <string name="scan_qr_code">Сканирайте QR кода</string>
     <string name="camera_permission_denied">Разрешението за камерата е отказано.</string>
+    <string name="request_xmr_manual">Ръчно</string>
+    <string name="request_xmr_send">Изпращане</string>
+    <string name="choose_forum_name">Име на форума</string>
+    <string name="button_delete">Премахване</string>
+    <string name="button_cancel">Отказ</string>
+    <string name="status_imported">Внесена:</string>
+    <string name="panic_option_sign_out">Отписване</string>
+    <string name="panic_option_delete_account">Премахване на профил</string>
+    <string name="panic_action_sign_out_summary">Отписани сте от Anonomi</string>
 </resources>
