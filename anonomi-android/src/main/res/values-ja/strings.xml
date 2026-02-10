@@ -1035,4 +1035,14 @@
     <string name="scan_qr_code">QRコードをスキャン</string>
     <string name="camera_permission_denied">カメラの許可が拒否されました。</string>
     <string name="load_qr_code">QRコードを読み込む</string>
+    <string name="request_xmr_manual">手動</string>
+    <string name="request_xmr_send">送信</string>
+    <string name="sign_in_title">Anonomiにサインイン</string>
+    <string name="choose_forum_name">オープングループの名前を選択してください</string>
+    <string name="button_delete">削除</string>
+    <string name="button_cancel">キャンセル</string>
+    <string name="status_imported">インポート済み：</string>
+    <string name="panic_option_sign_out">サインアウト</string>
+    <string name="panic_option_delete_account">アカウントを削除</string>
+    <string name="panic_action_sign_out_summary">Anonomiからサインアウト</string>
 </resources>
