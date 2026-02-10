@@ -536,4 +536,6 @@
     <string name="hotspot_button_connected">Növbəti</string>
     <string name="website_download_button">Anonomi kilidini aç</string>
     <string name="hotspot_error_web_server_serve">Bu problem davam edərsə, anonim məlumatlarla birlikdə rəyinizi Anonomi tətbiqi vasitəsilə göndərin.</string>
+    <string name="delete_account_button">Hesabı sil</string>
+    <string name="panic_option_delete_account">Hesabı sil</string>
 </resources>
