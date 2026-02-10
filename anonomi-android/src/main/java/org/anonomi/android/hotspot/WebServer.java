@@ -147,6 +147,10 @@ class WebServer extends NanoHTTPD {
 				.text(ctx.getString(R.string.website_download_title_1, VERSION_NAME));
 		requireNonNull(doc.selectFirst("#download_intro"))
 				.text(ctx.getString(R.string.website_download_intro_1));
+		Element httpNotice = doc.selectFirst("#http_notice_text");
+		if (httpNotice != null) {
+			httpNotice.text(ctx.getString(R.string.website_http_notice));
+		}
 		requireNonNull(doc.selectFirst(".button")).attr("href", filename);
 		requireNonNull(doc.selectFirst("#download_button"))
 				.text(ctx.getString(R.string.website_download_button));
@@ -178,7 +182,12 @@ class WebServer extends NanoHTTPD {
 		Element btn = doc.selectFirst(selector);
 		if (btn == null) return;
 		btn.attr("href", href);
-		btn.text(ctx.getString(textRes));
+		Element span = btn.selectFirst("span");
+		if (span != null) {
+			span.text(ctx.getString(textRes));
+		} else {
+			btn.text(ctx.getString(textRes));
+		}
 	}
 
 	private String getUnknownSourcesString(@Nullable String userAgent) {

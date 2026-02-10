@@ -1019,6 +1019,7 @@ Anonomi Messenger is an independent project and is not affiliated with, endorsed
     <!-- e.g. Download Anonomi Messenger 1.2.20 -->
 	<string name="website_download_title_1">Download Anonomi Messenger %s</string>
     <string name="website_download_intro_1">Someone nearby shared Anonomi Messenger with you.</string>
+    <string name="website_http_notice">Your browser may warn that this connection is not secure. This is expected — the page is served locally over your direct Wi-Fi connection and does not travel over the internet.</string>
     <string name="website_download_button">Download Anonomi Messenger</string>
     <string name="website_download_mailbox_button">Download Anonomi Postbox</string>
     <string name="website_download_outro">After the download is complete, open the downloaded file and install it.</string>
