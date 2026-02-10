@@ -846,4 +846,32 @@ Først, installer appen "Anonomi Postbox" på en annen enhet fra det samme stede
     <!--This is a message to be used in screenshots.-->
   <string name="screenshot_message_3">Ingen årsak, håper du liker den 😀</string>
     <string name="panic_message">⚠️‼️ PANIKKMODUS AKTIVERT! ‼️⚠️ Dette er et automatisk panikkvarsel.</string>
+    <string name="more_info_title">Anonomi lenke</string>
+    <string name="request_xmr_manual">Manuelt</string>
+    <string name="request_xmr_send">Send</string>
+    <string name="error_creating_message">Feil ved sending av melding</string>
+    <string name="sign_in_title">Logget inn på Anonomi</string>
+    <string name="info">Ytterligere informasjon</string>
+    <string name="contact_already_exists_general">Kontakten %s finnes allerede</string>
+    <string name="connect_via_bluetooth_no_bluetooth_permission">Kan ikke fortsette uten lokasjonstillatelse</string>
+    <string name="choose_forum_name">Velg et navn for ditt forum</string>
+    <string name="blogs_rss_feeds_import_progress">Importer RSS-strøm</string>
+    <string name="location_sent">Lokasjonsinnstillinger</string>
+    <string name="unlocking_anonchat">Låse opp Anonomi</string>
+    <string name="button_delete">Slett</string>
+    <string name="button_cancel">Avbryt</string>
+    <string name="status_imported">Importert:</string>
+    <string name="panic_option_sign_out">Logg ut</string>
+    <string name="panic_option_delete_account">Slett konto</string>
+    <string name="panic_action_sign_out_summary">Logget ut av Anonomi</string>
+    <string name="mailbox_qr_code_too_old">QR-koden du har skannet kommer fra en nyere versjon av Anonomi.\n\nVennligst oppgrader til den nyeste versjonen og prøv så på nytt.</string>
+    <string name="mailbox_qr_code_too_new">QR-koden du har skannet kommer fra en nyere versjon av Anonomi.\n\nVennligst oppgrader til den nyeste versjonen og prøv så på nytt.</string>
+    <string name="share_app_link">Dele nedlastingslenke</string>
+    <string name="share_app_link_text">Laste ned Anonomi %s</string>
+    <string name="permission_location_setting_hotspot_body">Din enhets lokasjonsinnstillinger må være skrudd på for å finne andre enheter via Blåtann. Vennligst skru på lokasjonstilgang for å fortsette. Det er mulig å skru det av igjen senere.</string>
+    <string name="permission_bluetooth_denied_body">Du har avlsått tilgang til din lokasjon, men Anonomi trenger denne tilgangen for å kunne finne Blåtann-enheter.\n\nVennligst vurdere å gi tilgang.</string>
+    <string name="permission_hotspot_location_request_precise_body">For å lage et WiFi-hotspot så trenger Anonomi tillatelse til å få tilgang til din lokasjon.\n\nAnonomi lagrer ikke din lokasjon eller deler den med noen.</string>
+    <string name="permission_hotspot_location_denied_precise_body">Du har avlsått tilgang til din lokasjonsinformasjon, men Anonomi trenger denne tillatelsen for å lage et Wi-Fi-hotspot.\n\nVennligst vurder å gi denne tilgangen.</string>
+    <string name="permission_hotspot_nearby_wifi_denied_body">Du har avlsått tilgang til din lokasjonsinformasjon, men Anonomi trenger denne tillatelsen for å lage et Wi-Fi-hotspot.\n\nVennligst vurder å gi denne tilgangen.</string>
+    <string name="camera_permission_denied">Kameratilgang</string>
 </resources>
