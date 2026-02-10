@@ -51,7 +51,6 @@ class WebServer extends NanoHTTPD {
 	private static final Map<String, String> APK_ASSETS = new LinkedHashMap<>();
 	static {
 		APK_ASSETS.put("postbox", "anonomi-postbox.apk");
-		APK_ASSETS.put("ripple", "ripple.apk");
 		APK_ASSETS.put("monerujo", "monerujo.apk");
 		APK_ASSETS.put("orbot", "orbot.apk");
 		APK_ASSETS.put("tor-browser", "tor-browser.apk");
@@ -155,8 +154,6 @@ class WebServer extends NanoHTTPD {
 		// Optional buttons (only if present in HTML)
 		setButton(doc, "#mailbox_button", "anonomi-postbox.apk",
 				R.string.website_download_mailbox_button);
-		setButton(doc, "#ripple_button", "ripple.apk",
-				R.string.website_download_ripple_button);
 		setButton(doc, "#monerujo_button", "monerujo.apk",
 				R.string.website_download_monerujo_button);
 		setButton(doc, "#orbot_button", "orbot.apk",

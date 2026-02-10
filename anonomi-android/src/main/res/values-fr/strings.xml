@@ -1004,7 +1004,6 @@ copies des messages que vous envoyez.
     <string name="offline_maps_import_title">Importer des cartes hors ligne</string>
     <string name="offline_maps_import_success">%1$d Tuiles importées avec succès.</string>
     <string name="offline_maps_import_failed">Échec de l\'importation des cartes hors ligne.</string>
-    <string name="website_download_ripple_button">Télécharger l\'application Ripple</string>
     <string name="monero_settings_title">Monero (XMR)</string>
     <string name="pref_primary_address_title">Adresse Monero principale</string>
     <string name="pref_primary_address_hint">Entrez votre adresse Monero (4...)</string>
