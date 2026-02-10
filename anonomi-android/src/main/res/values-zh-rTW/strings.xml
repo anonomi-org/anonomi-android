@@ -863,4 +863,23 @@
     <!--This is a message to be used in screenshots.-->
   <string name="screenshot_message_3">沒問題，希望您喜歡它 😀</string>
     <string name="panic_message">⚠️‼️ 恐慌模式已啟動！‼️⚠️ 這是自動恐慌警報。</string>
+    <string name="more_info_title">Anonomi鏈接</string>
+    <string name="request_xmr_manual">手動</string>
+    <string name="request_xmr_send">發送</string>
+    <string name="error_creating_message">發送訊息時出錯</string>
+    <string name="sign_in_title">已登錄 Anonomi</string>
+    <string name="contact_already_exists_general">聯絡人 %s 已存在</string>
+    <string name="choose_forum_name">爲論壇命名</string>
+    <string name="location_sent">位置設定</string>
+    <string name="unlocking_anonchat">解鎖 Anonomi</string>
+    <string name="button_delete">刪除</string>
+    <string name="button_cancel">取消</string>
+    <string name="status_imported">已導入：</string>
+    <string name="share_app_link">分享下載鏈接</string>
+    <string name="share_app_link_text">下載 Anonomi %s</string>
+    <string name="permission_hotspot_nearby_wifi_denied_body">您拒絕 Anonomi 使用設備位置權限，但Anonomi 須有此授權才能為您建立 Wi-Fi 熱點\n\n 請考慮同意此項授權</string>
+    <string name="camera_permission_denied">相機權限</string>
+    <string name="panic_option_sign_out">登出</string>
+    <string name="panic_option_delete_account">刪除帳戶</string>
+    <string name="panic_action_sign_out_summary">已登出 Anonomi</string>
 </resources>
