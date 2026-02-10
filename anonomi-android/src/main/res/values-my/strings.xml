@@ -866,4 +866,19 @@
     <!--This is a message to be used in screenshots.-->
   <string name="screenshot_message_3">ကိစ္စမရှိပါဘူး၊ မင်းကြိုက်မယ်လို့ မျှော်လင့်ပါတယ်။</string>
     <string name="panic_message">⚠️‼️ ထိတ်လန့်တုန်လှုပ်မှုစနစ် စတင်ပါပြီ။ ‼️⚠️ ဤသည်မှာ အလိုအလျောက် ထိတ်လန့်တုန်လှုပ်မှု အချက်ပေးစနစ်ဖြစ်သည်။</string>
+    <string name="more_info_title">Anonomi လင့်ခ်</string>
+    <string name="request_xmr_manual">လမ်းညွှန်စာအုပ်</string>
+    <string name="request_xmr_send">ပို့မည်</string>
+    <string name="error_creating_message">မက်ဆေ့ချ်ပို့ရာတွင် ပျက်ကွက်မှုဖြစ်</string>
+    <string name="sign_in_title">Anonomi သို့ အကောင့်ဝင်ထားသည်</string>
+    <string name="choose_forum_name">သင့် ဆွေးနွေးမှုဖိုရမ်အတွက် အမည်ရွေးပါ</string>
+    <string name="location_sent">နေရာ အပြင်အဆင်</string>
+    <string name="unlocking_anonchat">Anonomi သော့ဖွင့်မယ်</string>
+    <string name="button_delete">ဖျက်သိမ်းမည်</string>
+    <string name="button_cancel">ပယ်ဖျက်မည်</string>
+    <string name="status_imported">တင်သွင်းထားသော</string>
+    <string name="camera_permission_denied">ကင်မရာသုံးခွင့်</string>
+    <string name="panic_option_sign_out">အကောင့်ထွက်မည်</string>
+    <string name="panic_option_delete_account">အကောင့် ဖျက်သိမ်းမည်</string>
+    <string name="panic_action_sign_out_summary">Anonomi မှ အကောင့်ထွက်ထားသည်</string>
 </resources>
