@@ -1011,4 +1011,21 @@
     <string name="dev_report_sent">Lähetetty palaute</string>
     <string name="permission_hotspot_location_request_precise_body">Wi-Fi-hotspotin luomiseksi Anonomi Messenger tarvitsee luvan käyttää tarkkaa sijaintiasi.\n\nAnonomi Messenger ei tallenna sijaintiasi eikä jaa sitä kenellekään.</string>
     <string name="website_http_notice">Selaimesi saattaa varoittaa, että tämä yhteys ei ole turvallinen. Tämä on odotettavissa – sivu toimitetaan paikallisesti suoralla Wi-Fi-yhteydellä, eikä se kulje internetin kautta.</string>
+    <string name="request_xmr_send">Lähetä</string>
+    <string name="dnkm_xiaomi_button">Suojaa Anonomi</string>
+    <string name="dnkm_xiaomi_help">Jos Anonomi Messengeria ei lisätä suojattujen sovellusten listalle, se ei voi toimia taustalla.</string>
+    <string name="sign_in_title">Kirjautunut Anonomi Messengeriin</string>
+    <string name="menu_contact">Yhteystiedot</string>
+    <string name="contact_already_exists_general">Yhteystieto %s on jo olemassa</string>
+    <string name="choose_forum_name">Valitse nimi foorumillesi</string>
+    <string name="button_delete">Poista</string>
+    <string name="button_cancel">Peruuta</string>
+    <string name="status_imported">Tuotu:</string>
+    <string name="permission_camera_qr_denied_body">Olet kieltänyt käyttämästä kameraa, mutta yhteyshenkilöiden lisääminen vaatii kameran käyttöä.\n\nOle hyvä ja harkitse kameraluvan myöntämistä.</string>
+    <string name="mailbox_setup_assertion_error_description">Jos tämä ongelma jatkuu, lähetä palautetta (anonyymien tietojen kanssa) Anonomi-sovelluksen kautta.</string>
+    <string name="tor_offline_title">Poissa verkosta</string>
+    <string name="mailbox_status_connected_never">Ei koskaan</string>
+    <string name="hotspot_button_connected">Seuraava</string>
+    <string name="panic_option_sign_out">Kirjaudu ulos</string>
+    <string name="panic_action_sign_out_summary">Uloskirjautunut Anonomi Messengerista</string>
 </resources>
