@@ -580,7 +580,7 @@
     <string name="password_changed">Пароль змінено.</string>
     <string name="panic_setting">Налаштування тривожної кнопки</string>
     <string name="panic_setting_title">Тривожна кнопка</string>
-    <string name="panic_setting_hint">Задайте, як Anonomi реагуватиме у випадку використання тривожної кнопки</string>
+    <string name="panic_setting_hint">Налаштуйте послідовність натискання кнопок гучності для активації режиму паніки.</string>
     <string name="panic_app_setting_title">Програма тривожної кнопки</string>
     <string name="unknown_app">невідома програма</string>
     <string name="panic_app_setting_summary">Жодна програма не була налаштована</string>
@@ -1075,4 +1075,23 @@
     <string name="passcode_attention_label">Увага</string>
     <string name="set_passcode_hint_1">Вираз (наприклад, 55+23)</string>
     <string name="set_passcode_hint_2">Повторно введіть вираз</string>
+    <string name="panic_enabled_title">Увімкнути тригер паніки</string>
+    <string name="panic_enabled_summary">Визначте послідовність натискання кнопок гучності для запуску режиму паніки.</string>
+    <string name="panic_record_sequence_title">Запишіть послідовність дій у режимі паніки.</string>
+    <string name="panic_sequence_not_set">Послідовність не налаштована</string>
+    <string name="panic_sequence_too_short">Послідовність повинна складатися щонайменше з 3 кроків.</string>
+    <string name="panic_action_title">Дія паніки</string>
+    <string name="panic_dialog_title">Режим паніки</string>
+    <string name="panic_option_sign_out">Вийти</string>
+    <string name="panic_option_delete_account">Видалити обліковий запис</string>
+    <string name="panic_record_dialog_title">Запис послідовності паніки</string>
+    <string name="panic_record_dialog_instruction">Натискайте кнопки збільшення/зменшення гучності в бажаному порядку. Коротке натискання (&lt; 0,5 с) або довге натискання (&gt;= 0,5 с). Необхідно мінімум 3 кроки.</string>
+    <string name="panic_record_save">Зберегти</string>
+    <string name="panic_record_clear">Чіткість</string>
+    <string name="panic_action_sign_out_summary">Вийти з Anonomi Messenger</string>
+    <string name="panic_action_delete_summary">Назавжди видаліть свій обліковий запис, контакти та повідомлення</string>
+    <string name="panic_action_dialog_summary">Показати діалогове вікно вибору (Вийти / Видалити обліковий запис / Скасувати)</string>
+    <string name="panic_status_signing_out">Відправлення панічних повідомлень і вихід із системи…</string>
+    <string name="panic_status_deleting">Відправлення панічних повідомлень і видалення облікового запису…</string>
+    <string name="website_http_notice">Ваш браузер може попередити, що це з\'єднання не є безпечним. Це нормально — сторінка обслуговується локально через ваше пряме Wi-Fi-з\'єднання і не передається через Інтернет.</string>
 </resources>
