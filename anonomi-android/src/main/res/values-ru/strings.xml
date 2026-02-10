@@ -910,4 +910,18 @@
     <!--This is a message to be used in screenshots.-->
   <string name="screenshot_message_3">Рада помочь, надеюсь, он вам понравится 😀</string>
     <string name="panic_message">⚠️‼️ РЕЖИМ ПАНИКИ АКТИВИРОВАН! ‼️⚠️ Это автоматическое паническое оповещение.</string>
+    <string name="more_info_title">Ссылка Anonomi</string>
+    <string name="request_xmr_manual">Вручную</string>
+    <string name="request_xmr_send">Отправить</string>
+    <string name="error_creating_message">Ошибка отправки сообщения</string>
+    <string name="choose_forum_name">Придумайте название вашего форума</string>
+    <string name="location_sent">Настройка местоположения</string>
+    <string name="unlocking_anonchat">Разблокировать Anonomi</string>
+    <string name="button_delete">Удалить</string>
+    <string name="button_cancel">Отмена</string>
+    <string name="status_imported">Импортирован:</string>
+    <string name="camera_permission_denied">Доступ к камере</string>
+    <string name="panic_option_sign_out">Выйти</string>
+    <string name="panic_option_delete_account">Удалить аккаунт</string>
+    <string name="panic_action_sign_out_summary">Вы не авторизованы в Anonomi</string>
 </resources>
