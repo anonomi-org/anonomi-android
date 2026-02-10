@@ -870,4 +870,18 @@
     <!--This is a message to be used in screenshots.-->
   <string name="screenshot_message_3">没问题，希望你喜欢它 😀</string>
     <string name="panic_message">⚠️‼️ 恐慌模式已激活！‼️⚠️ 这是自动恐慌警报。</string>
+    <string name="more_info_title">Anonomi 链接</string>
+    <string name="request_xmr_manual">手动</string>
+    <string name="request_xmr_send">发送</string>
+    <string name="error_creating_message">发送消息出错</string>
+    <string name="choose_forum_name">为开放群组命名</string>
+    <string name="location_sent">位置设定</string>
+    <string name="unlocking_anonchat">解锁 Anonomi</string>
+    <string name="button_delete">删除</string>
+    <string name="button_cancel">取消</string>
+    <string name="status_imported">已导入：</string>
+    <string name="camera_permission_denied">相机权限</string>
+    <string name="panic_option_sign_out">登出</string>
+    <string name="panic_option_delete_account">删除帐户</string>
+    <string name="panic_action_sign_out_summary">已登出 Anonomi</string>
 </resources>
