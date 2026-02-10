@@ -1048,4 +1048,15 @@ Vigyázat: Ez végleg törli az identitásait, kapcsolatait és üzeneteit</stri
     <string name="scan_qr_code">QR-kód beolvasása</string>
     <string name="camera_permission_denied">A kamera engedélyezése megtagadva.</string>
     <string name="load_qr_code">QR-kód betöltése</string>
+    <string name="request_xmr_manual">Kézi</string>
+    <string name="request_xmr_send">Küldés</string>
+    <string name="sign_in_title">Belépve a Anonomi-ba</string>
+    <string name="choose_forum_name">Válasszon nevet a fórumának</string>
+    <string name="button_delete">Töröl</string>
+    <string name="button_cancel">Mégse</string>
+    <string name="status_imported">Importálva:</string>
+    <string name="panic_option_sign_out">Kijelentkezés</string>
+    <string name="panic_option_delete_account">Fiók törlése</string>
+    <string name="panic_action_sign_out_summary">Kilépve a Anonomi-ból</string>
+    <string name="permission_hotspot_nearby_wifi_denied_body">Megtagadta a hozzáférést a tartózkodási helyéhez, de Anonomi Messengernak szüksége van erre az engedélyre Wi-Fi hotspot létrehozásához. Kérjük, fontolja meg a hozzáférés megadását.</string>
 </resources>
