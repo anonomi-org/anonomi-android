@@ -1078,4 +1078,16 @@ Brak dostępu do aparatu. Spróbuj ponownie, może po ponownym uruchomieniu urz�
     <string name="scan_qr_code">Zeskanuj kod QR</string>
     <string name="camera_permission_denied">Odmowa dostępu do aparatu.</string>
     <string name="load_qr_code">Załaduj kod QR</string>
+    <string name="request_xmr_manual">Manualne</string>
+    <string name="request_xmr_send">Wyślij</string>
+    <string name="sign_in_title">Zalogowany w Anonomi</string>
+    <string name="choose_forum_name">Wybierz nazwę dla swojego forum</string>
+    <string name="button_delete">Usuń</string>
+    <string name="button_cancel">Anuluj</string>
+    <string name="status_imported">Zaimportowane:</string>
+    <string name="panic_option_sign_out">Wyloguj się</string>
+    <string name="panic_option_delete_account">Skasuj Konto</string>
+    <string name="panic_action_sign_out_summary">Wylogowano z Anonomi</string>
+    <string name="share_app_link_text">Pobierz Anonomi %s</string>
+    <string name="permission_hotspot_nearby_wifi_denied_body">Zabroniłeś dostępu do Twojej lokalizacji, ale Anonomi potrzebuje tego uprawnienia do tworzenia hotspotu Wi-Fi.\n\nRozważ przyznanie tego dostępu.</string>
 </resources>
