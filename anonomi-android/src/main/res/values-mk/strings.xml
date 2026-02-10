@@ -589,4 +589,45 @@
     <!--This is a message to be used in screenshots.-->
   <string name="screenshot_message_3">Нема проблем, се надевам ти се допаѓа 😀</string>
     <string name="panic_message">⚠️‼️ РЕЖИМОТ ЗА ПАНИКА Е АКТИВИРАН! ‼️⚠️ Ова е автоматско алармирање за паника.</string>
+    <string name="more_info_title">Anonomi линк</string>
+    <string name="request_xmr_send">Испрати</string>
+    <string name="dnkm_xiaomi_help">Ако Anonomi не е додаден на листата со заштитени апликации, ќе биде оневозможен да работи во позадина.</string>
+    <string name="dnkm_xiaomi_lock_apps_help">Ако Anonomi не е додаден на листата со заштитени апликации, ќе биде оневозможен да работи во позадина.</string>
+    <string name="sign_in_title">Најавен во Anonomi</string>
+    <string name="info">Повеќе информации</string>
+    <string name="message_hint">Нова објава</string>
+    <string name="menu_contact">Контакти</string>
+    <string name="contact_already_exists_general">Контактот %s веќе постои</string>
+    <string name="qr_code_too_new_1">Овој линк доаѓа од понова верзија на Anonomi. Ве молиме надградете во последна верзија и обидете се повторно.</string>
+    <string name="connect_via_bluetooth_start">Поврзи се преку Bluetooth</string>
+    <string name="choose_forum_name">Одберете име за вашиот форум</string>
+    <string name="blogs_rss_feeds_import_progress">Увези RSS тековник</string>
+    <string name="unlocking_anonchat">Отклучи го Anonomi</string>
+    <string name="button_delete">Избриши</string>
+    <string name="button_cancel">Исклучи</string>
+    <string name="status_imported">Увезени:</string>
+    <string name="panic_action_sign_out_summary">Одјави се од Anonomi</string>
+    <plurals name="duration_minutes">
+        <item quantity="one"></item>
+        <item quantity="other">5 минути</item>
+    </plurals>
+    <string name="panic_option_sign_out">Одјави се</string>
+    <string name="permission_camera_qr_denied_body">Го одбивте пристапот до камерата, но за додавање на контакти потребно е користење на камерата.\n\nВе молиме размислете за давање пристап.</string>
+    <string name="mailbox_setup_assertion_error_description">Ако овој проблем останува, ве молиме испратете повратна информација (со анонимни податоци) преку апликацијата Anonomi.</string>
+    <string name="tor_offline_title">Офлајн/Исклучен</string>
+    <string name="mailbox_status_app_too_old_title">Anonomi е заклучен</string>
+    <string name="mailbox_status_connected_never">Никогаш</string>
+    <string name="dev_report_logcat">Апликацијата е заклучена</string>
+    <string name="dev_report_sending">Испрати повратни информации</string>
+    <string name="screen_filter_body_api_30">Друга апликација е уклучена врз Anonomi. За да ја зачува вашата безбедност, Anonomi нема да одговори на допирите кога има друга апликација уклучена врз него.\n\nСледните апликации можат да бидат вклучени врз:\n\n%1$s</string>
+    <string name="permission_bluetooth_denied_body">Го одбивте пристапот до вашата локација, но на Anonomi му е потребна оваа дозвола за да ги открие Bluetooth уредите.\n\nВе молиме размислете за давање пристап.</string>
+    <string name="hotspot_button_connected">Следно</string>
+    <string name="permission_hotspot_location_request_body">За да открие Bluetooth уреди, на Anonomi му е потребна дозвола за пристап до вашата локација.\n\nAnonomi не ја зачувува вашата локација или не ја споделува со никого.</string>
+    <string name="permission_hotspot_location_request_precise_body">За да открие Bluetooth уреди, на Anonomi му е потребна дозвола за пристап до вашата локација.\n\nAnonomi не ја зачувува вашата локација или не ја споделува со никого.</string>
+    <string name="permission_hotspot_location_denied_body">Го одбивте пристапот до вашата локација, но на Anonomi му е потребна оваа дозвола за да ги открие Bluetooth уредите.\n\nВе молиме размислете за давање пристап.</string>
+    <string name="permission_hotspot_location_denied_precise_body">Го одбивте пристапот до вашата локација, но на Anonomi му е потребна оваа дозвола за да ги открие Bluetooth уредите.\n\nВе молиме размислете за давање пристап.</string>
+    <string name="permission_hotspot_nearby_wifi_denied_body">Го одбивте пристапот до вашата локација, но на Anonomi му е потребна оваа дозвола за да ги открие Bluetooth уредите.\n\nВе молиме размислете за давање пристап.</string>
+    <string name="website_download_button">Отклучи го Anonomi</string>
+    <string name="hotspot_error_web_server_serve">Ако овој проблем останува, ве молиме испратете повратна информација (со анонимни податоци) преку апликацијата Anonomi.</string>
+    <string name="camera_permission_denied">Дозвола за камера</string>
 </resources>
