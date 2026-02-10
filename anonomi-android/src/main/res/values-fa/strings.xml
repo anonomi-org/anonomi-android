@@ -919,4 +919,22 @@ Anonomi (برایر) موقعیت شما را ذخیره نمی‌کند و آن
     <!--This is a message to be used in screenshots.-->
   <string name="screenshot_message_3">خواهش میکنم، امیدوارم ازش خوشت بیاد 😀</string>
     <string name="panic_message">⚠️‼️ حالت وحشت فعال شد! ‼️⚠️ این یک هشدار وحشت خودکار است.</string>
+    <string name="more_info_title">پیوند Anonomi (برایر)</string>
+    <string name="request_xmr_manual">دستی</string>
+    <string name="request_xmr_send">ارسال</string>
+    <string name="error_creating_message">خطا در ارسال پیام</string>
+    <string name="sign_in_title">وارد Anonomi (برایر) شد</string>
+    <string name="choose_forum_name">انتخاب یک نام برای فروم</string>
+    <string name="location_sent">تنظیمات مکان‌یابی</string>
+    <string name="unlocking_anonchat">باز کردن قفل Anonomi (برایر)</string>
+    <string name="button_delete">حذف</string>
+    <string name="button_cancel">لغو</string>
+    <string name="status_imported">وارد شده:</string>
+    <string name="panic_option_sign_out">خروج</string>
+    <string name="panic_option_delete_account">حذف حساب کاربری</string>
+    <string name="panic_action_sign_out_summary">از Anonomi (برایر) خارج شد</string>
+    <string name="share_app_link">اشتراک لینک دانلود</string>
+    <string name="share_app_link_text">دانلود Anonomi %s</string>
+    <string name="permission_hotspot_nearby_wifi_denied_body">شما دسترسی به مکان خود را رد کرده‌اید، در صورتی که Anonomi برای ایجاد Wi-Fi hotspot به این مجوز نیاز دارد.\n\n لطفا اجازه دسترسی را در نظر بگیرید.</string>
+    <string name="camera_permission_denied">دسترسی به دوربین</string>
 </resources>
