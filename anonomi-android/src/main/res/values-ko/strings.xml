@@ -839,4 +839,6 @@
     <string name="website_download_button">Anonomi 잠금 해제</string>
     <string name="hotspot_error_web_server_serve">문제가 계속되면 익명 데이터를 포함하여 Anonomi 앱을 통해 피드백을 보내주세요.</string>
     <string name="camera_permission_denied">카메라 권한</string>
+    <string name="delete_account_button">계정 삭제하기</string>
+    <string name="panic_option_delete_account">계정 삭제하기</string>
 </resources>
