@@ -1227,4 +1227,13 @@ Si tu contacto creó el archivo hace más de 28 días, Anonomi no podrá reconoc
     <string name="scan_qr_code">Escanear código QR</string>
     <string name="camera_permission_denied">Permiso de cámara denegado.</string>
     <string name="load_qr_code">Cargar código QR</string>
+    <string name="request_xmr_manual">Manual</string>
+    <string name="request_xmr_send">Enviar</string>
+    <string name="choose_forum_name">Elige un nombre para el grupo</string>
+    <string name="button_delete">Eliminar</string>
+    <string name="button_cancel">Cancelar</string>
+    <string name="status_imported">Importado:</string>
+    <string name="panic_option_sign_out">Cerrar sesión</string>
+    <string name="panic_option_delete_account">Borrar cuenta</string>
+    <string name="panic_action_sign_out_summary">Sesión de Anonomi cerrada</string>
 </resources>
