@@ -864,4 +864,22 @@ Així que l\'actualitzi li veureu una icona diferent .</string>
     <!--This is a message to be used in screenshots.-->
   <string name="screenshot_message_3">De res, espero que t\'agradi 😀</string>
     <string name="panic_message">⚠️‼️ MODE PÀNIC ACTIVAT! ‼️⚠️ Aquesta és una alerta de pànic automàtica.</string>
+    <string name="more_info_title">Enllaç de Anonomi</string>
+    <string name="request_xmr_manual">Manual</string>
+    <string name="request_xmr_send">Envia</string>
+    <string name="error_creating_message">Error a l\'enviar missatge</string>
+    <string name="sign_in_title">Sessió iniciada</string>
+    <string name="choose_forum_name">Trieu un nom per al fòrum</string>
+    <string name="location_sent">Configuració d\'ubicació</string>
+    <string name="unlocking_anonchat">Desbloqueja Anonomi</string>
+    <string name="button_delete">Suprimeix</string>
+    <string name="button_cancel">Cancel·la</string>
+    <string name="status_imported">Importat:</string>
+    <string name="share_app_link">Comparteix l\'enllaç de baixada</string>
+    <string name="share_app_link_text">Baixa el Anonomi %s</string>
+    <string name="permission_hotspot_nearby_wifi_denied_body">Heu denegat l\'accés a la vostra ubicació, però el Anonomi necessita aquest permís per crear un punt d\'accés Wi-Fi.\n\nPenseu en concedir l\'accés.</string>
+    <string name="camera_permission_denied">Permís de la càmera</string>
+    <string name="panic_option_sign_out">Tanca la sessió</string>
+    <string name="panic_option_delete_account">Esborreu el compte</string>
+    <string name="panic_action_sign_out_summary">Heu sortit de Anonomi</string>
 </resources>
