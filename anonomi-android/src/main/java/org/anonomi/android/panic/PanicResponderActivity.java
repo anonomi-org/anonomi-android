@@ -6,8 +6,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-
 import org.anonomi.R;
 import org.anonomi.android.activity.ActivityComponent;
 import org.anonomi.android.activity.BriarActivity;
@@ -29,7 +27,6 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 import static org.anonomi.android.panic.PanicSequenceDetector.ACTION_DELETE_ACCOUNT;
-import static org.anonomi.android.panic.PanicSequenceDetector.ACTION_SHOW_DIALOG;
 import static org.anonomi.android.panic.PanicSequenceDetector.ACTION_SIGN_OUT;
 import static org.anonomi.android.panic.PanicSequenceDetector.PREF_KEY_PANIC_ACTION;
 
@@ -37,6 +34,8 @@ public class PanicResponderActivity extends BriarActivity {
 
 	public static final String ACTION_INTERNAL_PANIC =
 			"org.anonomi.android.panic.ACTION_INTERNAL_PANIC";
+	public static final String EXTRA_PANIC_ACTION =
+			"org.anonomi.android.panic.EXTRA_PANIC_ACTION";
 
 	@Inject
 	ContactManager contactManager;
@@ -69,18 +68,19 @@ public class PanicResponderActivity extends BriarActivity {
 
 		Log.d("PanicResponder", "Panic trigger accepted!");
 
-		SecurePrefsManager securePrefs = new SecurePrefsManager(this);
-		String action = securePrefs.getDecrypted(PREF_KEY_PANIC_ACTION);
+		// Check for action override from PanicDialogHelper (dialog choice)
+		String action = intent.getStringExtra(EXTRA_PANIC_ACTION);
+		if (action == null) {
+			SecurePrefsManager securePrefs = new SecurePrefsManager(this);
+			action = securePrefs.getDecrypted(PREF_KEY_PANIC_ACTION);
+		}
 		if (action == null) action = ACTION_SIGN_OUT;
 
 		sendPanicMessages();
-
 		long delayMillis = panicMessagesSent ? 5000 : 0;
 		final String panicAction = action;
-
-		new Handler(Looper.getMainLooper()).postDelayed(() -> {
-			executePanicAction(panicAction);
-		}, delayMillis);
+		new Handler(Looper.getMainLooper()).postDelayed(
+				() -> executePanicAction(panicAction), delayMillis);
 	}
 
 	private void executePanicAction(String action) {
@@ -89,42 +89,12 @@ public class PanicResponderActivity extends BriarActivity {
 				signOut(true, true);
 				finishAndRemoveTask();
 				break;
-			case ACTION_SHOW_DIALOG:
-				showPanicDialog();
-				break;
 			case ACTION_SIGN_OUT:
 			default:
 				signOut(true, false);
 				finishAndRemoveTask();
 				break;
 		}
-	}
-
-	private void showPanicDialog() {
-		MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(
-				this, R.style.AnonDialogTheme);
-		builder.setTitle(R.string.panic_dialog_title);
-		builder.setItems(new CharSequence[]{
-				getString(R.string.panic_option_sign_out),
-				getString(R.string.panic_option_delete_account),
-				getString(R.string.cancel)
-		}, (dialog, which) -> {
-			switch (which) {
-				case 0:
-					signOut(true, false);
-					finishAndRemoveTask();
-					break;
-				case 1:
-					signOut(true, true);
-					finishAndRemoveTask();
-					break;
-				default:
-					finish();
-					break;
-			}
-		});
-		builder.setOnCancelListener(dialog -> finish());
-		builder.show();
 	}
 
 	private void sendPanicMessages() {

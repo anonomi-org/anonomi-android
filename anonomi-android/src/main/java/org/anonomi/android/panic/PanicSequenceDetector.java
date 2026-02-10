@@ -12,6 +12,7 @@ public class PanicSequenceDetector {
 
 	public static final String PREF_KEY_PANIC_SEQUENCE = "pref_key_panic_sequence";
 	public static final String PREF_KEY_PANIC_ACTION = "pref_key_panic_action";
+	public static final String PREF_KEY_PANIC_ENABLED = "pref_key_panic_enabled";
 
 	public static final String ACTION_SIGN_OUT = "sign_out";
 	public static final String ACTION_DELETE_ACCOUNT = "delete_account";
@@ -28,6 +29,7 @@ public class PanicSequenceDetector {
 	private long keyDownTime = 0;
 	private int keyDownCode = 0;
 	private boolean tracking = false;
+	private boolean longPressHandled = false;
 	private boolean enabled = false;
 	private PanicTriggerListener listener;
 
@@ -41,8 +43,10 @@ public class PanicSequenceDetector {
 	public void loadSequence(Context context) {
 		try {
 			SecurePrefsManager securePrefs = new SecurePrefsManager(context);
+			String enabledStr = securePrefs.getDecrypted(PREF_KEY_PANIC_ENABLED);
+			boolean prefEnabled = enabledStr == null || "true".equals(enabledStr);
 			String raw = securePrefs.getDecrypted(PREF_KEY_PANIC_SEQUENCE);
-			if (raw != null && !raw.isEmpty()) {
+			if (prefEnabled && raw != null && !raw.isEmpty()) {
 				sequence = deserializeSequence(raw);
 				enabled = sequence.size() >= 3;
 			} else {
@@ -67,6 +71,10 @@ public class PanicSequenceDetector {
 	/**
 	 * Process a key event. Returns true if the event was consumed
 	 * (i.e. the detector is actively tracking a sequence).
+	 *
+	 * Long presses are detected via held duration on repeated
+	 * ACTION_DOWN events, so the sequence can trigger without
+	 * waiting for the final key release.
 	 */
 	public boolean onKeyEvent(KeyEvent event) {
 		if (!enabled || sequence.isEmpty()) return false;
@@ -78,36 +86,62 @@ public class PanicSequenceDetector {
 			return false;
 		}
 
-		if (event.getAction() == KeyEvent.ACTION_DOWN &&
-				event.getRepeatCount() == 0) {
-			// Check timeout from last completed step
-			if (tracking && currentStepIndex > 0) {
-				long now = event.getEventTime();
-				if (now - keyDownTime > STEP_TIMEOUT_MS) {
-					reset();
+		if (event.getAction() == KeyEvent.ACTION_DOWN) {
+			if (event.getRepeatCount() == 0) {
+				// Fresh key press
+				// Check timeout from last completed step
+				if (tracking && currentStepIndex > 0) {
+					long now = event.getEventTime();
+					if (now - keyDownTime > STEP_TIMEOUT_MS) {
+						reset();
+					}
 				}
-			}
 
-			keyDownTime = event.getEventTime();
-			keyDownCode = keyCode;
+				keyDownTime = event.getEventTime();
+				keyDownCode = keyCode;
+				longPressHandled = false;
 
-			// Check if this key matches the expected step's button
-			Step expected = sequence.get(currentStepIndex);
-			if (expected.button == keyCode) {
-				tracking = true;
-				return true;
-			} else {
-				reset();
-				// Check if it matches the first step (restart detection)
-				Step first = sequence.get(0);
-				if (first.button == keyCode) {
+				// Check if this key matches the expected step's button
+				Step expected = sequence.get(currentStepIndex);
+				if (expected.button == keyCode) {
 					tracking = true;
-					keyDownTime = event.getEventTime();
-					keyDownCode = keyCode;
+					// If expected is short, we can't confirm yet -
+					// wait for release to check it wasn't held too long
 					return true;
+				} else {
+					reset();
+					// Check if it matches the first step (restart)
+					Step first = sequence.get(0);
+					if (first.button == keyCode) {
+						tracking = true;
+						keyDownTime = event.getEventTime();
+						keyDownCode = keyCode;
+						longPressHandled = false;
+						return true;
+					}
+					return false;
 				}
-				return false;
+			} else if (tracking && !longPressHandled) {
+				// Repeated ACTION_DOWN while held - check for long press
+				long held = event.getEventTime() - keyDownTime;
+				if (held >= SHORT_PRESS_MAX_MS) {
+					Step expected = sequence.get(currentStepIndex);
+					if (expected.button == keyDownCode &&
+							expected.pressType == PressType.LONG) {
+						longPressHandled = true;
+						currentStepIndex++;
+						if (currentStepIndex >= sequence.size()) {
+							PanicTriggerListener l = listener;
+							reset();
+							if (l != null) {
+								l.onPanicTriggered();
+							}
+						}
+					}
+				}
+				return true;
 			}
+			return tracking;
 		}
 
 		if (event.getAction() == KeyEvent.ACTION_UP && tracking) {
@@ -116,14 +150,19 @@ public class PanicSequenceDetector {
 				return false;
 			}
 
+			// If already handled as long press, just consume the release
+			if (longPressHandled) {
+				return true;
+			}
+
 			long pressDuration = event.getEventTime() - keyDownTime;
 			boolean isLong = pressDuration >= SHORT_PRESS_MAX_MS;
 			Step expected = sequence.get(currentStepIndex);
 
-			if (expected.button == keyCode && expected.pressType == (isLong ? PressType.LONG : PressType.SHORT)) {
+			if (expected.button == keyCode &&
+					expected.pressType == (isLong ? PressType.LONG : PressType.SHORT)) {
 				currentStepIndex++;
 				if (currentStepIndex >= sequence.size()) {
-					// Sequence complete
 					PanicTriggerListener l = listener;
 					reset();
 					if (l != null) {
@@ -132,9 +171,8 @@ public class PanicSequenceDetector {
 				}
 				return true;
 			} else {
-				// Mismatch - reset and check if this could be start of new sequence
 				reset();
-				return true; // consume since we were tracking
+				return true;
 			}
 		}
 
@@ -144,6 +182,7 @@ public class PanicSequenceDetector {
 	private void reset() {
 		currentStepIndex = 0;
 		tracking = false;
+		longPressHandled = false;
 		keyDownTime = 0;
 		keyDownCode = 0;
 	}

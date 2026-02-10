@@ -2,7 +2,10 @@ package org.anonomi.android.panic;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,6 +55,22 @@ public class PanicSequenceRecordDialog extends DialogFragment {
 		MaterialButton clearButton = view.findViewById(R.id.button_clear);
 		MaterialButton cancelButton = view.findViewById(R.id.button_cancel);
 		MaterialButton saveButton = view.findViewById(R.id.button_save);
+
+		// Apply theme-aware button colors
+		TypedValue typedValue = new TypedValue();
+		requireContext().getTheme().resolveAttribute(
+				android.R.attr.colorPrimary, typedValue, true);
+		int primary = typedValue.data;
+
+		// textColorPrimary is a ColorStateList, resolve via TypedArray
+		TypedArray ta = requireContext().obtainStyledAttributes(
+				new int[]{android.R.attr.textColorPrimary});
+		int textColor = ta.getColor(0, Color.WHITE);
+		ta.recycle();
+
+		saveButton.setTextColor(primary);
+		clearButton.setTextColor(textColor);
+		cancelButton.setTextColor(textColor);
 
 		clearButton.setOnClickListener(v -> {
 			recordedSteps.clear();

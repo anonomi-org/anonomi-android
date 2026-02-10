@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.anonomi.R;
+import org.anonomi.android.panic.PanicDialogHelper;
 import org.anonomi.android.panic.PanicResponderActivity;
 import org.anonomi.android.panic.PanicSequenceDetector;
 import org.anonomi.android.settings.SecurityFragment;
@@ -180,13 +181,8 @@ public class CalculatorActivity extends AppCompatActivity {
 	protected void onResume() {
 		super.onResume();
 		PanicSequenceDetector.getInstance().loadSequence(this);
-		PanicSequenceDetector.getInstance().setListener(() -> {
-			Intent i = new Intent(CalculatorActivity.this,
-					PanicResponderActivity.class);
-			i.setAction(PanicResponderActivity.ACTION_INTERNAL_PANIC);
-			i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			startActivity(i);
-		});
+		PanicSequenceDetector.getInstance().setListener(() ->
+				PanicDialogHelper.onPanicTriggered(CalculatorActivity.this));
 	}
 
 	@Override

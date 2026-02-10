@@ -2,6 +2,15 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto">
 
+	<SwitchPreferenceCompat
+		android:key="pref_key_panic_enabled"
+		android:persistent="false"
+		android:defaultValue="true"
+		android:title="@string/panic_enabled_title"
+		android:summary="@string/panic_enabled_summary"
+		app:iconSpaceReserved="false"
+		app:singleLineTitle="false" />
+
 	<Preference
 		android:key="pref_key_record_sequence"
 		android:title="@string/panic_record_sequence_title"

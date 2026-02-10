@@ -17,6 +17,7 @@ import org.anonomi.android.controller.ActivityLifecycleController;
 import org.anonomi.android.fragment.BaseFragment;
 import org.anonomi.android.fragment.ScreenFilterDialogFragment;
 import org.anonomi.android.util.UiUtils;
+import org.anonomi.android.panic.PanicDialogHelper;
 import org.anonomi.android.panic.PanicResponderActivity;
 import org.anonomi.android.panic.PanicSequenceDetector;
 import org.anonomi.android.widget.TapSafeFrameLayout;
@@ -186,13 +187,8 @@ public abstract class BaseActivity extends AppCompatActivity
 	@Override
 	protected void onResume() {
 		super.onResume();
-		PanicSequenceDetector.getInstance().setListener(() -> {
-			Intent i = new Intent(BaseActivity.this,
-					PanicResponderActivity.class);
-			i.setAction(PanicResponderActivity.ACTION_INTERNAL_PANIC);
-			i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			startActivity(i);
-		});
+		PanicSequenceDetector.getInstance().setListener(() ->
+				PanicDialogHelper.onPanicTriggered(BaseActivity.this));
 	}
 
 	@Override
@@ -320,6 +316,7 @@ public abstract class BaseActivity extends AppCompatActivity
 
 
 	private void applyCustomTheme() {
+		if ("PanicResponderActivity".equals(getClass().getSimpleName())) return;
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		String theme = prefs.getString("pref_key_theme", null);
 

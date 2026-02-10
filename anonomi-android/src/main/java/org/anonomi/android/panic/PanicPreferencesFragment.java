@@ -10,18 +10,22 @@ import java.util.List;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.SwitchPreferenceCompat;
 
 import static org.anonomi.android.panic.PanicSequenceDetector.ACTION_DELETE_ACCOUNT;
 import static org.anonomi.android.panic.PanicSequenceDetector.ACTION_SHOW_DIALOG;
 import static org.anonomi.android.panic.PanicSequenceDetector.ACTION_SIGN_OUT;
 import static org.anonomi.android.panic.PanicSequenceDetector.PREF_KEY_PANIC_ACTION;
+import static org.anonomi.android.panic.PanicSequenceDetector.PREF_KEY_PANIC_ENABLED;
 import static org.anonomi.android.panic.PanicSequenceDetector.PREF_KEY_PANIC_SEQUENCE;
 
 public class PanicPreferencesFragment extends PreferenceFragmentCompat {
 
+	private static final String KEY_PANIC_ENABLED = "pref_key_panic_enabled";
 	private static final String KEY_RECORD_SEQUENCE = "pref_key_record_sequence";
 	private static final String KEY_PANIC_ACTION_LIST = "pref_key_panic_action";
 
+	private SwitchPreferenceCompat enabledPref;
 	private Preference recordSequencePref;
 	private ListPreference panicActionPref;
 	private SecurePrefsManager securePrefs;
@@ -32,8 +36,26 @@ public class PanicPreferencesFragment extends PreferenceFragmentCompat {
 
 		securePrefs = new SecurePrefsManager(requireContext());
 
+		enabledPref = findPreference(KEY_PANIC_ENABLED);
 		recordSequencePref = findPreference(KEY_RECORD_SEQUENCE);
 		panicActionPref = findPreference(KEY_PANIC_ACTION_LIST);
+
+		if (enabledPref != null) {
+			String enabledStr = securePrefs.getDecrypted(PREF_KEY_PANIC_ENABLED);
+			boolean isEnabled = enabledStr == null || "true".equals(enabledStr);
+			enabledPref.setChecked(isEnabled);
+			updateDependentPrefs(isEnabled);
+
+			enabledPref.setOnPreferenceChangeListener((pref, newValue) -> {
+				boolean val = (Boolean) newValue;
+				securePrefs.putEncrypted(PREF_KEY_PANIC_ENABLED,
+						String.valueOf(val));
+				updateDependentPrefs(val);
+				PanicSequenceDetector.getInstance()
+						.loadSequence(requireContext());
+				return true;
+			});
+		}
 
 		updateSequenceDisplay();
 
@@ -89,6 +111,15 @@ public class PanicPreferencesFragment extends PreferenceFragmentCompat {
 			}
 		}
 		recordSequencePref.setSummary(R.string.panic_sequence_not_set);
+	}
+
+	private void updateDependentPrefs(boolean enabled) {
+		if (recordSequencePref != null) {
+			recordSequencePref.setEnabled(enabled);
+		}
+		if (panicActionPref != null) {
+			panicActionPref.setEnabled(enabled);
+		}
 	}
 
 	private void updateActionSummary(String value) {

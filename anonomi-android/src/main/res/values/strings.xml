@@ -714,6 +714,8 @@
     <string name="panic_setting">Panic button setup</string>
     <string name="panic_setting_title">Panic button</string>
     <string name="panic_setting_hint">Configure a volume button sequence to trigger panic mode</string>
+    <string name="panic_enabled_title">Enable panic trigger</string>
+    <string name="panic_enabled_summary">Detect volume button sequence to trigger panic mode</string>
     <string name="panic_record_sequence_title">Record panic sequence</string>
     <string name="panic_sequence_not_set">No sequence configured</string>
     <string name="panic_sequence_too_short">Sequence must be at least 3 steps</string>
@@ -728,6 +730,8 @@
     <string name="panic_action_sign_out_summary">Sign out of Anonomi Messenger</string>
     <string name="panic_action_delete_summary">Permanently delete your account, contacts and messages</string>
     <string name="panic_action_dialog_summary">Show a choice dialog (Sign Out / Delete Account / Cancel)</string>
+    <string name="panic_status_signing_out">Sending panic messages and signing out\u2026</string>
+    <string name="panic_status_deleting">Sending panic messages and deleting account\u2026</string>
     <string name="offline_maps_title">Offline Maps</string>
     <string name="offline_maps_import_title">Import Offline Maps</string>
     <string name="offline_maps_import_success">%1$d tiles imported successfully.</string>
