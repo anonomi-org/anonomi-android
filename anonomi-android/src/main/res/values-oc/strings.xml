@@ -592,4 +592,6 @@ parteja pas amb degun.</string>
     <string name="website_download_button">Desverrolhar Anonomi</string>
     <string name="hotspot_error_web_server_serve">Se aqueste problèma contunha, mercés d’enviar un comentari (anonimament) via l’aplicacion Anonomi.</string>
     <string name="camera_permission_denied">Permission de la camèra</string>
+    <string name="delete_account_button">Suprimir lo compte</string>
+    <string name="panic_option_delete_account">Suprimir lo compte</string>
 </resources>
