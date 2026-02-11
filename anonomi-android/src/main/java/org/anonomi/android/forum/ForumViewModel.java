@@ -90,9 +90,13 @@ class ForumViewModel extends ThreadListViewModel<ForumPostItem> {
 		if (e instanceof ForumPostReceivedEvent) {
 			ForumPostReceivedEvent f = (ForumPostReceivedEvent) e;
 			if (f.getGroupId().equals(groupId)) {
-				// LOG.info("Forum post received, adding...");
-				ForumPostItem item =
-						new ForumPostItem(f.getHeader(), f.getText());
+				ForumPostItem item;
+				if (f.getAudioData() != null) {
+					item = new ForumPostItem(f.getHeader(), f.getText(),
+							f.getAudioData(), f.getAudioContentType());
+				} else {
+					item = new ForumPostItem(f.getHeader(), f.getText());
+				}
 				addItem(item, false);
 			}
 		} else if (e instanceof ForumInvitationResponseReceivedEvent) {
@@ -100,13 +104,11 @@ class ForumViewModel extends ThreadListViewModel<ForumPostItem> {
 					(ForumInvitationResponseReceivedEvent) e;
 			ForumInvitationResponse r = f.getMessageHeader();
 			if (r.getShareableId().equals(groupId) && r.wasAccepted()) {
-				// LOG.info("Forum invitation was accepted");
 				sharingController.add(f.getContactId());
 			}
 		} else if (e instanceof ContactLeftShareableEvent) {
 			ContactLeftShareableEvent c = (ContactLeftShareableEvent) e;
 			if (c.getGroupId().equals(groupId)) {
-				// LOG.info("Forum left by contact");
 				sharingController.remove(c.getContactId());
 			}
 		} else {
@@ -152,6 +154,14 @@ class ForumViewModel extends ThreadListViewModel<ForumPostItem> {
 	private ForumPostItem loadItem(Transaction txn, ForumPostHeader header)
 			throws DbException {
 		String text = forumManager.getPostText(txn, header.getId());
+		if (header.hasAudio()) {
+			byte[] audioData = forumManager
+					.getPostAudioData(txn, header.getId());
+			String audioContentType = forumManager
+					.getPostAudioContentType(txn, header.getId());
+			return new ForumPostItem(header, text, audioData,
+					audioContentType);
+		}
 		return new ForumPostItem(header, text);
 	}
 
@@ -174,7 +184,6 @@ class ForumViewModel extends ThreadListViewModel<ForumPostItem> {
 	private void createMessage(String text, long timestamp,
 			@Nullable MessageId parentId, LocalAuthor author) {
 		cryptoExecutor.execute(() -> {
-			// LOG.info("Creating forum post...");
 			ForumPost msg = forumManager.createLocalPost(groupId, text,
 					timestamp, parentId, author);
 			storePost(msg, text);
@@ -188,6 +197,47 @@ class ForumViewModel extends ThreadListViewModel<ForumPostItem> {
 			logDuration(LOG, "Storing forum post", start);
 			txn.attach(() -> {
 				ForumPostItem item = new ForumPostItem(header, text);
+				addItem(item, true);
+			});
+		}, this::handleException);
+	}
+
+	void createAndStoreAudioMessage(byte[] audioData, String contentType,
+			@Nullable MessageId parentId) {
+		runOnDbThread(() -> {
+			try {
+				LocalAuthor author = identityManager.getLocalAuthor();
+				GroupCount count = forumManager.getGroupCount(groupId);
+				long timestamp = max(count.getLatestMsgTime() + 1,
+						clock.currentTimeMillis());
+				createAudioMessage(audioData, contentType, timestamp,
+						parentId, author);
+			} catch (DbException e) {
+				handleException(e);
+			}
+		});
+	}
+
+	private void createAudioMessage(byte[] audioData, String contentType,
+			long timestamp, @Nullable MessageId parentId,
+			LocalAuthor author) {
+		cryptoExecutor.execute(() -> {
+			LOG.info("Creating forum audio post...");
+			ForumPost msg = forumManager.createLocalAudioPost(groupId, "",
+					timestamp, parentId, author, audioData, contentType);
+			storeAudioPost(msg, audioData, contentType);
+		});
+	}
+
+	private void storeAudioPost(ForumPost msg, byte[] audioData,
+			String contentType) {
+		runOnDbThread(false, txn -> {
+			long start = now();
+			ForumPostHeader header = forumManager.addLocalPost(txn, msg);
+			logDuration(LOG, "Storing forum audio post", start);
+			txn.attach(() -> {
+				ForumPostItem item = new ForumPostItem(header, "",
+						audioData, contentType);
 				addItem(item, true);
 			});
 		}, this::handleException);
@@ -227,6 +277,15 @@ class ForumViewModel extends ThreadListViewModel<ForumPostItem> {
 				handleException(e);
 			}
 		});
+	}
+
+	@Nullable
+	MessageId getCurrentReplyId() {
+		return getReplyId();
+	}
+
+	void clearReplyId() {
+		setReplyId(null);
 	}
 
 }

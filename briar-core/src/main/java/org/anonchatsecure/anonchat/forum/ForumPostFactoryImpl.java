@@ -69,4 +69,26 @@ class ForumPostFactoryImpl implements ForumPostFactory {
 		return new ForumPost(m, parent, author);
 	}
 
+	@Override
+	public ForumPost createAudioPost(GroupId groupId, long timestamp,
+			@Nullable MessageId parent, LocalAuthor author, String text,
+			byte[] audioData, String contentType)
+			throws FormatException, GeneralSecurityException {
+		// Validate the arguments
+		if (utf8IsTooLong(text, MAX_FORUM_POST_TEXT_LENGTH))
+			throw new IllegalArgumentException();
+		// Serialise the data to be signed
+		BdfList authorList = clientHelper.toList(author);
+		BdfList signed = BdfList.of(groupId, timestamp, parent, authorList,
+				text, audioData, contentType);
+		// Sign the data
+		byte[] sig = clientHelper.sign(SIGNING_LABEL_AUDIO_POST, signed,
+				author.getPrivateKey());
+		// Serialise the signed message
+		BdfList message = BdfList.of(parent, authorList, text, sig,
+				audioData, contentType);
+		Message m = clientHelper.createMessage(groupId, timestamp, message);
+		return new ForumPost(m, parent, author);
+	}
+
 }

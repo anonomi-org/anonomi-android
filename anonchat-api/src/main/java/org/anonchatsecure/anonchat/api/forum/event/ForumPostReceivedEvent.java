@@ -23,6 +23,7 @@ import org.anonchatsecure.bramble.api.sync.GroupId;
 import org.anonchatsecure.anonchat.api.forum.ForumPostHeader;
 import org.briarproject.nullsafety.NotNullByDefault;
 
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 /**
@@ -35,12 +36,24 @@ public class ForumPostReceivedEvent extends Event {
 	private final GroupId groupId;
 	private final ForumPostHeader header;
 	private final String text;
+	@Nullable
+	private final byte[] audioData;
+	@Nullable
+	private final String audioContentType;
 
 	public ForumPostReceivedEvent(GroupId groupId, ForumPostHeader header,
 			String text) {
+		this(groupId, header, text, null, null);
+	}
+
+	public ForumPostReceivedEvent(GroupId groupId, ForumPostHeader header,
+			String text, @Nullable byte[] audioData,
+			@Nullable String audioContentType) {
 		this.groupId = groupId;
 		this.header = header;
 		this.text = text;
+		this.audioData = audioData;
+		this.audioContentType = audioContentType;
 	}
 
 	public GroupId getGroupId() {
@@ -53,5 +66,15 @@ public class ForumPostReceivedEvent extends Event {
 
 	public String getText() {
 		return text;
+	}
+
+	@Nullable
+	public byte[] getAudioData() {
+		return audioData;
+	}
+
+	@Nullable
+	public String getAudioContentType() {
+		return audioContentType;
 	}
 }

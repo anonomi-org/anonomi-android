@@ -484,6 +484,7 @@
     <string name="forum_new_message_hint">New Message</string>
     <string name="forum_message_reply_hint">New Reply</string>
     <string name="btn_reply">Reply</string>
+    <string name="forum_toggle_voice_distortion">Toggle voice distortion</string>
     <string name="forum_leave">Leave Open Group</string>
     <string name="dialog_title_leave_forum">Confirm Leaving Open Group</string>
     <string name="dialog_message_leave_forum">Are you sure that you want to leave this open group?\n\nAny contacts you\'ve shared this open group with might stop receiving updates.</string>

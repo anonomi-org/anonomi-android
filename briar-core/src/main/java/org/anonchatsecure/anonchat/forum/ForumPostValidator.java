@@ -48,7 +48,10 @@ import static org.anonchatsecure.anonchat.api.forum.ForumConstants.KEY_AUTHOR;
 import static org.anonchatsecure.anonchat.api.forum.ForumConstants.KEY_PARENT;
 import static org.anonchatsecure.anonchat.api.forum.ForumConstants.KEY_READ;
 import static org.anonchatsecure.anonchat.api.forum.ForumConstants.KEY_TIMESTAMP;
+import static org.anonchatsecure.anonchat.api.forum.ForumConstants.MAX_FORUM_AUDIO_SIZE;
 import static org.anonchatsecure.anonchat.api.forum.ForumConstants.MAX_FORUM_POST_TEXT_LENGTH;
+import static org.anonchatsecure.anonchat.api.forum.ForumConstants.KEY_HAS_AUDIO;
+import static org.anonchatsecure.anonchat.api.forum.ForumPostFactory.SIGNING_LABEL_AUDIO_POST;
 import static org.anonchatsecure.anonchat.api.forum.ForumPostFactory.SIGNING_LABEL_POST;
 
 @Immutable
@@ -63,8 +66,9 @@ class ForumPostValidator extends BdfMessageValidator {
 	@Override
 	protected BdfMessageContext validateMessage(Message m, Group g,
 			BdfList body) throws InvalidMessageException, FormatException {
-		// Parent ID, author, text, signature
-		checkSize(body, 4);
+		// Parent ID, author, text, signature [, audioData, contentType]
+		boolean hasAudio = body.size() == 6;
+		if (!hasAudio) checkSize(body, 4);
 
 		// Parent ID is optional
 		byte[] parent = body.getOptionalRaw(0);
@@ -82,11 +86,30 @@ class ForumPostValidator extends BdfMessageValidator {
 		byte[] sig = body.getRaw(3);
 		checkLength(sig, 1, MAX_SIGNATURE_LENGTH);
 
+		// Audio data (optional)
+		byte[] audioData = null;
+		String contentType = null;
+		if (hasAudio) {
+			audioData = body.getRaw(4);
+			checkLength(audioData, 1, MAX_FORUM_AUDIO_SIZE);
+			contentType = body.getString(5);
+			checkLength(contentType, 1, 50);
+		}
+
 		// Verify the signature
-		BdfList signed = BdfList.of(g.getId(), m.getTimestamp(), parent,
-				authorList, text);
+		String signingLabel;
+		BdfList signed;
+		if (hasAudio) {
+			signingLabel = SIGNING_LABEL_AUDIO_POST;
+			signed = BdfList.of(g.getId(), m.getTimestamp(), parent,
+					authorList, text, audioData, contentType);
+		} else {
+			signingLabel = SIGNING_LABEL_POST;
+			signed = BdfList.of(g.getId(), m.getTimestamp(), parent,
+					authorList, text);
+		}
 		try {
-			clientHelper.verifySignature(sig, SIGNING_LABEL_POST,
+			clientHelper.verifySignature(sig, signingLabel,
 					signed, author.getPublicKey());
 		} catch (GeneralSecurityException e) {
 			throw new InvalidMessageException(e);
@@ -102,6 +125,7 @@ class ForumPostValidator extends BdfMessageValidator {
 		}
 		meta.put(KEY_AUTHOR, authorList);
 		meta.put(KEY_READ, false);
+		if (hasAudio) meta.put(KEY_HAS_AUDIO, true);
 		return new BdfMessageContext(meta, dependencies);
 	}
 }

@@ -2,27 +2,50 @@ package org.anonomi.android.forum;
 
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.media.AudioFormat;
+import android.media.AudioRecord;
+import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.arthenica.ffmpegkit.FFmpegKit;
+import com.arthenica.ffmpegkit.ReturnCode;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.anonomi.R;
 import org.anonomi.android.activity.ActivityComponent;
 import org.anonomi.android.sharing.ForumSharingStatusActivity;
 import org.anonomi.android.sharing.ShareForumActivity;
-import org.anonomi.android.threaded.ThreadItemAdapter;
 import org.anonomi.android.threaded.ThreadListActivity;
 import org.anonomi.android.threaded.ThreadListViewModel;
+import org.anonomi.android.util.AudioUtils;
+import org.anonomi.android.view.CompositeSendButton;
+import org.anonchatsecure.bramble.api.sync.MessageId;
 import org.briarproject.nullsafety.MethodsNotNullByDefault;
 import org.briarproject.nullsafety.ParametersNotNullByDefault;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
@@ -33,12 +56,56 @@ import static org.anonchatsecure.anonchat.api.forum.ForumConstants.MAX_FORUM_POS
 @MethodsNotNullByDefault
 @ParametersNotNullByDefault
 public class ForumActivity extends
-		ThreadListActivity<ForumPostItem, ThreadItemAdapter<ForumPostItem>> {
+		ThreadListActivity<ForumPostItem, ForumPostAdapter> {
+
+	private static final String PREF_FORUM_DISTORTION =
+			"forum_voice_distortion_";
 
 	@Inject
 	ViewModelProvider.Factory viewModelFactory;
 
 	private ForumViewModel viewModel;
+
+	private AudioRecord audioRecord;
+	private Thread recordingThread;
+	private boolean isRecording = false;
+	private volatile byte[] recordedPcmData;
+	private TextView slideToCancelText;
+	private CompositeSendButton compositeSendButton;
+	private long recordingStartTime;
+	private final Handler recordingTimerHandler =
+			new Handler(Looper.getMainLooper());
+
+	private final Runnable recordingTimerRunnable = new Runnable() {
+		@Override
+		public void run() {
+			if (isRecording) {
+				long elapsed = System.currentTimeMillis() - recordingStartTime;
+				int seconds = (int) (elapsed / 1000);
+
+				if (seconds >= 11) {
+					slideToCancelText.setTextColor(ContextCompat.getColor(
+							ForumActivity.this, R.color.anon_red_500));
+				} else if (seconds >= 10) {
+					slideToCancelText.setTextColor(ContextCompat.getColor(
+							ForumActivity.this, R.color.anon_orange_500));
+				} else {
+					slideToCancelText.setTextColor(ContextCompat.getColor(
+							ForumActivity.this, R.color.white));
+				}
+				slideToCancelText.setText(getString(
+						R.string.slide_to_cancel_with_timer, seconds));
+
+				if (seconds >= 12) {
+					slideToCancelText.setText(
+							getString(R.string.recording_max_reached));
+					stopAndSendRecording();
+				} else {
+					recordingTimerHandler.postDelayed(this, 250);
+				}
+			}
+		}
+	};
 
 	@Override
 	public void injectActivity(ActivityComponent component) {
@@ -53,8 +120,13 @@ public class ForumActivity extends
 	}
 
 	@Override
-	protected ThreadItemAdapter<ForumPostItem> createAdapter() {
-		return new ThreadItemAdapter<>(this);
+	protected ForumPostAdapter createAdapter() {
+		return new ForumPostAdapter(this);
+	}
+
+	@Override
+	protected int getLayoutResId() {
+		return R.layout.activity_forum_conversation;
 	}
 
 	@Override
@@ -78,6 +150,67 @@ public class ForumActivity extends
 					setTitle(forum.getName())
 			);
 		}
+
+		// Voice recording UI
+		slideToCancelText = findViewById(R.id.slideToCancelText);
+		compositeSendButton = textInput.findViewById(R.id.compositeSendButton);
+		updateMicColor();
+
+		AppCompatImageButton recordButton =
+				textInput.findViewById(R.id.recordButton);
+		recordButton.setOnTouchListener(new View.OnTouchListener() {
+			float startX = 0;
+			boolean cancelled = false;
+			static final float SWIPE_CANCEL_THRESHOLD = 150f;
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+					case MotionEvent.ACTION_DOWN:
+						startX = event.getX();
+						cancelled = false;
+						slideToCancelText.setText(
+								getString(R.string.slide_to_cancel));
+						slideToCancelText.setAlpha(1f);
+						slideToCancelText.setVisibility(View.VISIBLE);
+						startRecording();
+						recordingStartTime = System.currentTimeMillis();
+						recordingTimerHandler.post(recordingTimerRunnable);
+						return true;
+
+					case MotionEvent.ACTION_MOVE:
+						float deltaX = event.getX() - startX;
+						if (Math.abs(deltaX) > SWIPE_CANCEL_THRESHOLD
+								&& !cancelled) {
+							cancelRecording();
+							cancelled = true;
+							slideToCancelText.setText(
+									R.string.recording_cancelled);
+							slideToCancelText.animate()
+									.alpha(0f)
+									.setDuration(500)
+									.withEndAction(() ->
+											slideToCancelText.setVisibility(
+													View.GONE))
+									.start();
+						}
+						return true;
+
+					case MotionEvent.ACTION_UP:
+					case MotionEvent.ACTION_CANCEL:
+						if (!cancelled) stopAndSendRecording();
+						slideToCancelText.animate()
+								.alpha(0f)
+								.setDuration(300)
+								.withEndAction(() ->
+										slideToCancelText.setVisibility(
+												View.GONE))
+								.start();
+						return true;
+				}
+				return false;
+			}
+		});
 	}
 
 	@Override
@@ -118,6 +251,9 @@ public class ForumActivity extends
 		} else if (itemId == R.id.action_forum_delete) {
 			showUnsubscribeDialog();
 			return true;
+		} else if (itemId == R.id.action_forum_voice_distortion) {
+			toggleVoiceDistortion();
+			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -136,6 +272,223 @@ public class ForumActivity extends
 		builder.setNegativeButton(R.string.dialog_button_leave, okListener);
 		builder.setPositiveButton(R.string.cancel, null);
 		builder.show();
+	}
+
+	// Voice recording
+
+	private void startRecording() {
+		if (ContextCompat.checkSelfPermission(this,
+				android.Manifest.permission.RECORD_AUDIO)
+				!= PackageManager.PERMISSION_GRANTED) {
+			ActivityCompat.requestPermissions(this,
+					new String[]{android.Manifest.permission.RECORD_AUDIO},
+					1001);
+			Toast.makeText(this,
+					getString(R.string.microphone_permission_required),
+					Toast.LENGTH_SHORT).show();
+			return;
+		}
+
+		int sampleRate = 16000;
+		int channelConfig = AudioFormat.CHANNEL_IN_MONO;
+		int audioFormat = AudioFormat.ENCODING_PCM_16BIT;
+		int bufferSize = AudioRecord.getMinBufferSize(sampleRate,
+				channelConfig, audioFormat) * 3;
+
+		audioRecord = new AudioRecord(
+				MediaRecorder.AudioSource.MIC,
+				sampleRate, channelConfig, audioFormat, bufferSize);
+
+		audioRecord.startRecording();
+		isRecording = true;
+
+		recordingThread = new Thread(() -> {
+			try {
+				ByteArrayOutputStream pcmOut = new ByteArrayOutputStream();
+				byte[] buffer = new byte[bufferSize];
+				while (isRecording) {
+					int read = audioRecord.read(buffer, 0, buffer.length);
+					if (read > 0) {
+						pcmOut.write(buffer, 0, read);
+					}
+				}
+				recordedPcmData = pcmOut.toByteArray();
+			} catch (Exception e) {
+				Log.e("ForumActivity", "Error recording audio", e);
+			}
+		}, "ForumAudioRecorder");
+
+		recordingThread.start();
+	}
+
+	private void stopAndSendRecording() {
+		try {
+			isRecording = false;
+			if (audioRecord != null &&
+					audioRecord.getRecordingState() ==
+							AudioRecord.RECORDSTATE_RECORDING) {
+				audioRecord.stop();
+			}
+			if (audioRecord != null) {
+				audioRecord.release();
+				audioRecord = null;
+			}
+
+			recordingTimerHandler.removeCallbacks(recordingTimerRunnable);
+
+			try {
+				Thread.sleep(100);
+				if (recordingThread != null) {
+					recordingThread.join();
+					recordingThread = null;
+				}
+			} catch (InterruptedException e) {
+				Log.e("ForumActivity",
+						"Recording thread interrupted", e);
+				Toast.makeText(this,
+						getString(R.string.recording_error),
+						Toast.LENGTH_SHORT).show();
+				return;
+			}
+
+			if (recordedPcmData == null || recordedPcmData.length == 0) {
+				Toast.makeText(this, getString(R.string.recording_error),
+						Toast.LENGTH_SHORT).show();
+				return;
+			}
+
+			if (recordedPcmData.length < 1024) {
+				Toast.makeText(this, getString(R.string.recording_too_short),
+						Toast.LENGTH_SHORT).show();
+				return;
+			}
+
+			boolean isDistorted = isVoiceDistortionEnabled();
+			MessageId replyId = viewModel.getCurrentReplyId();
+
+			File wavFile = new File(getCacheDir(),
+					isDistorted ? "forum_distorted.wav"
+							: "forum_recording.wav");
+			File oggFile = new File(getCacheDir(), "forum_audio.ogg");
+
+			new Thread(() -> {
+				try {
+					byte[] pcmToWrite = recordedPcmData;
+
+					if (isDistorted) {
+						pcmToWrite = AudioUtils.distortPcm(recordedPcmData);
+						if (pcmToWrite == null) {
+							runOnUiThread(() -> Toast.makeText(this,
+									getString(R.string.distortion_failed),
+									Toast.LENGTH_SHORT).show());
+							return;
+						}
+					}
+
+					AudioUtils.writeWavFile(wavFile, pcmToWrite, 16000, 1);
+
+					String ffmpegCommand = String.format(
+							"-y -i \"%s\" -c:a libopus -b:a 16k \"%s\"",
+							wavFile.getAbsolutePath(),
+							oggFile.getAbsolutePath());
+
+					FFmpegKit.executeAsync(ffmpegCommand, session -> {
+						ReturnCode returnCode = session.getReturnCode();
+
+						if (ReturnCode.isSuccess(returnCode)
+								&& oggFile.exists()) {
+							try {
+								byte[] oggData = readFileBytes(oggFile);
+								runOnUiThread(() -> {
+									viewModel.createAndStoreAudioMessage(
+											oggData, "audio/ogg", replyId);
+									viewModel.clearReplyId();
+									Toast.makeText(this,
+											getString(R.string.voice_sent),
+											Toast.LENGTH_SHORT).show();
+								});
+							} catch (IOException e) {
+								runOnUiThread(() -> Toast.makeText(this,
+										getString(R.string.conversion_failed),
+										Toast.LENGTH_SHORT).show());
+							}
+						} else {
+							runOnUiThread(() -> Toast.makeText(this,
+									getString(R.string.conversion_failed),
+									Toast.LENGTH_SHORT).show());
+						}
+
+						wavFile.delete();
+						oggFile.delete();
+					});
+				} catch (Exception e) {
+					runOnUiThread(() -> Toast.makeText(this,
+							getString(R.string.processing_error),
+							Toast.LENGTH_SHORT).show());
+					e.printStackTrace();
+				}
+			}).start();
+
+		} catch (Exception e) {
+			Toast.makeText(this,
+					getString(R.string.general_sendaudio_failure),
+					Toast.LENGTH_SHORT).show();
+			Log.e("ForumActivity", "Catch all error", e);
+		}
+	}
+
+	private void cancelRecording() {
+		try {
+			isRecording = false;
+			recordingTimerHandler.removeCallbacks(recordingTimerRunnable);
+			if (audioRecord != null) {
+				audioRecord.stop();
+				audioRecord.release();
+				audioRecord = null;
+			}
+			Toast.makeText(this, getString(R.string.recording_cancelled),
+					Toast.LENGTH_SHORT).show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private byte[] readFileBytes(File file) throws IOException {
+		java.io.FileInputStream fis = new java.io.FileInputStream(file);
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		byte[] buf = new byte[4096];
+		int len;
+		while ((len = fis.read(buf)) != -1) bos.write(buf, 0, len);
+		fis.close();
+		return bos.toByteArray();
+	}
+
+	// Voice distortion
+
+	private boolean isVoiceDistortionEnabled() {
+		SharedPreferences prefs = getSharedPreferences("forum_prefs",
+				MODE_PRIVATE);
+		return prefs.getBoolean(
+				PREF_FORUM_DISTORTION + groupId.hashCode(), false);
+	}
+
+	private void toggleVoiceDistortion() {
+		SharedPreferences prefs = getSharedPreferences("forum_prefs",
+				MODE_PRIVATE);
+		String key = PREF_FORUM_DISTORTION + groupId.hashCode();
+		boolean current = prefs.getBoolean(key, false);
+		prefs.edit().putBoolean(key, !current).apply();
+		updateMicColor();
+		Toast.makeText(this, !current
+						? getString(R.string.distorted_voice_checkbox)
+						: getString(R.string.voice_record),
+				Toast.LENGTH_SHORT).show();
+	}
+
+	private void updateMicColor() {
+		if (compositeSendButton != null) {
+			compositeSendButton.setMicColor(isVoiceDistortionEnabled());
+		}
 	}
 
 }

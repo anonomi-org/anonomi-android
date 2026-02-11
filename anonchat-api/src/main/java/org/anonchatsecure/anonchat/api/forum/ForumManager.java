@@ -79,6 +79,14 @@ public interface ForumManager {
 			@Nullable MessageId parentId, LocalAuthor author);
 
 	/**
+	 * Creates a local forum audio post.
+	 */
+	@CryptoExecutor
+	ForumPost createLocalAudioPost(GroupId groupId, String text,
+			long timestamp, @Nullable MessageId parentId,
+			LocalAuthor author, byte[] audioData, String contentType);
+
+	/**
 	 * Stores a local forum post.
 	 */
 	ForumPostHeader addLocalPost(ForumPost p) throws DbException;
@@ -118,6 +126,35 @@ public interface ForumManager {
 	 * Returns the text of the forum post with the given ID.
 	 */
 	String getPostText(Transaction txn, MessageId m) throws DbException;
+
+	/**
+	 * Returns the audio data of the forum post with the given ID,
+	 * or null if the post has no audio.
+	 */
+	@Nullable
+	byte[] getPostAudioData(MessageId m) throws DbException;
+
+	/**
+	 * Returns the audio data of the forum post with the given ID,
+	 * or null if the post has no audio.
+	 */
+	@Nullable
+	byte[] getPostAudioData(Transaction txn, MessageId m) throws DbException;
+
+	/**
+	 * Returns the audio content type of the forum post with the given ID,
+	 * or null if the post has no audio.
+	 */
+	@Nullable
+	String getPostAudioContentType(MessageId m) throws DbException;
+
+	/**
+	 * Returns the audio content type of the forum post with the given ID,
+	 * or null if the post has no audio.
+	 */
+	@Nullable
+	String getPostAudioContentType(Transaction txn, MessageId m)
+			throws DbException;
 
 	/**
 	 * Returns the headers of all posts in the given forum.

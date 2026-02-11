@@ -37,11 +37,17 @@ public interface ForumConstants {
 	 */
 	int MAX_FORUM_POST_TEXT_LENGTH = MAX_MESSAGE_BODY_LENGTH - 1024;
 
+	/**
+	 * The maximum size of audio data in a forum audio message in bytes.
+	 */
+	int MAX_FORUM_AUDIO_SIZE = 32 * 1024;
+
 	// Metadata keys
 	String KEY_TIMESTAMP = "timestamp";
 	String KEY_PARENT = "parent";
 	String KEY_AUTHOR = "author";
 	String KEY_LOCAL = "local";
 	String KEY_READ = "read";
+	String KEY_HAS_AUDIO = "hasAudio";
 
 }

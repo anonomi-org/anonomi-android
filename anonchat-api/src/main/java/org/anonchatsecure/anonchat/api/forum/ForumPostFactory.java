@@ -35,10 +35,17 @@ import static org.anonchatsecure.anonchat.api.forum.ForumManager.CLIENT_ID;
 public interface ForumPostFactory {
 
 	String SIGNING_LABEL_POST = CLIENT_ID.getString() + "/POST";
+	String SIGNING_LABEL_AUDIO_POST = CLIENT_ID.getString() + "/AUDIO_POST";
 
 	@CryptoExecutor
 	ForumPost createPost(GroupId groupId, long timestamp,
 			@Nullable MessageId parent, LocalAuthor author, String text)
+			throws FormatException, GeneralSecurityException;
+
+	@CryptoExecutor
+	ForumPost createAudioPost(GroupId groupId, long timestamp,
+			@Nullable MessageId parent, LocalAuthor author, String text,
+			byte[] audioData, String contentType)
 			throws FormatException, GeneralSecurityException;
 
 }

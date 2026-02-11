@@ -65,6 +65,7 @@ import javax.inject.Inject;
 
 import static org.anonchatsecure.bramble.api.sync.validation.IncomingMessageHook.DeliveryAction.ACCEPT_SHARE;
 import static org.anonchatsecure.anonchat.api.forum.ForumConstants.KEY_AUTHOR;
+import static org.anonchatsecure.anonchat.api.forum.ForumConstants.KEY_HAS_AUDIO;
 import static org.anonchatsecure.anonchat.api.forum.ForumConstants.KEY_LOCAL;
 import static org.anonchatsecure.anonchat.api.forum.ForumConstants.KEY_PARENT;
 import static org.anonchatsecure.anonchat.api.forum.ForumConstants.KEY_TIMESTAMP;
@@ -102,8 +103,10 @@ class ForumManagerImpl extends BdfIncomingMessageHook implements ForumManager {
 
 		ForumPostHeader header = getForumPostHeader(txn, m.getId(), meta);
 		String text = getPostText(body);
-		ForumPostReceivedEvent event =
-				new ForumPostReceivedEvent(m.getGroupId(), header, text);
+		byte[] audioData = getAudioData(body);
+		String audioContentType = getAudioContentType(body);
+		ForumPostReceivedEvent event = new ForumPostReceivedEvent(
+				m.getGroupId(), header, text, audioData, audioContentType);
 		txn.attach(event);
 
 		return ACCEPT_SHARE;
@@ -147,6 +150,20 @@ class ForumManagerImpl extends BdfIncomingMessageHook implements ForumManager {
 	}
 
 	@Override
+	public ForumPost createLocalAudioPost(GroupId groupId, String text,
+			long timestamp, @Nullable MessageId parentId,
+			LocalAuthor author, byte[] audioData, String contentType) {
+		ForumPost p;
+		try {
+			p = forumPostFactory.createAudioPost(groupId, timestamp, parentId,
+					author, text, audioData, contentType);
+		} catch (GeneralSecurityException | FormatException e) {
+			throw new AssertionError(e);
+		}
+		return p;
+	}
+
+	@Override
 	public ForumPostHeader addLocalPost(ForumPost p) throws DbException {
 		return db.transactionWithResult(false, txn -> addLocalPost(txn, p));
 	}
@@ -162,13 +179,17 @@ class ForumManagerImpl extends BdfIncomingMessageHook implements ForumManager {
 			meta.put(KEY_AUTHOR, clientHelper.toList(a));
 			meta.put(KEY_LOCAL, true);
 			meta.put(MSG_KEY_READ, true);
+			// check if message body has audio (6-field body)
+			BdfList body = clientHelper.toList(p.getMessage());
+			boolean hasAudio = body.size() == 6;
+			if (hasAudio) meta.put(KEY_HAS_AUDIO, true);
 			clientHelper
 					.addLocalMessage(txn, p.getMessage(), meta, true, false);
 			messageTracker.trackOutgoingMessage(txn, p.getMessage());
 			AuthorInfo authorInfo = authorManager.getMyAuthorInfo(txn);
 			return new ForumPostHeader(p.getMessage().getId(), p.getParent(),
 					p.getMessage().getTimestamp(), p.getAuthor(), authorInfo,
-					true);
+					true, hasAudio);
 		} catch (FormatException e) {
 			throw new AssertionError(e);
 		}
@@ -225,8 +246,62 @@ class ForumManagerImpl extends BdfIncomingMessageHook implements ForumManager {
 	}
 
 	private String getPostText(BdfList body) throws FormatException {
-		// Parent ID, author, text, signature
+		// Parent ID, author, text, signature [, audioData, contentType]
 		return body.getString(2);
+	}
+
+	@Override
+	@Nullable
+	public byte[] getPostAudioData(MessageId m) throws DbException {
+		try {
+			return getAudioData(clientHelper.getMessageAsList(m));
+		} catch (FormatException e) {
+			throw new DbException(e);
+		}
+	}
+
+	@Override
+	@Nullable
+	public byte[] getPostAudioData(Transaction txn, MessageId m)
+			throws DbException {
+		try {
+			return getAudioData(clientHelper.getMessageAsList(txn, m));
+		} catch (FormatException e) {
+			throw new DbException(e);
+		}
+	}
+
+	@Nullable
+	private byte[] getAudioData(BdfList body) throws FormatException {
+		if (body.size() == 6) return body.getRaw(4);
+		return null;
+	}
+
+	@Override
+	@Nullable
+	public String getPostAudioContentType(MessageId m) throws DbException {
+		try {
+			return getAudioContentType(clientHelper.getMessageAsList(m));
+		} catch (FormatException e) {
+			throw new DbException(e);
+		}
+	}
+
+	@Override
+	@Nullable
+	public String getPostAudioContentType(Transaction txn, MessageId m)
+			throws DbException {
+		try {
+			return getAudioContentType(clientHelper.getMessageAsList(txn, m));
+		} catch (FormatException e) {
+			throw new DbException(e);
+		}
+	}
+
+	@Nullable
+	private String getAudioContentType(BdfList body) throws FormatException {
+		if (body.size() == 6) return body.getString(5);
+		return null;
 	}
 
 	@Override
@@ -321,9 +396,11 @@ class ForumManagerImpl extends BdfIncomingMessageHook implements ForumManager {
 		if (authorInfo == null)
 			authorInfo = authorManager.getAuthorInfo(txn, author.getId());
 		boolean read = meta.getBoolean(MSG_KEY_READ);
+		boolean hasAudio = meta.containsKey(KEY_HAS_AUDIO) &&
+				meta.getBoolean(KEY_HAS_AUDIO);
 
 		return new ForumPostHeader(id, parentId, timestamp, author, authorInfo,
-				read);
+				read, hasAudio);
 	}
 
 }
