@@ -1068,4 +1068,10 @@
     <string name="mailbox_setup_assertion_error_description">אנא שלח משוב (עם נתונים אנונימיים) דרך אפליקציית Anonomi אם הבעיה נמשכת.</string>
     <string name="tor_offline_title">לא מקוון</string>
     <string name="mailbox_status_connected_never">לעולם לא</string>
+    <string name="groups_toggle_voice_distortion">עיוות קולי</string>
+    <string name="forum_toggle_voice_distortion">עיוות קולי</string>
+    <string name="tap_to_view_on_map">▸ הקש כדי להציג על גבי המפה</string>
+    <string name="image_sent">תמונה נשלחה</string>
+    <string name="image_compression_failed">דחיסת התמונה נכשלה</string>
+    <string name="image_too_large">התמונה גדולה מדי לשליחה</string>
 </resources>
