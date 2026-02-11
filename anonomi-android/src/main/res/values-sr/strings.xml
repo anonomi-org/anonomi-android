@@ -512,7 +512,7 @@ Molim vas da uzmete u obzir odobravanja pristupa.</string>
     <string name="dev_report_logcat">Zakljucavanje applikacije</string>
     <string name="dev_report_sending">Šalji povratne informacije</string>
     <plurals name="duration_minutes">
-        <item quantity="one"></item>
+        <item quantity="one"/>
         <item quantity="few">5 minuta</item>
         <item quantity="other">5 minuta</item>
     </plurals>
@@ -530,4 +530,7 @@ Molim vas da uzmete u obzir odobravanja pristupa.</string>
     <string name="camera_permission_denied">Dozvole kamere</string>
     <string name="delete_account_button">Izbriši račun</string>
     <string name="panic_option_delete_account">Izbriši račun</string>
+    <string name="dnkm_huawei_app_launch_help">Ako Anonomi nije dodat u listi zasticenih aplikacija - protected apps, nece moci da radi u pozadini.</string>
+    <string name="share_app_link_text">Otključaj Anonomi</string>
+    <string name="website_download_title_1">Otključaj Anonomi</string>
 </resources>
