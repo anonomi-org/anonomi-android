@@ -590,7 +590,7 @@ Umepoteza nenosiri.</string>
     <string name="status_imported">Zilizoingizwa</string>
     <plurals name="group_message_notification_text">
         <item quantity="one">chapisho Ukumbi</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="duration_minutes">
         <item quantity="one">Dakika 1</item>
@@ -617,4 +617,10 @@ Umepoteza nenosiri.</string>
     <string name="camera_permission_denied">Ruhusa ya Kamera</string>
     <string name="delete_account_button">Futa Akaunti.</string>
     <string name="panic_option_delete_account">Futa Akaunti.</string>
+    <string name="dnkm_huawei_app_launch_help">Kama Anonomi haija wekwa kwenye orotha programu ulizi, haitaweza kufanya kazi kwenye nyuma ya mkongo</string>
+    <string name="qr_code_too_old_1">Hichi kiunga kimetoka kwenye tolea jipya Bria. Tafathali boresha kuwa kwenye Tolea jipya na ujaribu tena .</string>
+    <string name="mailbox_qr_code_too_old">Hichi kiunga kimetoka kwenye tolea jipya Bria. Tafathali boresha kuwa kwenye Tolea jipya na ujaribu tena .</string>
+    <string name="mailbox_qr_code_too_new">Hichi kiunga kimetoka kwenye tolea jipya Bria. Tafathali boresha kuwa kwenye Tolea jipya na ujaribu tena .</string>
+    <string name="share_app_link_text">Fungua Anonomi</string>
+    <string name="website_download_title_1">Fungua Anonomi</string>
 </resources>
