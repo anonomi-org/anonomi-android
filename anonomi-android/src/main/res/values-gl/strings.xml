@@ -701,4 +701,10 @@
     <string name="hotspot_error_web_server_serve">Se persiste o problema, envía un informe (anónimo) a través da aplicación Anonomi.</string>
     <string name="removable_drive_success_send_title">Importación exitosa</string>
     <string name="camera_permission_denied">Permiso da cámara</string>
+    <string name="dnkm_huawei_app_launch_help">Se Anonomi non se engade ao listado de apps protexidas, non poderá funcionar en segundo plano.</string>
+    <string name="qr_code_too_old_1">Esta ligazón chega desde unha versión nova de Anonomi. Por favor, actualiza a nova versión e inténtao de novo.</string>
+    <string name="mailbox_qr_code_too_old">Esta ligazón chega desde unha versión nova de Anonomi. Por favor, actualiza a nova versión e inténtao de novo.</string>
+    <string name="mailbox_qr_code_too_new">Esta ligazón chega desde unha versión nova de Anonomi. Por favor, actualiza a nova versión e inténtao de novo.</string>
+    <string name="share_app_link_text">Desbloquear Anonomi</string>
+    <string name="website_download_title_1">Desbloquear Anonomi</string>
 </resources>
