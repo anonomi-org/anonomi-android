@@ -1086,4 +1086,10 @@ O teu contacto também pode alterar esta configuração para ambos.</string>
     <string name="panic_status_signing_out">Enviar mensagens de pânico e sair da conta…</string>
     <string name="panic_status_deleting">Enviando mensagens de pânico e eliminando conta…</string>
     <string name="website_http_notice">O seu navegador pode avisar que esta ligação não é segura. Isso é esperado — a página é servida localmente através da sua ligação Wi-Fi direta e não viaja pela Internet.</string>
+    <string name="groups_toggle_voice_distortion">Alternar distorção de voz</string>
+    <string name="forum_toggle_voice_distortion">Alternar distorção de voz</string>
+    <string name="tap_to_view_on_map">▸ Toque para ver no mapa</string>
+    <string name="image_sent">Imagem enviada</string>
+    <string name="image_compression_failed">Falha ao comprimir a imagem</string>
+    <string name="image_too_large">A imagem é demasiado grande para ser enviada.</string>
 </resources>
