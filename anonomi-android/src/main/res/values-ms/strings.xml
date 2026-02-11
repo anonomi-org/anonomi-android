@@ -115,4 +115,7 @@
     <string name="panic_action_sign_out_summary">Anonomi sedang berjalan</string>
     <string name="progress_title_logout">Anonomi sedang berjalan</string>
     <string name="lock_unlock_password">Masukkan kata laluan anda:</string>
+    <string name="dialog_title_lost_password">Masukkan kata laluan anda:</string>
+    <string name="groups_leave">Cipta forum baru</string>
+    <string name="forum_share_button">Cipta forum baru</string>
 </resources>
