@@ -817,4 +817,9 @@
     <string name="permission_hotspot_nearby_wifi_denied_body">Þú hefur hafnað aðgangi að staðsetningu, en Anonomi þarf þessa heimild til að geta útbúið Wi-Fi-aðgangsstað.\n\nÍhugaðu að veita þennan aðgang.</string>
     <string name="website_download_button">Aflæsa Anonomi</string>
     <string name="camera_permission_denied">Heimildir á myndavél</string>
+    <string name="qr_code_too_old_1">Þessi tengill kemur frá nýrri útgáfu af Anonomi.\n\nUppfærðu í nýjustu útgáfuna og prófaðu síðan aftur.</string>
+    <string name="mailbox_qr_code_too_old">Þessi tengill kemur frá nýrri útgáfu af Anonomi.\n\nUppfærðu í nýjustu útgáfuna og prófaðu síðan aftur.</string>
+    <string name="mailbox_qr_code_too_new">Þessi tengill kemur frá nýrri útgáfu af Anonomi.\n\nUppfærðu í nýjustu útgáfuna og prófaðu síðan aftur.</string>
+    <string name="share_app_link_text">Aflæsa Anonomi</string>
+    <string name="website_download_title_1">Aflæsa Anonomi</string>
 </resources>
