@@ -841,4 +841,14 @@
     <string name="camera_permission_denied">카메라 권한</string>
     <string name="delete_account_button">계정 삭제하기</string>
     <string name="panic_option_delete_account">계정 삭제하기</string>
+    <string name="mailbox_error_notification_title">Postbox를 사용할 수 없습니다</string>
+    <string name="mailbox_error_wizard_answer1_3">Postbox가 실행 중입니다</string>
+    <string name="disappearing_messages_title">사라지는 메시지</string>
+    <string name="share_app_link">공유 다운로드 링크</string>
+    <string name="share_app_link_text">Anonomi 잠금 해제</string>
+    <string name="dev_report_time_info">Basic information</string>
+    <string name="permission_location_setting_title">위치 전송됨</string>
+    <string name="hotspot_tab_manual">매뉴얼</string>
+    <string name="website_download_title_1">Anonomi 잠금 해제</string>
+    <string name="scan_qr_code">QR 코드 공유</string>
 </resources>
