@@ -660,4 +660,10 @@
     <string name="hotspot_error_web_server_serve">Als dit probleem aanhoudt, stuur dan feedback (met anonieme gegevens) via de Anonomi-app.</string>
     <string name="removable_drive_success_send_title">Importeren geslaagd</string>
     <string name="camera_permission_denied">Cameratoestemming</string>
+    <string name="dnkm_huawei_app_launch_help">Als Anonomi niet is toegevoegd aan de beschermde apps, is het niet mogelijk om het in de achtergrond uit te voeren.</string>
+    <string name="qr_code_too_old_1">Deze link komt van een nieuwe versie van Anonomi. Upgrade alsjeblieft naar de laatste versie en probeer het nog eens.</string>
+    <string name="mailbox_qr_code_too_old">Deze link komt van een nieuwe versie van Anonomi. Upgrade alsjeblieft naar de laatste versie en probeer het nog eens.</string>
+    <string name="mailbox_qr_code_too_new">Deze link komt van een nieuwe versie van Anonomi. Upgrade alsjeblieft naar de laatste versie en probeer het nog eens.</string>
+    <string name="share_app_link_text">Ontgrendel Anonomi</string>
+    <string name="website_download_title_1">Ontgrendel Anonomi</string>
 </resources>
