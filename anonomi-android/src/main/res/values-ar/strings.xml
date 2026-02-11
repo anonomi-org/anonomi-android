@@ -1121,4 +1121,10 @@
     <string name="panic_status_signing_out">إرسال رسائل الذعر وتسجيل الخروج…</string>
     <string name="panic_status_deleting">إرسال رسائل الذعر وحذف الحساب…</string>
     <string name="website_http_notice">قد يحذرك متصفحك من أن هذا الاتصال غير آمن. هذا أمر متوقع — يتم تقديم الصفحة محليًا عبر اتصالك المباشر بشبكة Wi-Fi ولا تنتقل عبر الإنترنت.</string>
+    <string name="groups_toggle_voice_distortion">تبديل تشويه الصوت</string>
+    <string name="forum_toggle_voice_distortion">تفعيل/إيقاف تشويه الصوت</string>
+    <string name="tap_to_view_on_map">▸ انقر لعرض الخريطة</string>
+    <string name="image_sent">تم إرسال الصورة</string>
+    <string name="image_compression_failed">فشل ضغط الصورة</string>
+    <string name="image_too_large">الصورة كبيرة جدًا بحيث لا يمكن إرسالها</string>
 </resources>
