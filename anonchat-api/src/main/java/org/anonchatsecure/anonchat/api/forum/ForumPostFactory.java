@@ -36,6 +36,7 @@ public interface ForumPostFactory {
 
 	String SIGNING_LABEL_POST = CLIENT_ID.getString() + "/POST";
 	String SIGNING_LABEL_AUDIO_POST = CLIENT_ID.getString() + "/AUDIO_POST";
+	String SIGNING_LABEL_IMAGE_POST = CLIENT_ID.getString() + "/IMAGE_POST";
 
 	@CryptoExecutor
 	ForumPost createPost(GroupId groupId, long timestamp,
@@ -46,6 +47,12 @@ public interface ForumPostFactory {
 	ForumPost createAudioPost(GroupId groupId, long timestamp,
 			@Nullable MessageId parent, LocalAuthor author, String text,
 			byte[] audioData, String contentType)
+			throws FormatException, GeneralSecurityException;
+
+	@CryptoExecutor
+	ForumPost createImagePost(GroupId groupId, long timestamp,
+			@Nullable MessageId parent, LocalAuthor author, String text,
+			byte[] imageData, String contentType)
 			throws FormatException, GeneralSecurityException;
 
 }

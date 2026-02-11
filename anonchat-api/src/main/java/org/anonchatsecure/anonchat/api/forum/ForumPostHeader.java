@@ -32,22 +32,35 @@ import javax.annotation.concurrent.Immutable;
 public class ForumPostHeader extends PostHeader {
 
 	private final boolean hasAudio;
+	private final boolean hasImage;
 
 	public ForumPostHeader(MessageId id, @Nullable MessageId parentId,
 			long timestamp, Author author, AuthorInfo authorInfo,
 			boolean read) {
-		this(id, parentId, timestamp, author, authorInfo, read, false);
+		this(id, parentId, timestamp, author, authorInfo, read, false, false);
 	}
 
 	public ForumPostHeader(MessageId id, @Nullable MessageId parentId,
 			long timestamp, Author author, AuthorInfo authorInfo,
 			boolean read, boolean hasAudio) {
+		this(id, parentId, timestamp, author, authorInfo, read, hasAudio,
+				false);
+	}
+
+	public ForumPostHeader(MessageId id, @Nullable MessageId parentId,
+			long timestamp, Author author, AuthorInfo authorInfo,
+			boolean read, boolean hasAudio, boolean hasImage) {
 		super(id, parentId, timestamp, author, authorInfo, read);
 		this.hasAudio = hasAudio;
+		this.hasImage = hasImage;
 	}
 
 	public boolean hasAudio() {
 		return hasAudio;
+	}
+
+	public boolean hasImage() {
+		return hasImage;
 	}
 
 }

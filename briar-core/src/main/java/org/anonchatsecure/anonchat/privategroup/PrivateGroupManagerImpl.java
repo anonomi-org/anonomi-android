@@ -89,6 +89,7 @@ import static org.anonchatsecure.anonchat.privategroup.GroupConstants.GROUP_KEY_
 import static org.anonchatsecure.anonchat.privategroup.GroupConstants.GROUP_KEY_OUR_GROUP;
 import static org.anonchatsecure.anonchat.privategroup.GroupConstants.GROUP_KEY_VISIBILITY;
 import static org.anonchatsecure.anonchat.privategroup.GroupConstants.KEY_HAS_AUDIO;
+import static org.anonchatsecure.anonchat.privategroup.GroupConstants.KEY_HAS_IMAGE;
 import static org.anonchatsecure.anonchat.privategroup.GroupConstants.KEY_INITIAL_JOIN_MSG;
 import static org.anonchatsecure.anonchat.privategroup.GroupConstants.KEY_MEMBER;
 import static org.anonchatsecure.anonchat.privategroup.GroupConstants.KEY_PARENT_MSG_ID;
@@ -238,10 +239,20 @@ class PrivateGroupManagerImpl extends BdfIncomingMessageHook
 			meta.put(KEY_TYPE, POST.getInt());
 			if (m.getParent() != null)
 				meta.put(KEY_PARENT_MSG_ID, m.getParent());
-			// check if message body has audio (8-field body)
+			// check if message body has media (8-field body)
 			BdfList body = clientHelper.toList(m.getMessage());
-			boolean hasAudio = body.size() == 8;
-			if (hasAudio) meta.put(KEY_HAS_AUDIO, true);
+			boolean hasAudio = false;
+			boolean hasImage = false;
+			if (body.size() == 8) {
+				String ct = body.getString(7);
+				if (ct.startsWith("audio/")) {
+					hasAudio = true;
+					meta.put(KEY_HAS_AUDIO, true);
+				} else if (ct.startsWith("image/")) {
+					hasImage = true;
+					meta.put(KEY_HAS_IMAGE, true);
+				}
+			}
 			addMessageMetadata(meta, m);
 			GroupId g = m.getMessage().getGroupId();
 			clientHelper
@@ -255,7 +266,7 @@ class PrivateGroupManagerImpl extends BdfIncomingMessageHook
 			return new GroupMessageHeader(m.getMessage().getGroupId(),
 					m.getMessage().getId(), m.getParent(),
 					m.getMessage().getTimestamp(), m.getMember(), authorInfo,
-					true, hasAudio);
+					true, hasAudio, hasImage);
 		} catch (FormatException e) {
 			throw new DbException(e);
 		}
@@ -414,6 +425,66 @@ class PrivateGroupManagerImpl extends BdfIncomingMessageHook
 	}
 
 	@Override
+	@Nullable
+	public byte[] getMessageImageData(MessageId m) throws DbException {
+		try {
+			return getImageData(clientHelper.getMessageAsList(m));
+		} catch (FormatException e) {
+			throw new DbException(e);
+		}
+	}
+
+	@Override
+	@Nullable
+	public byte[] getMessageImageData(Transaction txn, MessageId m)
+			throws DbException {
+		try {
+			return getImageData(clientHelper.getMessageAsList(txn, m));
+		} catch (FormatException e) {
+			throw new DbException(e);
+		}
+	}
+
+	@Nullable
+	private byte[] getImageData(BdfList body) throws FormatException {
+		if (body.size() == 8) {
+			String ct = body.getString(7);
+			if (ct.startsWith("image/")) return body.getRaw(6);
+		}
+		return null;
+	}
+
+	@Override
+	@Nullable
+	public String getMessageImageContentType(MessageId m) throws DbException {
+		try {
+			return getImageContentType(clientHelper.getMessageAsList(m));
+		} catch (FormatException e) {
+			throw new DbException(e);
+		}
+	}
+
+	@Override
+	@Nullable
+	public String getMessageImageContentType(Transaction txn, MessageId m)
+			throws DbException {
+		try {
+			return getImageContentType(clientHelper.getMessageAsList(txn, m));
+		} catch (FormatException e) {
+			throw new DbException(e);
+		}
+	}
+
+	@Nullable
+	private String getImageContentType(BdfList body) throws FormatException {
+		if (body.size() == 8) {
+			String ct = body.getString(7);
+			if (ct.startsWith("image/")) return ct;
+		}
+		return null;
+	}
+
+	@Override
 	public Collection<GroupMessageHeader> getHeaders(GroupId g)
 			throws DbException {
 		return db.transactionWithResult(true, txn -> getHeaders(txn, g));
@@ -474,9 +545,11 @@ class PrivateGroupManagerImpl extends BdfIncomingMessageHook
 		boolean read = meta.getBoolean(KEY_READ);
 		boolean hasAudio = meta.containsKey(KEY_HAS_AUDIO) &&
 				meta.getBoolean(KEY_HAS_AUDIO);
+		boolean hasImage = meta.containsKey(KEY_HAS_IMAGE) &&
+				meta.getBoolean(KEY_HAS_IMAGE);
 
 		return new GroupMessageHeader(g, id, parentId, timestamp, member,
-				authorInfo, read, hasAudio);
+				authorInfo, read, hasAudio, hasImage);
 	}
 
 	private JoinMessageHeader getJoinMessageHeader(Transaction txn, GroupId g,

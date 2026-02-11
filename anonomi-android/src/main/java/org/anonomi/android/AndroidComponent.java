@@ -33,6 +33,7 @@ import org.anonchatsecure.bramble.system.ClockModule;
 import org.anonchatsecure.anonchat.BriarCoreEagerSingletons;
 import org.anonchatsecure.anonchat.BriarCoreModule;
 import org.anonomi.android.attachment.AttachmentModule;
+import org.anonomi.android.attachment.media.ImageCompressor;
 import org.anonomi.android.attachment.media.MediaModule;
 import org.anonomi.android.contact.connect.BluetoothIntroFragment;
 import org.anonomi.android.conversation.glide.BriarModelLoader;
@@ -127,6 +128,8 @@ public interface AndroidComponent
 	IdentityManager identityManager();
 
 	AttachmentReader attachmentReader();
+
+	ImageCompressor imageCompressor();
 
 	AuthorManager authorManager();
 

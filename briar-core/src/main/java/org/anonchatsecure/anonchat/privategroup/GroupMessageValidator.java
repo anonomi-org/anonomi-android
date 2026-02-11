@@ -47,13 +47,16 @@ import static org.anonchatsecure.bramble.util.ValidationUtils.checkLength;
 import static org.anonchatsecure.bramble.util.ValidationUtils.checkSize;
 import static org.anonchatsecure.anonchat.api.privategroup.GroupMessageFactory.SIGNING_LABEL_JOIN;
 import static org.anonchatsecure.anonchat.api.privategroup.GroupMessageFactory.SIGNING_LABEL_AUDIO_POST;
+import static org.anonchatsecure.anonchat.api.privategroup.GroupMessageFactory.SIGNING_LABEL_IMAGE_POST;
 import static org.anonchatsecure.anonchat.api.privategroup.GroupMessageFactory.SIGNING_LABEL_POST;
 import static org.anonchatsecure.anonchat.api.privategroup.MessageType.JOIN;
 import static org.anonchatsecure.anonchat.api.privategroup.MessageType.POST;
 import static org.anonchatsecure.anonchat.api.privategroup.PrivateGroupConstants.MAX_GROUP_AUDIO_SIZE;
+import static org.anonchatsecure.anonchat.api.privategroup.PrivateGroupConstants.MAX_GROUP_IMAGE_SIZE;
 import static org.anonchatsecure.anonchat.api.privategroup.PrivateGroupConstants.MAX_GROUP_POST_TEXT_LENGTH;
 import static org.anonchatsecure.anonchat.api.privategroup.invitation.GroupInvitationFactory.SIGNING_LABEL_INVITE;
 import static org.anonchatsecure.anonchat.privategroup.GroupConstants.KEY_HAS_AUDIO;
+import static org.anonchatsecure.anonchat.privategroup.GroupConstants.KEY_HAS_IMAGE;
 import static org.anonchatsecure.anonchat.privategroup.GroupConstants.KEY_INITIAL_JOIN_MSG;
 import static org.anonchatsecure.anonchat.privategroup.GroupConstants.KEY_MEMBER;
 import static org.anonchatsecure.anonchat.privategroup.GroupConstants.KEY_PARENT_MSG_ID;
@@ -165,9 +168,9 @@ class GroupMessageValidator extends BdfMessageValidator {
 	private BdfMessageContext validatePost(Message m, Group g, BdfList body,
 			Author member) throws FormatException {
 		// Message type, member, optional parent ID, previous message ID,
-		// text, signature [, audioData, contentType]
-		boolean hasAudio = body.size() == 8;
-		if (!hasAudio) checkSize(body, 6);
+		// text, signature [, mediaData, contentType]
+		boolean hasMedia = body.size() == 8;
+		if (!hasMedia) checkSize(body, 6);
 
 		byte[] parentId = body.getOptionalRaw(2);
 		checkLength(parentId, MessageId.LENGTH);
@@ -178,21 +181,32 @@ class GroupMessageValidator extends BdfMessageValidator {
 		byte[] signature = body.getRaw(5);
 		checkLength(signature, 1, MAX_SIGNATURE_LENGTH);
 
-		byte[] audioData = null;
+		byte[] mediaData = null;
 		String contentType = null;
-		if (hasAudio) {
-			audioData = body.getRaw(6);
-			checkLength(audioData, 1, MAX_GROUP_AUDIO_SIZE);
+		boolean isAudio = false;
+		boolean isImage = false;
+		if (hasMedia) {
+			mediaData = body.getRaw(6);
 			contentType = body.getString(7);
 			checkLength(contentType, 1, 50);
+			isAudio = contentType.startsWith("audio/");
+			isImage = contentType.startsWith("image/");
+			if (!isAudio && !isImage)
+				throw new FormatException();
+			if (isAudio) {
+				checkLength(mediaData, 1, MAX_GROUP_AUDIO_SIZE);
+			} else {
+				checkLength(mediaData, 1, MAX_GROUP_IMAGE_SIZE);
+			}
 		}
 
 		// Verify the member's signature
 		BdfList memberList = body.getList(1); // Already validated
 		String signingLabel;
 		BdfList signed;
-		if (hasAudio) {
-			signingLabel = SIGNING_LABEL_AUDIO_POST;
+		if (hasMedia) {
+			signingLabel = isAudio ? SIGNING_LABEL_AUDIO_POST
+					: SIGNING_LABEL_IMAGE_POST;
 			signed = BdfList.of(
 					g.getId(),
 					m.getTimestamp(),
@@ -200,7 +214,7 @@ class GroupMessageValidator extends BdfMessageValidator {
 					parentId,
 					previousMessageId,
 					text,
-					audioData,
+					mediaData,
 					contentType
 			);
 		} else {
@@ -231,7 +245,8 @@ class GroupMessageValidator extends BdfMessageValidator {
 		BdfDictionary meta = new BdfDictionary();
 		if (parentId != null) meta.put(KEY_PARENT_MSG_ID, parentId);
 		meta.put(KEY_PREVIOUS_MSG_ID, previousMessageId);
-		if (hasAudio) meta.put(KEY_HAS_AUDIO, true);
+		if (isAudio) meta.put(KEY_HAS_AUDIO, true);
+		if (isImage) meta.put(KEY_HAS_IMAGE, true);
 		return new BdfMessageContext(meta, dependencies);
 	}
 

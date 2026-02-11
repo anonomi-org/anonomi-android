@@ -186,6 +186,36 @@ public interface PrivateGroupManager {
 			throws DbException;
 
 	/**
+	 * Returns the image data of the private group message with the given
+	 * ID, or null if the message has no image.
+	 */
+	@Nullable
+	byte[] getMessageImageData(MessageId m) throws DbException;
+
+	/**
+	 * Returns the image data of the private group message with the given
+	 * ID, or null if the message has no image.
+	 */
+	@Nullable
+	byte[] getMessageImageData(Transaction txn, MessageId m)
+			throws DbException;
+
+	/**
+	 * Returns the image content type of the private group message with the
+	 * given ID, or null if the message has no image.
+	 */
+	@Nullable
+	String getMessageImageContentType(MessageId m) throws DbException;
+
+	/**
+	 * Returns the image content type of the private group message with the
+	 * given ID, or null if the message has no image.
+	 */
+	@Nullable
+	String getMessageImageContentType(Transaction txn, MessageId m)
+			throws DbException;
+
+	/**
 	 * Returns the headers of all messages in the given private group.
 	 */
 	Collection<GroupMessageHeader> getHeaders(GroupId g) throws DbException;

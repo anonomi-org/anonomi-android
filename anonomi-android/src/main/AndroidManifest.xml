@@ -333,6 +333,11 @@
 		</activity>
 
 		<activity
+			android:name="org.anonomi.android.view.ImageViewActivity"
+			android:exported="false"
+			android:theme="@style/Theme.AppCompat.NoActionBar" />
+
+		<activity
 			android:name="org.anonomi.android.sharing.ShareForumActivity"
 			android:exported="false"
 			android:label="@string/activity_share_toolbar_header"

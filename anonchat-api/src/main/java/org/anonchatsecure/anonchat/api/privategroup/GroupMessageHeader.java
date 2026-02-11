@@ -34,21 +34,31 @@ public class GroupMessageHeader extends PostHeader {
 
 	private final GroupId groupId;
 	private final boolean hasAudio;
+	private final boolean hasImage;
 
 	public GroupMessageHeader(GroupId groupId, MessageId id,
 			@Nullable MessageId parentId, long timestamp,
 			Author author, AuthorInfo authorInfo, boolean read) {
 		this(groupId, id, parentId, timestamp, author, authorInfo, read,
-				false);
+				false, false);
 	}
 
 	public GroupMessageHeader(GroupId groupId, MessageId id,
 			@Nullable MessageId parentId, long timestamp,
 			Author author, AuthorInfo authorInfo, boolean read,
 			boolean hasAudio) {
+		this(groupId, id, parentId, timestamp, author, authorInfo, read,
+				hasAudio, false);
+	}
+
+	public GroupMessageHeader(GroupId groupId, MessageId id,
+			@Nullable MessageId parentId, long timestamp,
+			Author author, AuthorInfo authorInfo, boolean read,
+			boolean hasAudio, boolean hasImage) {
 		super(id, parentId, timestamp, author, authorInfo, read);
 		this.groupId = groupId;
 		this.hasAudio = hasAudio;
+		this.hasImage = hasImage;
 	}
 
 	public GroupId getGroupId() {
@@ -57,6 +67,10 @@ public class GroupMessageHeader extends PostHeader {
 
 	public boolean hasAudio() {
 		return hasAudio;
+	}
+
+	public boolean hasImage() {
+		return hasImage;
 	}
 
 }

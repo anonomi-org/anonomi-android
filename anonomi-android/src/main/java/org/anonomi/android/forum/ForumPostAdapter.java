@@ -36,6 +36,9 @@ class ForumPostAdapter extends ThreadItemAdapter<ForumPostItem> {
 		if (type == R.layout.list_item_thread_audio) {
 			return new ForumAudioPostViewHolder(v);
 		}
+		if (type == R.layout.list_item_thread_image) {
+			return new ForumImagePostViewHolder(v);
+		}
 		return new ThreadPostViewHolder<>(v);
 	}
 

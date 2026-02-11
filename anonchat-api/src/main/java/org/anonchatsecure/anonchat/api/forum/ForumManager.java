@@ -87,6 +87,14 @@ public interface ForumManager {
 			LocalAuthor author, byte[] audioData, String contentType);
 
 	/**
+	 * Creates a local forum image post.
+	 */
+	@CryptoExecutor
+	ForumPost createLocalImagePost(GroupId groupId, String text,
+			long timestamp, @Nullable MessageId parentId,
+			LocalAuthor author, byte[] imageData, String contentType);
+
+	/**
 	 * Stores a local forum post.
 	 */
 	ForumPostHeader addLocalPost(ForumPost p) throws DbException;
@@ -154,6 +162,35 @@ public interface ForumManager {
 	 */
 	@Nullable
 	String getPostAudioContentType(Transaction txn, MessageId m)
+			throws DbException;
+
+	/**
+	 * Returns the image data of the forum post with the given ID,
+	 * or null if the post has no image.
+	 */
+	@Nullable
+	byte[] getPostImageData(MessageId m) throws DbException;
+
+	/**
+	 * Returns the image data of the forum post with the given ID,
+	 * or null if the post has no image.
+	 */
+	@Nullable
+	byte[] getPostImageData(Transaction txn, MessageId m) throws DbException;
+
+	/**
+	 * Returns the image content type of the forum post with the given ID,
+	 * or null if the post has no image.
+	 */
+	@Nullable
+	String getPostImageContentType(MessageId m) throws DbException;
+
+	/**
+	 * Returns the image content type of the forum post with the given ID,
+	 * or null if the post has no image.
+	 */
+	@Nullable
+	String getPostImageContentType(Transaction txn, MessageId m)
 			throws DbException;
 
 	/**

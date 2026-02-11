@@ -42,6 +42,11 @@ public interface ForumConstants {
 	 */
 	int MAX_FORUM_AUDIO_SIZE = 32 * 1024;
 
+	/**
+	 * The maximum size of image data in a forum image message in bytes.
+	 */
+	int MAX_FORUM_IMAGE_SIZE = 32 * 1024;
+
 	// Metadata keys
 	String KEY_TIMESTAMP = "timestamp";
 	String KEY_PARENT = "parent";
@@ -49,5 +54,6 @@ public interface ForumConstants {
 	String KEY_LOCAL = "local";
 	String KEY_READ = "read";
 	String KEY_HAS_AUDIO = "hasAudio";
+	String KEY_HAS_IMAGE = "hasImage";
 
 }

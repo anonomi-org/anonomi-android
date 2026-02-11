@@ -41,6 +41,9 @@ class GroupMessageAdapter extends ThreadItemAdapter<GroupMessageItem> {
 		if (type == R.layout.list_item_thread_audio) {
 			return new GroupAudioPostViewHolder(v);
 		}
+		if (type == R.layout.list_item_thread_image) {
+			return new GroupImagePostViewHolder(v);
+		}
 		return new ThreadPostViewHolder<>(v);
 	}
 

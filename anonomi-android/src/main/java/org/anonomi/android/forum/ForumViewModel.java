@@ -91,9 +91,16 @@ class ForumViewModel extends ThreadListViewModel<ForumPostItem> {
 			ForumPostReceivedEvent f = (ForumPostReceivedEvent) e;
 			if (f.getGroupId().equals(groupId)) {
 				ForumPostItem item;
-				if (f.getAudioData() != null) {
-					item = new ForumPostItem(f.getHeader(), f.getText(),
-							f.getAudioData(), f.getAudioContentType());
+				if (f.getAudioData() != null &&
+						f.getAudioContentType() != null) {
+					if (f.getAudioContentType().startsWith("image/")) {
+						item = new ForumPostItem(f.getHeader(), f.getText(),
+								null, null,
+								f.getAudioData(), f.getAudioContentType());
+					} else {
+						item = new ForumPostItem(f.getHeader(), f.getText(),
+								f.getAudioData(), f.getAudioContentType());
+					}
 				} else {
 					item = new ForumPostItem(f.getHeader(), f.getText());
 				}
@@ -154,6 +161,14 @@ class ForumViewModel extends ThreadListViewModel<ForumPostItem> {
 	private ForumPostItem loadItem(Transaction txn, ForumPostHeader header)
 			throws DbException {
 		String text = forumManager.getPostText(txn, header.getId());
+		if (header.hasImage()) {
+			byte[] imageData = forumManager
+					.getPostImageData(txn, header.getId());
+			String imageContentType = forumManager
+					.getPostImageContentType(txn, header.getId());
+			return new ForumPostItem(header, text, null, null,
+					imageData, imageContentType);
+		}
 		if (header.hasAudio()) {
 			byte[] audioData = forumManager
 					.getPostAudioData(txn, header.getId());
@@ -238,6 +253,47 @@ class ForumViewModel extends ThreadListViewModel<ForumPostItem> {
 			txn.attach(() -> {
 				ForumPostItem item = new ForumPostItem(header, "",
 						audioData, contentType);
+				addItem(item, true);
+			});
+		}, this::handleException);
+	}
+
+	void createAndStoreImageMessage(byte[] imageData, String contentType,
+			@Nullable MessageId parentId) {
+		runOnDbThread(() -> {
+			try {
+				LocalAuthor author = identityManager.getLocalAuthor();
+				GroupCount count = forumManager.getGroupCount(groupId);
+				long timestamp = max(count.getLatestMsgTime() + 1,
+						clock.currentTimeMillis());
+				createImageMessage(imageData, contentType, timestamp,
+						parentId, author);
+			} catch (DbException e) {
+				handleException(e);
+			}
+		});
+	}
+
+	private void createImageMessage(byte[] imageData, String contentType,
+			long timestamp, @Nullable MessageId parentId,
+			LocalAuthor author) {
+		cryptoExecutor.execute(() -> {
+			LOG.info("Creating forum image post...");
+			ForumPost msg = forumManager.createLocalImagePost(groupId, "",
+					timestamp, parentId, author, imageData, contentType);
+			storeImagePost(msg, imageData, contentType);
+		});
+	}
+
+	private void storeImagePost(ForumPost msg, byte[] imageData,
+			String contentType) {
+		runOnDbThread(false, txn -> {
+			long start = now();
+			ForumPostHeader header = forumManager.addLocalPost(txn, msg);
+			logDuration(LOG, "Storing forum image post", start);
+			txn.attach(() -> {
+				ForumPostItem item = new ForumPostItem(header, "",
+						null, null, imageData, contentType);
 				addItem(item, true);
 			});
 		}, this::handleException);

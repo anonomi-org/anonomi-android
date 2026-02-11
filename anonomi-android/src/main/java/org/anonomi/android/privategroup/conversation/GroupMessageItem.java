@@ -23,27 +23,43 @@ class GroupMessageItem extends ThreadItem {
 	private final byte[] audioData;
 	@Nullable
 	private final String audioContentType;
+	@Nullable
+	private final byte[] imageData;
+	@Nullable
+	private final String imageContentType;
 
 	private GroupMessageItem(MessageId messageId, GroupId groupId,
 			@Nullable MessageId parentId, String text, long timestamp,
 			Author author, AuthorInfo authorInfo, boolean isRead,
-			@Nullable byte[] audioData, @Nullable String audioContentType) {
+			@Nullable byte[] audioData, @Nullable String audioContentType,
+			@Nullable byte[] imageData, @Nullable String imageContentType) {
 		super(messageId, parentId, text, timestamp, author, authorInfo, isRead);
 		this.groupId = groupId;
 		this.audioData = audioData;
 		this.audioContentType = audioContentType;
+		this.imageData = imageData;
+		this.imageContentType = imageContentType;
 	}
 
 	GroupMessageItem(GroupMessageHeader h, String text) {
 		this(h.getId(), h.getGroupId(), h.getParentId(), text, h.getTimestamp(),
-				h.getAuthor(), h.getAuthorInfo(), h.isRead(), null, null);
+				h.getAuthor(), h.getAuthorInfo(), h.isRead(),
+				null, null, null, null);
 	}
 
 	GroupMessageItem(GroupMessageHeader h, String text,
 			@Nullable byte[] audioData, @Nullable String audioContentType) {
 		this(h.getId(), h.getGroupId(), h.getParentId(), text, h.getTimestamp(),
 				h.getAuthor(), h.getAuthorInfo(), h.isRead(), audioData,
-				audioContentType);
+				audioContentType, null, null);
+	}
+
+	GroupMessageItem(GroupMessageHeader h, String text,
+			@Nullable byte[] audioData, @Nullable String audioContentType,
+			@Nullable byte[] imageData, @Nullable String imageContentType) {
+		this(h.getId(), h.getGroupId(), h.getParentId(), text, h.getTimestamp(),
+				h.getAuthor(), h.getAuthorInfo(), h.isRead(), audioData,
+				audioContentType, imageData, imageContentType);
 	}
 
 	public GroupId getGroupId() {
@@ -64,8 +80,23 @@ class GroupMessageItem extends ThreadItem {
 		return audioContentType;
 	}
 
+	public boolean hasImage() {
+		return imageData != null && imageData.length > 0;
+	}
+
+	@Nullable
+	public byte[] getImageData() {
+		return imageData;
+	}
+
+	@Nullable
+	public String getImageContentType() {
+		return imageContentType;
+	}
+
 	@LayoutRes
 	public int getLayout() {
+		if (hasImage()) return R.layout.list_item_thread_image;
 		if (hasAudio()) return R.layout.list_item_thread_audio;
 		return R.layout.list_item_thread;
 	}

@@ -39,15 +39,23 @@ import org.briarproject.nullsafety.ParametersNotNullByDefault;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 
+import android.net.Uri;
+import org.anonomi.android.attachment.media.ImageCompressor;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
+
+import static org.anonchatsecure.anonchat.api.privategroup.PrivateGroupConstants.MAX_GROUP_IMAGE_SIZE;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -65,6 +73,8 @@ public class GroupActivity extends
 
 	@Inject
 	ViewModelProvider.Factory viewModelFactory;
+	@Inject
+	ImageCompressor imageCompressor;
 
 	private GroupViewModel viewModel;
 
@@ -108,6 +118,11 @@ public class GroupActivity extends
 			}
 		}
 	};
+
+	private final ActivityResultLauncher<String> imagePickerLauncher =
+			registerForActivityResult(
+					new ActivityResultContracts.GetContent(),
+					this::onImageSelected);
 
 	@Override
 	public void injectActivity(ActivityComponent component) {
@@ -155,6 +170,11 @@ public class GroupActivity extends
 		slideToCancelText = findViewById(R.id.slideToCancelText);
 		compositeSendButton = textInput.findViewById(R.id.compositeSendButton);
 		updateMicColor();
+
+		// Image picker
+		compositeSendButton.setImagesSupported();
+		compositeSendButton.setOnImageClickListener(
+				v -> imagePickerLauncher.launch("image/*"));
 
 		AppCompatImageButton recordButton =
 				textInput.findViewById(R.id.recordButton);
@@ -310,6 +330,46 @@ public class GroupActivity extends
 		} else {
 			textInput.setVisibility(VISIBLE);
 		}
+	}
+
+	// Image sending
+
+	private void onImageSelected(@Nullable Uri uri) {
+		if (uri == null) return;
+		MessageId replyId = viewModel.getCurrentReplyId();
+		new Thread(() -> {
+			try {
+				String mimeType = getContentResolver().getType(uri);
+				if (mimeType == null) mimeType = "image/jpeg";
+				InputStream is = getContentResolver().openInputStream(uri);
+				if (is == null) {
+					runOnUiThread(() -> Toast.makeText(this,
+							getString(R.string.image_compression_failed),
+							Toast.LENGTH_SHORT).show());
+					return;
+				}
+				InputStream compressed = imageCompressor.compressImage(
+						is, mimeType, MAX_GROUP_IMAGE_SIZE);
+				ByteArrayOutputStream bos = new ByteArrayOutputStream();
+				byte[] buf = new byte[4096];
+				int len;
+				while ((len = compressed.read(buf)) != -1)
+					bos.write(buf, 0, len);
+				byte[] imageBytes = bos.toByteArray();
+				runOnUiThread(() -> {
+					viewModel.createAndStoreImageMessage(
+							imageBytes, "image/jpeg", replyId);
+					viewModel.clearReplyId();
+					Toast.makeText(this,
+							getString(R.string.image_sent),
+							Toast.LENGTH_SHORT).show();
+				});
+			} catch (IOException e) {
+				runOnUiThread(() -> Toast.makeText(this,
+						getString(R.string.image_compression_failed),
+						Toast.LENGTH_SHORT).show());
+			}
+		}).start();
 	}
 
 	// Voice recording

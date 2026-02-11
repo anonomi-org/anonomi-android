@@ -1104,6 +1104,9 @@ Anonomi Messenger is an independent project and is not affiliated with, endorsed
     <string name="microphone_permission_required">Microphone permission required</string>
     <string name="distortion_failed">Distortion failed</string>
     <string name="voice_sent">Voice sent</string>
+    <string name="image_sent">Image sent</string>
+    <string name="image_compression_failed">Failed to compress image</string>
+    <string name="image_too_large">Image is too large to send</string>
     <string name="send_failed">Send failed</string>
     <string name="general_sendaudio_failure">Broke on catchall</string>
     <string name="conversion_failed">Conversion failed</string>

@@ -49,9 +49,12 @@ import static org.anonchatsecure.anonchat.api.forum.ForumConstants.KEY_PARENT;
 import static org.anonchatsecure.anonchat.api.forum.ForumConstants.KEY_READ;
 import static org.anonchatsecure.anonchat.api.forum.ForumConstants.KEY_TIMESTAMP;
 import static org.anonchatsecure.anonchat.api.forum.ForumConstants.MAX_FORUM_AUDIO_SIZE;
+import static org.anonchatsecure.anonchat.api.forum.ForumConstants.MAX_FORUM_IMAGE_SIZE;
 import static org.anonchatsecure.anonchat.api.forum.ForumConstants.MAX_FORUM_POST_TEXT_LENGTH;
 import static org.anonchatsecure.anonchat.api.forum.ForumConstants.KEY_HAS_AUDIO;
+import static org.anonchatsecure.anonchat.api.forum.ForumConstants.KEY_HAS_IMAGE;
 import static org.anonchatsecure.anonchat.api.forum.ForumPostFactory.SIGNING_LABEL_AUDIO_POST;
+import static org.anonchatsecure.anonchat.api.forum.ForumPostFactory.SIGNING_LABEL_IMAGE_POST;
 import static org.anonchatsecure.anonchat.api.forum.ForumPostFactory.SIGNING_LABEL_POST;
 
 @Immutable
@@ -66,9 +69,9 @@ class ForumPostValidator extends BdfMessageValidator {
 	@Override
 	protected BdfMessageContext validateMessage(Message m, Group g,
 			BdfList body) throws InvalidMessageException, FormatException {
-		// Parent ID, author, text, signature [, audioData, contentType]
-		boolean hasAudio = body.size() == 6;
-		if (!hasAudio) checkSize(body, 4);
+		// Parent ID, author, text, signature [, mediaData, contentType]
+		boolean hasMedia = body.size() == 6;
+		if (!hasMedia) checkSize(body, 4);
 
 		// Parent ID is optional
 		byte[] parent = body.getOptionalRaw(0);
@@ -86,23 +89,34 @@ class ForumPostValidator extends BdfMessageValidator {
 		byte[] sig = body.getRaw(3);
 		checkLength(sig, 1, MAX_SIGNATURE_LENGTH);
 
-		// Audio data (optional)
-		byte[] audioData = null;
+		// Media data (optional - audio or image)
+		byte[] mediaData = null;
 		String contentType = null;
-		if (hasAudio) {
-			audioData = body.getRaw(4);
-			checkLength(audioData, 1, MAX_FORUM_AUDIO_SIZE);
+		boolean isAudio = false;
+		boolean isImage = false;
+		if (hasMedia) {
+			mediaData = body.getRaw(4);
 			contentType = body.getString(5);
 			checkLength(contentType, 1, 50);
+			isAudio = contentType.startsWith("audio/");
+			isImage = contentType.startsWith("image/");
+			if (!isAudio && !isImage)
+				throw new InvalidMessageException();
+			if (isAudio) {
+				checkLength(mediaData, 1, MAX_FORUM_AUDIO_SIZE);
+			} else {
+				checkLength(mediaData, 1, MAX_FORUM_IMAGE_SIZE);
+			}
 		}
 
 		// Verify the signature
 		String signingLabel;
 		BdfList signed;
-		if (hasAudio) {
-			signingLabel = SIGNING_LABEL_AUDIO_POST;
+		if (hasMedia) {
+			signingLabel = isAudio ? SIGNING_LABEL_AUDIO_POST
+					: SIGNING_LABEL_IMAGE_POST;
 			signed = BdfList.of(g.getId(), m.getTimestamp(), parent,
-					authorList, text, audioData, contentType);
+					authorList, text, mediaData, contentType);
 		} else {
 			signingLabel = SIGNING_LABEL_POST;
 			signed = BdfList.of(g.getId(), m.getTimestamp(), parent,
@@ -125,7 +139,8 @@ class ForumPostValidator extends BdfMessageValidator {
 		}
 		meta.put(KEY_AUTHOR, authorList);
 		meta.put(KEY_READ, false);
-		if (hasAudio) meta.put(KEY_HAS_AUDIO, true);
+		if (isAudio) meta.put(KEY_HAS_AUDIO, true);
+		if (isImage) meta.put(KEY_HAS_IMAGE, true);
 		return new BdfMessageContext(meta, dependencies);
 	}
 }

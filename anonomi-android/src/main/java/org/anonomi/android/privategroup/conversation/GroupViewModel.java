@@ -100,7 +100,13 @@ class GroupViewModel extends ThreadListViewModel<GroupMessageItem> {
 			if (!g.isLocal() && g.getGroupId().equals(groupId)) {
 				LOG.info("Group message received, adding...");
 				GroupMessageItem item;
-				if (g.getHeader().hasAudio()) {
+				if (g.getHeader().hasImage() ||
+						(g.getAudioContentType() != null &&
+								g.getAudioContentType()
+										.startsWith("image/"))) {
+					item = buildItemWithImage(g.getHeader(), g.getText(),
+							g.getAudioData(), g.getAudioContentType());
+				} else if (g.getHeader().hasAudio()) {
 					item = buildItem(g.getHeader(), g.getText(),
 							g.getAudioData(), g.getAudioContentType());
 				} else {
@@ -192,6 +198,14 @@ class GroupViewModel extends ThreadListViewModel<GroupMessageItem> {
 		} else {
 			text = privateGroupManager.getMessageText(txn, header.getId());
 		}
+		if (header.hasImage()) {
+			byte[] imageData = privateGroupManager
+					.getMessageImageData(txn, header.getId());
+			String imageContentType = privateGroupManager
+					.getMessageImageContentType(txn, header.getId());
+			return buildItemWithImage(header, text, imageData,
+					imageContentType);
+		}
 		if (header.hasAudio()) {
 			byte[] audioData = privateGroupManager
 					.getMessageAudioData(txn, header.getId());
@@ -215,6 +229,16 @@ class GroupViewModel extends ThreadListViewModel<GroupMessageItem> {
 			return new JoinMessageItem((JoinMessageHeader) header, text);
 		}
 		return new GroupMessageItem(header, text, audioData, audioContentType);
+	}
+
+	private GroupMessageItem buildItemWithImage(GroupMessageHeader header,
+			String text, @Nullable byte[] imageData,
+			@Nullable String imageContentType) {
+		if (header instanceof JoinMessageHeader) {
+			return new JoinMessageItem((JoinMessageHeader) header, text);
+		}
+		return new GroupMessageItem(header, text, null, null,
+				imageData, imageContentType);
 	}
 
 	@Override
@@ -298,6 +322,50 @@ class GroupViewModel extends ThreadListViewModel<GroupMessageItem> {
 			txn.attach(() ->
 					addItem(buildItem(header, "", audioData, contentType),
 							true)
+			);
+		}, this::handleException);
+	}
+
+	void createAndStoreImageMessage(byte[] imageData, String contentType,
+			@Nullable MessageId parentId) {
+		runOnDbThread(() -> {
+			try {
+				LocalAuthor author = identityManager.getLocalAuthor();
+				MessageId previousMsgId =
+						privateGroupManager.getPreviousMsgId(groupId);
+				GroupCount count = privateGroupManager.getGroupCount(groupId);
+				long timestamp = count.getLatestMsgTime();
+				timestamp = max(clock.currentTimeMillis(), timestamp + 1);
+				createImageMessage(imageData, contentType, timestamp,
+						parentId, author, previousMsgId);
+			} catch (DbException e) {
+				handleException(e);
+			}
+		});
+	}
+
+	private void createImageMessage(byte[] imageData, String contentType,
+			long timestamp, @Nullable MessageId parentId,
+			LocalAuthor author, MessageId previousMsgId) {
+		cryptoExecutor.execute(() -> {
+			LOG.info("Creating group image message...");
+			GroupMessage msg = groupMessageFactory.createGroupImageMessage(
+					groupId, timestamp, parentId, author, "",
+					imageData, contentType, previousMsgId);
+			storeImagePost(msg, imageData, contentType);
+		});
+	}
+
+	private void storeImagePost(GroupMessage msg, byte[] imageData,
+			String contentType) {
+		runOnDbThread(false, txn -> {
+			long start = now();
+			GroupMessageHeader header =
+					privateGroupManager.addLocalMessage(txn, msg);
+			logDuration(LOG, "Storing group image message", start);
+			txn.attach(() ->
+					addItem(buildItemWithImage(header, "", imageData,
+							contentType), true)
 			);
 		}, this::handleException);
 	}

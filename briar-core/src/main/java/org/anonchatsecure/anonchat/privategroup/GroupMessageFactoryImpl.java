@@ -172,4 +172,46 @@ class GroupMessageFactoryImpl implements GroupMessageFactory {
 		}
 	}
 
+	@Override
+	public GroupMessage createGroupImageMessage(GroupId groupId,
+			long timestamp, @Nullable MessageId parentId,
+			LocalAuthor member, String text, byte[] imageData,
+			String contentType, MessageId previousMsgId) {
+		try {
+			// Generate the signature
+			BdfList memberList = clientHelper.toList(member);
+			BdfList toSign = BdfList.of(
+					groupId,
+					timestamp,
+					memberList,
+					parentId,
+					previousMsgId,
+					text,
+					imageData,
+					contentType
+			);
+			byte[] signature = clientHelper.sign(
+					SIGNING_LABEL_IMAGE_POST, toSign,
+					member.getPrivateKey());
+
+			// Compose the message
+			BdfList body = BdfList.of(
+					POST.getInt(),
+					memberList,
+					parentId,
+					previousMsgId,
+					text,
+					signature,
+					imageData,
+					contentType
+			);
+			Message m = clientHelper.createMessage(groupId, timestamp, body);
+			return new GroupMessage(m, parentId, member);
+		} catch (GeneralSecurityException e) {
+			throw new IllegalArgumentException(e);
+		} catch (FormatException e) {
+			throw new AssertionError(e);
+		}
+	}
+
 }

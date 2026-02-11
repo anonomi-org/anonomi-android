@@ -38,5 +38,6 @@ interface GroupConstants {
 	String GROUP_KEY_VISIBILITY = "visibility";
 
 	String KEY_HAS_AUDIO = "hasAudio";
+	String KEY_HAS_IMAGE = "hasImage";
 
 }

@@ -36,4 +36,17 @@ public interface ImageCompressor {
 	 */
 	InputStream compressImage(Bitmap bitmap) throws IOException;
 
+	/**
+	 * Like {@link #compressImage(InputStream, String)} but with a custom
+	 * maximum size in bytes.
+	 */
+	InputStream compressImage(InputStream is, String contentType,
+			int maxBytes) throws IOException;
+
+	/**
+	 * Like {@link #compressImage(Bitmap)} but with a custom maximum size
+	 * in bytes.
+	 */
+	InputStream compressImage(Bitmap bitmap, int maxBytes) throws IOException;
+
 }

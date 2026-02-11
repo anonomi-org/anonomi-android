@@ -47,4 +47,9 @@ public interface PrivateGroupConstants {
 	 */
 	int MAX_GROUP_AUDIO_SIZE = 32 * 1024;
 
+	/**
+	 * The maximum size of image data in a group image message in bytes.
+	 */
+	int MAX_GROUP_IMAGE_SIZE = 32 * 1024;
+
 }

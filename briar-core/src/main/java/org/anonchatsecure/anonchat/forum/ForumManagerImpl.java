@@ -66,6 +66,7 @@ import javax.inject.Inject;
 import static org.anonchatsecure.bramble.api.sync.validation.IncomingMessageHook.DeliveryAction.ACCEPT_SHARE;
 import static org.anonchatsecure.anonchat.api.forum.ForumConstants.KEY_AUTHOR;
 import static org.anonchatsecure.anonchat.api.forum.ForumConstants.KEY_HAS_AUDIO;
+import static org.anonchatsecure.anonchat.api.forum.ForumConstants.KEY_HAS_IMAGE;
 import static org.anonchatsecure.anonchat.api.forum.ForumConstants.KEY_LOCAL;
 import static org.anonchatsecure.anonchat.api.forum.ForumConstants.KEY_PARENT;
 import static org.anonchatsecure.anonchat.api.forum.ForumConstants.KEY_TIMESTAMP;
@@ -164,6 +165,20 @@ class ForumManagerImpl extends BdfIncomingMessageHook implements ForumManager {
 	}
 
 	@Override
+	public ForumPost createLocalImagePost(GroupId groupId, String text,
+			long timestamp, @Nullable MessageId parentId,
+			LocalAuthor author, byte[] imageData, String contentType) {
+		ForumPost p;
+		try {
+			p = forumPostFactory.createImagePost(groupId, timestamp, parentId,
+					author, text, imageData, contentType);
+		} catch (GeneralSecurityException | FormatException e) {
+			throw new AssertionError(e);
+		}
+		return p;
+	}
+
+	@Override
 	public ForumPostHeader addLocalPost(ForumPost p) throws DbException {
 		return db.transactionWithResult(false, txn -> addLocalPost(txn, p));
 	}
@@ -179,17 +194,27 @@ class ForumManagerImpl extends BdfIncomingMessageHook implements ForumManager {
 			meta.put(KEY_AUTHOR, clientHelper.toList(a));
 			meta.put(KEY_LOCAL, true);
 			meta.put(MSG_KEY_READ, true);
-			// check if message body has audio (6-field body)
+			// check if message body has media (6-field body)
 			BdfList body = clientHelper.toList(p.getMessage());
-			boolean hasAudio = body.size() == 6;
-			if (hasAudio) meta.put(KEY_HAS_AUDIO, true);
+			boolean hasAudio = false;
+			boolean hasImage = false;
+			if (body.size() == 6) {
+				String ct = body.getString(5);
+				if (ct.startsWith("audio/")) {
+					hasAudio = true;
+					meta.put(KEY_HAS_AUDIO, true);
+				} else if (ct.startsWith("image/")) {
+					hasImage = true;
+					meta.put(KEY_HAS_IMAGE, true);
+				}
+			}
 			clientHelper
 					.addLocalMessage(txn, p.getMessage(), meta, true, false);
 			messageTracker.trackOutgoingMessage(txn, p.getMessage());
 			AuthorInfo authorInfo = authorManager.getMyAuthorInfo(txn);
 			return new ForumPostHeader(p.getMessage().getId(), p.getParent(),
 					p.getMessage().getTimestamp(), p.getAuthor(), authorInfo,
-					true, hasAudio);
+					true, hasAudio, hasImage);
 		} catch (FormatException e) {
 			throw new AssertionError(e);
 		}
@@ -305,6 +330,66 @@ class ForumManagerImpl extends BdfIncomingMessageHook implements ForumManager {
 	}
 
 	@Override
+	@Nullable
+	public byte[] getPostImageData(MessageId m) throws DbException {
+		try {
+			return getImageData(clientHelper.getMessageAsList(m));
+		} catch (FormatException e) {
+			throw new DbException(e);
+		}
+	}
+
+	@Override
+	@Nullable
+	public byte[] getPostImageData(Transaction txn, MessageId m)
+			throws DbException {
+		try {
+			return getImageData(clientHelper.getMessageAsList(txn, m));
+		} catch (FormatException e) {
+			throw new DbException(e);
+		}
+	}
+
+	@Nullable
+	private byte[] getImageData(BdfList body) throws FormatException {
+		if (body.size() == 6) {
+			String ct = body.getString(5);
+			if (ct.startsWith("image/")) return body.getRaw(4);
+		}
+		return null;
+	}
+
+	@Override
+	@Nullable
+	public String getPostImageContentType(MessageId m) throws DbException {
+		try {
+			return getImageContentType(clientHelper.getMessageAsList(m));
+		} catch (FormatException e) {
+			throw new DbException(e);
+		}
+	}
+
+	@Override
+	@Nullable
+	public String getPostImageContentType(Transaction txn, MessageId m)
+			throws DbException {
+		try {
+			return getImageContentType(clientHelper.getMessageAsList(txn, m));
+		} catch (FormatException e) {
+			throw new DbException(e);
+		}
+	}
+
+	@Nullable
+	private String getImageContentType(BdfList body) throws FormatException {
+		if (body.size() == 6) {
+			String ct = body.getString(5);
+			if (ct.startsWith("image/")) return ct;
+		}
+		return null;
+	}
+
+	@Override
 	public Collection<ForumPostHeader> getPostHeaders(GroupId g)
 			throws DbException {
 		return db.transactionWithResult(true, txn -> getPostHeaders(txn, g));
@@ -398,9 +483,11 @@ class ForumManagerImpl extends BdfIncomingMessageHook implements ForumManager {
 		boolean read = meta.getBoolean(MSG_KEY_READ);
 		boolean hasAudio = meta.containsKey(KEY_HAS_AUDIO) &&
 				meta.getBoolean(KEY_HAS_AUDIO);
+		boolean hasImage = meta.containsKey(KEY_HAS_IMAGE) &&
+				meta.getBoolean(KEY_HAS_IMAGE);
 
 		return new ForumPostHeader(id, parentId, timestamp, author, authorInfo,
-				read, hasAudio);
+				read, hasAudio, hasImage);
 	}
 
 }

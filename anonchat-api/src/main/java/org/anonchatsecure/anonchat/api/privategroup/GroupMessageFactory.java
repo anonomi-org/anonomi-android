@@ -34,6 +34,7 @@ public interface GroupMessageFactory {
 	String SIGNING_LABEL_JOIN = CLIENT_ID.getString() + "/JOIN";
 	String SIGNING_LABEL_POST = CLIENT_ID.getString() + "/POST";
 	String SIGNING_LABEL_AUDIO_POST = CLIENT_ID.getString() + "/AUDIO_POST";
+	String SIGNING_LABEL_IMAGE_POST = CLIENT_ID.getString() + "/IMAGE_POST";
 
 	/**
 	 * Creates a join announcement message for the creator of a group.
@@ -98,5 +99,13 @@ public interface GroupMessageFactory {
 	GroupMessage createGroupAudioMessage(GroupId groupId, long timestamp,
 			@Nullable MessageId parentId, LocalAuthor author, String text,
 			byte[] audioData, String contentType, MessageId previousMsgId);
+
+	/**
+	 * Creates a private group image post.
+	 */
+	@CryptoExecutor
+	GroupMessage createGroupImageMessage(GroupId groupId, long timestamp,
+			@Nullable MessageId parentId, LocalAuthor author, String text,
+			byte[] imageData, String contentType, MessageId previousMsgId);
 
 }
