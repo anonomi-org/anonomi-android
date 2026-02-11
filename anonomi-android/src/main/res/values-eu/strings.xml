@@ -594,4 +594,9 @@
     <string name="camera_permission_denied">Kamera erabiltzeko baimena</string>
     <string name="delete_account_button">Ezabatu kontua</string>
     <string name="panic_option_delete_account">Ezabatu kontua</string>
+    <string name="dnkm_huawei_app_launch_help">Anonomi ez bada babestutako aplikazioen zerrendara gehitzen, ezin izango du bigarren planoan ibili.</string>
+    <string name="qr_code_too_old_1">Esteka hau Anonomi-en bertsio berriago batetik dator. Eguneratu azken bertsiora eta saiatu berriro.</string>
+    <string name="mailbox_qr_code_too_old">Esteka hau Anonomi-en bertsio berriago batetik dator. Eguneratu azken bertsiora eta saiatu berriro.</string>
+    <string name="share_app_link_text">Desblokeatu Anonomi</string>
+    <string name="website_download_title_1">Desblokeatu Anonomi</string>
 </resources>
