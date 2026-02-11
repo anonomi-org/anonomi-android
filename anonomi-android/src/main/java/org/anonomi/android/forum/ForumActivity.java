@@ -25,6 +25,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.anonomi.R;
 import org.anonomi.android.activity.ActivityComponent;
+import org.anonomi.android.map.MapLocationPickerActivity;
 import org.anonomi.android.sharing.ForumSharingStatusActivity;
 import org.anonomi.android.sharing.ShareForumActivity;
 import org.anonomi.android.threaded.ThreadListActivity;
@@ -67,6 +68,7 @@ import static org.anonchatsecure.anonchat.api.forum.ForumConstants.MAX_FORUM_POS
 public class ForumActivity extends
 		ThreadListActivity<ForumPostItem, ForumPostAdapter> {
 
+	private static final int REQUEST_SEND_LOCATION = 2001;
 	private static final String PREF_FORUM_DISTORTION =
 			"forum_voice_distortion_";
 
@@ -237,10 +239,21 @@ public class ForumActivity extends
 	@Override
 	protected void onActivityResult(int request, int result,
 			@Nullable Intent data) {
-		super.onActivityResult(request, result, data);
-
-		if (request == REQUEST_SHARE_FORUM && result == RESULT_OK) {
+		if (request == REQUEST_SEND_LOCATION &&
+				result == RESULT_OK && data != null) {
+			String message = data.getStringExtra(
+					MapLocationPickerActivity.RESULT_MAP_MESSAGE);
+			if (message != null) {
+				MessageId replyId = viewModel.getCurrentReplyId();
+				viewModel.createAndStoreMessage(message, replyId);
+				viewModel.clearReplyId();
+				Toast.makeText(this, R.string.location_sent,
+						Toast.LENGTH_SHORT).show();
+			}
+		} else if (request == REQUEST_SHARE_FORUM && result == RESULT_OK) {
 			displaySnackbar(R.string.forum_shared_snackbar);
+		} else {
+			super.onActivityResult(request, result, data);
 		}
 	}
 
@@ -272,6 +285,9 @@ public class ForumActivity extends
 		} else if (itemId == R.id.action_forum_delete) {
 			showUnsubscribeDialog();
 			return true;
+		} else if (itemId == R.id.action_send_location) {
+			openSendLocationScreen();
+			return true;
 		} else if (itemId == R.id.action_forum_voice_distortion) {
 			toggleVoiceDistortion();
 			return true;
@@ -293,6 +309,13 @@ public class ForumActivity extends
 		builder.setNegativeButton(R.string.dialog_button_leave, okListener);
 		builder.setPositiveButton(R.string.cancel, null);
 		builder.show();
+	}
+
+	// Location sending
+
+	private void openSendLocationScreen() {
+		Intent intent = new Intent(this, MapLocationPickerActivity.class);
+		startActivityForResult(intent, REQUEST_SEND_LOCATION);
 	}
 
 	// Image sending

@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import org.anonchatsecure.bramble.api.sync.MessageId;
 import org.anonomi.R;
+import org.anonomi.android.conversation.MapMessageData;
 import org.anonomi.android.util.ItemReturningAdapter;
 import org.briarproject.nullsafety.NotNullByDefault;
 
@@ -138,6 +139,7 @@ public class ThreadItemAdapter<I extends ThreadItem>
 	public interface ThreadItemListener<I> {
 		void onReplyClick(I item);
 		void onLinkClick(String url);
+		void onMapMessageClicked(MapMessageData data);
 	}
 
 }

@@ -15,6 +15,12 @@
 		app:showAsAction="never"/>
 
 	<item
+		android:id="@+id/action_send_location"
+		android:icon="@drawable/ic_menu_mylocation"
+		android:title="@string/action_send_location"
+		app:showAsAction="never"/>
+
+	<item
 		android:id="@+id/action_forum_voice_distortion"
 		android:title="@string/forum_toggle_voice_distortion"
 		app:showAsAction="never"/>

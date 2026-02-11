@@ -27,6 +27,7 @@ import org.anonomi.android.activity.ActivityComponent;
 import org.anonomi.android.privategroup.creation.GroupInviteActivity;
 import org.anonomi.android.privategroup.memberlist.GroupMemberListActivity;
 import org.anonomi.android.privategroup.reveal.RevealContactsActivity;
+import org.anonomi.android.map.MapLocationPickerActivity;
 import org.anonomi.android.threaded.ThreadListActivity;
 import org.anonomi.android.threaded.ThreadListViewModel;
 import org.anonomi.android.util.AudioUtils;
@@ -69,6 +70,7 @@ import static org.briarproject.nullsafety.NullSafety.requireNonNull;
 public class GroupActivity extends
 		ThreadListActivity<GroupMessageItem, GroupMessageAdapter> {
 
+	private static final int REQUEST_SEND_LOCATION = 2001;
 	private static final String PREF_GROUP_DISTORTION = "group_voice_distortion_";
 
 	@Inject
@@ -288,6 +290,9 @@ public class GroupActivity extends
 				throw new IllegalStateException();
 			showDissolveGroupDialog();
 			return true;
+		} else if (itemId == R.id.action_send_location) {
+			openSendLocationScreen();
+			return true;
 		} else if (itemId == R.id.action_group_voice_distortion) {
 			toggleVoiceDistortion();
 			return true;
@@ -300,7 +305,20 @@ public class GroupActivity extends
 			@Nullable Intent data) {
 		if (request == REQUEST_GROUP_INVITE && result == RESULT_OK) {
 			displaySnackbar(R.string.groups_invitation_sent);
-		} else super.onActivityResult(request, result, data);
+		} else if (request == REQUEST_SEND_LOCATION &&
+				result == RESULT_OK && data != null) {
+			String message = data.getStringExtra(
+					MapLocationPickerActivity.RESULT_MAP_MESSAGE);
+			if (message != null) {
+				MessageId replyId = viewModel.getCurrentReplyId();
+				viewModel.createAndStoreMessage(message, replyId);
+				viewModel.clearReplyId();
+				Toast.makeText(this, R.string.location_sent,
+						Toast.LENGTH_SHORT).show();
+			}
+		} else {
+			super.onActivityResult(request, result, data);
+		}
 	}
 
 	@Override
@@ -330,6 +348,13 @@ public class GroupActivity extends
 		} else {
 			textInput.setVisibility(VISIBLE);
 		}
+	}
+
+	// Location sending
+
+	private void openSendLocationScreen() {
+		Intent intent = new Intent(this, MapLocationPickerActivity.class);
+		startActivityForResult(intent, REQUEST_SEND_LOCATION);
 	}
 
 	// Image sending

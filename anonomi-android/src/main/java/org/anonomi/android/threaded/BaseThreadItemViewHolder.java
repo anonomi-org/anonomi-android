@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import org.anonchatsecure.bramble.util.StringUtils;
 import org.anonomi.R;
+import org.anonomi.android.conversation.MapMessageData;
 import org.anonomi.android.threaded.ThreadItemAdapter.ThreadItemListener;
 import org.anonomi.android.view.AuthorView;
 import org.briarproject.nullsafety.NotNullByDefault;
@@ -44,9 +45,18 @@ public abstract class BaseThreadItemViewHolder<I extends ThreadItem>
 
 	@CallSuper
 	public void bind(I item, ThreadItemListener<I> listener) {
-		textView.setText(StringUtils.trim(item.getText()));
-		Linkify.addLinks(textView, Linkify.WEB_URLS);
-		makeLinksClickable(textView, listener::onLinkClick);
+		String trimmedText = StringUtils.trim(item.getText());
+		if (trimmedText != null && trimmedText.startsWith("::map:")) {
+			MapMessageData mapData = parseMapMessage(trimmedText);
+			textView.setText("\uD83D\uDCCD" + mapData.label + "\n   " +
+					mapData.latitude + "\n   " + mapData.longitude);
+			textView.setOnClickListener(
+					v -> listener.onMapMessageClicked(mapData));
+		} else {
+			textView.setText(trimmedText);
+			Linkify.addLinks(textView, Linkify.WEB_URLS);
+			makeLinksClickable(textView, listener::onLinkClick);
+		}
 
 		author.setAuthor(item.getAuthor(), item.getAuthorInfo());
 		author.setDate(item.getTimestamp());
@@ -91,6 +101,27 @@ public abstract class BaseThreadItemViewHolder<I extends ThreadItem>
 				(Integer) valueAnimator.getAnimatedValue()));
 		anim.setDuration(ANIMATION_DURATION);
 		anim.start();
+	}
+
+	private MapMessageData parseMapMessage(String text) {
+		String payload = text.substring(6); // Remove "::map:"
+		String[] parts = payload.split(";");
+		String label = (parts.length > 0) ? parts[0].trim() : "Unknown";
+		String location = (parts.length > 1) ? parts[1].trim() : "";
+		String zoom = (parts.length > 2) ? parts[2].trim() : "";
+
+		try {
+			String[] latLon = location.split(",");
+			String latStr = (latLon.length > 0) ?
+					latLon[0].trim().replace(":", "") : "0";
+			String lonStr = (latLon.length > 1) ?
+					latLon[1].trim().replace(":", "") : "0";
+			double lat = Double.parseDouble(latStr);
+			double lon = Double.parseDouble(lonStr);
+			return new MapMessageData(label, lat, lon, zoom);
+		} catch (Exception e) {
+			return new MapMessageData(label, 0, 0, zoom);
+		}
 	}
 
 	protected Context getContext() {

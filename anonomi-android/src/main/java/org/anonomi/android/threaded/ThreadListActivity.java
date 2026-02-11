@@ -10,6 +10,8 @@ import org.anonchatsecure.bramble.api.sync.GroupId;
 import org.anonchatsecure.bramble.api.sync.MessageId;
 import org.anonomi.R;
 import org.anonomi.android.activity.BriarActivity;
+import org.anonomi.android.conversation.MapMessageData;
+import org.anonomi.android.map.MapViewActivity;
 import org.anonomi.android.sharing.SharingController.SharingInfo;
 import org.anonomi.android.threaded.ThreadItemAdapter.ThreadItemListener;
 import org.anonomi.android.util.BriarSnackbarBuilder;
@@ -211,6 +213,16 @@ public abstract class ThreadListActivity<I extends ThreadItem, A extends ThreadI
 	public void onLinkClick(String url) {
 		LinkDialogFragment f = LinkDialogFragment.newInstance(url);
 		f.show(getSupportFragmentManager(), f.getUniqueTag());
+	}
+
+	@Override
+	public void onMapMessageClicked(MapMessageData data) {
+		Intent intent = new Intent(this, MapViewActivity.class);
+		intent.putExtra(MapViewActivity.EXTRA_LABEL, data.label);
+		intent.putExtra(MapViewActivity.EXTRA_LATITUDE, data.latitude);
+		intent.putExtra(MapViewActivity.EXTRA_LONGITUDE, data.longitude);
+		intent.putExtra(MapViewActivity.EXTRA_ZOOM, data.zoom);
+		startActivity(intent);
 	}
 
 	protected void setToolbarSubTitle(SharingInfo sharingInfo) {
