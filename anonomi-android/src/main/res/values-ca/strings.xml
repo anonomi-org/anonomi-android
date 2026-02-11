@@ -1056,4 +1056,5 @@ Així que l\'actualitzi li veureu una icona diferent .</string>
     <string name="offline_maps_onion_url">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/maps/</string>
     <string name="permission_hotspot_nearby_wifi_request_body">Per crear un punt d\'accés Wi-Fi, Anonomi Messenger necessita permís per accedir als dispositius propers.</string>
     <string name="play">Reprodueix</string>
+    <string name="offline_maps_help_title">Mapes fora de línia</string>
 </resources>
