@@ -1071,4 +1071,10 @@ copies des messages que vous envoyez.
     <string name="panic_status_signing_out">Envoi de messages d\'urgence et déconnexion…</string>
     <string name="panic_status_deleting">Envoi de messages d\'urgence et suppression du compte…</string>
     <string name="website_http_notice">Votre navigateur peut vous avertir que cette connexion n\'est pas sécurisée. Cela est normal : la page est servie localement via votre connexion Wi-Fi directe et ne transite pas par Internet.</string>
+    <string name="groups_toggle_voice_distortion">Activer/désactiver la distorsion de la voix</string>
+    <string name="forum_toggle_voice_distortion">Activer/désactiver la distorsion vocale</string>
+    <string name="tap_to_view_on_map">▸ Appuyez pour afficher sur la carte</string>
+    <string name="image_sent">Image envoyée</string>
+    <string name="image_compression_failed">Échec de la compression de l\'image</string>
+    <string name="image_too_large">L\'image est trop volumineuse pour être envoyée.</string>
 </resources>
