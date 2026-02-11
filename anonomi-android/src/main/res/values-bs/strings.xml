@@ -509,17 +509,17 @@
     <string name="dev_report_sending">Šalji povratne informacije</string>
     <string name="tor_offline_title">Offline</string>
     <plurals name="duration_minutes">
-        <item quantity="one"></item>
+        <item quantity="one"/>
         <item quantity="few">5 minuta</item>
         <item quantity="other">5 minuta</item>
     </plurals>
     <plurals name="messages">
-        <item quantity="one"></item>
+        <item quantity="one"/>
         <item quantity="few">Nema postova</item>
         <item quantity="other">Nema postova</item>
     </plurals>
     <plurals name="posts">
-        <item quantity="one"></item>
+        <item quantity="one"/>
         <item quantity="few">Nema postova</item>
         <item quantity="other">Nema postova</item>
     </plurals>
@@ -539,4 +539,10 @@
     <string name="camera_permission_denied">Dozvole kamere</string>
     <string name="delete_account_button">Izbriši račun</string>
     <string name="panic_option_delete_account">Izbriši račun</string>
+    <string name="dnkm_huawei_app_launch_help">Ako Anonomi nije dodat u listu zaštićenih aplikacija - protected apps, neće moći da radi u pozadinskom modu.</string>
+    <string name="qr_code_too_old_1">Ovaj link dolazi sa nove verzije Anonomi-a. Molim vas ažurirajte aplikaciju na posljednju verziju, a zatim pokušajte ponovo.</string>
+    <string name="mailbox_qr_code_too_old">Ovaj link dolazi sa nove verzije Anonomi-a. Molim vas ažurirajte aplikaciju na posljednju verziju, a zatim pokušajte ponovo.</string>
+    <string name="mailbox_qr_code_too_new">Ovaj link dolazi sa nove verzije Anonomi-a. Molim vas ažurirajte aplikaciju na posljednju verziju, a zatim pokušajte ponovo.</string>
+    <string name="share_app_link_text">Otključaj Anonomi</string>
+    <string name="website_download_title_1">Otključaj Anonomi</string>
 </resources>
