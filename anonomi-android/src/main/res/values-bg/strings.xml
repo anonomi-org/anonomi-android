@@ -1053,4 +1053,10 @@
     <string name="panic_option_sign_out">Отписване</string>
     <string name="panic_option_delete_account">Премахване на профил</string>
     <string name="panic_action_sign_out_summary">Отписани сте от Anonomi</string>
+    <string name="groups_toggle_voice_distortion">Превключване на изкривяването на гласа</string>
+    <string name="forum_toggle_voice_distortion">Превключване на изкривяването на гласа</string>
+    <string name="tap_to_view_on_map">▸ Докоснете, за да видите на картата</string>
+    <string name="image_sent">Изображението е изпратено</string>
+    <string name="image_compression_failed">Компресирането на изображението не бе успешно</string>
+    <string name="image_too_large">Изображението е твърде голямо за изпращане</string>
 </resources>
