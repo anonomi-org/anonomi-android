@@ -538,4 +538,10 @@
     <string name="hotspot_error_web_server_serve">Bu problem davam edərsə, anonim məlumatlarla birlikdə rəyinizi Anonomi tətbiqi vasitəsilə göndərin.</string>
     <string name="delete_account_button">Hesabı sil</string>
     <string name="panic_option_delete_account">Hesabı sil</string>
+    <string name="dnkm_huawei_app_launch_help">Anonomi qorunan tətbiqlər siyahısına əlavə olunmasa, arxa planda işləməyəcəkdir.</string>
+    <string name="qr_code_too_old_1">Bu link Anonomi-ın daha yeni versiyasından gəlir. Ən son versiyaya keçin və yenidən cəhd edin.</string>
+    <string name="mailbox_qr_code_too_old">Bu link Anonomi-ın daha yeni versiyasından gəlir. Ən son versiyaya keçin və yenidən cəhd edin.</string>
+    <string name="mailbox_qr_code_too_new">Bu link Anonomi-ın daha yeni versiyasından gəlir. Ən son versiyaya keçin və yenidən cəhd edin.</string>
+    <string name="share_app_link_text">Anonomi kilidini aç</string>
+    <string name="website_download_title_1">Anonomi kilidini aç</string>
 </resources>
