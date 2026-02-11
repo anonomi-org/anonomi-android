@@ -1087,4 +1087,10 @@ Primeiro, instale o app Anonomi Postbox em outro dispositivo a partir do mesmo l
     <string name="panic_status_signing_out">Enviando mensagens de pânico e saindo da conta…</string>
     <string name="panic_status_deleting">Enviando mensagens de pânico e excluindo conta…</string>
     <string name="website_http_notice">Seu navegador pode avisar que esta conexão não é segura. Isso é esperado — a página é servida localmente através de sua conexão Wi-Fi direta e não trafega pela internet.</string>
+    <string name="groups_toggle_voice_distortion">Alternar distorção de voz</string>
+    <string name="forum_toggle_voice_distortion">Alternar distorção de voz</string>
+    <string name="tap_to_view_on_map">▸ Toque para ver no mapa</string>
+    <string name="image_sent">Imagem enviada</string>
+    <string name="image_compression_failed">Falha ao comprimir a imagem</string>
+    <string name="image_too_large">A imagem é muito grande para ser enviada.</string>
 </resources>
