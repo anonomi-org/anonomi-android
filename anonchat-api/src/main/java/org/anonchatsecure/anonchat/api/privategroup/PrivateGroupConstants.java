@@ -42,4 +42,9 @@ public interface PrivateGroupConstants {
 	 */
 	int MAX_GROUP_INVITATION_TEXT_LENGTH = MAX_MESSAGE_BODY_LENGTH - 1024;
 
+	/**
+	 * The maximum size of audio data in a group audio message in bytes.
+	 */
+	int MAX_GROUP_AUDIO_SIZE = 32 * 1024;
+
 }

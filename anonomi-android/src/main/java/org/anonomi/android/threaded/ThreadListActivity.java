@@ -55,12 +55,16 @@ public abstract class ThreadListActivity<I extends ThreadItem, A extends ThreadI
 	private LinearLayoutManager layoutManager;
 	private ThreadScrollListener<I> scrollListener;
 
+	protected int getLayoutResId() {
+		return R.layout.activity_threaded_conversation;
+	}
+
 	@CallSuper
 	@Override
 	public void onCreate(@Nullable Bundle state) {
 		super.onCreate(state);
 
-		setContentView(R.layout.activity_threaded_conversation);
+		setContentView(getLayoutResId());
 
 		Intent i = getIntent();
 		byte[] b = i.getByteArrayExtra(GROUP_ID);

@@ -441,6 +441,7 @@
     <string name="groups_dissolve_dialog_title">Confirm Dissolving Group</string>
     <string name="groups_dissolve_dialog_message">Are you sure that you want to dissolve this group?\n\nAll other members will not be able to continue their conversation and might not receive the latest messages.</string>
     <string name="groups_dissolve_button">Dissolve</string>
+    <string name="groups_toggle_voice_distortion">Toggle Voice Distortion</string>
     <string name="groups_dissolved_dialog_title">Group Has Been Dissolved</string>
     <string name="groups_dissolved_dialog_message">The creator of this group has dissolved it.\n\nYou can no longer write messages to the group and might not receive all posts that have been written.</string>
     <!-- Private Group Invitations -->

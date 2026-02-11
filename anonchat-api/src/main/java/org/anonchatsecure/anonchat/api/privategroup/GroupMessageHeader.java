@@ -33,16 +33,30 @@ import javax.annotation.concurrent.Immutable;
 public class GroupMessageHeader extends PostHeader {
 
 	private final GroupId groupId;
+	private final boolean hasAudio;
 
 	public GroupMessageHeader(GroupId groupId, MessageId id,
 			@Nullable MessageId parentId, long timestamp,
 			Author author, AuthorInfo authorInfo, boolean read) {
+		this(groupId, id, parentId, timestamp, author, authorInfo, read,
+				false);
+	}
+
+	public GroupMessageHeader(GroupId groupId, MessageId id,
+			@Nullable MessageId parentId, long timestamp,
+			Author author, AuthorInfo authorInfo, boolean read,
+			boolean hasAudio) {
 		super(id, parentId, timestamp, author, authorInfo, read);
 		this.groupId = groupId;
+		this.hasAudio = hasAudio;
 	}
 
 	public GroupId getGroupId() {
 		return groupId;
+	}
+
+	public boolean hasAudio() {
+		return hasAudio;
 	}
 
 }

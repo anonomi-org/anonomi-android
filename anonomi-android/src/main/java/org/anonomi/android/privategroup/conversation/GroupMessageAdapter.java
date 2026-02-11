@@ -38,6 +38,9 @@ class GroupMessageAdapter extends ThreadItemAdapter<GroupMessageItem> {
 		if (type == R.layout.list_item_group_join_notice) {
 			return new JoinMessageItemViewHolder(v, isCreator);
 		}
+		if (type == R.layout.list_item_thread_audio) {
+			return new GroupAudioPostViewHolder(v);
+		}
 		return new ThreadPostViewHolder<>(v);
 	}
 

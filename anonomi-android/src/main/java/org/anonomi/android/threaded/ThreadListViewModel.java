@@ -206,13 +206,13 @@ public abstract class ThreadListViewModel<I extends ThreadItem>
 	}
 
 	@UiThread
-	void setReplyId(@Nullable MessageId id) {
+	protected void setReplyId(@Nullable MessageId id) {
 		replyId = id;
 	}
 
 	@UiThread
 	@Nullable
-	MessageId getReplyId() {
+	protected MessageId getReplyId() {
 		return replyId;
 	}
 

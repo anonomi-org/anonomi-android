@@ -70,6 +70,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 import javax.inject.Inject;
 
@@ -87,6 +88,7 @@ import static org.anonchatsecure.anonchat.privategroup.GroupConstants.GROUP_KEY_
 import static org.anonchatsecure.anonchat.privategroup.GroupConstants.GROUP_KEY_MEMBERS;
 import static org.anonchatsecure.anonchat.privategroup.GroupConstants.GROUP_KEY_OUR_GROUP;
 import static org.anonchatsecure.anonchat.privategroup.GroupConstants.GROUP_KEY_VISIBILITY;
+import static org.anonchatsecure.anonchat.privategroup.GroupConstants.KEY_HAS_AUDIO;
 import static org.anonchatsecure.anonchat.privategroup.GroupConstants.KEY_INITIAL_JOIN_MSG;
 import static org.anonchatsecure.anonchat.privategroup.GroupConstants.KEY_MEMBER;
 import static org.anonchatsecure.anonchat.privategroup.GroupConstants.KEY_PARENT_MSG_ID;
@@ -236,6 +238,10 @@ class PrivateGroupManagerImpl extends BdfIncomingMessageHook
 			meta.put(KEY_TYPE, POST.getInt());
 			if (m.getParent() != null)
 				meta.put(KEY_PARENT_MSG_ID, m.getParent());
+			// check if message body has audio (8-field body)
+			BdfList body = clientHelper.toList(m.getMessage());
+			boolean hasAudio = body.size() == 8;
+			if (hasAudio) meta.put(KEY_HAS_AUDIO, true);
 			addMessageMetadata(meta, m);
 			GroupId g = m.getMessage().getGroupId();
 			clientHelper
@@ -249,7 +255,7 @@ class PrivateGroupManagerImpl extends BdfIncomingMessageHook
 			return new GroupMessageHeader(m.getMessage().getGroupId(),
 					m.getMessage().getId(), m.getParent(),
 					m.getMessage().getTimestamp(), m.getMember(), authorInfo,
-					true);
+					true, hasAudio);
 		} catch (FormatException e) {
 			throw new DbException(e);
 		}
@@ -349,8 +355,62 @@ class PrivateGroupManagerImpl extends BdfIncomingMessageHook
 
 	private String getMessageText(BdfList body) throws FormatException {
 		// Message type (0), member (1), parent ID (2), previous message ID (3),
-		// text (4), signature (5)
+		// text (4), signature (5) [, audioData (6), contentType (7)]
 		return body.getString(4);
+	}
+
+	@Override
+	@Nullable
+	public byte[] getMessageAudioData(MessageId m) throws DbException {
+		try {
+			return getAudioData(clientHelper.getMessageAsList(m));
+		} catch (FormatException e) {
+			throw new DbException(e);
+		}
+	}
+
+	@Override
+	@Nullable
+	public byte[] getMessageAudioData(Transaction txn, MessageId m)
+			throws DbException {
+		try {
+			return getAudioData(clientHelper.getMessageAsList(txn, m));
+		} catch (FormatException e) {
+			throw new DbException(e);
+		}
+	}
+
+	@Nullable
+	private byte[] getAudioData(BdfList body) throws FormatException {
+		if (body.size() == 8) return body.getRaw(6);
+		return null;
+	}
+
+	@Override
+	@Nullable
+	public String getMessageAudioContentType(MessageId m) throws DbException {
+		try {
+			return getAudioContentType(clientHelper.getMessageAsList(m));
+		} catch (FormatException e) {
+			throw new DbException(e);
+		}
+	}
+
+	@Override
+	@Nullable
+	public String getMessageAudioContentType(Transaction txn, MessageId m)
+			throws DbException {
+		try {
+			return getAudioContentType(clientHelper.getMessageAsList(txn, m));
+		} catch (FormatException e) {
+			throw new DbException(e);
+		}
+	}
+
+	@Nullable
+	private String getAudioContentType(BdfList body) throws FormatException {
+		if (body.size() == 8) return body.getString(7);
+		return null;
 	}
 
 	@Override
@@ -412,9 +472,11 @@ class PrivateGroupManagerImpl extends BdfIncomingMessageHook
 			authorInfo = authorManager.getAuthorInfo(txn, member.getId());
 		}
 		boolean read = meta.getBoolean(KEY_READ);
+		boolean hasAudio = meta.containsKey(KEY_HAS_AUDIO) &&
+				meta.getBoolean(KEY_HAS_AUDIO);
 
 		return new GroupMessageHeader(g, id, parentId, timestamp, member,
-				authorInfo, read);
+				authorInfo, read, hasAudio);
 	}
 
 	private JoinMessageHeader getJoinMessageHeader(Transaction txn, GroupId g,
@@ -623,9 +685,12 @@ class PrivateGroupManagerImpl extends BdfIncomingMessageHook
 			throws DbException, FormatException {
 		GroupMessageHeader header = getGroupMessageHeader(txn, m.getGroupId(),
 				m.getId(), meta, Collections.emptyMap());
-		String text = getMessageText(clientHelper.toList(m));
+		BdfList body = clientHelper.toList(m);
+		String text = getMessageText(body);
+		byte[] audioData = getAudioData(body);
+		String audioContentType = getAudioContentType(body);
 		txn.attach(new GroupMessageAddedEvent(m.getGroupId(), header, text,
-				local));
+				local, audioData, audioContentType));
 	}
 
 	private void attachJoinMessageAddedEvent(Transaction txn, Message m,

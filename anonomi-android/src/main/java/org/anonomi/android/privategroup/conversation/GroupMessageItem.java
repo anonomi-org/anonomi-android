@@ -19,25 +19,54 @@ import androidx.annotation.UiThread;
 class GroupMessageItem extends ThreadItem {
 
 	private final GroupId groupId;
+	@Nullable
+	private final byte[] audioData;
+	@Nullable
+	private final String audioContentType;
 
 	private GroupMessageItem(MessageId messageId, GroupId groupId,
 			@Nullable MessageId parentId, String text, long timestamp,
-			Author author, AuthorInfo authorInfo, boolean isRead) {
+			Author author, AuthorInfo authorInfo, boolean isRead,
+			@Nullable byte[] audioData, @Nullable String audioContentType) {
 		super(messageId, parentId, text, timestamp, author, authorInfo, isRead);
 		this.groupId = groupId;
+		this.audioData = audioData;
+		this.audioContentType = audioContentType;
 	}
 
 	GroupMessageItem(GroupMessageHeader h, String text) {
 		this(h.getId(), h.getGroupId(), h.getParentId(), text, h.getTimestamp(),
-				h.getAuthor(), h.getAuthorInfo(), h.isRead());
+				h.getAuthor(), h.getAuthorInfo(), h.isRead(), null, null);
+	}
+
+	GroupMessageItem(GroupMessageHeader h, String text,
+			@Nullable byte[] audioData, @Nullable String audioContentType) {
+		this(h.getId(), h.getGroupId(), h.getParentId(), text, h.getTimestamp(),
+				h.getAuthor(), h.getAuthorInfo(), h.isRead(), audioData,
+				audioContentType);
 	}
 
 	public GroupId getGroupId() {
 		return groupId;
 	}
 
+	public boolean hasAudio() {
+		return audioData != null && audioData.length > 0;
+	}
+
+	@Nullable
+	public byte[] getAudioData() {
+		return audioData;
+	}
+
+	@Nullable
+	public String getAudioContentType() {
+		return audioContentType;
+	}
+
 	@LayoutRes
 	public int getLayout() {
+		if (hasAudio()) return R.layout.list_item_thread_audio;
 		return R.layout.list_item_thread;
 	}
 

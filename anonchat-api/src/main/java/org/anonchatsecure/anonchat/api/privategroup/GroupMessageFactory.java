@@ -33,6 +33,7 @@ public interface GroupMessageFactory {
 
 	String SIGNING_LABEL_JOIN = CLIENT_ID.getString() + "/JOIN";
 	String SIGNING_LABEL_POST = CLIENT_ID.getString() + "/POST";
+	String SIGNING_LABEL_AUDIO_POST = CLIENT_ID.getString() + "/AUDIO_POST";
 
 	/**
 	 * Creates a join announcement message for the creator of a group.
@@ -77,5 +78,25 @@ public interface GroupMessageFactory {
 	GroupMessage createGroupMessage(GroupId groupId, long timestamp,
 			@Nullable MessageId parentId, LocalAuthor author, String text,
 			MessageId previousMsgId);
+
+	/**
+	 * Creates a private group audio post.
+	 *
+	 * @param groupId The ID of the private group
+	 * @param timestamp Must be greater than the timestamps of the parent
+	 * post, if any, and the member's previous message
+	 * @param parentId The ID of the parent post, or null if the post has no
+	 * parent
+	 * @param author The author of the post
+	 * @param text The text of the post (may be empty)
+	 * @param audioData The audio data bytes
+	 * @param contentType The MIME type of the audio data
+	 * @param previousMsgId The ID of the author's previous message
+	 * in this group
+	 */
+	@CryptoExecutor
+	GroupMessage createGroupAudioMessage(GroupId groupId, long timestamp,
+			@Nullable MessageId parentId, LocalAuthor author, String text,
+			byte[] audioData, String contentType, MessageId previousMsgId);
 
 }

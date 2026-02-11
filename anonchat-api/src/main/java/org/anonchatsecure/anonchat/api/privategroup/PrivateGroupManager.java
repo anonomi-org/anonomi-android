@@ -32,6 +32,8 @@ import org.briarproject.nullsafety.NotNullByDefault;
 import java.util.Collection;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 @NotNullByDefault
 public interface PrivateGroupManager {
 
@@ -152,6 +154,36 @@ public interface PrivateGroupManager {
 	 * Returns the text of the private group message with the given ID.
 	 */
 	String getMessageText(Transaction txn, MessageId m) throws DbException;
+
+	/**
+	 * Returns the audio data of the private group message with the given
+	 * ID, or null if the message has no audio.
+	 */
+	@Nullable
+	byte[] getMessageAudioData(MessageId m) throws DbException;
+
+	/**
+	 * Returns the audio data of the private group message with the given
+	 * ID, or null if the message has no audio.
+	 */
+	@Nullable
+	byte[] getMessageAudioData(Transaction txn, MessageId m)
+			throws DbException;
+
+	/**
+	 * Returns the audio content type of the private group message with the
+	 * given ID, or null if the message has no audio.
+	 */
+	@Nullable
+	String getMessageAudioContentType(MessageId m) throws DbException;
+
+	/**
+	 * Returns the audio content type of the private group message with the
+	 * given ID, or null if the message has no audio.
+	 */
+	@Nullable
+	String getMessageAudioContentType(Transaction txn, MessageId m)
+			throws DbException;
 
 	/**
 	 * Returns the headers of all messages in the given private group.

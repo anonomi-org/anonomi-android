@@ -23,6 +23,7 @@ import org.anonchatsecure.bramble.api.sync.GroupId;
 import org.anonchatsecure.anonchat.api.privategroup.GroupMessageHeader;
 import org.briarproject.nullsafety.NotNullByDefault;
 
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 /**
@@ -37,13 +38,25 @@ public class GroupMessageAddedEvent extends Event {
 	private final GroupMessageHeader header;
 	private final String text;
 	private final boolean local;
+	@Nullable
+	private final byte[] audioData;
+	@Nullable
+	private final String audioContentType;
 
 	public GroupMessageAddedEvent(GroupId groupId, GroupMessageHeader header,
 			String text, boolean local) {
+		this(groupId, header, text, local, null, null);
+	}
+
+	public GroupMessageAddedEvent(GroupId groupId, GroupMessageHeader header,
+			String text, boolean local, @Nullable byte[] audioData,
+			@Nullable String audioContentType) {
 		this.groupId = groupId;
 		this.header = header;
 		this.text = text;
 		this.local = local;
+		this.audioData = audioData;
+		this.audioContentType = audioContentType;
 	}
 
 	public GroupId getGroupId() {
@@ -60,6 +73,16 @@ public class GroupMessageAddedEvent extends Event {
 
 	public boolean isLocal() {
 		return local;
+	}
+
+	@Nullable
+	public byte[] getAudioData() {
+		return audioData;
+	}
+
+	@Nullable
+	public String getAudioContentType() {
+		return audioContentType;
 	}
 
 }

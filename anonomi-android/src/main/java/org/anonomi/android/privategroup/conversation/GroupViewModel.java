@@ -99,7 +99,13 @@ class GroupViewModel extends ThreadListViewModel<GroupMessageItem> {
 			// only act on non-local messages in this group
 			if (!g.isLocal() && g.getGroupId().equals(groupId)) {
 				LOG.info("Group message received, adding...");
-				GroupMessageItem item = buildItem(g.getHeader(), g.getText());
+				GroupMessageItem item;
+				if (g.getHeader().hasAudio()) {
+					item = buildItem(g.getHeader(), g.getText(),
+							g.getAudioData(), g.getAudioContentType());
+				} else {
+					item = buildItem(g.getHeader(), g.getText());
+				}
 				addItem(item, false);
 				// In case the join message comes from the creator,
 				// we need to reload the sharing contacts
@@ -186,6 +192,13 @@ class GroupViewModel extends ThreadListViewModel<GroupMessageItem> {
 		} else {
 			text = privateGroupManager.getMessageText(txn, header.getId());
 		}
+		if (header.hasAudio()) {
+			byte[] audioData = privateGroupManager
+					.getMessageAudioData(txn, header.getId());
+			String audioContentType = privateGroupManager
+					.getMessageAudioContentType(txn, header.getId());
+			return buildItem(header, text, audioData, audioContentType);
+		}
 		return buildItem(header, text);
 	}
 
@@ -194,6 +207,14 @@ class GroupViewModel extends ThreadListViewModel<GroupMessageItem> {
 			return new JoinMessageItem((JoinMessageHeader) header, text);
 		}
 		return new GroupMessageItem(header, text);
+	}
+
+	private GroupMessageItem buildItem(GroupMessageHeader header, String text,
+			@Nullable byte[] audioData, @Nullable String audioContentType) {
+		if (header instanceof JoinMessageHeader) {
+			return new JoinMessageItem((JoinMessageHeader) header, text);
+		}
+		return new GroupMessageItem(header, text, audioData, audioContentType);
 	}
 
 	@Override
@@ -233,6 +254,50 @@ class GroupViewModel extends ThreadListViewModel<GroupMessageItem> {
 			logDuration(LOG, "Storing group message", start);
 			txn.attach(() ->
 					addItem(buildItem(header, text), true)
+			);
+		}, this::handleException);
+	}
+
+	void createAndStoreAudioMessage(byte[] audioData, String contentType,
+			@Nullable MessageId parentId) {
+		runOnDbThread(() -> {
+			try {
+				LocalAuthor author = identityManager.getLocalAuthor();
+				MessageId previousMsgId =
+						privateGroupManager.getPreviousMsgId(groupId);
+				GroupCount count = privateGroupManager.getGroupCount(groupId);
+				long timestamp = count.getLatestMsgTime();
+				timestamp = max(clock.currentTimeMillis(), timestamp + 1);
+				createAudioMessage(audioData, contentType, timestamp,
+						parentId, author, previousMsgId);
+			} catch (DbException e) {
+				handleException(e);
+			}
+		});
+	}
+
+	private void createAudioMessage(byte[] audioData, String contentType,
+			long timestamp, @Nullable MessageId parentId,
+			LocalAuthor author, MessageId previousMsgId) {
+		cryptoExecutor.execute(() -> {
+			LOG.info("Creating group audio message...");
+			GroupMessage msg = groupMessageFactory.createGroupAudioMessage(
+					groupId, timestamp, parentId, author, "",
+					audioData, contentType, previousMsgId);
+			storeAudioPost(msg, audioData, contentType);
+		});
+	}
+
+	private void storeAudioPost(GroupMessage msg, byte[] audioData,
+			String contentType) {
+		runOnDbThread(false, txn -> {
+			long start = now();
+			GroupMessageHeader header =
+					privateGroupManager.addLocalMessage(txn, msg);
+			logDuration(LOG, "Storing group audio message", start);
+			txn.attach(() ->
+					addItem(buildItem(header, "", audioData, contentType),
+							true)
 			);
 		}, this::handleException);
 	}
@@ -282,6 +347,15 @@ class GroupViewModel extends ThreadListViewModel<GroupMessageItem> {
 
 	LiveData<Boolean> isDissolved() {
 		return isDissolved;
+	}
+
+	@Nullable
+	MessageId getCurrentReplyId() {
+		return getReplyId();
+	}
+
+	void clearReplyId() {
+		setReplyId(null);
 	}
 
 }

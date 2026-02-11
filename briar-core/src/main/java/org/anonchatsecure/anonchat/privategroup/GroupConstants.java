@@ -37,4 +37,6 @@ interface GroupConstants {
 	String GROUP_KEY_DISSOLVED = "dissolved";
 	String GROUP_KEY_VISIBILITY = "visibility";
 
+	String KEY_HAS_AUDIO = "hasAudio";
+
 }

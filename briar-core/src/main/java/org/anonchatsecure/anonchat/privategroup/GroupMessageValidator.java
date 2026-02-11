@@ -46,11 +46,14 @@ import static org.anonchatsecure.bramble.api.identity.AuthorConstants.MAX_SIGNAT
 import static org.anonchatsecure.bramble.util.ValidationUtils.checkLength;
 import static org.anonchatsecure.bramble.util.ValidationUtils.checkSize;
 import static org.anonchatsecure.anonchat.api.privategroup.GroupMessageFactory.SIGNING_LABEL_JOIN;
+import static org.anonchatsecure.anonchat.api.privategroup.GroupMessageFactory.SIGNING_LABEL_AUDIO_POST;
 import static org.anonchatsecure.anonchat.api.privategroup.GroupMessageFactory.SIGNING_LABEL_POST;
 import static org.anonchatsecure.anonchat.api.privategroup.MessageType.JOIN;
 import static org.anonchatsecure.anonchat.api.privategroup.MessageType.POST;
+import static org.anonchatsecure.anonchat.api.privategroup.PrivateGroupConstants.MAX_GROUP_AUDIO_SIZE;
 import static org.anonchatsecure.anonchat.api.privategroup.PrivateGroupConstants.MAX_GROUP_POST_TEXT_LENGTH;
 import static org.anonchatsecure.anonchat.api.privategroup.invitation.GroupInvitationFactory.SIGNING_LABEL_INVITE;
+import static org.anonchatsecure.anonchat.privategroup.GroupConstants.KEY_HAS_AUDIO;
 import static org.anonchatsecure.anonchat.privategroup.GroupConstants.KEY_INITIAL_JOIN_MSG;
 import static org.anonchatsecure.anonchat.privategroup.GroupConstants.KEY_MEMBER;
 import static org.anonchatsecure.anonchat.privategroup.GroupConstants.KEY_PARENT_MSG_ID;
@@ -78,7 +81,7 @@ class GroupMessageValidator extends BdfMessageValidator {
 	protected BdfMessageContext validateMessage(Message m, Group g,
 			BdfList body) throws InvalidMessageException, FormatException {
 
-		checkSize(body, 4, 6);
+		checkSize(body, 4, 8);
 
 		// Message type (int)
 		int type = body.getInt(0);
@@ -162,29 +165,57 @@ class GroupMessageValidator extends BdfMessageValidator {
 	private BdfMessageContext validatePost(Message m, Group g, BdfList body,
 			Author member) throws FormatException {
 		// Message type, member, optional parent ID, previous message ID,
-		// text, signature
-		checkSize(body, 6);
+		// text, signature [, audioData, contentType]
+		boolean hasAudio = body.size() == 8;
+		if (!hasAudio) checkSize(body, 6);
+
 		byte[] parentId = body.getOptionalRaw(2);
 		checkLength(parentId, MessageId.LENGTH);
 		byte[] previousMessageId = body.getRaw(3);
 		checkLength(previousMessageId, MessageId.LENGTH);
 		String text = body.getString(4);
-		checkLength(text, 1, MAX_GROUP_POST_TEXT_LENGTH);
+		checkLength(text, 0, MAX_GROUP_POST_TEXT_LENGTH);
 		byte[] signature = body.getRaw(5);
 		checkLength(signature, 1, MAX_SIGNATURE_LENGTH);
 
+		byte[] audioData = null;
+		String contentType = null;
+		if (hasAudio) {
+			audioData = body.getRaw(6);
+			checkLength(audioData, 1, MAX_GROUP_AUDIO_SIZE);
+			contentType = body.getString(7);
+			checkLength(contentType, 1, 50);
+		}
+
 		// Verify the member's signature
 		BdfList memberList = body.getList(1); // Already validated
-		BdfList signed = BdfList.of(
-				g.getId(),
-				m.getTimestamp(),
-				memberList,
-				parentId,
-				previousMessageId,
-				text
-		);
+		String signingLabel;
+		BdfList signed;
+		if (hasAudio) {
+			signingLabel = SIGNING_LABEL_AUDIO_POST;
+			signed = BdfList.of(
+					g.getId(),
+					m.getTimestamp(),
+					memberList,
+					parentId,
+					previousMessageId,
+					text,
+					audioData,
+					contentType
+			);
+		} else {
+			signingLabel = SIGNING_LABEL_POST;
+			signed = BdfList.of(
+					g.getId(),
+					m.getTimestamp(),
+					memberList,
+					parentId,
+					previousMessageId,
+					text
+			);
+		}
 		try {
-			clientHelper.verifySignature(signature, SIGNING_LABEL_POST,
+			clientHelper.verifySignature(signature, signingLabel,
 					signed, member.getPublicKey());
 		} catch (GeneralSecurityException e) {
 			throw new FormatException();
@@ -200,6 +231,7 @@ class GroupMessageValidator extends BdfMessageValidator {
 		BdfDictionary meta = new BdfDictionary();
 		if (parentId != null) meta.put(KEY_PARENT_MSG_ID, parentId);
 		meta.put(KEY_PREVIOUS_MSG_ID, previousMessageId);
+		if (hasAudio) meta.put(KEY_HAS_AUDIO, true);
 		return new BdfMessageContext(meta, dependencies);
 	}
 
