@@ -608,7 +608,7 @@
     <string name="status_imported">Увезени:</string>
     <string name="panic_action_sign_out_summary">Одјави се од Anonomi</string>
     <plurals name="duration_minutes">
-        <item quantity="one"></item>
+        <item quantity="one"/>
         <item quantity="other">5 минути</item>
     </plurals>
     <string name="panic_option_sign_out">Одјави се</string>
@@ -632,4 +632,10 @@
     <string name="camera_permission_denied">Дозвола за камера</string>
     <string name="delete_account_button">Избриши сметка</string>
     <string name="panic_option_delete_account">Избриши сметка</string>
+    <string name="dnkm_huawei_app_launch_help">Ако Anonomi не е додаден на листата со заштитени апликации, ќе биде оневозможен да работи во позадина.</string>
+    <string name="qr_code_too_old_1">Овој линк доаѓа од понова верзија на Anonomi. Ве молиме надградете во последна верзија и обидете се повторно.</string>
+    <string name="mailbox_qr_code_too_old">Овој линк доаѓа од понова верзија на Anonomi. Ве молиме надградете во последна верзија и обидете се повторно.</string>
+    <string name="mailbox_qr_code_too_new">Овој линк доаѓа од понова верзија на Anonomi. Ве молиме надградете во последна верзија и обидете се повторно.</string>
+    <string name="share_app_link_text">Отклучи го Anonomi</string>
+    <string name="website_download_title_1">Отклучи го Anonomi</string>
 </resources>
