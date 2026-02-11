@@ -258,4 +258,10 @@
     <string name="lock_unlock">Protexer Anonomi</string>
     <string name="lock_unlock_password">Contraseña perdida</string>
     <string name="hotspot_button_connected">Siguiente</string>
+    <string name="link_clip_label">Protexer Anonomi</string>
+    <string name="dialog_title_leave_forum">Confirma la disolución del grupu</string>
+    <string name="forum_share_button">Crear foru</string>
+    <string name="unlocking_anonchat">Protexer Anonomi</string>
+    <string name="notify_group_messages_setting_title">Nun hai mensaxes</string>
+    <string name="website_download_button">Protexer Anonomi</string>
 </resources>
