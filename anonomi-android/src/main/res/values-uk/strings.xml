@@ -1094,4 +1094,10 @@
     <string name="panic_status_signing_out">Відправлення панічних повідомлень і вихід із системи…</string>
     <string name="panic_status_deleting">Відправлення панічних повідомлень і видалення облікового запису…</string>
     <string name="website_http_notice">Ваш браузер може попередити, що це з\'єднання не є безпечним. Це нормально — сторінка обслуговується локально через ваше пряме Wi-Fi-з\'єднання і не передається через Інтернет.</string>
+    <string name="groups_toggle_voice_distortion">Увімкнути/вимкнути спотворення голосу</string>
+    <string name="forum_toggle_voice_distortion">Увімкнути/вимкнути спотворення голосу</string>
+    <string name="tap_to_view_on_map">▸ Натисніть, щоб переглянути на карті</string>
+    <string name="image_sent">Зображення надіслано</string>
+    <string name="image_compression_failed">Не вдалося стиснути зображення</string>
+    <string name="image_too_large">Зображення занадто велике для надсилання</string>
 </resources>

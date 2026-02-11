@@ -1090,4 +1090,10 @@ Najprv nainštalujte aplikáciu Anonomi Postbox do iného zariadenia z rovnakéh
     <string name="panic_action_sign_out_summary">Odhlásený z aplikácie Anonomi</string>
     <string name="panic_option_sign_out">Odhlásiť sa</string>
     <string name="panic_option_delete_account">Vymazať účet</string>
+    <string name="groups_toggle_voice_distortion">Prepnúť skreslenie hlasu</string>
+    <string name="forum_toggle_voice_distortion">Prepnúť skreslenie hlasu</string>
+    <string name="tap_to_view_on_map">▸ Klepnutím zobrazíte na mape</string>
+    <string name="image_sent">Obrázok odoslaný</string>
+    <string name="image_compression_failed">Nepodarilo sa komprimovať obrázok</string>
+    <string name="image_too_large">Obrázok je príliš veľký na odoslanie</string>
 </resources>

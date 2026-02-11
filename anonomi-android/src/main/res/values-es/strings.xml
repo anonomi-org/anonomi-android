@@ -1081,4 +1081,10 @@
     <string name="panic_status_signing_out">Enviar mensajes de pánico y cerrar sesión…</string>
     <string name="panic_status_deleting">Envío de mensajes de pánico y eliminación de la cuenta…</string>
     <string name="website_http_notice">Es posible que su navegador le advierta de que esta conexión no es segura. Esto es normal, ya que la página se sirve localmente a través de su conexión Wi-Fi directa y no viaja por Internet.</string>
+    <string name="groups_toggle_voice_distortion">Activar o desactivar la distorsión de voz</string>
+    <string name="forum_toggle_voice_distortion">Activar o desactivar la distorsión de voz</string>
+    <string name="tap_to_view_on_map">▸ Toque para ver en el mapa</string>
+    <string name="image_sent">Imagen enviada</string>
+    <string name="image_compression_failed">No se pudo comprimir la imagen</string>
+    <string name="image_too_large">La imagen es demasiado grande para enviarla</string>
 </resources>

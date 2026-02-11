@@ -1059,4 +1059,10 @@ Vigyázat: Ez végleg törli az identitásait, kapcsolatait és üzeneteit</stri
     <string name="panic_option_delete_account">Fiók törlése</string>
     <string name="panic_action_sign_out_summary">Kilépve a Anonomi-ból</string>
     <string name="permission_hotspot_nearby_wifi_denied_body">Megtagadta a hozzáférést a tartózkodási helyéhez, de Anonomi Messengernak szüksége van erre az engedélyre Wi-Fi hotspot létrehozásához. Kérjük, fontolja meg a hozzáférés megadását.</string>
+    <string name="groups_toggle_voice_distortion">Hangtorzítás be-/kikapcsolása</string>
+    <string name="forum_toggle_voice_distortion">Hangtorzítás be-/kikapcsolása</string>
+    <string name="tap_to_view_on_map">▸ Koppintson a térképen való megtekintéshez</string>
+    <string name="image_sent">Kép elküldve</string>
+    <string name="image_compression_failed">Nem sikerült tömöríteni a képet</string>
+    <string name="image_too_large">A kép túl nagy a küldéshez</string>
 </resources>

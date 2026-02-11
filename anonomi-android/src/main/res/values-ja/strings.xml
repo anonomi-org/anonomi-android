@@ -1045,4 +1045,10 @@
     <string name="panic_option_sign_out">サインアウト</string>
     <string name="panic_option_delete_account">アカウントを削除</string>
     <string name="panic_action_sign_out_summary">Anonomiからサインアウト</string>
+    <string name="groups_toggle_voice_distortion">音声歪みの切り替え</string>
+    <string name="forum_toggle_voice_distortion">音声の歪みを切り替える</string>
+    <string name="tap_to_view_on_map">▸ タップして地図で見る</string>
+    <string name="image_sent">画像を送信しました</string>
+    <string name="image_compression_failed">画像の圧縮に失敗しました</string>
+    <string name="image_too_large">画像が大きすぎて送信できません</string>
 </resources>

@@ -1090,4 +1090,10 @@ Brak dostępu do aparatu. Spróbuj ponownie, może po ponownym uruchomieniu urz�
     <string name="panic_action_sign_out_summary">Wylogowano z Anonomi</string>
     <string name="share_app_link_text">Pobierz Anonomi %s</string>
     <string name="permission_hotspot_nearby_wifi_denied_body">Zabroniłeś dostępu do Twojej lokalizacji, ale Anonomi potrzebuje tego uprawnienia do tworzenia hotspotu Wi-Fi.\n\nRozważ przyznanie tego dostępu.</string>
+    <string name="groups_toggle_voice_distortion">Przełącz zniekształcenie głosu</string>
+    <string name="forum_toggle_voice_distortion">Przełącz zniekształcenie głosu</string>
+    <string name="tap_to_view_on_map">▸ Dotknij, aby wyświetlić na mapie</string>
+    <string name="image_sent">Wysłano obraz</string>
+    <string name="image_compression_failed">Nie udało się skompresować obrazu</string>
+    <string name="image_too_large">Obraz jest za duży, aby go wysłać</string>
 </resources>

@@ -1236,4 +1236,10 @@ Si tu contacto creó el archivo hace más de 28 días, Anonomi no podrá reconoc
     <string name="panic_option_sign_out">Cerrar sesión</string>
     <string name="panic_option_delete_account">Borrar cuenta</string>
     <string name="panic_action_sign_out_summary">Sesión de Anonomi cerrada</string>
+    <string name="groups_toggle_voice_distortion">Alternar distorsión de voz</string>
+    <string name="forum_toggle_voice_distortion">Alternar distorsión de voz</string>
+    <string name="tap_to_view_on_map">▸ Toca para ver en el mapa</string>
+    <string name="image_sent">Imagen enviada</string>
+    <string name="image_compression_failed">No se pudo comprimir la imagen</string>
+    <string name="image_too_large">La imagen es demasiado grande para enviarla</string>
 </resources>

@@ -1074,4 +1074,10 @@ Per prima cosa, installa l\'app Anonomi Postbox su un altro dispositivo da dove 
     <string name="panic_option_delete_account">Cancella Account</string>
     <string name="panic_option_sign_out">Esci</string>
     <string name="panic_action_sign_out_summary">Uscito da Anonomi</string>
+    <string name="groups_toggle_voice_distortion">Attiva/disattiva la distorsione vocale</string>
+    <string name="forum_toggle_voice_distortion">Attiva/disattiva la distorsione vocale</string>
+    <string name="tap_to_view_on_map">▸ Tocca per visualizzare sulla mappa</string>
+    <string name="image_sent">Immagine inviata</string>
+    <string name="image_compression_failed">Impossibile comprimere l\'immagine</string>
+    <string name="image_too_large">L\'immagine è troppo grande per essere inviata</string>
 </resources>
