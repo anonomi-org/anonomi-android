@@ -72,7 +72,11 @@ abstract class ConversationItemViewHolder extends ViewHolder {
 
 			if (isMapMessage(trimmedText)) {
 				MapMessageData mapData = parseMapMessage(trimmedText);
-				String displayText = "📍" + mapData.label + "\n   " + mapData.latitude + "\n   " + mapData.longitude;
+				String displayText = "\uD83D\uDCCD" + mapData.label +
+						"\n   " + mapData.latitude +
+						"\n   " + mapData.longitude +
+						"\n   " + text.getContext().getString(
+						R.string.tap_to_view_on_map);
 				text.setText(displayText);
 				text.setOnClickListener(v -> listener.onMapMessageClicked(mapData));
 			} else {

@@ -641,6 +641,7 @@
     <string name="incorrect_passcode">Incorrect passcode. Try again.</string>
     <string name="action_send_location">Send Offline Location</string>
     <string name="location_sent">Location sent</string>
+    <string name="tap_to_view_on_map">▸ Tap to view on map</string>
     <string name="unlocking_anonchat">Unlocking Anonomi Messenger...</string>
     <string name="stealth_mode_enabled">Stealth mode enabled.</string>
     <string name="offline_maps_copy_onion_title">Where to get Offline Maps data</string>

@@ -48,8 +48,11 @@ public abstract class BaseThreadItemViewHolder<I extends ThreadItem>
 		String trimmedText = StringUtils.trim(item.getText());
 		if (trimmedText != null && trimmedText.startsWith("::map:")) {
 			MapMessageData mapData = parseMapMessage(trimmedText);
-			textView.setText("\uD83D\uDCCD" + mapData.label + "\n   " +
-					mapData.latitude + "\n   " + mapData.longitude);
+			textView.setText("\uD83D\uDCCD" + mapData.label +
+					"\n   " + mapData.latitude +
+					"\n   " + mapData.longitude +
+					"\n   " + getContext().getString(
+					R.string.tap_to_view_on_map));
 			textView.setOnClickListener(
 					v -> listener.onMapMessageClicked(mapData));
 		} else {
