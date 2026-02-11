@@ -577,4 +577,10 @@
     <string name="camera_permission_denied">कैमरा अनुमति</string>
     <string name="delete_account_button">खाता हटा दो</string>
     <string name="panic_option_delete_account">खाता हटा दो</string>
+    <string name="dnkm_huawei_app_launch_help">अगर Anonomi संरक्षित ऐप्स सूची में नहीं जोड़ा गया है, तो यह पृष्ठभूमि में चलने में असमर्थ होगा।</string>
+    <string name="qr_code_too_old_1">यह लिंक Anonomi के नए संस्करण से आया है। कृपया नवीनतम संस्करण में अद्यतन करें और पुनः प्रयास करें।</string>
+    <string name="mailbox_qr_code_too_old">यह लिंक Anonomi के नए संस्करण से आया है। कृपया नवीनतम संस्करण में अद्यतन करें और पुनः प्रयास करें।</string>
+    <string name="mailbox_qr_code_too_new">यह लिंक Anonomi के नए संस्करण से आया है। कृपया नवीनतम संस्करण में अद्यतन करें और पुनः प्रयास करें।</string>
+    <string name="share_app_link_text">Anonomi अनलॉक करें</string>
+    <string name="website_download_title_1">Anonomi अनलॉक करें</string>
 </resources>
