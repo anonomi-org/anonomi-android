@@ -1,0 +1,5 @@
+Version 1.1.0:
+* Panic system with configurable volume button sequences
+* Stealth mode (calculator disguise) with panic integration
+* Encrypted preferences via Android Keystore (AES-256-GCM)
+* Translation updates

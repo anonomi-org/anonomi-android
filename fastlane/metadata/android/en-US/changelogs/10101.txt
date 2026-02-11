@@ -1,0 +1,3 @@
+Version 1.1.1:
+* Replaced bundled FFmpeg binary with Maven Central dependency
+* Prepared metadata for F-Droid submission

@@ -472,7 +472,7 @@ public class ForumActivity extends
 					AudioUtils.writeWavFile(wavFile, pcmToWrite, 16000, 1);
 
 					String ffmpegCommand = String.format(
-							"-y -i \"%s\" -c:a libopus -b:a 16k \"%s\"",
+							"-y -i \"%s\" -c:a opus -strict -2 -b:a 16k \"%s\"",
 							wavFile.getAbsolutePath(),
 							oggFile.getAbsolutePath());
 

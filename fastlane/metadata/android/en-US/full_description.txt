@@ -1,0 +1,22 @@
+Anonomi Messenger is a privacy-first communication tool designed for situations where networks are monitored, infrastructure is hostile, and trust assumptions fail.
+
+It is built for people who cannot afford to be naive about surveillance, centralization, or metadata.
+
+Features:
+
+* Secure messaging — Peer-to-peer communication with no central servers to seize or subpoena.
+* Tor support (online mode) — Route traffic through Tor, with bridge support when Tor is blocked.
+* Offline operation — Communicate without the internet using Wi-Fi, Bluetooth, or external storage (store-and-forward).
+* Private payments (Monero) — In-chat payment requests using unique subaddresses to avoid persistent identifiers.
+* Offline maps & location sharing — Share locations and navigate using imported map tiles, no external map servers.
+
+Philosophy:
+
+* Anti-authoritarian by design — Incompatible with centralized control, mass surveillance, and coercive platforms.
+* Open and auditable — Security through transparency, not marketing claims.
+* Community-governed — No sponsors, no investors, no institutional control.
+* Honest about limits — Trade-offs are documented. Assumptions are explicit.
+
+Android only. iOS is intentionally not supported due to architectural and policy constraints that prevent the level of network control, offline operation, and user agency required by the threat model.
+
+Privacy is a condition you defend, not a checkbox you enable.
