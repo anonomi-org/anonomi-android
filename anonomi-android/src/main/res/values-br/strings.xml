@@ -223,17 +223,17 @@
     <string name="button_cancel">Nullañ</string>
     <string name="progress_title_logout">Marilhet e-barzh Anonomi</string>
     <plurals name="duration_minutes">
-        <item quantity="one"></item>
+        <item quantity="one"/>
         <item quantity="two">5 munutenn</item>
         <item quantity="few">5 munutenn</item>
-        <item quantity="many"></item>
+        <item quantity="many"/>
         <item quantity="other">5 munutenn</item>
     </plurals>
     <plurals name="posts">
-        <item quantity="one"></item>
+        <item quantity="one"/>
         <item quantity="two">%d kemennadenn</item>
         <item quantity="few">%d kemennadenn</item>
-        <item quantity="many"></item>
+        <item quantity="many"/>
         <item quantity="other">%d kemennadenn</item>
     </plurals>
     <string name="panic_option_sign_out">Digevreañ</string>
@@ -243,4 +243,9 @@
     <string name="lock_unlock">Gwareziñ Anonomi</string>
     <string name="lock_unlock_password">Kollet em eus ma ger-tremen</string>
     <string name="hotspot_button_connected">De-heul</string>
+    <string name="link_clip_label">Gwareziñ Anonomi</string>
+    <string name="forum_share_button">Kuitaat ar strollad</string>
+    <string name="unlocking_anonchat">Gwareziñ Anonomi</string>
+    <string name="notify_group_messages_setting_title">Kemennadenn ebet.</string>
+    <string name="website_download_button">Gwareziñ Anonomi</string>
 </resources>
