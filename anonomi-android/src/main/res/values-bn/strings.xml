@@ -1066,4 +1066,15 @@
     <string name="panic_record_dialog_title">প্যানিক সিকোয়েন্স রেকর্ড করুন</string>
     <string name="panic_record_save">সংরক্ষণ করুন</string>
     <string name="play_voice_message">ভয়েস মেসেজ চালান</string>
+    <string name="walkie_talkie_mode">ওয়াকি-টকি</string>
+    <string name="walkie_talkie_enabled">ওয়াকি-টকি মোড সক্ষম করা হয়েছে</string>
+    <string name="walkie_talkie_disabled">ওয়াকি-টকি মোড অক্ষম করা হয়েছে</string>
+    <string name="walkie_talkie_bar_text">ওয়াকি-টকি মোড</string>
+    <string name="walkie_talkie_recording">রেকর্ডিং হচ্ছে…</string>
+    <string name="walkie_talkie_playing">বাজানো হচ্ছে: %s</string>
+    <string name="ptt_button_title">পুশ-টু-টক বোতাম</string>
+    <string name="ptt_button_volume_up">ভলিউম আপ</string>
+    <string name="ptt_button_volume_down">ভলিউম কমানো</string>
+    <string name="ptt_conflict_message">এই বোতামটি আপনার প্যানিক ট্রিগার সিকোয়েন্সের সাথে সাংঘর্ষিক।</string>
+    <string name="panic_conflict_ptt">পুশ-টু-টক বোতামের সাথে বিরোধ। প্রথমে সেটিংসে এটি পরিবর্তন করুন।</string>
 </resources>
