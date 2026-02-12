@@ -1057,4 +1057,15 @@ Així que l\'actualitzi li veureu una icona diferent .</string>
     <string name="permission_hotspot_nearby_wifi_request_body">Per crear un punt d\'accés Wi-Fi, Anonomi Messenger necessita permís per accedir als dispositius propers.</string>
     <string name="play">Reprodueix</string>
     <string name="offline_maps_help_title">Mapes fora de línia</string>
+    <string name="walkie_talkie_mode">Walkie-talkie</string>
+    <string name="walkie_talkie_enabled">Mode walkie-talkie activat</string>
+    <string name="walkie_talkie_disabled">Mode walkie-talkie desactivat</string>
+    <string name="walkie_talkie_bar_text">Mode walkie-talkie</string>
+    <string name="walkie_talkie_recording">Enregistrament…</string>
+    <string name="walkie_talkie_playing">Reproduint: %s</string>
+    <string name="ptt_button_title">Botó Premeu per parlar</string>
+    <string name="ptt_button_volume_up">Pujar volum</string>
+    <string name="ptt_button_volume_down">Baixar volum</string>
+    <string name="ptt_conflict_message">Aquest botó entra en conflicte amb la seqüència de desencadenant de pànic.</string>
+    <string name="panic_conflict_ptt">Conflictes amb el botó Prem per parlar. Canvia-ho primer a Configuració.</string>
 </resources>

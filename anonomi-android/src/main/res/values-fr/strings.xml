@@ -1077,4 +1077,15 @@ copies des messages que vous envoyez.
     <string name="image_sent">Image envoyée</string>
     <string name="image_compression_failed">Échec de la compression de l\'image</string>
     <string name="image_too_large">L\'image est trop volumineuse pour être envoyée.</string>
+    <string name="walkie_talkie_mode">Talkie-walkie</string>
+    <string name="walkie_talkie_enabled">Mode talkie-walkie activé</string>
+    <string name="walkie_talkie_disabled">Mode talkie-walkie désactivé</string>
+    <string name="walkie_talkie_bar_text">Mode talkie-walkie</string>
+    <string name="walkie_talkie_recording">Enregistrement…</string>
+    <string name="walkie_talkie_playing">Lecture en cours : %s</string>
+    <string name="ptt_button_title">Bouton Push-to-Talk</string>
+    <string name="ptt_button_volume_up">Augmenter le volume</string>
+    <string name="ptt_button_volume_down">Baisser le volume</string>
+    <string name="ptt_conflict_message">Ce bouton entre en conflit avec votre séquence de déclenchement d\'alerte.</string>
+    <string name="panic_conflict_ptt">En conflit avec le bouton « Appuyer pour parler ». Modifiez-le d\'abord dans les paramètres.</string>
 </resources>

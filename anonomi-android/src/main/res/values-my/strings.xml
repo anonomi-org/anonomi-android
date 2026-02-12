@@ -1054,4 +1054,15 @@
     <string name="recording_max_reached">အများဆုံး: ၁၂ စက္ကန့်</string>
     <string name="scan_qr_code">QR ကုဒ်ကို စကင်ဖတ်ပါ</string>
     <string name="load_qr_code">QR ကုဒ်ကို တင်ပါ</string>
+    <string name="walkie_talkie_mode">ဝေါ်ကီတော်ကီ</string>
+    <string name="walkie_talkie_enabled">ဝေါ်ကီတော်ကီမုဒ်ကို ဖွင့်ထားသည်</string>
+    <string name="walkie_talkie_disabled">ဝေါ်ကီတော်ကီမုဒ်ကို ပိတ်ထားသည်</string>
+    <string name="walkie_talkie_bar_text">ဝေါ်ကီတော်ကီမုဒ်</string>
+    <string name="walkie_talkie_recording">မှတ်တမ်းတင်နေသည်…</string>
+    <string name="walkie_talkie_playing">ဖွင့်နေသည်- %s</string>
+    <string name="ptt_button_title">စကားပြောရန် ခလုတ်</string>
+    <string name="ptt_button_volume_up">အသံတိုးပါ</string>
+    <string name="ptt_button_volume_down">အသံလျှော့ပါ</string>
+    <string name="ptt_conflict_message">ဒီခလုတ်က သင့်ရဲ့ Panic Trigger အစီအစဉ်နဲ့ ပဋိပက္ခဖြစ်နေတယ်။</string>
+    <string name="panic_conflict_ptt">Push-to-Talk ခလုတ်နှင့် ပဋိပက္ခဖြစ်နေသည်။ ၎င်းကို ဆက်တင်များတွင် ဦးစွာပြောင်းလဲပါ။</string>
 </resources>

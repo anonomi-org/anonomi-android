@@ -1032,4 +1032,15 @@
     <string name="mailbox_status_unlink_success">Poçt qutunuzun əlaqəsi kəsildi</string>
     <string name="hotspot_manual_site">Telefonunuz Wi-Fi qaynar nöqtəsi təmin edir. Qaynar nöqtəyə qoşulmuş insanlar veb brauzerdə və ya %s-də aşağıdakı linki yazaraq Anonomi Messenger proqramını yükləyə bilərlər.</string>
     <string name="hotspot_manual_site_address">Ünvan (URL)</string>
+    <string name="walkie_talkie_mode">Radio</string>
+    <string name="walkie_talkie_enabled">Walkie-Talkie rejimi aktivdir</string>
+    <string name="walkie_talkie_disabled">Walkie-Talkie rejimi deaktivdir</string>
+    <string name="walkie_talkie_bar_text">Raki-telki rejimi</string>
+    <string name="walkie_talkie_recording">Qeydə alınır…</string>
+    <string name="walkie_talkie_playing">Oxudulur: %s</string>
+    <string name="ptt_button_title">Danışmaq üçün düymə</string>
+    <string name="ptt_button_volume_up">Səs artırın</string>
+    <string name="ptt_button_volume_down">Səs Azaldılması</string>
+    <string name="ptt_conflict_message">Bu düymə Panic Tetikleyici ardıcıllığınızla ziddiyyət təşkil edir.</string>
+    <string name="panic_conflict_ptt">Push-to-Talk düyməsi ilə ziddiyyət təşkil edir. Əvvəlcə onu Parametrlərdə dəyişdirin.</string>
 </resources>

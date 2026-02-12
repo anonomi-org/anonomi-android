@@ -858,17 +858,17 @@ Molim vas da uzmete u obzir odobravanja pristupa.</string>
     <string name="offline_maps_help_data_desc">Након извоза пакета мапа:\n\n1 - Вратите се и додирните „Увези податке офлајн мапа“.\n\n2 - Изаберите ZIP датотеку коју желите да увезете.\n\n3 - Сачекајте да се увоз заврши — велики пакети могу потрајати неко време у зависности од величине датотеке и вашег уређаја.</string>
     <string name="offline_maps_help_zoom_title">Нивои зумирања</string>
     <plurals name="duration_hours">
-        <item quantity="one"></item>
+        <item quantity="one"/>
         <item quantity="few">%d сати</item>
         <item quantity="other">%d сати</item>
     </plurals>
     <plurals name="duration_days">
-        <item quantity="one"></item>
+        <item quantity="one"/>
         <item quantity="few">%d дана</item>
         <item quantity="other">%d дана</item>
     </plurals>
     <plurals name="contact_added_notification_text">
-        <item quantity="one"></item>
+        <item quantity="one"/>
         <item quantity="few">Додато је %d нових контаката.</item>
         <item quantity="other">Додато је %d нових контаката.</item>
     </plurals>
@@ -1049,7 +1049,7 @@ Molim vas da uzmete u obzir odobravanja pristupa.</string>
     <string name="hotspot_qr_wifi">Ваш телефон пружа Wi-Fi приступну тачку. Људи који желе да преузму Anonomi Messenger могу се повезати на приступну тачку скенирањем овог QR кода. Када се повежу на приступну тачку, притисните „Даље“.</string>
     <string name="hotspot_no_peers_connected">Ниједан уређај није повезан</string>
     <plurals name="hotspot_peers_connected">
-        <item quantity="one"></item>
+        <item quantity="one"/>
         <item quantity="few">Повезано је %s уређаја</item>
         <item quantity="other">Повезано је %s уређаја</item>
     </plurals>
@@ -1065,4 +1065,15 @@ Molim vas da uzmete u obzir odobravanja pristupa.</string>
     <string name="website_troubleshooting_2_old">Да бисте инсталирали преузету апликацију, можда ћете морати да дозволите инсталацију апликација из „Непознатих извора“ у системским подешавањима. Након тога, можда ћете морати поново да преузмете апликацију. Препоручујемо да онемогућите подешавање „Непознати извори“ након инсталирања апликације.</string>
     <string name="website_troubleshooting_2_new">Да бисте инсталирали преузету апликацију, можда ћете морати да дозволите прегледачу да инсталира непознате апликације. Након инсталирања апликације, препоручујемо да уклоните дозволу прегледачу за инсталирање непознатих апликација.</string>
     <string name="hotspot_help_wifi_title">Проблеми са повезивањем на Wi-Fi:</string>
+    <string name="walkie_talkie_mode">Воки-токи</string>
+    <string name="walkie_talkie_enabled">Режим воки-токија је омогућен</string>
+    <string name="walkie_talkie_disabled">Режим воки-токија је онемогућен</string>
+    <string name="walkie_talkie_bar_text">Режим воки-токија</string>
+    <string name="walkie_talkie_recording">Снимање…</string>
+    <string name="walkie_talkie_playing">Свира: %s</string>
+    <string name="ptt_button_title">Дугме за разговор</string>
+    <string name="ptt_button_volume_up">Појачај звук</string>
+    <string name="ptt_button_volume_down">Смањи јачину звука</string>
+    <string name="ptt_conflict_message">Ово дугме је у супротности са вашом секвенцом за окидање панике.</string>
+    <string name="panic_conflict_ptt">Сукобљава се са дугметом „Притисни за разговор“. Прво га промените у подешавањима.</string>
 </resources>

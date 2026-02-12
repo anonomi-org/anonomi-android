@@ -264,4 +264,7 @@
     <string name="unlocking_anonchat">Protexer Anonomi</string>
     <string name="notify_group_messages_setting_title">Nun hai mensaxes</string>
     <string name="website_download_button">Protexer Anonomi</string>
+    <string name="share_app_link_text">Protexer Anonomi</string>
+    <string name="lock_is_locked">Protexer Anonomi</string>
+    <string name="website_download_title_1">Protexer Anonomi</string>
 </resources>

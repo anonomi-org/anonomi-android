@@ -1055,4 +1055,15 @@
     <string name="voice_record">Gravación de voz</string>
     <string name="slide_to_cancel">Gravando... Desliza para cancelar</string>
     <string name="audio_sent">Audio enviado!</string>
+    <string name="walkie_talkie_mode">Walkie-talkie</string>
+    <string name="walkie_talkie_enabled">Modo walkie-talkie activado</string>
+    <string name="walkie_talkie_disabled">Modo walkie-talkie desactivado</string>
+    <string name="walkie_talkie_bar_text">Modo walkie-talkie</string>
+    <string name="walkie_talkie_recording">Gravando…</string>
+    <string name="walkie_talkie_playing">Reproducindo: %s</string>
+    <string name="ptt_button_title">Botón Premer para Falar</string>
+    <string name="ptt_button_volume_up">Subir volume</string>
+    <string name="ptt_button_volume_down">Baixar volume</string>
+    <string name="ptt_conflict_message">Este botón entra en conflito coa túa secuencia de activación de pánico.</string>
+    <string name="panic_conflict_ptt">Conflitos co botón Premer para falar. Cámbiao primeiro en Configuración.</string>
 </resources>

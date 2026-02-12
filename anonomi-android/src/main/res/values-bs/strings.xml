@@ -677,23 +677,23 @@
     <string name="connect_via_bluetooth_error_not_supported">Uređaj ne podržava Bluetooth.</string>
     <string name="invalid_saved_passcode">Greška: Nevažeći sačuvani izraz za lozinku.</string>
     <plurals name="expiry_warning">
-        <item quantity="one"></item>
+        <item quantity="one"/>
         <item quantity="few">Ovo je probna verzija Anonomi Messengera. Vaš račun će isteći za %d dana i ne može se obnoviti.</item>
         <item quantity="other">Ovo je probna verzija Anonomi Messengera. Vaš račun će isteći za %d dana i ne može se obnoviti.</item>
     </plurals>
     <plurals name="private_message_notification_text">
-        <item quantity="one"></item>
+        <item quantity="one"/>
         <item quantity="few">%d nove privatne poruke.</item>
         <item quantity="other">%d nove privatne poruke.</item>
     </plurals>
     <plurals name="group_message_notification_text">
-        <item quantity="one"></item>
+        <item quantity="one"/>
         <item quantity="few">%d nove grupne poruke.</item>
         <item quantity="other">%d nove grupne poruke.</item>
     </plurals>
     <string name="groups_toggle_voice_distortion">Uključi/isključi izobličenje glasa</string>
     <plurals name="groups_invitations_open">
-        <item quantity="one"></item>
+        <item quantity="one"/>
         <item quantity="few">%d otvoreni pozivi za grupe</item>
         <item quantity="other">%d otvoreni pozivi za grupe</item>
     </plurals>
@@ -705,7 +705,7 @@
     <string name="forum_invitation_error">Greška. Ovo je bug i nije vaša krivica.</string>
     <string name="forum_invitation_response_declined_auto">Poziv u otvorenu grupu od %s je automatski odbijen.</string>
     <plurals name="forums_shared">
-        <item quantity="one"></item>
+        <item quantity="one"/>
         <item quantity="few">%d otvorena grupa koju dijele kontakti</item>
         <item quantity="other">%d otvorena grupa koju dijele kontakti</item>
     </plurals>
@@ -935,7 +935,7 @@
     <string name="hotspot_qr_wifi">Vaš telefon pruža Wi-Fi pristupnu tačku. Osobe koje žele preuzeti Anonomi Messenger mogu se povezati na pristupnu tačku skeniranjem ovog QR koda. Kada se povežu na pristupnu tačku, pritisnite \'Dalje\'.</string>
     <string name="hotspot_no_peers_connected">Nema povezanih uređaja</string>
     <plurals name="hotspot_peers_connected">
-        <item quantity="one"></item>
+        <item quantity="one"/>
         <item quantity="few">%s uređaja povezano</item>
         <item quantity="other">%s uređaja povezano</item>
     </plurals>
@@ -1016,27 +1016,27 @@
     <string name="offline_maps_clearnet_url">https://anonomi.org/maps/</string>
     <string name="offline_maps_onion_url">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/maps/</string>
     <plurals name="forum_post_notification_text">
-        <item quantity="one"></item>
+        <item quantity="one"/>
         <item quantity="few">%d nove objave na forumu.</item>
         <item quantity="other">%d nove objave na forumu.</item>
     </plurals>
     <plurals name="blog_post_notification_text">
-        <item quantity="one"></item>
+        <item quantity="one"/>
         <item quantity="few">%d novih objava na blogu.</item>
         <item quantity="other">%d novih objava na blogu.</item>
     </plurals>
     <plurals name="duration_hours">
-        <item quantity="one"></item>
+        <item quantity="one"/>
         <item quantity="few">%d sati</item>
         <item quantity="other">%d sati</item>
     </plurals>
     <plurals name="duration_days">
-        <item quantity="one"></item>
+        <item quantity="one"/>
         <item quantity="few">%d dana</item>
         <item quantity="other">%d dana</item>
     </plurals>
     <plurals name="contact_added_notification_text">
-        <item quantity="one"></item>
+        <item quantity="one"/>
         <item quantity="few">Dodano je %d novih kontakata.</item>
         <item quantity="other">Dodano je %d novih kontakata.</item>
     </plurals>
@@ -1048,4 +1048,15 @@
     <string name="hotspot_help_fallback_title">Ništa ne funkcioniše?</string>
     <string name="removable_drive_error_receive_title">Greška pri uvozu podataka</string>
     <string name="play">Igraj</string>
+    <string name="walkie_talkie_mode">Voki-toki</string>
+    <string name="walkie_talkie_enabled">Omogućen je način rada voki-tokija</string>
+    <string name="walkie_talkie_disabled">Walkie-Talkie način rada onemogućen</string>
+    <string name="walkie_talkie_bar_text">Walkie-Talkie način rada</string>
+    <string name="walkie_talkie_recording">Snimanje…</string>
+    <string name="walkie_talkie_playing">Svira: %s</string>
+    <string name="ptt_button_title">Dugme za razgovor</string>
+    <string name="ptt_button_volume_up">Pojačavanje zvuka</string>
+    <string name="ptt_button_volume_down">Smanjivanje jačine zvuka</string>
+    <string name="ptt_conflict_message">Ovo dugme je u sukobu sa vašom sekvencom za okidanje panike.</string>
+    <string name="panic_conflict_ptt">Konflikt sa dugmetom Pritisni za razgovor. Prvo to promijenite u Postavkama.</string>
 </resources>

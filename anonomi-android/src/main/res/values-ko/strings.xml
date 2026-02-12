@@ -1024,4 +1024,15 @@
     <string name="recording_cancelled">녹화 취소됨</string>
     <string name="distorted_voice_checkbox">왜곡된 오디오 메시지</string>
     <string name="audio_sent">음성 파일 전송 완료!</string>
+    <string name="walkie_talkie_mode">무전기</string>
+    <string name="walkie_talkie_enabled">무전기 모드 활성화됨</string>
+    <string name="walkie_talkie_disabled">무전기 모드 비활성화됨</string>
+    <string name="walkie_talkie_bar_text">무전기 모드</string>
+    <string name="walkie_talkie_recording">녹음…</string>
+    <string name="walkie_talkie_playing">재생 중: %s</string>
+    <string name="ptt_button_title">푸시 투 토크 버튼</string>
+    <string name="ptt_button_volume_up">볼륨 높이기</string>
+    <string name="ptt_button_volume_down">볼륨 낮추기</string>
+    <string name="ptt_conflict_message">이 버튼은 패닉 트리거 시퀀스와 충돌합니다.</string>
+    <string name="panic_conflict_ptt">푸시 투 토크 버튼과 충돌합니다. 먼저 설정에서 변경하세요.</string>
 </resources>

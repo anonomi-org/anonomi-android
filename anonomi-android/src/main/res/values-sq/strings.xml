@@ -1071,4 +1071,15 @@ Anonomi-i i përdor ato paralelisht.</string>
     <string name="microphone_permission_required">Kërkohet leje për mikrofonin</string>
     <string name="image_sent">Imazhi u dërgua</string>
     <string name="image_compression_failed">Kompresimi i imazhit dështoi</string>
+    <string name="walkie_talkie_mode">Radio me kabëll</string>
+    <string name="walkie_talkie_enabled">Modaliteti \"Walkie-Talkie\" është aktivizuar</string>
+    <string name="walkie_talkie_disabled">Modaliteti \"Walkie-Talkie\" është çaktivizuar</string>
+    <string name="walkie_talkie_bar_text">Modaliteti i radios</string>
+    <string name="walkie_talkie_recording">Duke regjistruar…</string>
+    <string name="walkie_talkie_playing">Duke luajtur: %s</string>
+    <string name="ptt_button_title">Butoni \"Shtyp për të folur\"</string>
+    <string name="ptt_button_volume_up">Volumi lart</string>
+    <string name="ptt_button_volume_down">Ulja e volumit</string>
+    <string name="ptt_conflict_message">Ky buton bie ndesh me sekuencën tuaj të Shkaktuesit të Panikut.</string>
+    <string name="panic_conflict_ptt">Konflikte me butonin Push-to-Fol. Ndryshoje fillimisht te Cilësimet.</string>
 </resources>

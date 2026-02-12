@@ -1038,4 +1038,15 @@
     <string name="recording_cancelled">Grabaketa bertan behera utzi da</string>
     <string name="distorted_voice_checkbox">Audio-mezuak distortsionatuta</string>
     <string name="audio_sent">Audioa bidalita!</string>
+    <string name="walkie_talkie_mode">Walkie-talkie</string>
+    <string name="walkie_talkie_enabled">Walkie-Talkie modua gaituta</string>
+    <string name="walkie_talkie_disabled">Walkie-Talkie modua desgaituta</string>
+    <string name="walkie_talkie_bar_text">Walkie-Talkie modua</string>
+    <string name="walkie_talkie_recording">Grabatzen…</string>
+    <string name="walkie_talkie_playing">Jolasten: %s</string>
+    <string name="ptt_button_title">Sakatu hitz egiteko botoia</string>
+    <string name="ptt_button_volume_up">Bolumena igo</string>
+    <string name="ptt_button_volume_down">Bolumena jaitsi</string>
+    <string name="ptt_conflict_message">Botoi honek zure Panic Trigger sekuentziarekin gatazkan jartzen du.</string>
+    <string name="panic_conflict_ptt">Gatazkak sortzen ditu Sakatu eta hitz egiteko botoiarekin. Aldatu lehenik Ezarpenetan.</string>
 </resources>

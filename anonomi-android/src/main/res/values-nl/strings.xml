@@ -1046,4 +1046,15 @@
     <string name="hotspot_help_site_3">Als je een firewall-app hebt, controleer dan of deze de toegang niet blokkeert.</string>
     <string name="removable_drive_success_receive_text">Alle versleutelde berichten in dit bestand zijn ontvangen.</string>
     <string name="removable_drive_error_send_title">Fout bij het exporteren van gegevens.</string>
+    <string name="walkie_talkie_mode">Walkie-talkie</string>
+    <string name="walkie_talkie_enabled">Walkie-talkie-modus ingeschakeld</string>
+    <string name="walkie_talkie_disabled">Walkie-talkie-modus uitgeschakeld</string>
+    <string name="walkie_talkie_bar_text">Walkie-talkie-modus</string>
+    <string name="walkie_talkie_recording">Opname…</string>
+    <string name="walkie_talkie_playing">Aan het spelen: %s</string>
+    <string name="ptt_button_title">Drukknop voor spraakcommunicatie</string>
+    <string name="ptt_button_volume_up">Volume omhoog</string>
+    <string name="ptt_button_volume_down">Volume omlaag</string>
+    <string name="ptt_conflict_message">Deze knop conflicteert met uw paniektriggersequentie.</string>
+    <string name="panic_conflict_ptt">Conflicteert met de Push-to-Talk-knop. Wijzig dit eerst in de instellingen.</string>
 </resources>

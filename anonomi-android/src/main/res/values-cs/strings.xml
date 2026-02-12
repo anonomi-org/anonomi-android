@@ -1087,4 +1087,15 @@
     <string name="image_sent">Obrázek odeslán</string>
     <string name="image_compression_failed">Nepodařilo se zkomprimovat obrázek</string>
     <string name="image_too_large">Obrázek je příliš velký na odeslání</string>
+    <string name="walkie_talkie_mode">Vysílačka</string>
+    <string name="walkie_talkie_enabled">Režim vysílačky povolen</string>
+    <string name="walkie_talkie_disabled">Režim vysílačky deaktivován</string>
+    <string name="walkie_talkie_bar_text">Režim vysílačky</string>
+    <string name="walkie_talkie_recording">Záznam…</string>
+    <string name="walkie_talkie_playing">Hraje: %s</string>
+    <string name="ptt_button_title">Tlačítko pro hovor</string>
+    <string name="ptt_button_volume_up">Zvýšení hlasitosti</string>
+    <string name="ptt_button_volume_down">Snížení hlasitosti</string>
+    <string name="ptt_conflict_message">Toto tlačítko je v konfliktu s vaší sekvencí pro spuštění paniky.</string>
+    <string name="panic_conflict_ptt">Konflikt s tlačítkem Push-to-Talk. Nejprve to změňte v Nastavení.</string>
 </resources>

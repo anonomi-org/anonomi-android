@@ -1074,4 +1074,15 @@
     <string name="image_sent">תמונה נשלחה</string>
     <string name="image_compression_failed">דחיסת התמונה נכשלה</string>
     <string name="image_too_large">התמונה גדולה מדי לשליחה</string>
+    <string name="walkie_talkie_mode">מכשיר קשר</string>
+    <string name="walkie_talkie_enabled">מצב מכשיר קשר מופעל</string>
+    <string name="walkie_talkie_disabled">מצב מכשיר קשר מושבת</string>
+    <string name="walkie_talkie_bar_text">מצב מכשיר קשר</string>
+    <string name="walkie_talkie_recording">הַקלָטָה…</string>
+    <string name="walkie_talkie_playing">מנגן: %s</string>
+    <string name="ptt_button_title">כפתור \"לחצן דיבור\"</string>
+    <string name="ptt_button_volume_up">הגברת עוצמת הקול</string>
+    <string name="ptt_button_volume_down">הנמכת עוצמת הקול</string>
+    <string name="ptt_conflict_message">כפתור זה מתנגש עם רצף הפעלת הפאניקה שלך.</string>
+    <string name="panic_conflict_ptt">מתנגש עם כפתור ה-Push-to-Talk. שנה אותו תחילה בהגדרות.</string>
 </resources>

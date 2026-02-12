@@ -1081,4 +1081,15 @@
     <string name="distortion_failed">Distorsiunea a eșuat</string>
     <string name="voice_sent">Voce trimisă</string>
     <string name="image_sent">Imagine trimisă</string>
+    <string name="walkie_talkie_mode">Stație de emisie-recepție</string>
+    <string name="walkie_talkie_enabled">Modul walkie-talkie activat</string>
+    <string name="walkie_talkie_disabled">Modul walkie-talkie dezactivat</string>
+    <string name="walkie_talkie_bar_text">Modul walkie-talkie</string>
+    <string name="walkie_talkie_recording">Înregistrare…</string>
+    <string name="walkie_talkie_playing">Se joacă: %s</string>
+    <string name="ptt_button_title">Buton Apasă-și-vorbește</string>
+    <string name="ptt_button_volume_up">Mărire volum</string>
+    <string name="ptt_button_volume_down">Reducere volum</string>
+    <string name="ptt_conflict_message">Acest buton intră în conflict cu secvența de declanșare a panicii.</string>
+    <string name="panic_conflict_ptt">Conflict cu butonul Apasă și vorbește. Schimbați-l mai întâi în Setări.</string>
 </resources>

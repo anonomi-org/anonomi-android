@@ -1051,4 +1051,15 @@
     <string name="image_sent">画像を送信しました</string>
     <string name="image_compression_failed">画像の圧縮に失敗しました</string>
     <string name="image_too_large">画像が大きすぎて送信できません</string>
+    <string name="walkie_talkie_mode">トランシーバー</string>
+    <string name="walkie_talkie_enabled">トランシーバーモードが有効</string>
+    <string name="walkie_talkie_disabled">トランシーバーモードが無効</string>
+    <string name="walkie_talkie_bar_text">トランシーバーモード</string>
+    <string name="walkie_talkie_recording">録音中…</string>
+    <string name="walkie_talkie_playing">再生中: %s</string>
+    <string name="ptt_button_title">プッシュ・トゥ・トークボタン</string>
+    <string name="ptt_button_volume_up">音量を上げる</string>
+    <string name="ptt_button_volume_down">音量を下げる</string>
+    <string name="ptt_conflict_message">このボタンはパニック トリガー シーケンスと競合します。</string>
+    <string name="panic_conflict_ptt">プッシュ・トゥ・トークボタンと競合しています。まず設定で変更してください。</string>
 </resources>

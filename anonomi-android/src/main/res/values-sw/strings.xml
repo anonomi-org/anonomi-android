@@ -1048,4 +1048,15 @@ Umepoteza nenosiri.</string>
     <string name="conversion_failed">Ubadilishaji umeshindwa</string>
     <string name="processing_error">Hitilafu ya usindikaji</string>
     <string name="unsupported_file_type">Aina ya faili isiyotumika</string>
+    <string name="walkie_talkie_mode">Walkie-Talkie</string>
+    <string name="walkie_talkie_enabled">Hali ya Walkie-Talkie imewashwa</string>
+    <string name="walkie_talkie_disabled">Hali ya Walkie-Talkie imezimwa</string>
+    <string name="walkie_talkie_bar_text">Hali ya Kuzungumza kwa Watembea kwa Miguu</string>
+    <string name="walkie_talkie_recording">Inarekodi…</string>
+    <string name="walkie_talkie_playing">Inacheza: %s</string>
+    <string name="ptt_button_title">Kitufe cha Kusukuma Ili Kuzungumza</string>
+    <string name="ptt_button_volume_up">Ongeza Sauti</string>
+    <string name="ptt_button_volume_down">Punguza Sauti</string>
+    <string name="ptt_conflict_message">Kitufe hiki kinapingana na mfuatano wako wa Kichochezi cha Panic.</string>
+    <string name="panic_conflict_ptt">Inakinzana na kitufe cha Push-to-Talk. Kibadilishe katika Mipangilio kwanza.</string>
 </resources>

@@ -1045,4 +1045,15 @@ parteja pas amb degun.</string>
     <string name="mailbox_status_failure_title">Bóstia de corrièr es pas disponibla</string>
     <string name="hotspot_help_wifi_3">Reaviatz lo telefòn qu\'executa lo punt d\'accès Wi-Fi, puèi aviatz Anonomi Messenger e ensajatz de partejar tornarmai.</string>
     <string name="removable_drive_success_receive_title">Importacion capitada</string>
+    <string name="walkie_talkie_mode">Walkie-Talkie</string>
+    <string name="walkie_talkie_enabled">Lo mòde Walkie-Talkie activat</string>
+    <string name="walkie_talkie_disabled">Lo mòde Walkie-Talkie desactivat</string>
+    <string name="walkie_talkie_bar_text">Mòde Walkie-Talkie</string>
+    <string name="walkie_talkie_recording">Enregistrament…</string>
+    <string name="walkie_talkie_playing">En jogant: %s</string>
+    <string name="ptt_button_title">Boton de pression per parlar</string>
+    <string name="ptt_button_volume_up">Aumentar lo volum</string>
+    <string name="ptt_button_volume_down">Reduire lo volum</string>
+    <string name="ptt_conflict_message">Aqueste boton es en conflicte amb vòstra sequéncia de Panic Trigger.</string>
+    <string name="panic_conflict_ptt">Conflictes amb lo boton Push-to-Talk. Cambiatz-lo dins los Paramètres d\'en primièr.</string>
 </resources>

@@ -1100,4 +1100,15 @@
     <string name="image_sent">Зображення надіслано</string>
     <string name="image_compression_failed">Не вдалося стиснути зображення</string>
     <string name="image_too_large">Зображення занадто велике для надсилання</string>
+    <string name="walkie_talkie_mode">Рація</string>
+    <string name="walkie_talkie_enabled">Режим рації увімкнено</string>
+    <string name="walkie_talkie_disabled">Режим рації вимкнено</string>
+    <string name="walkie_talkie_bar_text">Режим рації</string>
+    <string name="walkie_talkie_recording">Запис…</string>
+    <string name="walkie_talkie_playing">Грає: %s</string>
+    <string name="ptt_button_title">Кнопка «Натисни та говори»</string>
+    <string name="ptt_button_volume_up">Збільшення гучності</string>
+    <string name="ptt_button_volume_down">Зменшення гучності</string>
+    <string name="ptt_conflict_message">Ця кнопка конфліктує з вашою послідовністю спрацьовування паніки.</string>
+    <string name="panic_conflict_ptt">Конфліктує з кнопкою «Натисни та говори». Спочатку змініть це в налаштуваннях.</string>
 </resources>

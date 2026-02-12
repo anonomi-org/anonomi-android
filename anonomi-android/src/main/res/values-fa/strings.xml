@@ -1111,4 +1111,15 @@ Anonomi (برایر) موقعیت شما را ذخیره نمی‌کند و آن
     <string name="pause">مکث</string>
     <string name="voice_record">ضبط صدا</string>
     <string name="recording_cancelled">ضبط لغو شد</string>
+    <string name="walkie_talkie_mode">واکی تاکی</string>
+    <string name="walkie_talkie_enabled">حالت واکی تاکی فعال است</string>
+    <string name="walkie_talkie_disabled">حالت واکی تاکی غیرفعال است</string>
+    <string name="walkie_talkie_bar_text">حالت واکی تاکی</string>
+    <string name="walkie_talkie_recording">در حال ضبط…</string>
+    <string name="walkie_talkie_playing">در حال پخش: %s</string>
+    <string name="ptt_button_title">دکمه فشاری برای صحبت</string>
+    <string name="ptt_button_volume_up">افزایش صدا</string>
+    <string name="ptt_button_volume_down">کاهش صدا</string>
+    <string name="ptt_conflict_message">این دکمه با توالی Panic Trigger شما تداخل دارد.</string>
+    <string name="panic_conflict_ptt">با دکمه‌ی «فشار برای صحبت» تداخل دارد. ابتدا آن را در تنظیمات تغییر دهید.</string>
 </resources>

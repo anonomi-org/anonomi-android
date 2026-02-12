@@ -1038,4 +1038,15 @@
     <string name="recording_timer">%1$d सेकंड</string>
     <string name="recording_max_reached">अधिकतम: 12 सेकंड</string>
     <string name="scan_qr_code">स्कैन क्यू आर कोड</string>
+    <string name="walkie_talkie_mode">वॉकी टॉकी</string>
+    <string name="walkie_talkie_enabled">वॉकी-टॉकी मोड चालू है</string>
+    <string name="walkie_talkie_disabled">वॉकी-टॉकी मोड अक्षम है</string>
+    <string name="walkie_talkie_bar_text">वॉकी-टॉकी मोड</string>
+    <string name="walkie_talkie_recording">रिकॉर्डिंग…</string>
+    <string name="walkie_talkie_playing">चल रहा है: %s</string>
+    <string name="ptt_button_title">पुश-टू-टॉक बटन</string>
+    <string name="ptt_button_volume_up">आवाज बढ़ाएं</string>
+    <string name="ptt_button_volume_down">नीची मात्रा</string>
+    <string name="ptt_conflict_message">यह बटन आपके पैनिक ट्रिगर अनुक्रम के साथ असंगत है।</string>
+    <string name="panic_conflict_ptt">पुश-टू-टॉक बटन के साथ समस्या आ रही है। कृपया पहले सेटिंग्स में जाकर इसे बदलें।</string>
 </resources>

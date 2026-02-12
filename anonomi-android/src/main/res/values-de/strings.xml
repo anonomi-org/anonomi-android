@@ -1065,4 +1065,15 @@
     <string name="image_sent">Bild gesendet</string>
     <string name="image_compression_failed">Bild konnte nicht komprimiert werden</string>
     <string name="image_too_large">Bild ist zu groß zum Senden</string>
+    <string name="walkie_talkie_mode">Walkie-Talkie</string>
+    <string name="walkie_talkie_enabled">Walkie-Talkie-Modus aktiviert</string>
+    <string name="walkie_talkie_disabled">Walkie-Talkie-Modus deaktiviert</string>
+    <string name="walkie_talkie_bar_text">Walkie-Talkie-Modus</string>
+    <string name="walkie_talkie_recording">Aufnahme…</string>
+    <string name="walkie_talkie_playing">Wiedergabe: %s</string>
+    <string name="ptt_button_title">Sprechtaste</string>
+    <string name="ptt_button_volume_up">Lautstärke erhöhen</string>
+    <string name="ptt_button_volume_down">Lautstärke verringern</string>
+    <string name="ptt_conflict_message">Diese Taste steht im Konflikt mit Ihrer Panik-Auslösesequenz.</string>
+    <string name="panic_conflict_ptt">Konflikte mit der Push-to-Talk-Taste. Bitte zuerst in den Einstellungen ändern.</string>
 </resources>

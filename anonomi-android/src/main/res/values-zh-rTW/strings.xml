@@ -1057,4 +1057,15 @@
     <string name="recording_max_reached">最長：12 秒</string>
     <string name="scan_qr_code">掃描二維碼</string>
     <string name="load_qr_code">載入二維碼</string>
+    <string name="walkie_talkie_mode">對講機</string>
+    <string name="walkie_talkie_enabled">對講機模式已啟用</string>
+    <string name="walkie_talkie_disabled">對講機模式已停用</string>
+    <string name="walkie_talkie_bar_text">對講機模式</string>
+    <string name="walkie_talkie_recording">記錄…</string>
+    <string name="walkie_talkie_playing">正在播放：%s</string>
+    <string name="ptt_button_title">對講按鈕</string>
+    <string name="ptt_button_volume_up">音量調高</string>
+    <string name="ptt_button_volume_down">音量調低</string>
+    <string name="ptt_conflict_message">此按鈕與您的緊急觸發序列衝突。</string>
+    <string name="panic_conflict_ptt">與一鍵通按鈕衝突。請先在設定中更改。</string>
 </resources>
