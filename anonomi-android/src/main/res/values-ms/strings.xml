@@ -981,4 +981,15 @@
     <string name="unsupported_file_type">Jenis fail yang tidak disokong</string>
     <string name="recording_too_short">Audio terlalu pendek, mengabaikan penghantaran</string>
     <string name="slide_to_cancel_with_timer">Rakaman... Luncur untuk membatalkan – %1$d/12s</string>
+    <string name="walkie_talkie_mode">Walkie-Talkie</string>
+    <string name="walkie_talkie_enabled">Mod Walkie-Talkie diaktifkan</string>
+    <string name="walkie_talkie_disabled">Mod Walkie-Talkie dinyahdayakan</string>
+    <string name="walkie_talkie_bar_text">Mod Walkie-Talkie</string>
+    <string name="walkie_talkie_recording">Rakaman…</string>
+    <string name="walkie_talkie_playing">Bermain: %s</string>
+    <string name="ptt_button_title">Butang Tekan untuk Bercakap</string>
+    <string name="ptt_button_volume_up">Naikkan Kelantangan</string>
+    <string name="ptt_button_volume_down">Kelantangan Rendah</string>
+    <string name="ptt_conflict_message">Butang ini bercanggah dengan urutan Pencetus Panik anda.</string>
+    <string name="panic_conflict_ptt">Berkonflik dengan butang Tekan untuk Bercakap. Tukarkannya dalam Tetapan terlebih dahulu.</string>
 </resources>
