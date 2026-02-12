@@ -1061,4 +1061,15 @@
     <string name="mailbox_error_notification_channel_title">Vandamál með nafnlausan póstkassa</string>
     <string name="mailbox_error_notification_text">Ýttu til að laga vandamálið.</string>
     <string name="permission_hotspot_nearby_wifi_request_body">Til að búa til Wi-Fi netkerfi þarf Anonomi Messenger aðgang að tækjum í nágrenninu.</string>
+    <string name="walkie_talkie_mode">Talstöð</string>
+    <string name="walkie_talkie_enabled">Walkie-Talkie-stilling virk</string>
+    <string name="walkie_talkie_disabled">Talstöðvastilling óvirk</string>
+    <string name="walkie_talkie_bar_text">Walkie-Talkie stilling</string>
+    <string name="walkie_talkie_recording">Upptaka…</string>
+    <string name="walkie_talkie_playing">Spilar: %s</string>
+    <string name="ptt_button_title">Talhnappur</string>
+    <string name="ptt_button_volume_up">Hljóðstyrkur hækkaður</string>
+    <string name="ptt_button_volume_down">Lækkaðu hljóðstyrkinn</string>
+    <string name="ptt_conflict_message">Þessi hnappur stangast á við Panic Trigger-röðina þína.</string>
+    <string name="panic_conflict_ptt">Rekast á við ýta-til-að-tala hnappinn. Breyttu því fyrst í stillingum.</string>
 </resources>
