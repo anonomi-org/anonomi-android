@@ -1067,4 +1067,15 @@
     <string name="recording_cancelled">Kayıt iptal edildi</string>
     <string name="distorted_voice_checkbox">Bozuk Sesli Mesajlar</string>
     <string name="audio_sent">Ses kaydı gönderildi!</string>
+    <string name="walkie_talkie_mode">Telsiz</string>
+    <string name="walkie_talkie_enabled">Telsiz modu etkinleştirildi</string>
+    <string name="walkie_talkie_disabled">Telsiz modu devre dışı bırakıldı</string>
+    <string name="walkie_talkie_bar_text">Telsiz Modu</string>
+    <string name="walkie_talkie_recording">Kayıt…</string>
+    <string name="walkie_talkie_playing">Oynatılıyor: %s</string>
+    <string name="ptt_button_title">Bas-Konuş Düğmesi</string>
+    <string name="ptt_button_volume_up">Sesi Yükselt</string>
+    <string name="ptt_button_volume_down">Ses Kısma</string>
+    <string name="ptt_conflict_message">Bu düğme, panik tetikleme dizinizle çakışıyor.</string>
+    <string name="panic_conflict_ptt">Bas-konuş düğmesiyle çakışma var. Öncelikle Ayarlar\'dan değiştirin.</string>
 </resources>
