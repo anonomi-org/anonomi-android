@@ -1059,4 +1059,15 @@
     <string name="image_sent">Изображението е изпратено</string>
     <string name="image_compression_failed">Компресирането на изображението не бе успешно</string>
     <string name="image_too_large">Изображението е твърде голямо за изпращане</string>
+    <string name="walkie_talkie_mode">Уоки-токи</string>
+    <string name="walkie_talkie_enabled">Режимът на уоки-токи е активиран</string>
+    <string name="walkie_talkie_disabled">Режимът на уоки-токи е деактивиран</string>
+    <string name="walkie_talkie_bar_text">Режим на уоки-токи</string>
+    <string name="walkie_talkie_recording">Записване…</string>
+    <string name="walkie_talkie_playing">Възпроизвежда се: %s</string>
+    <string name="ptt_button_title">Бутон „Натисни и говори“</string>
+    <string name="ptt_button_volume_up">Увеличаване на звука</string>
+    <string name="ptt_button_volume_down">Намаляване на звука</string>
+    <string name="ptt_conflict_message">Този бутон е в конфликт с вашата последователност за задействане на паника.</string>
+    <string name="panic_conflict_ptt">Конфликт с бутона „Натисни и говори“. Първо го променете в „Настройки“.</string>
 </resources>
