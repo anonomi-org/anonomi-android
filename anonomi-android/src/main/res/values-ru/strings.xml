@@ -1095,4 +1095,15 @@
     <string name="audio_sent">Аудио отправлено!</string>
     <string name="audio_send_failed">Не удалось отправить аудио.</string>
     <string name="recording_error">Ошибка записи</string>
+    <string name="walkie_talkie_mode">Рация</string>
+    <string name="walkie_talkie_enabled">Включен режим рации</string>
+    <string name="walkie_talkie_disabled">Режим рации отключен</string>
+    <string name="walkie_talkie_bar_text">Режим рации</string>
+    <string name="walkie_talkie_recording">Запись…</string>
+    <string name="walkie_talkie_playing">Играет: %s</string>
+    <string name="ptt_button_title">Кнопка \"Нажми и говори\"</string>
+    <string name="ptt_button_volume_up">Увеличение громкости</string>
+    <string name="ptt_button_volume_down">Уменьшить громкость</string>
+    <string name="ptt_conflict_message">Эта кнопка конфликтует с вашей последовательностью срабатывания триггера паники.</string>
+    <string name="panic_conflict_ptt">Конфликт с кнопкой \"Нажми и говори\". Сначала измените это в настройках.</string>
 </resources>
