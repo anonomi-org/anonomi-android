@@ -1096,4 +1096,15 @@ Brak dostępu do aparatu. Spróbuj ponownie, może po ponownym uruchomieniu urz�
     <string name="image_sent">Wysłano obraz</string>
     <string name="image_compression_failed">Nie udało się skompresować obrazu</string>
     <string name="image_too_large">Obraz jest za duży, aby go wysłać</string>
+    <string name="walkie_talkie_mode">Walkie-Talkie</string>
+    <string name="walkie_talkie_enabled">Włączony tryb walkie-talkie</string>
+    <string name="walkie_talkie_disabled">Tryb walkie-talkie wyłączony</string>
+    <string name="walkie_talkie_bar_text">Tryb walkie-talkie</string>
+    <string name="walkie_talkie_recording">Nagranie…</string>
+    <string name="walkie_talkie_playing">Odtwarzanie: %s</string>
+    <string name="ptt_button_title">Przycisk „Naciśnij i mów”</string>
+    <string name="ptt_button_volume_up">Zwiększ głośność</string>
+    <string name="ptt_button_volume_down">Zmniejszenie głośności</string>
+    <string name="ptt_conflict_message">Ten przycisk koliduje z sekwencją wyzwalacza paniki.</string>
+    <string name="panic_conflict_ptt">Konflikt z przyciskiem „Naciśnij i mów”. Zmień to najpierw w Ustawieniach.</string>
 </resources>
