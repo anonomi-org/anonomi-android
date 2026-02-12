@@ -1068,4 +1068,15 @@ Installera först Anonomi Postbox-appen på en annan enhet genom att hämta den 
     <string name="recording_max_reached">Max: 12 sek</string>
     <string name="scan_qr_code">Skanna QR-koden</string>
     <string name="load_qr_code">Ladda QR-kod</string>
+    <string name="walkie_talkie_mode">Walkie-talkie</string>
+    <string name="walkie_talkie_enabled">Walkie-talkie-läge aktiverat</string>
+    <string name="walkie_talkie_disabled">Walkie-talkie-läge inaktiverat</string>
+    <string name="walkie_talkie_bar_text">Walkie-talkie-läge</string>
+    <string name="walkie_talkie_recording">Inspelning…</string>
+    <string name="walkie_talkie_playing">Spelar: %s</string>
+    <string name="ptt_button_title">Push-to-Talk-knapp</string>
+    <string name="ptt_button_volume_up">Volym upp</string>
+    <string name="ptt_button_volume_down">Volym ned</string>
+    <string name="ptt_conflict_message">Den här knappen står i konflikt med din panikutlösarsekvens.</string>
+    <string name="panic_conflict_ptt">Konflikt med Push-to-Talk-knappen. Ändra det i Inställningarna först.</string>
 </resources>
