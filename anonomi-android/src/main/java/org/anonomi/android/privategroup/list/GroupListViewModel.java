@@ -1,6 +1,7 @@
 package org.anonomi.android.privategroup.list;
 
 import android.app.Application;
+import android.content.Context;
 
 import org.anonchatsecure.bramble.api.db.DatabaseExecutor;
 import org.anonchatsecure.bramble.api.db.DbException;
@@ -199,6 +200,11 @@ class GroupListViewModel extends DbViewModel implements EventListener {
 				long start = now();
 				groupManager.removePrivateGroup(g);
 				logDuration(LOG, "Removing group", start);
+				getApplication().getSharedPreferences("group_prefs",
+						Context.MODE_PRIVATE).edit()
+						.remove("group_walkie_talkie_" + g.hashCode())
+						.remove("group_voice_distortion_" + g.hashCode())
+						.apply();
 			} catch (DbException e) {
 				handleException(e);
 			}

@@ -47,6 +47,9 @@ import java.util.logging.Logger;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 
+import org.anonomi.android.viewmodel.LiveEvent;
+import org.anonomi.android.viewmodel.MutableLiveEvent;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -69,6 +72,8 @@ class GroupViewModel extends ThreadListViewModel<GroupMessageItem> {
 	private final MutableLiveData<Boolean> isCreator = new MutableLiveData<>();
 	private final MutableLiveData<Boolean> isDissolved =
 			new MutableLiveData<>();
+	private final MutableLiveEvent<android.util.Pair<byte[], String>>
+			autoPlayAudio = new MutableLiveEvent<>();
 
 	@Inject
 	GroupViewModel(Application application,
@@ -113,6 +118,15 @@ class GroupViewModel extends ThreadListViewModel<GroupMessageItem> {
 					item = buildItem(g.getHeader(), g.getText());
 				}
 				addItem(item, false);
+				// Fire auto-play event for walkie-talkie
+				if (g.getAudioData() != null
+						&& g.getAudioContentType() != null
+						&& g.getAudioContentType()
+								.startsWith("audio/")) {
+					String name = g.getHeader().getAuthor().getName();
+					autoPlayAudio.postEvent(
+							new android.util.Pair<>(g.getAudioData(), name));
+				}
 				// In case the join message comes from the creator,
 				// we need to reload the sharing contacts
 				// in case it was delayed and the sharing count is wrong (#850).
@@ -415,6 +429,10 @@ class GroupViewModel extends ThreadListViewModel<GroupMessageItem> {
 
 	LiveData<Boolean> isDissolved() {
 		return isDissolved;
+	}
+
+	LiveEvent<android.util.Pair<byte[], String>> getAutoPlayAudio() {
+		return autoPlayAudio;
 	}
 
 	@Nullable

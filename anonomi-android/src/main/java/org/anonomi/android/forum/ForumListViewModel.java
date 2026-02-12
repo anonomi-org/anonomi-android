@@ -1,6 +1,7 @@
 package org.anonomi.android.forum;
 
 import android.app.Application;
+import android.content.Context;
 import android.widget.Toast;
 
 import org.anonchatsecure.bramble.api.contact.event.ContactRemovedEvent;
@@ -188,6 +189,11 @@ class ForumListViewModel extends DbViewModel implements EventListener {
 			try {
 				Forum f = forumManager.getForum(groupId);
 				forumManager.removeForum(f);
+				getApplication().getSharedPreferences("forum_prefs",
+						Context.MODE_PRIVATE).edit()
+						.remove("forum_walkie_talkie_" + groupId.hashCode())
+						.remove("forum_voice_distortion_" + groupId.hashCode())
+						.apply();
 				androidExecutor.runOnUiThread(() -> Toast
 						.makeText(getApplication(), R.string.forum_left_toast,
 								LENGTH_SHORT).show());

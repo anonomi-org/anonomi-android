@@ -4,12 +4,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import org.anonomi.R;
 import org.anonomi.android.mailbox.MailboxActivity;
+import org.anonomi.android.panic.PanicSequenceDetector;
+import org.anonomi.android.util.SecurePrefsManager;
 import org.briarproject.nullsafety.MethodsNotNullByDefault;
 import org.briarproject.nullsafety.ParametersNotNullByDefault;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -21,6 +27,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceGroup;
@@ -41,6 +48,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 	private static final String PREF_KEY_DEV = "pref_key_dev";
 	private static final String PREF_KEY_EXPLODE = "pref_key_explode";
 	private static final String PREF_KEY_MAILBOX = "pref_key_mailbox";
+	private static final String PREF_KEY_PTT_BUTTON = "pref_key_ptt_button";
 
 	private static final String DOWNLOAD_URL = "https://anon/download/";
 
@@ -103,6 +111,23 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 			prefFeedback.setVisible(false);
 		}
 
+		// PTT button preference
+		ListPreference pttPref = findPreference(PREF_KEY_PTT_BUTTON);
+		if (pttPref != null) {
+			updatePttSummary(pttPref, pttPref.getValue());
+			pttPref.setOnPreferenceChangeListener((pref, newValue) -> {
+				String value = (String) newValue;
+				if (isPttConflictWithPanic(value)) {
+					Toast.makeText(requireContext(),
+							R.string.ptt_conflict_message,
+							Toast.LENGTH_LONG).show();
+					return false;
+				}
+				updatePttSummary((ListPreference) pref, value);
+				return true;
+			});
+		}
+
 		// Developer-only crash option
 		Preference explode = requireNonNull(findPreference(PREF_KEY_EXPLODE));
 		if (IS_DEBUG_BUILD) {
@@ -132,5 +157,37 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 		if (uri == null) return;
 		DialogFragment dialog = ConfirmAvatarDialogFragment.newInstance(uri);
 		dialog.show(getParentFragmentManager(), ConfirmAvatarDialogFragment.TAG);
+	}
+
+	private void updatePttSummary(ListPreference pref, String value) {
+		if ("volume_down".equals(value)) {
+			pref.setSummary(R.string.ptt_button_volume_down);
+		} else {
+			pref.setSummary(R.string.ptt_button_volume_up);
+		}
+	}
+
+	private boolean isPttConflictWithPanic(String pttValue) {
+		SecurePrefsManager securePrefs =
+				new SecurePrefsManager(requireContext());
+		String enabledStr = securePrefs.getDecrypted(
+				PanicSequenceDetector.PREF_KEY_PANIC_ENABLED);
+		boolean panicEnabled =
+				enabledStr == null || "true".equals(enabledStr);
+		if (!panicEnabled) return false;
+
+		String raw = securePrefs.getDecrypted(
+				PanicSequenceDetector.PREF_KEY_PANIC_SEQUENCE);
+		if (raw == null || raw.isEmpty()) return false;
+
+		List<PanicSequenceDetector.Step> steps =
+				PanicSequenceDetector.deserializeSequence(raw);
+		if (steps.isEmpty()) return false;
+
+		int firstButton = steps.get(0).button;
+		int pttKeyCode = "volume_down".equals(pttValue)
+				? KeyEvent.KEYCODE_VOLUME_DOWN
+				: KeyEvent.KEYCODE_VOLUME_UP;
+		return firstButton == pttKeyCode;
 	}
 }

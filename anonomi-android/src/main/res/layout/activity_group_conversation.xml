@@ -9,6 +9,17 @@
 
 	<include layout="@layout/toolbar" />
 
+	<TextView
+		android:id="@+id/walkieTalkieBar"
+		android:layout_width="match_parent"
+		android:layout_height="28dp"
+		android:background="?attr/colorPrimary"
+		android:gravity="center"
+		android:text="@string/walkie_talkie_bar_text"
+		android:textColor="@android:color/white"
+		android:textSize="12sp"
+		android:visibility="gone" />
+
 	<FrameLayout
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
