@@ -1055,4 +1055,15 @@
     <string name="distortion_failed">失真失败</string>
     <string name="voice_sent">语音发送</string>
     <string name="image_sent">图片已发送</string>
+    <string name="walkie_talkie_mode">对讲机</string>
+    <string name="walkie_talkie_enabled">对讲机模式已启用</string>
+    <string name="walkie_talkie_disabled">对讲机模式已禁用</string>
+    <string name="walkie_talkie_bar_text">对讲机模式</string>
+    <string name="walkie_talkie_recording">记录…</string>
+    <string name="walkie_talkie_playing">正在播放：%s</string>
+    <string name="ptt_button_title">对讲按钮</string>
+    <string name="ptt_button_volume_up">音量调高</string>
+    <string name="ptt_button_volume_down">音量调低</string>
+    <string name="ptt_conflict_message">此按钮与您的紧急触发序列冲突。</string>
+    <string name="panic_conflict_ptt">与一键通按钮冲突。请先在设置中更改。</string>
 </resources>
