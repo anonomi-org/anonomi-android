@@ -1242,4 +1242,15 @@ Si tu contacto creó el archivo hace más de 28 días, Anonomi no podrá reconoc
     <string name="image_sent">Imagen enviada</string>
     <string name="image_compression_failed">No se pudo comprimir la imagen</string>
     <string name="image_too_large">La imagen es demasiado grande para enviarla</string>
+    <string name="walkie_talkie_mode">Walkie-talkie</string>
+    <string name="walkie_talkie_enabled">Modo Walkie-Talkie habilitado</string>
+    <string name="walkie_talkie_disabled">Modo walkie-talkie deshabilitado</string>
+    <string name="walkie_talkie_bar_text">Modo Walkie-Talkie</string>
+    <string name="walkie_talkie_recording">Grabación…</string>
+    <string name="walkie_talkie_playing">Jugando: %s</string>
+    <string name="ptt_button_title">Botón pulsar para hablar</string>
+    <string name="ptt_button_volume_up">Subir volumen</string>
+    <string name="ptt_button_volume_down">Bajar el volumen</string>
+    <string name="ptt_conflict_message">Este botón entra en conflicto con la secuencia de activación del pánico.</string>
+    <string name="panic_conflict_ptt">Hay conflictos con el botón Pulsar para hablar. Cámbielo primero en Configuración.</string>
 </resources>
