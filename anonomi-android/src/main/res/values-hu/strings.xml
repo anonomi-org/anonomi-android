@@ -1065,4 +1065,15 @@ Vigyázat: Ez végleg törli az identitásait, kapcsolatait és üzeneteit</stri
     <string name="image_sent">Kép elküldve</string>
     <string name="image_compression_failed">Nem sikerült tömöríteni a képet</string>
     <string name="image_too_large">A kép túl nagy a küldéshez</string>
+    <string name="walkie_talkie_mode">Rádióadó</string>
+    <string name="walkie_talkie_enabled">Rádió-talkie mód engedélyezve</string>
+    <string name="walkie_talkie_disabled">Rádió-talkie mód letiltva</string>
+    <string name="walkie_talkie_bar_text">Rádióadó mód</string>
+    <string name="walkie_talkie_recording">Felvétel…</string>
+    <string name="walkie_talkie_playing">Játszik: %s</string>
+    <string name="ptt_button_title">Push-to-Talk gomb</string>
+    <string name="ptt_button_volume_up">Hangerő növelése</string>
+    <string name="ptt_button_volume_down">Hangerő csökkentése</string>
+    <string name="ptt_conflict_message">Ez a gomb ütközik a pánikindító szekvenciával.</string>
+    <string name="panic_conflict_ptt">Ütközik a Push-to-Talk gombbal. Először módosítsa a beállításokban.</string>
 </resources>
