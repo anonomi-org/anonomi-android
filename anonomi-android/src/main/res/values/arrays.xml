@@ -145,6 +145,15 @@
 		<item>604800000</item>      <!-- 7 days -->
 	</integer-array>
 
+	<string-array name="ptt_button_entries">
+		<item>@string/ptt_button_volume_up</item>
+		<item>@string/ptt_button_volume_down</item>
+	</string-array>
+	<string-array name="ptt_button_values">
+		<item>volume_up</item>
+		<item>volume_down</item>
+	</string-array>
+
 	<string-array name="panic_action_entries">
 		<item>@string/panic_option_sign_out</item>
 		<item>@string/panic_option_delete_account</item>

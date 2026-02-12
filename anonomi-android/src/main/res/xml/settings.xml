@@ -24,6 +24,14 @@
 		app:fragment="org.anonomi.android.settings.NotificationsFragment"
 		app:icon="@drawable/ic_notifications" />
 
+	<ListPreference
+		android:key="pref_key_ptt_button"
+		android:title="@string/ptt_button_title"
+		android:entries="@array/ptt_button_entries"
+		android:entryValues="@array/ptt_button_values"
+		android:defaultValue="volume_up"
+		app:icon="@drawable/ic_walkie_talkie" />
+
 	<Preference
 		android:key="pref_key_mailbox"
 		android:title="@string/mailbox_settings_title"

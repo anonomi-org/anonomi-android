@@ -44,6 +44,17 @@
 
 	</com.google.android.material.appbar.AppBarLayout>
 
+	<TextView
+		android:id="@+id/walkieTalkieBar"
+		android:layout_width="match_parent"
+		android:layout_height="28dp"
+		android:background="?attr/colorPrimary"
+		android:gravity="center"
+		android:text="@string/walkie_talkie_bar_text"
+		android:textColor="@android:color/white"
+		android:textSize="12sp"
+		android:visibility="gone" />
+
 	<org.anonomi.android.view.BriarRecyclerView
 		android:id="@+id/conversationView"
 		android:layout_width="match_parent"

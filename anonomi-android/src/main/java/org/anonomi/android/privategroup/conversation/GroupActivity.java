@@ -9,7 +9,10 @@ import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -31,6 +34,7 @@ import org.anonomi.android.map.MapLocationPickerActivity;
 import org.anonomi.android.threaded.ThreadListActivity;
 import org.anonomi.android.threaded.ThreadListViewModel;
 import org.anonomi.android.util.AudioUtils;
+import org.anonomi.android.util.WalkieTalkiePlayer;
 import org.anonomi.android.view.CompositeSendButton;
 import org.anonomi.android.widget.LinkDialogFragment;
 import org.anonchatsecure.bramble.api.sync.MessageId;
@@ -55,6 +59,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
 
 import static org.anonchatsecure.anonchat.api.privategroup.PrivateGroupConstants.MAX_GROUP_IMAGE_SIZE;
 
@@ -72,6 +77,7 @@ public class GroupActivity extends
 
 	private static final int REQUEST_SEND_LOCATION = 2001;
 	private static final String PREF_GROUP_DISTORTION = "group_voice_distortion_";
+	private static final String PREF_GROUP_WALKIE_TALKIE = "group_walkie_talkie_";
 
 	@Inject
 	ViewModelProvider.Factory viewModelFactory;
@@ -89,6 +95,12 @@ public class GroupActivity extends
 	private long recordingStartTime;
 	private final Handler recordingTimerHandler =
 			new Handler(Looper.getMainLooper());
+
+	// Walkie-Talkie
+	private volatile boolean walkieTalkieEnabled = false;
+	private boolean isWalkieTalkieRecording = false;
+	private TextView walkieTalkieBar;
+	private WalkieTalkiePlayer walkieTalkiePlayer;
 
 	private final Runnable recordingTimerRunnable = new Runnable() {
 		@Override
@@ -159,6 +171,27 @@ public class GroupActivity extends
 					GroupMemberListActivity.class);
 			i.putExtra(GROUP_ID, groupId.getBytes());
 			startActivity(i);
+		});
+
+		// Walkie-Talkie init
+		walkieTalkieBar = findViewById(R.id.walkieTalkieBar);
+		walkieTalkiePlayer = new WalkieTalkiePlayer(this);
+		walkieTalkiePlayer.setListener(new WalkieTalkiePlayer.Listener() {
+			@Override
+			public void onPlaybackStarted(String senderName) {
+				setWalkieTalkieBarPlaying(senderName);
+			}
+			@Override
+			public void onAllPlaybackFinished() {
+				setWalkieTalkieBarIdle();
+			}
+		});
+		walkieTalkieEnabled = isWalkieTalkieEnabled();
+		updateWalkieTalkieBar();
+		viewModel.getAutoPlayAudio().observeEvent(this, pair -> {
+			if (walkieTalkieEnabled && pair.first != null) {
+				walkieTalkiePlayer.play(pair.first, pair.second);
+			}
 		});
 
 		String groupName = getIntent().getStringExtra(GROUP_NAME);
@@ -295,6 +328,9 @@ public class GroupActivity extends
 			return true;
 		} else if (itemId == R.id.action_group_voice_distortion) {
 			toggleVoiceDistortion();
+			return true;
+		} else if (itemId == R.id.action_walkie_talkie) {
+			toggleWalkieTalkie();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -650,6 +686,131 @@ public class GroupActivity extends
 		builder.setMessage(getString(R.string.groups_dissolved_dialog_message));
 		builder.setNeutralButton(R.string.ok, null);
 		builder.show();
+	}
+
+	// ---- Walkie-Talkie ----
+
+	private boolean isWalkieTalkieEnabled() {
+		SharedPreferences prefs =
+				getSharedPreferences("group_prefs", MODE_PRIVATE);
+		return prefs.getBoolean(
+				PREF_GROUP_WALKIE_TALKIE + groupId.hashCode(), false);
+	}
+
+	private void toggleWalkieTalkie() {
+		SharedPreferences prefs =
+				getSharedPreferences("group_prefs", MODE_PRIVATE);
+		String key = PREF_GROUP_WALKIE_TALKIE + groupId.hashCode();
+		boolean current = prefs.getBoolean(key, false);
+		prefs.edit().putBoolean(key, !current).apply();
+		walkieTalkieEnabled = !current;
+		updateWalkieTalkieBar();
+		if (!walkieTalkieEnabled) {
+			walkieTalkiePlayer.stop();
+		}
+		Toast.makeText(this, walkieTalkieEnabled
+				? R.string.walkie_talkie_enabled
+				: R.string.walkie_talkie_disabled,
+				Toast.LENGTH_SHORT).show();
+	}
+
+	private void updateWalkieTalkieBar() {
+		if (walkieTalkieBar == null) return;
+		walkieTalkieBar.setVisibility(
+				walkieTalkieEnabled ? View.VISIBLE : View.GONE);
+		setWalkieTalkieBarIdle();
+	}
+
+	private void setWalkieTalkieBarIdle() {
+		if (walkieTalkieBar == null) return;
+		walkieTalkieBar.setText(R.string.walkie_talkie_bar_text);
+		android.util.TypedValue tv = new android.util.TypedValue();
+		getTheme().resolveAttribute(R.attr.colorPrimary, tv, true);
+		walkieTalkieBar.setBackgroundColor(tv.data);
+	}
+
+	private void setWalkieTalkieBarRecording() {
+		if (walkieTalkieBar == null) return;
+		walkieTalkieBar.setText(R.string.walkie_talkie_recording);
+		walkieTalkieBar.setBackgroundColor(
+				androidx.core.content.ContextCompat.getColor(
+						this, R.color.anon_red_500));
+	}
+
+	private void setWalkieTalkieBarPlaying(String senderName) {
+		if (walkieTalkieBar == null) return;
+		walkieTalkieBar.setText(getString(R.string.walkie_talkie_playing,
+				senderName));
+		walkieTalkieBar.setBackgroundColor(
+				androidx.core.content.ContextCompat.getColor(
+						this, R.color.md_theme_tertiary));
+	}
+
+	private int getPttKeyCode() {
+		SharedPreferences prefs =
+				PreferenceManager.getDefaultSharedPreferences(this);
+		String value = prefs.getString("pref_key_ptt_button", "volume_up");
+		return "volume_down".equals(value)
+				? KeyEvent.KEYCODE_VOLUME_DOWN
+				: KeyEvent.KEYCODE_VOLUME_UP;
+	}
+
+	@Override
+	public boolean dispatchKeyEvent(KeyEvent event) {
+		if (walkieTalkieEnabled) {
+			int pttButton = getPttKeyCode();
+			if (event.getKeyCode() == pttButton) {
+				if (event.getAction() == KeyEvent.ACTION_DOWN
+						&& event.getRepeatCount() == 0
+						&& !isWalkieTalkieRecording) {
+					isWalkieTalkieRecording = true;
+					startRecording();
+					vibrateShort();
+					setWalkieTalkieBarRecording();
+					return true;
+				}
+				if (event.getAction() == KeyEvent.ACTION_UP
+						&& isWalkieTalkieRecording) {
+					isWalkieTalkieRecording = false;
+					stopAndSendRecording();
+					vibrateShort();
+					setWalkieTalkieBarIdle();
+					return true;
+				}
+				return true; // consume repeats
+			}
+		}
+		return super.dispatchKeyEvent(event);
+	}
+
+	private void vibrateShort() {
+		Vibrator v = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+		if (v != null) {
+			v.vibrate(VibrationEffect.createOneShot(50,
+					VibrationEffect.DEFAULT_AMPLITUDE));
+		}
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		walkieTalkiePlayer.stop();
+		setWalkieTalkieBarIdle();
+		if (isWalkieTalkieRecording) {
+			isWalkieTalkieRecording = false;
+			cancelRecording();
+		}
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		walkieTalkiePlayer.release();
 	}
 
 }

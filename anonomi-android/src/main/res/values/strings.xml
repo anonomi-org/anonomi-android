@@ -1117,6 +1117,18 @@ Anonomi Messenger is an independent project and is not affiliated with, endorsed
     <string name="slide_to_cancel_with_timer">Recording... Slide to cancel – %1$d/12s</string>
     <string name="recording_timer">%1$d sec</string>
     <string name="recording_max_reached">Max: 12 sec</string>
+    <!-- Walkie-Talkie -->
+    <string name="walkie_talkie_mode">Walkie-Talkie</string>
+    <string name="walkie_talkie_enabled">Walkie-Talkie mode enabled</string>
+    <string name="walkie_talkie_disabled">Walkie-Talkie mode disabled</string>
+    <string name="walkie_talkie_bar_text">Walkie-Talkie Mode</string>
+    <string name="walkie_talkie_recording">Recording…</string>
+    <string name="walkie_talkie_playing">Playing: %s</string>
+    <string name="ptt_button_title">Push-to-Talk Button</string>
+    <string name="ptt_button_volume_up">Volume Up</string>
+    <string name="ptt_button_volume_down">Volume Down</string>
+    <string name="ptt_conflict_message">This button conflicts with your Panic Trigger sequence.</string>
+    <string name="panic_conflict_ptt">Conflicts with Push-to-Talk button. Change it in Settings first.</string>
     <string name="scan_qr_code">Scan QR Code</string>
     <string name="camera_permission_denied">Camera permission denied.</string>
     <string name="load_qr_code">Load QR Code</string>

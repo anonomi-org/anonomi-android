@@ -66,6 +66,7 @@ import org.anonomi.android.view.TextSendController;
 import org.anonomi.android.view.TextSendController.SendState;
 import org.anonomi.android.widget.LinkDialogFragment;
 import org.anonchatsecure.anonchat.api.android.AndroidNotificationManager;
+import org.anonchatsecure.anonchat.api.attachment.Attachment;
 import org.anonchatsecure.anonchat.api.attachment.AttachmentHeader;
 import org.anonchatsecure.anonchat.api.autodelete.event.ConversationMessagesDeletedEvent;
 import org.anonchatsecure.anonchat.api.blog.BlogSharingManager;
@@ -89,17 +90,23 @@ import org.anonomi.android.map.MapViewActivity;
 
 import androidx.activity.result.contract.ActivityResultContracts;
 
+import android.content.SharedPreferences;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
-
+import android.os.VibrationEffect;
+import android.os.Vibrator;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 
 import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.preference.PreferenceManager;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
+import org.anonomi.android.util.WalkieTalkiePlayer;
 import org.anonomi.android.view.CompositeSendButton;
 
 
@@ -268,7 +275,13 @@ public class ConversationActivity extends BriarActivity
 	private Thread recordingThread;
 	private boolean isRecording = false;
 
-
+	// Walkie-Talkie
+	private static final String PREF_WALKIE_TALKIE = "walkie_talkie_";
+	private volatile boolean walkieTalkieEnabled = false;
+	private boolean isWalkieTalkieRecording = false;
+	private volatile String contactDisplayName = "";
+	private TextView walkieTalkieBar;
+	private WalkieTalkiePlayer walkieTalkiePlayer;
 
 	private volatile ContactId contactId;
 
@@ -315,6 +328,21 @@ public class ConversationActivity extends BriarActivity
 
 		setContentView(R.layout.activity_conversation);
 
+		walkieTalkieBar = findViewById(R.id.walkieTalkieBar);
+		walkieTalkiePlayer = new WalkieTalkiePlayer(this);
+		walkieTalkiePlayer.setListener(new WalkieTalkiePlayer.Listener() {
+			@Override
+			public void onPlaybackStarted(String senderName) {
+				setWalkieTalkieBarPlaying(senderName);
+			}
+			@Override
+			public void onAllPlaybackFinished() {
+				setWalkieTalkieBarIdle();
+			}
+		});
+		walkieTalkieEnabled = isWalkieTalkieEnabled();
+		updateWalkieTalkieBar();
+
 		slideToCancelText = findViewById(R.id.slideToCancelText);
 
 		// Custom Toolbar
@@ -332,6 +360,7 @@ public class ConversationActivity extends BriarActivity
 		viewModel.getContactDisplayName().observe(this, contactName -> {
 			requireNonNull(contactName);
 			toolbarTitle.setText(contactName);
+			contactDisplayName = contactName;
 		});
 		viewModel.isContactDeleted().observe(this, deleted -> {
 			requireNonNull(deleted);
@@ -784,6 +813,9 @@ public class ConversationActivity extends BriarActivity
 		} else if (itemId == R.id.action_send_location) {
 			openSendLocationScreen();
 			return true;
+		} else if (itemId == R.id.action_walkie_talkie) {
+			toggleWalkieTalkie();
+			return true;
 		}
 
 		return super.onOptionsItemSelected(item);
@@ -1064,8 +1096,19 @@ public class ConversationActivity extends BriarActivity
 			ConversationMessageReceivedEvent<?> p =
 					(ConversationMessageReceivedEvent<?>) e;
 			if (p.getContactId().equals(contactId)) {
-				//LOG.info("Message received, adding");
 				onNewConversationMessage(p.getMessageHeader());
+				if (walkieTalkieEnabled) {
+					ConversationMessageHeader hdr = p.getMessageHeader();
+					if (!hdr.isLocal() && hdr instanceof PrivateMessageHeader) {
+						PrivateMessageHeader pmh = (PrivateMessageHeader) hdr;
+						for (AttachmentHeader ah : pmh.getAttachmentHeaders()) {
+							if (ah.getContentType().startsWith("audio/")) {
+								loadAndPlayAttachment(ah, contactDisplayName);
+								break;
+							}
+						}
+					}
+				}
 			}
 		} else if (e instanceof MessagesSentEvent) {
 			MessagesSentEvent m = (MessagesSentEvent) e;
@@ -1296,6 +1339,10 @@ public class ConversationActivity extends BriarActivity
 		runOnDbThread(() -> {
 			try {
 				contactManager.removeContact(contactId);
+				getSharedPreferences("conversation_prefs", MODE_PRIVATE)
+						.edit()
+						.remove(PREF_WALKIE_TALKIE + contactId.getInt())
+						.apply();
 			} catch (DbException e) {
 				logException(LOG, WARNING, e);
 			} finally {
@@ -1557,6 +1604,162 @@ public class ConversationActivity extends BriarActivity
 		intent.putExtra(MapViewActivity.EXTRA_LONGITUDE, data.longitude);
 		intent.putExtra(MapViewActivity.EXTRA_ZOOM, data.zoom);
 		startActivity(intent);
+	}
+
+	// ---- Walkie-Talkie ----
+
+	private boolean isWalkieTalkieEnabled() {
+		SharedPreferences prefs =
+				getSharedPreferences("conversation_prefs", MODE_PRIVATE);
+		return prefs.getBoolean(
+				PREF_WALKIE_TALKIE + contactId.getInt(), false);
+	}
+
+	private void toggleWalkieTalkie() {
+		SharedPreferences prefs =
+				getSharedPreferences("conversation_prefs", MODE_PRIVATE);
+		String key = PREF_WALKIE_TALKIE + contactId.getInt();
+		boolean current = prefs.getBoolean(key, false);
+		prefs.edit().putBoolean(key, !current).apply();
+		walkieTalkieEnabled = !current;
+		updateWalkieTalkieBar();
+		if (!walkieTalkieEnabled) {
+			walkieTalkiePlayer.stop();
+		}
+		Toast.makeText(this, walkieTalkieEnabled
+				? R.string.walkie_talkie_enabled
+				: R.string.walkie_talkie_disabled,
+				Toast.LENGTH_SHORT).show();
+	}
+
+	private void updateWalkieTalkieBar() {
+		if (walkieTalkieBar == null) return;
+		walkieTalkieBar.setVisibility(
+				walkieTalkieEnabled ? View.VISIBLE : View.GONE);
+		setWalkieTalkieBarIdle();
+	}
+
+	private void setWalkieTalkieBarIdle() {
+		if (walkieTalkieBar == null) return;
+		walkieTalkieBar.setText(R.string.walkie_talkie_bar_text);
+		walkieTalkieBar.setBackgroundColor(getThemeColor(R.attr.colorPrimary));
+	}
+
+	private void setWalkieTalkieBarRecording() {
+		if (walkieTalkieBar == null) return;
+		walkieTalkieBar.setText(R.string.walkie_talkie_recording);
+		walkieTalkieBar.setBackgroundColor(
+				androidx.core.content.ContextCompat.getColor(
+						this, R.color.anon_red_500));
+	}
+
+	private void setWalkieTalkieBarPlaying(String senderName) {
+		if (walkieTalkieBar == null) return;
+		walkieTalkieBar.setText(getString(R.string.walkie_talkie_playing,
+				senderName));
+		walkieTalkieBar.setBackgroundColor(
+				androidx.core.content.ContextCompat.getColor(
+						this, R.color.md_theme_tertiary));
+	}
+
+	private int getThemeColor(int attr) {
+		android.util.TypedValue tv = new android.util.TypedValue();
+		getTheme().resolveAttribute(attr, tv, true);
+		return tv.data;
+	}
+
+	private int getPttKeyCode() {
+		SharedPreferences prefs =
+				PreferenceManager.getDefaultSharedPreferences(this);
+		String value = prefs.getString("pref_key_ptt_button", "volume_up");
+		return "volume_down".equals(value)
+				? KeyEvent.KEYCODE_VOLUME_DOWN
+				: KeyEvent.KEYCODE_VOLUME_UP;
+	}
+
+	@Override
+	public boolean dispatchKeyEvent(KeyEvent event) {
+		if (walkieTalkieEnabled) {
+			int pttButton = getPttKeyCode();
+			if (event.getKeyCode() == pttButton) {
+				if (event.getAction() == KeyEvent.ACTION_DOWN
+						&& event.getRepeatCount() == 0
+						&& !isWalkieTalkieRecording) {
+					isWalkieTalkieRecording = true;
+					startRecording();
+					vibrateShort();
+					setWalkieTalkieBarRecording();
+					return true;
+				}
+				if (event.getAction() == KeyEvent.ACTION_UP
+						&& isWalkieTalkieRecording) {
+					isWalkieTalkieRecording = false;
+					stopAndSendRecording();
+					vibrateShort();
+					setWalkieTalkieBarIdle();
+					return true;
+				}
+				return true; // consume repeats
+			}
+		}
+		return super.dispatchKeyEvent(event);
+	}
+
+	private void vibrateShort() {
+		Vibrator v = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+		if (v != null) {
+			v.vibrate(VibrationEffect.createOneShot(50,
+					VibrationEffect.DEFAULT_AMPLITUDE));
+		}
+	}
+
+	private void loadAndPlayAttachment(AttachmentHeader ah,
+			String senderName) {
+		runOnDbThread(() -> {
+			try {
+				Attachment a =
+						attachmentRetriever.getMessageAttachment(ah);
+				InputStream stream = a.getStream();
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				byte[] buf = new byte[4096];
+				int len;
+				while ((len = stream.read(buf)) != -1) {
+					baos.write(buf, 0, len);
+				}
+				stream.close();
+				byte[] audioData = baos.toByteArray();
+				runOnUiThread(() -> {
+					if (walkieTalkieEnabled) {
+						walkieTalkiePlayer.play(audioData, senderName);
+					}
+				});
+			} catch (Exception e) {
+				Log.e("ConversationActivity",
+						"Failed to load attachment for auto-play", e);
+			}
+		});
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		walkieTalkiePlayer.stop();
+		setWalkieTalkieBarIdle();
+		if (isWalkieTalkieRecording) {
+			isWalkieTalkieRecording = false;
+			cancelRecording();
+		}
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		walkieTalkiePlayer.release();
 	}
 
 }

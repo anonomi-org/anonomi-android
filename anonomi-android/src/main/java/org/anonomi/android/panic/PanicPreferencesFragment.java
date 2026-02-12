@@ -1,6 +1,9 @@
 package org.anonomi.android.panic;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.widget.Toast;
 
 import org.anonomi.R;
 import org.anonomi.android.util.SecurePrefsManager;
@@ -10,6 +13,7 @@ import java.util.List;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreferenceCompat;
 
 import static org.anonomi.android.panic.PanicSequenceDetector.ACTION_DELETE_ACCOUNT;
@@ -48,6 +52,12 @@ public class PanicPreferencesFragment extends PreferenceFragmentCompat {
 
 			enabledPref.setOnPreferenceChangeListener((pref, newValue) -> {
 				boolean val = (Boolean) newValue;
+				if (val && isPanicConflictWithPtt()) {
+					Toast.makeText(requireContext(),
+							R.string.panic_conflict_ptt,
+							Toast.LENGTH_LONG).show();
+					return false;
+				}
 				securePrefs.putEncrypted(PREF_KEY_PANIC_ENABLED,
 						String.valueOf(val));
 				updateDependentPrefs(val);
@@ -68,6 +78,19 @@ public class PanicPreferencesFragment extends PreferenceFragmentCompat {
 							PanicSequenceDetector.serializeSequence(steps);
 					securePrefs.putEncrypted(PREF_KEY_PANIC_SEQUENCE,
 							serialized);
+					// Check conflict with PTT button
+					if (!steps.isEmpty()
+							&& isPanicFirstStepConflict(steps)) {
+						securePrefs.putEncrypted(PREF_KEY_PANIC_ENABLED,
+								"false");
+						if (enabledPref != null) {
+							enabledPref.setChecked(false);
+						}
+						updateDependentPrefs(false);
+						Toast.makeText(requireContext(),
+								R.string.panic_conflict_ptt,
+								Toast.LENGTH_LONG).show();
+					}
 					PanicSequenceDetector.getInstance()
 							.loadSequence(requireContext());
 					updateSequenceDisplay();
@@ -138,5 +161,32 @@ public class PanicPreferencesFragment extends PreferenceFragmentCompat {
 						R.string.panic_action_dialog_summary);
 				break;
 		}
+	}
+
+	private int getPttKeyCode() {
+		SharedPreferences prefs =
+				PreferenceManager.getDefaultSharedPreferences(
+						requireContext());
+		String value = prefs.getString("pref_key_ptt_button", "volume_up");
+		return "volume_down".equals(value)
+				? KeyEvent.KEYCODE_VOLUME_DOWN
+				: KeyEvent.KEYCODE_VOLUME_UP;
+	}
+
+	private boolean isPanicConflictWithPtt() {
+		String raw = securePrefs.getDecrypted(PREF_KEY_PANIC_SEQUENCE);
+		if (raw == null || raw.isEmpty()) return false;
+
+		List<PanicSequenceDetector.Step> steps =
+				PanicSequenceDetector.deserializeSequence(raw);
+		if (steps.isEmpty()) return false;
+
+		return steps.get(0).button == getPttKeyCode();
+	}
+
+	private boolean isPanicFirstStepConflict(
+			List<PanicSequenceDetector.Step> steps) {
+		if (steps.isEmpty()) return false;
+		return steps.get(0).button == getPttKeyCode();
 	}
 }

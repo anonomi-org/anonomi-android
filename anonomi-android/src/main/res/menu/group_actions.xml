@@ -37,6 +37,11 @@
 		app:showAsAction="never" />
 
 	<item
+		android:id="@+id/action_walkie_talkie"
+		android:title="@string/walkie_talkie_mode"
+		app:showAsAction="never" />
+
+	<item
 		android:id="@+id/action_group_leave"
 		android:icon="@drawable/action_delete_white"
 		android:title="@string/groups_leave"

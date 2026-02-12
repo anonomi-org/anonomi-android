@@ -1,6 +1,7 @@
 package org.anonomi.android.forum;
 
 import android.app.Application;
+import android.content.Context;
 import android.widget.Toast;
 
 import org.anonchatsecure.bramble.api.contact.Contact;
@@ -45,6 +46,9 @@ import java.util.logging.Logger;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 
+import org.anonomi.android.viewmodel.LiveEvent;
+import org.anonomi.android.viewmodel.MutableLiveEvent;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -62,6 +66,8 @@ class ForumViewModel extends ThreadListViewModel<ForumPostItem> {
 
 	private final ForumManager forumManager;
 	private final ForumSharingManager forumSharingManager;
+	private final MutableLiveEvent<android.util.Pair<byte[], String>>
+			autoPlayAudio = new MutableLiveEvent<>();
 
 	@Inject
 	ForumViewModel(Application application,
@@ -105,6 +111,15 @@ class ForumViewModel extends ThreadListViewModel<ForumPostItem> {
 					item = new ForumPostItem(f.getHeader(), f.getText());
 				}
 				addItem(item, false);
+				// Fire auto-play event for walkie-talkie
+				if (f.getAudioData() != null
+						&& f.getAudioContentType() != null
+						&& f.getAudioContentType()
+								.startsWith("audio/")) {
+					String name = f.getHeader().getAuthor().getName();
+					autoPlayAudio.postEvent(
+							new android.util.Pair<>(f.getAudioData(), name));
+				}
 			}
 		} else if (e instanceof ForumInvitationResponseReceivedEvent) {
 			ForumInvitationResponseReceivedEvent f =
@@ -126,6 +141,10 @@ class ForumViewModel extends ThreadListViewModel<ForumPostItem> {
 	@Override
 	protected void clearNotifications() {
 		notificationManager.clearForumPostNotification(groupId);
+	}
+
+	LiveEvent<android.util.Pair<byte[], String>> getAutoPlayAudio() {
+		return autoPlayAudio;
 	}
 
 	LiveData<Forum> loadForum() {
@@ -326,6 +345,11 @@ class ForumViewModel extends ThreadListViewModel<ForumPostItem> {
 			try {
 				Forum f = forumManager.getForum(groupId);
 				forumManager.removeForum(f);
+				getApplication().getSharedPreferences("forum_prefs",
+						Context.MODE_PRIVATE).edit()
+						.remove("forum_walkie_talkie_" + groupId.hashCode())
+						.remove("forum_voice_distortion_" + groupId.hashCode())
+						.apply();
 				androidExecutor.runOnUiThread(() -> Toast
 						.makeText(getApplication(), R.string.forum_left_toast,
 								LENGTH_SHORT).show());

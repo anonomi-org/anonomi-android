@@ -66,4 +66,9 @@
 		android:title="@string/action_send_location"
 		android:icon="@drawable/ic_menu_mylocation"
 		android:showAsAction="never" />
+
+	<item
+		android:id="@+id/action_walkie_talkie"
+		android:title="@string/walkie_talkie_mode"
+		app:showAsAction="never" />
 </menu>
