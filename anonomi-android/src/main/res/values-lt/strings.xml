@@ -1095,4 +1095,15 @@ Pirmiausia, įdiekite „Anonomi Postbox“ programėlę į kitą įrenginį iš
     <string name="panic_action_dialog_summary">Rodyti pasirinkimo dialogo langą (Atsijungti / Ištrinti paskyrą / Atšaukti)</string>
     <string name="panic_status_signing_out">Siunčiamos panikos žinutės ir atsijungiama…</string>
     <string name="panic_status_deleting">Siunčiamos panikos žinutės ir ištrinama paskyra…</string>
+    <string name="walkie_talkie_mode">Racija</string>
+    <string name="walkie_talkie_enabled">Įjungtas racijos režimas</string>
+    <string name="walkie_talkie_disabled">Racijos režimas išjungtas</string>
+    <string name="walkie_talkie_bar_text">Racijos režimas</string>
+    <string name="walkie_talkie_recording">Įrašoma…</string>
+    <string name="walkie_talkie_playing">Žaidžia: %s</string>
+    <string name="ptt_button_title">Paspauskite ir kalbėkite mygtukas</string>
+    <string name="ptt_button_volume_up">Garsumo didinimas</string>
+    <string name="ptt_button_volume_down">Garsumo mažinimas</string>
+    <string name="ptt_conflict_message">Šis mygtukas prieštarauja jūsų panikos suveikimo sekai.</string>
+    <string name="panic_conflict_ptt">Konfliktuoja su mygtuku „Push to Talk“. Pirmiausia pakeiskite jį nustatymuose.</string>
 </resources>
