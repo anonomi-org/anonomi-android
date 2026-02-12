@@ -1067,4 +1067,15 @@
     <string name="permission_bluetooth_title">ახლომდებარე მოწყობილობების ნებართვა</string>
     <string name="permission_bluetooth_body">Bluetooth კომუნიკაციის გამოსაყენებლად, Anonomi Messenger-ს სჭირდება ნებართვა ახლომდებარე მოწყობილობების მოსაძებნად და მათთან დასაკავშირებლად.</string>
     <string name="permission_hotspot_nearby_wifi_request_body">Wi-Fi ცხელი წერტილის შესაქმნელად, Anonomi Messenger-ს ახლომდებარე მოწყობილობებზე წვდომის ნებართვა სჭირდება.</string>
+    <string name="walkie_talkie_mode">რაციონი</string>
+    <string name="walkie_talkie_enabled">ჩართულია რასი-ტელეკის რეჟიმი</string>
+    <string name="walkie_talkie_disabled">რალი-ტელეკის რეჟიმი გამორთულია</string>
+    <string name="walkie_talkie_bar_text">რაციონის რეჟიმი</string>
+    <string name="walkie_talkie_recording">ჩაწერა…</string>
+    <string name="walkie_talkie_playing">დაკვრა: %s</string>
+    <string name="ptt_button_title">ღილაკი „Push-to-Talk“</string>
+    <string name="ptt_button_volume_up">ხმის აწევა</string>
+    <string name="ptt_button_volume_down">ხმის დაწევა</string>
+    <string name="ptt_conflict_message">ეს ღილაკი კონფლიქტშია თქვენს პანიკის გამშვები სიგნალის თანმიმდევრობასთან.</string>
+    <string name="panic_conflict_ptt">კონფლიქტშია Push-to-Talk ღილაკთან. ჯერ პარამეტრებში შეცვალეთ.</string>
 </resources>
