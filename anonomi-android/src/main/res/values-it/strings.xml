@@ -1080,4 +1080,15 @@ Per prima cosa, installa l\'app Anonomi Postbox su un altro dispositivo da dove 
     <string name="image_sent">Immagine inviata</string>
     <string name="image_compression_failed">Impossibile comprimere l\'immagine</string>
     <string name="image_too_large">L\'immagine è troppo grande per essere inviata</string>
+    <string name="walkie_talkie_mode">Walkie-talkie</string>
+    <string name="walkie_talkie_enabled">Modalità Walkie-Talkie abilitata</string>
+    <string name="walkie_talkie_disabled">Modalità Walkie-Talkie disabilitata</string>
+    <string name="walkie_talkie_bar_text">Modalità Walkie-Talkie</string>
+    <string name="walkie_talkie_recording">Registrazione…</string>
+    <string name="walkie_talkie_playing">Riproduzione: %s</string>
+    <string name="ptt_button_title">Pulsante Push-to-Talk</string>
+    <string name="ptt_button_volume_up">Aumenta il volume</string>
+    <string name="ptt_button_volume_down">Abbassa il volume</string>
+    <string name="ptt_conflict_message">Questo pulsante è in conflitto con la sequenza Panic Trigger.</string>
+    <string name="panic_conflict_ptt">Conflitti con il pulsante Push-to-Talk. Modificalo prima nelle Impostazioni.</string>
 </resources>
