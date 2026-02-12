@@ -1067,4 +1067,15 @@ Først, installer appen "Anonomi Postbox" på en annen enhet fra det samme stede
     <string name="pref_primary_address_title">Primær Monero-adresse</string>
     <string name="permission_hotspot_nearby_wifi_request_body">For å opprette et Wi-Fi-hotspot trenger Anonomi Messenger tillatelse til å få tilgang til enheter i nærheten.</string>
     <string name="groups_toggle_voice_distortion">Slå av/på stemmeforvrengning</string>
+    <string name="walkie_talkie_mode">Walkie-talkie</string>
+    <string name="walkie_talkie_enabled">Walkie-Talkie-modus aktivert</string>
+    <string name="walkie_talkie_disabled">Walkie-Talkie-modus deaktivert</string>
+    <string name="walkie_talkie_bar_text">Walkie-Talkie-modus</string>
+    <string name="walkie_talkie_recording">Innspilling…</string>
+    <string name="walkie_talkie_playing">Spiller: %s</string>
+    <string name="ptt_button_title">Trykk-for-å-snakke-knapp</string>
+    <string name="ptt_button_volume_up">Volum opp</string>
+    <string name="ptt_button_volume_down">Volum ned</string>
+    <string name="ptt_conflict_message">Denne knappen er i konflikt med panikkutløsersekvensen din.</string>
+    <string name="panic_conflict_ptt">Konflikt med Push-to-Talk-knappen. Endre den i Innstillinger først.</string>
 </resources>
