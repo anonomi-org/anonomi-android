@@ -919,7 +919,7 @@
     <string name="hotspot_qr_wifi">Вашиот телефон обезбедува Wi-Fi хотспот. Луѓето кои сакаат да го преземат Anonomi Messenger можат да се поврзат со хотспотот со скенирање на овој QR-код. Кога ќе се поврзат со хотспотот, притиснете „Следно“.</string>
     <string name="hotspot_no_peers_connected">Нема поврзани уреди</string>
     <plurals name="hotspot_peers_connected">
-        <item quantity="one"></item>
+        <item quantity="one"/>
         <item quantity="other">%s уреди поврзани</item>
     </plurals>
     <string name="hotspot_manual_site">Вашиот телефон обезбедува Wi-Fi хотспот. Луѓето кои се поврзани со хотспотот можат да го преземат Anonomi Messenger со внесување на следниов линк во веб-прелистувач или %s.</string>
@@ -1009,11 +1009,11 @@
     <string name="mailbox_error_wizard_button">Реши го проблемот</string>
     <string name="panic_action_delete_summary">Трајно избришете ја вашата сметка, контакти и пораки</string>
     <plurals name="duration_hours">
-        <item quantity="one"></item>
+        <item quantity="one"/>
         <item quantity="other">%d часа</item>
     </plurals>
     <plurals name="duration_days">
-        <item quantity="one"></item>
+        <item quantity="one"/>
         <item quantity="other">%d дена</item>
     </plurals>
     <string name="panic_enabled_title">Овозможи активирање на паника</string>
@@ -1038,4 +1038,15 @@
     <string name="permission_bluetooth_body">За да користи Bluetooth комуникација, на Anonomi Messenger му е потребна дозвола за пронаоѓање и поврзување со уреди во близина.</string>
     <string name="hotspot_scanning_a_qr_code">скенирање на QR код</string>
     <string name="hotspot_help_fallback_button">Зачувај апликација</string>
+    <string name="walkie_talkie_mode">Воки-токи</string>
+    <string name="walkie_talkie_enabled">Режимот на рачен токи е овозможен</string>
+    <string name="walkie_talkie_disabled">Режимот на рачен токи е оневозможен</string>
+    <string name="walkie_talkie_bar_text">Режим на воки-токи</string>
+    <string name="walkie_talkie_recording">Се снима…</string>
+    <string name="walkie_talkie_playing">Се репродуцира: %s</string>
+    <string name="ptt_button_title">Копче „Притисни за разговор“</string>
+    <string name="ptt_button_volume_up">Зголемување на јачината на звукот</string>
+    <string name="ptt_button_volume_down">Намалување на јачината на звукот</string>
+    <string name="ptt_conflict_message">Ова копче е во конфликт со вашата секвенца на активирање на паника.</string>
+    <string name="panic_conflict_ptt">Конфликт со копчето „Притисни за разговор“. Прво променете го во Поставки.</string>
 </resources>
