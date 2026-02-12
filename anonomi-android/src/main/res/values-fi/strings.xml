@@ -1036,4 +1036,15 @@
     <string name="image_sent">Kuva lähetetty</string>
     <string name="image_compression_failed">Kuvan pakkaaminen epäonnistui</string>
     <string name="image_too_large">Kuva on liian suuri lähetettäväksi</string>
+    <string name="walkie_talkie_mode">Radiopuhelin</string>
+    <string name="walkie_talkie_enabled">Radiopuhelintila käytössä</string>
+    <string name="walkie_talkie_disabled">Radiopuhelintila poistettu käytöstä</string>
+    <string name="walkie_talkie_bar_text">Radiopuhelintila</string>
+    <string name="walkie_talkie_recording">Tallennetaan…</string>
+    <string name="walkie_talkie_playing">Toistetaan: %s</string>
+    <string name="ptt_button_title">Paina ja puhu -painike</string>
+    <string name="ptt_button_volume_up">Äänenvoimakkuuden lisäys</string>
+    <string name="ptt_button_volume_down">Äänenvoimakkuuden vähennys</string>
+    <string name="ptt_conflict_message">Tämä painike on ristiriidassa paniikkihälytystoimintojesi kanssa.</string>
+    <string name="panic_conflict_ptt">Ristiriidassa Push-to-Talk-painikkeen kanssa. Muuta se ensin asetuksista.</string>
 </resources>
