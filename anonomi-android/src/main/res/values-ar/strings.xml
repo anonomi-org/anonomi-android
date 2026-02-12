@@ -1127,4 +1127,15 @@
     <string name="image_sent">تم إرسال الصورة</string>
     <string name="image_compression_failed">فشل ضغط الصورة</string>
     <string name="image_too_large">الصورة كبيرة جدًا بحيث لا يمكن إرسالها</string>
+    <string name="walkie_talkie_mode">جهاز لاسلكي</string>
+    <string name="walkie_talkie_enabled">تم تفعيل وضع جهاز الاتصال اللاسلكي</string>
+    <string name="walkie_talkie_disabled">تم تعطيل وضع جهاز الاتصال اللاسلكي</string>
+    <string name="walkie_talkie_bar_text">وضع جهاز الاتصال اللاسلكي</string>
+    <string name="walkie_talkie_recording">تسجيل…</string>
+    <string name="walkie_talkie_playing">تشغيل: %s</string>
+    <string name="ptt_button_title">زر التحدث بالضغط</string>
+    <string name="ptt_button_volume_up">رفع مستوى الصوت</string>
+    <string name="ptt_button_volume_down">خفض مستوى الصوت</string>
+    <string name="ptt_conflict_message">يتعارض هذا الزر مع تسلسل تشغيل حالة الذعر لديك.</string>
+    <string name="panic_conflict_ptt">يتعارض مع زر الضغط للتحدث. قم بتغييره في الإعدادات أولاً.</string>
 </resources>
