@@ -37,6 +37,11 @@ android {
 	compileSdk 35
 	buildToolsVersion '35.0.0'
 
+	dependenciesInfo {
+		includeInApk = false
+		includeInBundle = false
+	}
+
 	signingConfigs {
 		release {
 			// Priority 1: keystore.properties (local dev)
@@ -79,8 +84,8 @@ android {
 	defaultConfig {
 		minSdkVersion 24
 		targetSdkVersion 35
-		versionCode 10101
-		versionName "1.1.1"
+		versionCode 10102
+		versionName "1.1.2"
 		applicationId "org.anonomi.android"
 		buildConfigField "String", "TorVersion", "\"$tor_version\""
 
