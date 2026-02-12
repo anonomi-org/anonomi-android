@@ -1,0 +1,7 @@
+Version 1.2.0:
+* Added Walkie-Talkie mode for conversations, private groups, and forums
+* Push-to-talk recording via volume buttons
+* Auto-play incoming audio messages when mode is active
+* Status bar shows sender name during playback
+* PTT button setting with Panic Trigger conflict validation
+* Updated translations
