@@ -902,10 +902,10 @@
     <string name="hotspot_qr_wifi">Ho pellgomzer a ginnig ur poent mont e darempred Wi-Fi. An dud a fell dezho pellgargañ Anonomi Messenger a c\'hall kevreañ ouzh al lec\'h dre skaniñ ar c\'hod QR-mañ. Pa vint kevreet ouzh ar poent-tremen, pouezit war \'Da heul\'.</string>
     <string name="hotspot_no_peers_connected">N\'eus urzhiataer ebet kevreet</string>
     <plurals name="hotspot_peers_connected">
-        <item quantity="one"></item>
+        <item quantity="one"/>
         <item quantity="two">%s ardivinkoù kevreet</item>
         <item quantity="few">%s ardivinkoù kevreet</item>
-        <item quantity="many"></item>
+        <item quantity="many"/>
         <item quantity="other">%s ardivinkoù kevreet</item>
     </plurals>
     <string name="hotspot_manual_site">Ho pellgomzer a ginnig ur poent mont e darempred Wi-Fi. An dud a zo kevreet ouzh ar poent-tremen a c\'hall pellgargañ Anonomi Messenger en ur skrivañ al liamm da-heul en ur merdeer web pe %s.</string>
@@ -999,38 +999,38 @@
     <string name="panic_record_sequence_title">Enrollañ heuliad ar spont</string>
     <string name="panic_enabled_summary">Detektiñ heuliad ar boutonoù volum evit lakaat ar mod spont da vont en-dro</string>
     <plurals name="expiry_warning">
-        <item quantity="one"></item>
+        <item quantity="one"/>
         <item quantity="two">Ur stumm amprouiñ eus Anonomi Messenger eo hemañ. Echuiñ a raio ho kont a-benn %d devezh ha ne c\'hallo ket bezañ nevesaet.</item>
         <item quantity="few">Ur stumm amprouiñ eus Anonomi Messenger eo hemañ. Echuiñ a raio ho kont a-benn %d devezh ha ne c\'hallo ket bezañ nevesaet.</item>
-        <item quantity="many"></item>
+        <item quantity="many"/>
         <item quantity="other">Ur stumm amprouiñ eus Anonomi Messenger eo hemañ. Echuiñ a raio ho kont a-benn %d devezh ha ne c\'hallo ket bezañ nevesaet.</item>
     </plurals>
     <plurals name="duration_hours">
-        <item quantity="one"></item>
+        <item quantity="one"/>
         <item quantity="two">%d eurvezhioù</item>
         <item quantity="few">%d eurvezhioù</item>
-        <item quantity="many"></item>
+        <item quantity="many"/>
         <item quantity="other">%d eurvezhioù</item>
     </plurals>
     <plurals name="duration_days">
-        <item quantity="one"></item>
+        <item quantity="one"/>
         <item quantity="two">%d devezh</item>
         <item quantity="few">%d devezh</item>
-        <item quantity="many"></item>
+        <item quantity="many"/>
         <item quantity="other">%d devezh</item>
     </plurals>
     <plurals name="groups_invitations_open">
-        <item quantity="one"></item>
+        <item quantity="one"/>
         <item quantity="two">%d pedadennoù stroll digor</item>
         <item quantity="few">%d pedadennoù stroll digor</item>
-        <item quantity="many"></item>
+        <item quantity="many"/>
         <item quantity="other">%d pedadennoù stroll digor</item>
     </plurals>
     <plurals name="forums_shared">
-        <item quantity="one"></item>
+        <item quantity="one"/>
         <item quantity="two">%d strollad digor rannet gant darempredoù</item>
         <item quantity="few">%d strollad digor rannet gant darempredoù</item>
-        <item quantity="many"></item>
+        <item quantity="many"/>
         <item quantity="other">%d strollad digor rannet gant darempredoù</item>
     </plurals>
     <string name="panic_enabled_title">Gweredekaat an degaser spont</string>
@@ -1042,4 +1042,15 @@
     <string name="permission_bluetooth_denied_body">Nac\'het hoc\'h eus mont e darempred gant ardivinkoù tost, met ezhomm en deus Anonomi Messenger eus an aotre-mañ evit implijout Bluetooth.\n\nMar plij, soñjit reiñ an aotre.</string>
     <string name="camera_permission_denied">Nac\'het eo bet aotre ar c\'hamera.</string>
     <string name="load_qr_code">Kargañ ar c\'hod QR</string>
+    <string name="walkie_talkie_mode">Walkie-Talkie</string>
+    <string name="walkie_talkie_enabled">Mod Walkie-Talkie gweredekaet</string>
+    <string name="walkie_talkie_disabled">Diweredekaet ar mod Walkie-Talkie</string>
+    <string name="walkie_talkie_bar_text">Mod Walkie-Talkie</string>
+    <string name="walkie_talkie_recording">Enrollañ…</string>
+    <string name="walkie_talkie_playing">O c\'hoari : %s</string>
+    <string name="ptt_button_title">Boton pouezañ evit komz</string>
+    <string name="ptt_button_volume_up">Kreskiñ ar volum</string>
+    <string name="ptt_button_volume_down">Digreskiñ ar vouezh</string>
+    <string name="ptt_conflict_message">Ar bouton-mañ a glot gant ho heuliad Panic Trigger.</string>
+    <string name="panic_conflict_ptt">Emglevioù gant ar bouton pouezañ evit komz. Cheñchit anezhañ en arventennoù da gentañ.</string>
 </resources>
