@@ -1096,4 +1096,15 @@ Najprv nainštalujte aplikáciu Anonomi Postbox do iného zariadenia z rovnakéh
     <string name="image_sent">Obrázok odoslaný</string>
     <string name="image_compression_failed">Nepodarilo sa komprimovať obrázok</string>
     <string name="image_too_large">Obrázok je príliš veľký na odoslanie</string>
+    <string name="walkie_talkie_mode">Vysielačka</string>
+    <string name="walkie_talkie_enabled">Režim vysielačky povolený</string>
+    <string name="walkie_talkie_disabled">Režim vysielačky je vypnutý</string>
+    <string name="walkie_talkie_bar_text">Režim vysielačky</string>
+    <string name="walkie_talkie_recording">Nahrávanie…</string>
+    <string name="walkie_talkie_playing">Prehráva sa: %s</string>
+    <string name="ptt_button_title">Tlačidlo Stlač a hovor</string>
+    <string name="ptt_button_volume_up">Zvýšenie hlasitosti</string>
+    <string name="ptt_button_volume_down">Znížiť hlasitosť</string>
+    <string name="ptt_conflict_message">Toto tlačidlo je v konflikte s vašou sekvenciou spúšťania paniky.</string>
+    <string name="panic_conflict_ptt">Konflikt s tlačidlom Push-to-Talk. Najprv to zmeňte v nastaveniach.</string>
 </resources>
