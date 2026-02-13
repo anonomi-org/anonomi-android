@@ -1103,4 +1103,5 @@ O teu contacto também pode alterar esta configuração para ambos.</string>
     <string name="ptt_button_volume_down">Diminuir o volume</string>
     <string name="ptt_conflict_message">Este botão entra em conflito com a sua sequência de ativação de pânico.</string>
     <string name="panic_conflict_ptt">Conflito com o botão Push-to-Talk. Altere-o primeiro nas Definições.</string>
+    <string name="walkie_talkie_recording_timer">Gravação… %1$d/12s</string>
 </resources>
