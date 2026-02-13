@@ -1062,4 +1062,5 @@
     <string name="ptt_button_volume_down">音量を下げる</string>
     <string name="ptt_conflict_message">このボタンはパニック トリガー シーケンスと競合します。</string>
     <string name="panic_conflict_ptt">プッシュ・トゥ・トークボタンと競合しています。まず設定で変更してください。</string>
+    <string name="walkie_talkie_recording_timer">録音中…%1$d/12秒</string>
 </resources>
