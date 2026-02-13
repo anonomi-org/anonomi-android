@@ -84,8 +84,8 @@ android {
 	defaultConfig {
 		minSdkVersion 24
 		targetSdkVersion 35
-		versionCode 10200
-		versionName "1.2.0"
+		versionCode 10201
+		versionName "1.2.1"
 		applicationId "org.anonomi.android"
 		buildConfigField "String", "TorVersion", "\"$tor_version\""
 
