@@ -1070,4 +1070,5 @@
     <string name="ptt_button_volume_down">Намаляване на звука</string>
     <string name="ptt_conflict_message">Този бутон е в конфликт с вашата последователност за задействане на паника.</string>
     <string name="panic_conflict_ptt">Конфликт с бутона „Натисни и говори“. Първо го променете в „Настройки“.</string>
+    <string name="walkie_talkie_recording_timer">Запис… %1$d/12 сек.</string>
 </resources>
