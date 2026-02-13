@@ -1123,6 +1123,7 @@ Anonomi Messenger is an independent project and is not affiliated with, endorsed
     <string name="walkie_talkie_disabled">Walkie-Talkie mode disabled</string>
     <string name="walkie_talkie_bar_text">Walkie-Talkie Mode</string>
     <string name="walkie_talkie_recording">Recording…</string>
+    <string name="walkie_talkie_recording_timer">Recording… %1$d/12s</string>
     <string name="walkie_talkie_playing">Playing: %s</string>
     <string name="ptt_button_title">Push-to-Talk Button</string>
     <string name="ptt_button_volume_up">Volume Up</string>

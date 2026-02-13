@@ -102,6 +102,39 @@ public class ForumActivity extends
 	private TextView walkieTalkieBar;
 	private WalkieTalkiePlayer walkieTalkiePlayer;
 
+	private final Runnable walkieTalkieTimerRunnable = new Runnable() {
+		@Override
+		public void run() {
+			if (isWalkieTalkieRecording) {
+				long elapsed = System.currentTimeMillis() - recordingStartTime;
+				int seconds = (int) (elapsed / 1000);
+
+				if (seconds >= 11) {
+					walkieTalkieBar.setBackgroundColor(ContextCompat.getColor(
+							ForumActivity.this, R.color.anon_red_700));
+				} else if (seconds >= 10) {
+					walkieTalkieBar.setBackgroundColor(ContextCompat.getColor(
+							ForumActivity.this, R.color.anon_orange_500));
+				} else {
+					walkieTalkieBar.setBackgroundColor(ContextCompat.getColor(
+							ForumActivity.this, R.color.anon_red_500));
+				}
+				walkieTalkieBar.setText(getString(
+						R.string.walkie_talkie_recording_timer, seconds));
+
+				if (seconds >= 12) {
+					isWalkieTalkieRecording = false;
+					recordingTimerHandler.removeCallbacks(this);
+					stopAndSendRecording();
+					vibrateShort();
+					setWalkieTalkieBarIdle();
+				} else {
+					recordingTimerHandler.postDelayed(this, 250);
+				}
+			}
+		}
+	};
+
 	private final Runnable recordingTimerRunnable = new Runnable() {
 		@Override
 		public void run() {
@@ -690,12 +723,17 @@ public class ForumActivity extends
 					isWalkieTalkieRecording = true;
 					startRecording();
 					vibrateShort();
+					recordingStartTime = System.currentTimeMillis();
 					setWalkieTalkieBarRecording();
+					recordingTimerHandler.postDelayed(
+							walkieTalkieTimerRunnable, 250);
 					return true;
 				}
 				if (event.getAction() == KeyEvent.ACTION_UP
 						&& isWalkieTalkieRecording) {
 					isWalkieTalkieRecording = false;
+					recordingTimerHandler.removeCallbacks(
+							walkieTalkieTimerRunnable);
 					stopAndSendRecording();
 					vibrateShort();
 					setWalkieTalkieBarIdle();
