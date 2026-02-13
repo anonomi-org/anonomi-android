@@ -55,11 +55,18 @@ public class MapImporter {
 						byte[] metaBytes = zis.readAllBytes();
 						String jsonText = new String(metaBytes, StandardCharsets.UTF_8);
 
-						JSONObject meta = new JSONObject(jsonText);
-						regionName = meta.getString("region");
-
-// Save full metadata string so we have zoom info later
 						metadataJsonText = jsonText;
+
+						JSONObject meta = new JSONObject(jsonText);
+						regionName = meta.optString("region", "");
+						if (regionName.isEmpty()) {
+							// Derive a name from the .amd filename
+							String amdName = entry.getName();
+							int slash = amdName.lastIndexOf('/');
+							if (slash >= 0) amdName = amdName.substring(slash + 1);
+							amdName = amdName.replace(".amd", "");
+							regionName = amdName.equals("export") ? "Imported Map" : amdName;
+						}
 
 						Log.d("MapImporter", "Parsed region: " + regionName);
 						zis.closeEntry();
@@ -83,7 +90,7 @@ public class MapImporter {
 					zis.closeEntry();
 				}
 
-				// Done ✅
+				// Done
 				String sizeStr = humanReadableByteCountBin(totalBytes);
 				statusText = "Size: " + sizeStr + ", Status: Imported";
 
