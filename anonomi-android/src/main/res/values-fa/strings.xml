@@ -1122,4 +1122,5 @@ Anonomi (برایر) موقعیت شما را ذخیره نمی‌کند و آن
     <string name="ptt_button_volume_down">کاهش صدا</string>
     <string name="ptt_conflict_message">این دکمه با توالی Panic Trigger شما تداخل دارد.</string>
     <string name="panic_conflict_ptt">با دکمه‌ی «فشار برای صحبت» تداخل دارد. ابتدا آن را در تنظیمات تغییر دهید.</string>
+    <string name="walkie_talkie_recording_timer">در حال ضبط… %1$d/12s</string>
 </resources>
