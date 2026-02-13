@@ -1106,4 +1106,5 @@ Pirmiausia, įdiekite „Anonomi Postbox“ programėlę į kitą įrenginį iš
     <string name="ptt_button_volume_down">Garsumo mažinimas</string>
     <string name="ptt_conflict_message">Šis mygtukas prieštarauja jūsų panikos suveikimo sekai.</string>
     <string name="panic_conflict_ptt">Konfliktuoja su mygtuku „Push to Talk“. Pirmiausia pakeiskite jį nustatymuose.</string>
+    <string name="walkie_talkie_recording_timer">Įrašoma… %1$d/12 sek.</string>
 </resources>
