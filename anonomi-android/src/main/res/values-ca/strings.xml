@@ -1068,4 +1068,5 @@ Així que l\'actualitzi li veureu una icona diferent .</string>
     <string name="ptt_button_volume_down">Baixar volum</string>
     <string name="ptt_conflict_message">Aquest botó entra en conflicte amb la seqüència de desencadenant de pànic.</string>
     <string name="panic_conflict_ptt">Conflictes amb el botó Prem per parlar. Canvia-ho primer a Configuració.</string>
+    <string name="walkie_talkie_recording_timer">Enregistrament… %1$d/12s</string>
 </resources>
