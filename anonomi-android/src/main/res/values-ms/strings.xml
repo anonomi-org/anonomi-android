@@ -992,4 +992,5 @@
     <string name="ptt_button_volume_down">Kelantangan Rendah</string>
     <string name="ptt_conflict_message">Butang ini bercanggah dengan urutan Pencetus Panik anda.</string>
     <string name="panic_conflict_ptt">Berkonflik dengan butang Tekan untuk Bercakap. Tukarkannya dalam Tetapan terlebih dahulu.</string>
+    <string name="walkie_talkie_recording_timer">Rakaman… %1$d/12s</string>
 </resources>
