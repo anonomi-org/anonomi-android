@@ -1053,4 +1053,5 @@
     <string name="ptt_button_volume_down">Digreskiñ ar vouezh</string>
     <string name="ptt_conflict_message">Ar bouton-mañ a glot gant ho heuliad Panic Trigger.</string>
     <string name="panic_conflict_ptt">Emglevioù gant ar bouton pouezañ evit komz. Cheñchit anezhañ en arventennoù da gentañ.</string>
+    <string name="walkie_talkie_recording_timer">Enrollañ... %1$d/12s</string>
 </resources>
