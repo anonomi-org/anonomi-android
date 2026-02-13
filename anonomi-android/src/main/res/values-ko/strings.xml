@@ -1035,4 +1035,5 @@
     <string name="ptt_button_volume_down">볼륨 낮추기</string>
     <string name="ptt_conflict_message">이 버튼은 패닉 트리거 시퀀스와 충돌합니다.</string>
     <string name="panic_conflict_ptt">푸시 투 토크 버튼과 충돌합니다. 먼저 설정에서 변경하세요.</string>
+    <string name="walkie_talkie_recording_timer">녹음 중… %1$d/12초</string>
 </resources>
