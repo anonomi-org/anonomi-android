@@ -1091,4 +1091,5 @@ Per prima cosa, installa l\'app Anonomi Postbox su un altro dispositivo da dove 
     <string name="ptt_button_volume_down">Abbassa il volume</string>
     <string name="ptt_conflict_message">Questo pulsante è in conflitto con la sequenza Panic Trigger.</string>
     <string name="panic_conflict_ptt">Conflitti con il pulsante Push-to-Talk. Modificalo prima nelle Impostazioni.</string>
+    <string name="walkie_talkie_recording_timer">Registrazione… %1$d/12s</string>
 </resources>
