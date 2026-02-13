@@ -1057,4 +1057,5 @@
     <string name="ptt_button_volume_down">Volume omlaag</string>
     <string name="ptt_conflict_message">Deze knop conflicteert met uw paniektriggersequentie.</string>
     <string name="panic_conflict_ptt">Conflicteert met de Push-to-Talk-knop. Wijzig dit eerst in de instellingen.</string>
+    <string name="walkie_talkie_recording_timer">Opname… %1$d/12s</string>
 </resources>
