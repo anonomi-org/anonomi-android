@@ -1111,4 +1111,5 @@
     <string name="ptt_button_volume_down">Зменшення гучності</string>
     <string name="ptt_conflict_message">Ця кнопка конфліктує з вашою послідовністю спрацьовування паніки.</string>
     <string name="panic_conflict_ptt">Конфліктує з кнопкою «Натисни та говори». Спочатку змініть це в налаштуваннях.</string>
+    <string name="walkie_talkie_recording_timer">Запис… %1$d/12 с</string>
 </resources>
