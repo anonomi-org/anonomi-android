@@ -282,6 +282,8 @@ public class ConversationActivity extends BriarActivity
 	private volatile String contactDisplayName = "";
 	private TextView walkieTalkieBar;
 	private WalkieTalkiePlayer walkieTalkiePlayer;
+	private final List<android.util.Pair<byte[], String>> pendingAutoPlay =
+			new java.util.ArrayList<>();
 
 	private final Runnable walkieTalkieTimerRunnable = new Runnable() {
 		@Override
@@ -309,6 +311,7 @@ public class ConversationActivity extends BriarActivity
 					stopAndSendRecording();
 					vibrateShort();
 					setWalkieTalkieBarIdle();
+					drainPendingAutoPlay();
 				} else {
 					recordingTimerHandler.postDelayed(this, 250);
 				}
@@ -1695,6 +1698,13 @@ public class ConversationActivity extends BriarActivity
 						this, R.color.md_theme_tertiary));
 	}
 
+	private void drainPendingAutoPlay() {
+		for (android.util.Pair<byte[], String> p : pendingAutoPlay) {
+			walkieTalkiePlayer.play(p.first, p.second);
+		}
+		pendingAutoPlay.clear();
+	}
+
 	private int getThemeColor(int attr) {
 		android.util.TypedValue tv = new android.util.TypedValue();
 		getTheme().resolveAttribute(attr, tv, true);
@@ -1735,6 +1745,7 @@ public class ConversationActivity extends BriarActivity
 					stopAndSendRecording();
 					vibrateShort();
 					setWalkieTalkieBarIdle();
+					drainPendingAutoPlay();
 					return true;
 				}
 				return true; // consume repeats
@@ -1768,7 +1779,12 @@ public class ConversationActivity extends BriarActivity
 				byte[] audioData = baos.toByteArray();
 				runOnUiThread(() -> {
 					if (walkieTalkieEnabled) {
-						walkieTalkiePlayer.play(audioData, senderName);
+						if (isWalkieTalkieRecording) {
+							pendingAutoPlay.add(new android.util.Pair<>(
+									audioData, senderName));
+						} else {
+							walkieTalkiePlayer.play(audioData, senderName);
+						}
 					}
 				});
 			} catch (Exception e) {

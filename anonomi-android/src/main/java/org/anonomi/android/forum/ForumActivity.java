@@ -41,6 +41,8 @@ import org.briarproject.nullsafety.MethodsNotNullByDefault;
 import org.briarproject.nullsafety.ParametersNotNullByDefault;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -101,6 +103,8 @@ public class ForumActivity extends
 	private boolean isWalkieTalkieRecording = false;
 	private TextView walkieTalkieBar;
 	private WalkieTalkiePlayer walkieTalkiePlayer;
+	private final List<android.util.Pair<byte[], String>> pendingAutoPlay =
+			new ArrayList<>();
 
 	private final Runnable walkieTalkieTimerRunnable = new Runnable() {
 		@Override
@@ -128,6 +132,7 @@ public class ForumActivity extends
 					stopAndSendRecording();
 					vibrateShort();
 					setWalkieTalkieBarIdle();
+					drainPendingAutoPlay();
 				} else {
 					recordingTimerHandler.postDelayed(this, 250);
 				}
@@ -232,7 +237,12 @@ public class ForumActivity extends
 		updateWalkieTalkieBar();
 		viewModel.getAutoPlayAudio().observeEvent(this, pair -> {
 			if (walkieTalkieEnabled && pair.first != null) {
-				walkieTalkiePlayer.play(pair.first, pair.second);
+				if (isWalkieTalkieRecording) {
+					pendingAutoPlay.add(new android.util.Pair<>(
+							pair.first, pair.second));
+				} else {
+					walkieTalkiePlayer.play(pair.first, pair.second);
+				}
 			}
 		});
 
@@ -703,6 +713,13 @@ public class ForumActivity extends
 						this, R.color.md_theme_tertiary));
 	}
 
+	private void drainPendingAutoPlay() {
+		for (android.util.Pair<byte[], String> p : pendingAutoPlay) {
+			walkieTalkiePlayer.play(p.first, p.second);
+		}
+		pendingAutoPlay.clear();
+	}
+
 	private int getPttKeyCode() {
 		SharedPreferences prefs =
 				PreferenceManager.getDefaultSharedPreferences(this);
@@ -737,6 +754,7 @@ public class ForumActivity extends
 					stopAndSendRecording();
 					vibrateShort();
 					setWalkieTalkieBarIdle();
+					drainPendingAutoPlay();
 					return true;
 				}
 				return true; // consume repeats
