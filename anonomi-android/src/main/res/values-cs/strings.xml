@@ -1098,4 +1098,5 @@
     <string name="ptt_button_volume_down">Snížení hlasitosti</string>
     <string name="ptt_conflict_message">Toto tlačítko je v konfliktu s vaší sekvencí pro spuštění paniky.</string>
     <string name="panic_conflict_ptt">Konflikt s tlačítkem Push-to-Talk. Nejprve to změňte v Nastavení.</string>
+    <string name="walkie_talkie_recording_timer">Nahrávání… %1$d/12 s</string>
 </resources>
