@@ -1056,4 +1056,5 @@ parteja pas amb degun.</string>
     <string name="ptt_button_volume_down">Reduire lo volum</string>
     <string name="ptt_conflict_message">Aqueste boton es en conflicte amb vòstra sequéncia de Panic Trigger.</string>
     <string name="panic_conflict_ptt">Conflictes amb lo boton Push-to-Talk. Cambiatz-lo dins los Paramètres d\'en primièr.</string>
+    <string name="walkie_talkie_recording_timer">Enregistrament… %1$d/12s</string>
 </resources>
