@@ -1049,4 +1049,5 @@
     <string name="ptt_button_volume_down">Намалување на јачината на звукот</string>
     <string name="ptt_conflict_message">Ова копче е во конфликт со вашата секвенца на активирање на паника.</string>
     <string name="panic_conflict_ptt">Конфликт со копчето „Притисни за разговор“. Прво променете го во Поставки.</string>
+    <string name="walkie_talkie_recording_timer">Снимање… %1$d/12 секунди</string>
 </resources>

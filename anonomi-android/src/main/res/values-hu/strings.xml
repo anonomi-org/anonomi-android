@@ -1076,4 +1076,5 @@ Vigyázat: Ez végleg törli az identitásait, kapcsolatait és üzeneteit</stri
     <string name="ptt_button_volume_down">Hangerő csökkentése</string>
     <string name="ptt_conflict_message">Ez a gomb ütközik a pánikindító szekvenciával.</string>
     <string name="panic_conflict_ptt">Ütközik a Push-to-Talk gombbal. Először módosítsa a beállításokban.</string>
+    <string name="walkie_talkie_recording_timer">Felvétel… %1$d/12 mp</string>
 </resources>

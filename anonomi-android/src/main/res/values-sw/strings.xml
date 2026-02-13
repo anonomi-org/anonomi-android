@@ -1059,4 +1059,5 @@ Umepoteza nenosiri.</string>
     <string name="ptt_button_volume_down">Punguza Sauti</string>
     <string name="ptt_conflict_message">Kitufe hiki kinapingana na mfuatano wako wa Kichochezi cha Panic.</string>
     <string name="panic_conflict_ptt">Inakinzana na kitufe cha Push-to-Talk. Kibadilishe katika Mipangilio kwanza.</string>
+    <string name="walkie_talkie_recording_timer">Kurekodi… %1$d/sekunde 12</string>
 </resources>

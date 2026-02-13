@@ -1092,4 +1092,5 @@
     <string name="ptt_button_volume_down">Reducere volum</string>
     <string name="ptt_conflict_message">Acest buton intră în conflict cu secvența de declanșare a panicii.</string>
     <string name="panic_conflict_ptt">Conflict cu butonul Apasă și vorbește. Schimbați-l mai întâi în Setări.</string>
+    <string name="walkie_talkie_recording_timer">Înregistrare… %1$d/12s</string>
 </resources>

@@ -1076,4 +1076,5 @@ Molim vas da uzmete u obzir odobravanja pristupa.</string>
     <string name="ptt_button_volume_down">Смањи јачину звука</string>
     <string name="ptt_conflict_message">Ово дугме је у супротности са вашом секвенцом за окидање панике.</string>
     <string name="panic_conflict_ptt">Сукобљава се са дугметом „Притисни за разговор“. Прво га промените у подешавањима.</string>
+    <string name="walkie_talkie_recording_timer">Снимање… %1$d/12s</string>
 </resources>

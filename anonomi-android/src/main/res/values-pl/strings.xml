@@ -1107,4 +1107,5 @@ Brak dostępu do aparatu. Spróbuj ponownie, może po ponownym uruchomieniu urz�
     <string name="ptt_button_volume_down">Zmniejszenie głośności</string>
     <string name="ptt_conflict_message">Ten przycisk koliduje z sekwencją wyzwalacza paniki.</string>
     <string name="panic_conflict_ptt">Konflikt z przyciskiem „Naciśnij i mów”. Zmień to najpierw w Ustawieniach.</string>
+    <string name="walkie_talkie_recording_timer">Nagrywanie… %1$d/12s</string>
 </resources>

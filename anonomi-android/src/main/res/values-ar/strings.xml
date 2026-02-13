@@ -1138,4 +1138,5 @@
     <string name="ptt_button_volume_down">خفض مستوى الصوت</string>
     <string name="ptt_conflict_message">يتعارض هذا الزر مع تسلسل تشغيل حالة الذعر لديك.</string>
     <string name="panic_conflict_ptt">يتعارض مع زر الضغط للتحدث. قم بتغييره في الإعدادات أولاً.</string>
+    <string name="walkie_talkie_recording_timer">جارٍ التسجيل... %1$d/12 ثانية</string>
 </resources>

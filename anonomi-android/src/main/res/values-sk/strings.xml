@@ -1107,4 +1107,5 @@ Najprv nainštalujte aplikáciu Anonomi Postbox do iného zariadenia z rovnakéh
     <string name="ptt_button_volume_down">Znížiť hlasitosť</string>
     <string name="ptt_conflict_message">Toto tlačidlo je v konflikte s vašou sekvenciou spúšťania paniky.</string>
     <string name="panic_conflict_ptt">Konflikt s tlačidlom Push-to-Talk. Najprv to zmeňte v nastaveniach.</string>
+    <string name="walkie_talkie_recording_timer">Nahrávanie… %1$d/12 s</string>
 </resources>

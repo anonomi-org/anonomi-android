@@ -1049,4 +1049,5 @@
     <string name="ptt_button_volume_down">नीची मात्रा</string>
     <string name="ptt_conflict_message">यह बटन आपके पैनिक ट्रिगर अनुक्रम के साथ असंगत है।</string>
     <string name="panic_conflict_ptt">पुश-टू-टॉक बटन के साथ समस्या आ रही है। कृपया पहले सेटिंग्स में जाकर इसे बदलें।</string>
+    <string name="walkie_talkie_recording_timer">रिकॉर्डिंग… %1$d/12s</string>
 </resources>

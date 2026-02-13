@@ -1088,4 +1088,5 @@ copies des messages que vous envoyez.
     <string name="ptt_button_volume_down">Baisser le volume</string>
     <string name="ptt_conflict_message">Ce bouton entre en conflit avec votre séquence de déclenchement d\'alerte.</string>
     <string name="panic_conflict_ptt">En conflit avec le bouton « Appuyer pour parler ». Modifiez-le d\'abord dans les paramètres.</string>
+    <string name="walkie_talkie_recording_timer">Enregistrement… %1$d/12s</string>
 </resources>

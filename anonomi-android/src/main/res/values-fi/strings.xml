@@ -1047,4 +1047,5 @@
     <string name="ptt_button_volume_down">Äänenvoimakkuuden vähennys</string>
     <string name="ptt_conflict_message">Tämä painike on ristiriidassa paniikkihälytystoimintojesi kanssa.</string>
     <string name="panic_conflict_ptt">Ristiriidassa Push-to-Talk-painikkeen kanssa. Muuta se ensin asetuksista.</string>
+    <string name="walkie_talkie_recording_timer">Tallennus… %1$d/12s</string>
 </resources>

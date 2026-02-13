@@ -1078,4 +1078,5 @@
     <string name="ptt_button_volume_down">Ses Kısma</string>
     <string name="ptt_conflict_message">Bu düğme, panik tetikleme dizinizle çakışıyor.</string>
     <string name="panic_conflict_ptt">Bas-konuş düğmesiyle çakışma var. Öncelikle Ayarlar\'dan değiştirin.</string>
+    <string name="walkie_talkie_recording_timer">Kayıt… %1$d/12s</string>
 </resources>

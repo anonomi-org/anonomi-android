@@ -1078,4 +1078,5 @@
     <string name="ptt_button_volume_down">ხმის დაწევა</string>
     <string name="ptt_conflict_message">ეს ღილაკი კონფლიქტშია თქვენს პანიკის გამშვები სიგნალის თანმიმდევრობასთან.</string>
     <string name="panic_conflict_ptt">კონფლიქტშია Push-to-Talk ღილაკთან. ჯერ პარამეტრებში შეცვალეთ.</string>
+    <string name="walkie_talkie_recording_timer">ჩაწერა… %1$d/12 წმ</string>
 </resources>

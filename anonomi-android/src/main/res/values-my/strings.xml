@@ -1065,4 +1065,5 @@
     <string name="ptt_button_volume_down">အသံလျှော့ပါ</string>
     <string name="ptt_conflict_message">ဒီခလုတ်က သင့်ရဲ့ Panic Trigger အစီအစဉ်နဲ့ ပဋိပက္ခဖြစ်နေတယ်။</string>
     <string name="panic_conflict_ptt">Push-to-Talk ခလုတ်နှင့် ပဋိပက္ခဖြစ်နေသည်။ ၎င်းကို ဆက်တင်များတွင် ဦးစွာပြောင်းလဲပါ။</string>
+    <string name="walkie_talkie_recording_timer">မှတ်တမ်းတင်နေသည်… %1$d/၁၂ စက္ကန့်</string>
 </resources>

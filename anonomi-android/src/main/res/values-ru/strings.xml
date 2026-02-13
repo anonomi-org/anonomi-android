@@ -1106,4 +1106,5 @@
     <string name="ptt_button_volume_down">Уменьшить громкость</string>
     <string name="ptt_conflict_message">Эта кнопка конфликтует с вашей последовательностью срабатывания триггера паники.</string>
     <string name="panic_conflict_ptt">Конфликт с кнопкой \"Нажми и говори\". Сначала измените это в настройках.</string>
+    <string name="walkie_talkie_recording_timer">Запись… %1$d/12с</string>
 </resources>

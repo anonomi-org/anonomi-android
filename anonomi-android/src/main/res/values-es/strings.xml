@@ -1098,4 +1098,5 @@
     <string name="ptt_button_volume_down">Bajar el volumen</string>
     <string name="ptt_conflict_message">Este botón entra en conflicto con la secuencia de activación del pánico.</string>
     <string name="panic_conflict_ptt">Hay conflictos con el botón Pulsar para hablar. Cámbielo primero en Configuración.</string>
+    <string name="walkie_talkie_recording_timer">Grabando… %1$d/12s</string>
 </resources>

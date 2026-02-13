@@ -1043,4 +1043,5 @@
     <string name="ptt_button_volume_down">Səs Azaldılması</string>
     <string name="ptt_conflict_message">Bu düymə Panic Tetikleyici ardıcıllığınızla ziddiyyət təşkil edir.</string>
     <string name="panic_conflict_ptt">Push-to-Talk düyməsi ilə ziddiyyət təşkil edir. Əvvəlcə onu Parametrlərdə dəyişdirin.</string>
+    <string name="walkie_talkie_recording_timer">Qeydə alınır… %1$d/12s</string>
 </resources>

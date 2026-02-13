@@ -1082,4 +1082,5 @@ Anonomi-i i përdor ato paralelisht.</string>
     <string name="ptt_button_volume_down">Ulja e volumit</string>
     <string name="ptt_conflict_message">Ky buton bie ndesh me sekuencën tuaj të Shkaktuesit të Panikut.</string>
     <string name="panic_conflict_ptt">Konflikte me butonin Push-to-Fol. Ndryshoje fillimisht te Cilësimet.</string>
+    <string name="walkie_talkie_recording_timer">Regjistrimi… %1$d/12s</string>
 </resources>

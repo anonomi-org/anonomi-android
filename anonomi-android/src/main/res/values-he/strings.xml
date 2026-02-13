@@ -1085,4 +1085,5 @@
     <string name="ptt_button_volume_down">הנמכת עוצמת הקול</string>
     <string name="ptt_conflict_message">כפתור זה מתנגש עם רצף הפעלת הפאניקה שלך.</string>
     <string name="panic_conflict_ptt">מתנגש עם כפתור ה-Push-to-Talk. שנה אותו תחילה בהגדרות.</string>
+    <string name="walkie_talkie_recording_timer">הקלטה... %1$d/12 שניות</string>
 </resources>

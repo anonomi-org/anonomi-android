@@ -1059,4 +1059,5 @@
     <string name="ptt_button_volume_down">Smanjivanje jačine zvuka</string>
     <string name="ptt_conflict_message">Ovo dugme je u sukobu sa vašom sekvencom za okidanje panike.</string>
     <string name="panic_conflict_ptt">Konflikt sa dugmetom Pritisni za razgovor. Prvo to promijenite u Postavkama.</string>
+    <string name="walkie_talkie_recording_timer">Snimanje… %1$d/12s</string>
 </resources>
