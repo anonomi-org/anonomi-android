@@ -1079,4 +1079,5 @@ Installera först Anonomi Postbox-appen på en annan enhet genom att hämta den 
     <string name="ptt_button_volume_down">Volym ned</string>
     <string name="ptt_conflict_message">Den här knappen står i konflikt med din panikutlösarsekvens.</string>
     <string name="panic_conflict_ptt">Konflikt med Push-to-Talk-knappen. Ändra det i Inställningarna först.</string>
+    <string name="walkie_talkie_recording_timer">Inspelning… %1$d/12s</string>
 </resources>
