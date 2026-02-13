@@ -1068,4 +1068,5 @@
     <string name="ptt_button_volume_down">音量調低</string>
     <string name="ptt_conflict_message">此按鈕與您的緊急觸發序列衝突。</string>
     <string name="panic_conflict_ptt">與一鍵通按鈕衝突。請先在設定中更改。</string>
+    <string name="walkie_talkie_recording_timer">正在錄製中… %1$d/12秒</string>
 </resources>
