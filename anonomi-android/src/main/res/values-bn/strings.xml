@@ -1077,4 +1077,5 @@
     <string name="ptt_button_volume_down">ভলিউম কমানো</string>
     <string name="ptt_conflict_message">এই বোতামটি আপনার প্যানিক ট্রিগার সিকোয়েন্সের সাথে সাংঘর্ষিক।</string>
     <string name="panic_conflict_ptt">পুশ-টু-টক বোতামের সাথে বিরোধ। প্রথমে সেটিংসে এটি পরিবর্তন করুন।</string>
+    <string name="walkie_talkie_recording_timer">রেকর্ডিং... %1$d/১২ সেকেন্ড</string>
 </resources>
