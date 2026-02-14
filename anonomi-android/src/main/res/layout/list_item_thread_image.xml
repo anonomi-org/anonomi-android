@@ -105,32 +105,42 @@
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintTop_toBottomOf="@+id/divider" />
 
-		<ImageView
-			android:id="@+id/imageContent"
+		<com.google.android.material.card.MaterialCardView
+			android:id="@+id/imageCard"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:adjustViewBounds="true"
-			android:maxHeight="300dp"
-			android:padding="@dimen/margin_medium"
-			android:scaleType="centerCrop"
-			android:contentDescription="@string/image_sent"
+			android:layout_margin="@dimen/margin_medium"
+			app:cardCornerRadius="12dp"
+			app:cardElevation="0dp"
 			app:layout_constraintBottom_toTopOf="@id/text"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/author" />
+			app:layout_constraintTop_toBottomOf="@id/author">
+
+			<ImageView
+				android:id="@+id/imageContent"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:adjustViewBounds="true"
+				android:maxHeight="300dp"
+				android:scaleType="centerCrop"
+				android:contentDescription="@string/image_sent" />
+
+		</com.google.android.material.card.MaterialCardView>
 
 		<com.vanniktech.emoji.EmojiTextView
 			android:id="@+id/text"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:paddingStart="@dimen/margin_medium"
-			android:paddingEnd="@dimen/margin_medium"
-			android:paddingBottom="@dimen/margin_medium"
+			android:padding="@dimen/margin_medium"
 			android:textColor="?android:attr/textColorPrimary"
+			android:textColorLink="@color/anon_text_link"
+			android:textIsSelectable="true"
+			android:textSize="@dimen/text_size_medium"
 			android:visibility="gone"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/imageContent" />
+			app:layout_constraintTop_toBottomOf="@id/imageCard" />
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
 
