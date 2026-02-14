@@ -55,10 +55,15 @@ public abstract class BaseThreadItemViewHolder<I extends ThreadItem>
 					R.string.tap_to_view_on_map));
 			textView.setOnClickListener(
 					v -> listener.onMapMessageClicked(mapData));
-		} else {
+			textView.setVisibility(View.VISIBLE);
+		} else if (trimmedText != null && !trimmedText.isEmpty()) {
 			textView.setText(trimmedText);
 			Linkify.addLinks(textView, Linkify.WEB_URLS);
 			makeLinksClickable(textView, listener::onLinkClick);
+			textView.setVisibility(View.VISIBLE);
+		} else {
+			textView.setText(null);
+			textView.setVisibility(View.GONE);
 		}
 
 		author.setAuthor(item.getAuthor(), item.getAuthorInfo());

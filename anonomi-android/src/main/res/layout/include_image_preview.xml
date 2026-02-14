@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/imagePreviewContainer"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:background="@color/card_background"
+	android:visibility="gone">
+
+	<ImageView
+		android:id="@+id/previewImage"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:adjustViewBounds="true"
+		android:maxHeight="200dp"
+		android:scaleType="fitCenter" />
+
+	<com.google.android.material.floatingactionbutton.FloatingActionButton
+		android:id="@+id/cancelImageButton"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="top|end"
+		android:layout_margin="8dp"
+		android:contentDescription="@string/close"
+		app:backgroundTint="?colorSecondary"
+		app:fabCustomSize="26dp"
+		app:maxImageSize="18dp"
+		app:srcCompat="@drawable/ic_close"
+		app:tint="?colorOnSecondary" />
+
+</FrameLayout>

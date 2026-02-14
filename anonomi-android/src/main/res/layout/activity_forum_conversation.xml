@@ -60,6 +60,8 @@
 		android:layout_gravity="center_horizontal"
 		android:visibility="gone" />
 
+	<include layout="@layout/include_image_preview" />
+
 	<org.anonomi.android.view.TextInputView
 		android:id="@+id/text_input_container"
 		android:layout_width="match_parent"

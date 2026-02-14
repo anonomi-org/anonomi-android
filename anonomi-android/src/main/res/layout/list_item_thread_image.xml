@@ -119,11 +119,14 @@
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/author" />
 
-		<!-- Hidden text view required by BaseThreadItemViewHolder -->
 		<com.vanniktech.emoji.EmojiTextView
 			android:id="@+id/text"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
+			android:paddingStart="@dimen/margin_medium"
+			android:paddingEnd="@dimen/margin_medium"
+			android:paddingBottom="@dimen/margin_medium"
+			android:textColor="?android:attr/textColorPrimary"
 			android:visibility="gone"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"

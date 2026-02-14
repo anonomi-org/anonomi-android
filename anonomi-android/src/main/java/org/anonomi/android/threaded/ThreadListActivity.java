@@ -1,9 +1,15 @@
 package org.anonomi.android.threaded;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.anonchatsecure.bramble.api.sync.GroupId;
@@ -26,6 +32,7 @@ import org.anonchatsecure.anonchat.api.attachment.AttachmentHeader;
 import org.briarproject.nullsafety.MethodsNotNullByDefault;
 import org.briarproject.nullsafety.ParametersNotNullByDefault;
 
+import java.io.InputStream;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -53,6 +60,15 @@ public abstract class ThreadListActivity<I extends ThreadItem, A extends ThreadI
 	protected TextInputView textInput;
 	protected TextSendController sendController;
 	protected GroupId groupId;
+
+	@Nullable
+	protected byte[] pendingImageBytes;
+	@Nullable
+	protected String pendingImageContentType;
+	@Nullable
+	private View imagePreviewContainer;
+	@Nullable
+	private ImageView previewImageView;
 
 	private LinearLayoutManager layoutManager;
 	private ThreadScrollListener<I> scrollListener;
@@ -144,7 +160,9 @@ public abstract class ThreadListActivity<I extends ThreadItem, A extends ThreadI
 
 	@Override
 	public void onBackPressed() {
-		if (adapter.getHighlightedItem() != null) {
+		if (pendingImageBytes != null) {
+			clearPendingImage();
+		} else if (adapter.getHighlightedItem() != null) {
 			textInput.clearText();
 			getViewModel().setReplyId(null);
 			updateTextInput();
@@ -260,6 +278,18 @@ public abstract class ThreadListActivity<I extends ThreadItem, A extends ThreadI
 	@Override
 	public LiveData<SendState> onSendClick(@Nullable String text,
 			List<AttachmentHeader> headers, long expectedAutoDeleteTimer) {
+		if (pendingImageBytes != null) {
+			MessageId replyId = getViewModel().getReplyId();
+			onSendImageWithText(pendingImageBytes, pendingImageContentType,
+					replyId, text);
+			clearPendingImage();
+			textInput.hideSoftKeyboard();
+			textInput.clearText();
+			getViewModel().setReplyId(null);
+			updateTextInput();
+			return new MutableLiveData<>(SENT);
+		}
+
 		if (isNullOrEmpty(text)) throw new AssertionError();
 
 		MessageId replyId = getViewModel().getReplyId();
@@ -269,6 +299,58 @@ public abstract class ThreadListActivity<I extends ThreadItem, A extends ThreadI
 		getViewModel().setReplyId(null);
 		updateTextInput();
 		return new MutableLiveData<>(SENT);
+	}
+
+	protected void onSendImageWithText(byte[] imageBytes,
+			@Nullable String contentType, @Nullable MessageId replyId,
+			@Nullable String text) {
+		// subclasses override this
+	}
+
+	protected void initImagePreview() {
+		imagePreviewContainer = findViewById(R.id.imagePreviewContainer);
+		previewImageView = findViewById(R.id.previewImage);
+		FloatingActionButton cancelButton =
+				findViewById(R.id.cancelImageButton);
+		if (cancelButton != null) {
+			cancelButton.setOnClickListener(v -> clearPendingImage());
+		}
+	}
+
+	protected void showImagePreview(Uri uri) {
+		if (imagePreviewContainer == null || previewImageView == null) return;
+		imagePreviewContainer.setVisibility(View.VISIBLE);
+		new Thread(() -> {
+			try {
+				InputStream is = getContentResolver().openInputStream(uri);
+				if (is == null) return;
+				Bitmap bitmap = BitmapFactory.decodeStream(is);
+				is.close();
+				if (bitmap != null) {
+					runOnUiThread(() -> previewImageView.setImageBitmap(bitmap));
+				}
+			} catch (Exception e) {
+				// ignore preview errors
+			}
+		}).start();
+	}
+
+	protected void setPendingImage(byte[] bytes, String contentType) {
+		pendingImageBytes = bytes;
+		pendingImageContentType = contentType;
+		sendController.setHasPendingAttachment(true);
+	}
+
+	protected void clearPendingImage() {
+		pendingImageBytes = null;
+		pendingImageContentType = null;
+		if (imagePreviewContainer != null) {
+			imagePreviewContainer.setVisibility(View.GONE);
+		}
+		if (previewImageView != null) {
+			previewImageView.setImageBitmap(null);
+		}
+		sendController.setHasPendingAttachment(false);
 	}
 
 	protected abstract int getMaxTextLength();
