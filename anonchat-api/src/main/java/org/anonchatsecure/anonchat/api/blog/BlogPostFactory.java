@@ -37,9 +37,15 @@ public interface BlogPostFactory {
 
 	String SIGNING_LABEL_POST = CLIENT_ID.getString() + "/POST";
 	String SIGNING_LABEL_COMMENT = CLIENT_ID.getString() + "/COMMENT";
+	String SIGNING_LABEL_IMAGE_POST = CLIENT_ID.getString() + "/IMAGE_POST";
 
 	BlogPost createBlogPost(GroupId groupId, long timestamp,
 			@Nullable MessageId parent, LocalAuthor author, String text)
+			throws FormatException, GeneralSecurityException;
+
+	BlogPost createBlogImagePost(GroupId groupId, long timestamp,
+			@Nullable MessageId parent, LocalAuthor author, String text,
+			byte[] imageData, String contentType)
 			throws FormatException, GeneralSecurityException;
 
 	Message createBlogComment(GroupId groupId, LocalAuthor author,

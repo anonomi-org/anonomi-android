@@ -32,7 +32,13 @@ public interface BlogConstants {
 	 */
 	int MAX_BLOG_COMMENT_TEXT_LENGTH = MAX_BLOG_POST_TEXT_LENGTH;
 
+	/**
+	 * The maximum size of image data in a blog image post in bytes.
+	 */
+	int MAX_BLOG_IMAGE_SIZE = 32 * 1024;
+
 	// Metadata keys
+	String KEY_HAS_IMAGE = "hasImage";
 	String KEY_TYPE = "type";
 	String KEY_TIMESTAMP = "timestamp";
 	String KEY_TIME_RECEIVED = "timeReceived";

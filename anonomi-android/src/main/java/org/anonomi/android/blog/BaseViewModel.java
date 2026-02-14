@@ -107,6 +107,13 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 			return item;
 		} else {
 			text = getPostText(txn, h.getId());
+			if (h.hasImage()) {
+				byte[] imageData =
+						blogManager.getPostImageData(txn, h.getId());
+				String imageContentType =
+						blogManager.getPostImageContentType(txn, h.getId());
+				return new BlogPostItem(h, text, imageData, imageContentType);
+			}
 			return new BlogPostItem(h, text);
 		}
 	}

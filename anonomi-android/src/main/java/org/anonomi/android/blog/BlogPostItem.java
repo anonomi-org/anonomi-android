@@ -18,11 +18,22 @@ public class BlogPostItem implements Comparable<BlogPostItem> {
 	@Nullable
 	protected String text;
 	private final boolean read;
+	@Nullable
+	private final byte[] imageData;
+	@Nullable
+	private final String imageContentType;
 
 	BlogPostItem(BlogPostHeader header, @Nullable String text) {
+		this(header, text, null, null);
+	}
+
+	BlogPostItem(BlogPostHeader header, @Nullable String text,
+			@Nullable byte[] imageData, @Nullable String imageContentType) {
 		this.header = header;
 		this.text = text;
 		this.read = header.isRead();
+		this.imageData = imageData;
+		this.imageContentType = imageContentType;
 	}
 
 	public MessageId getId() {
@@ -64,6 +75,20 @@ public class BlogPostItem implements Comparable<BlogPostItem> {
 
 	BlogPostHeader getPostHeader() {
 		return getHeader();
+	}
+
+	public boolean hasImage() {
+		return imageData != null && imageData.length > 0;
+	}
+
+	@Nullable
+	public byte[] getImageData() {
+		return imageData;
+	}
+
+	@Nullable
+	public String getImageContentType() {
+		return imageContentType;
 	}
 
 	@Override

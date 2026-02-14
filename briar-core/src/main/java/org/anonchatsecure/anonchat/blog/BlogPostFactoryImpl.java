@@ -82,6 +82,32 @@ class BlogPostFactoryImpl implements BlogPostFactory {
 	}
 
 	@Override
+	public BlogPost createBlogImagePost(GroupId groupId, long timestamp,
+			@Nullable MessageId parent, LocalAuthor author, String text,
+			byte[] imageData, String contentType)
+			throws FormatException, GeneralSecurityException {
+
+		// Validate the arguments
+		int textLength = StringUtils.toUtf8(text).length;
+		if (textLength > MAX_BLOG_POST_TEXT_LENGTH)
+			throw new IllegalArgumentException();
+
+		// Serialise the data to be signed
+		BdfList signed = BdfList.of(groupId, timestamp, text, imageData,
+				contentType);
+
+		// Generate the signature
+		byte[] sig = clientHelper.sign(SIGNING_LABEL_IMAGE_POST, signed,
+				author.getPrivateKey());
+
+		// Serialise the signed message (5-field POST body)
+		BdfList message = BdfList.of(POST.getInt(), text, sig, imageData,
+				contentType);
+		Message m = clientHelper.createMessage(groupId, timestamp, message);
+		return new BlogPost(m, parent, author);
+	}
+
+	@Override
 	public Message createBlogComment(GroupId groupId, LocalAuthor author,
 			@Nullable String comment, MessageId parentOriginalId,
 			MessageId parentCurrentId)
@@ -118,8 +144,17 @@ class BlogPostFactoryImpl implements BlogPostFactory {
 		// Serialise the message
 		String text = body.getString(1);
 		byte[] signature = body.getRaw(2);
-		BdfList message = BdfList.of(WRAPPED_POST.getInt(), descriptor,
-				timestamp, text, signature);
+		BdfList message;
+		if (body.size() == 5) {
+			// Image post: type, text, sig, imageData, contentType
+			byte[] imageData = body.getRaw(3);
+			String contentType = body.getString(4);
+			message = BdfList.of(WRAPPED_POST.getInt(), descriptor,
+					timestamp, text, signature, imageData, contentType);
+		} else {
+			message = BdfList.of(WRAPPED_POST.getInt(), descriptor,
+					timestamp, text, signature);
+		}
 		return clientHelper
 				.createMessage(groupId, clock.currentTimeMillis(), message);
 	}
@@ -136,8 +171,18 @@ class BlogPostFactoryImpl implements BlogPostFactory {
 		long timestamp = body.getLong(2);
 		String text = body.getString(3);
 		byte[] signature = body.getRaw(4);
-		BdfList message = BdfList.of(WRAPPED_POST.getInt(), descriptor,
-				timestamp, text, signature);
+		BdfList message;
+		if (body.size() == 7) {
+			// Image wrapped post: type, descriptor, timestamp, text, sig,
+			// imageData, contentType
+			byte[] imageData = body.getRaw(5);
+			String contentType = body.getString(6);
+			message = BdfList.of(WRAPPED_POST.getInt(), descriptor,
+					timestamp, text, signature, imageData, contentType);
+		} else {
+			message = BdfList.of(WRAPPED_POST.getInt(), descriptor,
+					timestamp, text, signature);
+		}
 		return clientHelper
 				.createMessage(groupId, clock.currentTimeMillis(), message);
 	}

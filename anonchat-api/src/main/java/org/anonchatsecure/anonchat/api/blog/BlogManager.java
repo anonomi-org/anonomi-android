@@ -86,6 +86,43 @@ public interface BlogManager {
 	void addLocalPost(Transaction txn, BlogPost p) throws DbException;
 
 	/**
+	 * Stores a local blog image post.
+	 */
+	void addLocalImagePost(BlogPost p) throws DbException;
+
+	/**
+	 * Stores a local blog image post.
+	 */
+	void addLocalImagePost(Transaction txn, BlogPost p) throws DbException;
+
+	/**
+	 * Returns the image data of the blog post with the given ID, or null.
+	 */
+	@Nullable
+	byte[] getPostImageData(MessageId m) throws DbException;
+
+	/**
+	 * Returns the image data of the blog post with the given ID, or null.
+	 */
+	@Nullable
+	byte[] getPostImageData(Transaction txn, MessageId m) throws DbException;
+
+	/**
+	 * Returns the image content type of the blog post with the given ID,
+	 * or null.
+	 */
+	@Nullable
+	String getPostImageContentType(MessageId m) throws DbException;
+
+	/**
+	 * Returns the image content type of the blog post with the given ID,
+	 * or null.
+	 */
+	@Nullable
+	String getPostImageContentType(Transaction txn, MessageId m)
+			throws DbException;
+
+	/**
 	 * Adds a comment to an existing blog post or reblogs it.
 	 */
 	void addLocalComment(LocalAuthor author, GroupId groupId,

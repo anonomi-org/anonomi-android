@@ -36,22 +36,33 @@ public class BlogPostHeader extends PostHeader {
 	private final GroupId groupId;
 	private final long timeReceived;
 	private final boolean rssFeed;
+	private final boolean hasImage;
 
 	public BlogPostHeader(MessageType type, GroupId groupId, MessageId id,
 			@Nullable MessageId parentId, long timestamp, long timeReceived,
-			Author author, AuthorInfo authorInfo, boolean rssFeed, boolean read) {
+			Author author, AuthorInfo authorInfo, boolean rssFeed,
+			boolean read) {
+		this(type, groupId, id, parentId, timestamp, timeReceived, author,
+				authorInfo, rssFeed, read, false);
+	}
+
+	public BlogPostHeader(MessageType type, GroupId groupId, MessageId id,
+			@Nullable MessageId parentId, long timestamp, long timeReceived,
+			Author author, AuthorInfo authorInfo, boolean rssFeed,
+			boolean read, boolean hasImage) {
 		super(id, parentId, timestamp, author, authorInfo, read);
 		this.type = type;
 		this.groupId = groupId;
 		this.timeReceived = timeReceived;
 		this.rssFeed = rssFeed;
+		this.hasImage = hasImage;
 	}
 
 	public BlogPostHeader(MessageType type, GroupId groupId, MessageId id,
 			long timestamp, long timeReceived, Author author,
 			AuthorInfo authorInfo, boolean rssFeed, boolean read) {
 		this(type, groupId, id, null, timestamp, timeReceived, author,
-				authorInfo, rssFeed, read);
+				authorInfo, rssFeed, read, false);
 	}
 
 	public MessageType getType() {
@@ -68,6 +79,10 @@ public class BlogPostHeader extends PostHeader {
 
 	public boolean isRssFeed() {
 		return rssFeed;
+	}
+
+	public boolean hasImage() {
+		return hasImage;
 	}
 
 }

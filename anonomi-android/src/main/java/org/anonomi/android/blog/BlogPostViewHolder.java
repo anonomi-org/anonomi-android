@@ -2,20 +2,26 @@ package org.anonomi.android.blog;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.text.Spanned;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.anonchatsecure.bramble.api.sync.MessageId;
 import org.anonomi.R;
+import org.anonomi.android.conversation.MapMessageData;
 import org.anonomi.android.view.AuthorView;
+import org.anonomi.android.view.ImageViewActivity;
 import org.anonchatsecure.anonchat.api.blog.BlogCommentHeader;
 import org.anonchatsecure.anonchat.api.blog.BlogPostHeader;
 import org.briarproject.nullsafety.NotNullByDefault;
+
+import javax.annotation.Nullable;
 
 import androidx.annotation.UiThread;
 import androidx.core.view.ViewCompat;
@@ -44,6 +50,8 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 	private final ImageButton reblogButton;
 	private final TextView text;
 	private final ViewGroup commentContainer;
+	@Nullable
+	private final ImageView imageContent;
 	private final boolean fullText, authorClickable;
 	private final int padding;
 
@@ -63,6 +71,7 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 		reblogButton = v.findViewById(R.id.commentView);
 		text = v.findViewById(R.id.textView);
 		commentContainer = v.findViewById(R.id.commentContainer);
+		imageContent = v.findViewById(R.id.imageContent);
 		padding = ctx.getResources()
 				.getDimensionPixelSize(R.dimen.listitem_vertical_margin);
 	}
@@ -105,17 +114,52 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 			author.setAuthorNotClickable();
 		}
 
-		// post text
-		Spanned postText = getSpanned(item.getText());
-		if (fullText) {
-			text.setText(postText);
-			text.setTextIsSelectable(true);
-			makeLinksClickable(text, listener::onLinkClick);
+		// image content
+		if (imageContent != null) {
+			if (item.hasImage()) {
+				byte[] data = item.getImageData();
+				if (data != null) {
+					android.graphics.Bitmap bitmap =
+							BitmapFactory.decodeByteArray(data, 0, data.length);
+					if (bitmap != null) {
+						imageContent.setImageBitmap(bitmap);
+						imageContent.setVisibility(VISIBLE);
+						imageContent.setOnClickListener(
+								v -> ImageViewActivity.start(ctx, data));
+					} else {
+						imageContent.setVisibility(GONE);
+					}
+				} else {
+					imageContent.setVisibility(GONE);
+				}
+			} else {
+				imageContent.setVisibility(GONE);
+			}
+		}
+
+		// post text - check for map message
+		String postTextStr = item.getText();
+		if (postTextStr != null && postTextStr.trim().startsWith("::map:")) {
+			MapMessageData mapData = parseMapMessage(postTextStr.trim());
+			text.setText("\uD83D\uDCCD" + mapData.label +
+					"\n   " + mapData.latitude +
+					"\n   " + mapData.longitude +
+					"\n   " + ctx.getString(R.string.tap_to_view_on_map));
+			text.setOnClickListener(
+					v -> listener.onMapMessageClicked(mapData));
 		} else {
-			text.setTextIsSelectable(false);
-			if (postText.length() > TEASER_LENGTH)
-				postText = getTeaser(ctx, postText);
-			text.setText(postText);
+			text.setOnClickListener(null);
+			Spanned postText = getSpanned(postTextStr);
+			if (fullText) {
+				text.setText(postText);
+				text.setTextIsSelectable(true);
+				makeLinksClickable(text, listener::onLinkClick);
+			} else {
+				text.setTextIsSelectable(false);
+				if (postText.length() > TEASER_LENGTH)
+					postText = getTeaser(ctx, postText);
+				text.setText(postText);
+			}
 		}
 
 		// reblog button
@@ -132,6 +176,27 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 			onBindComment((BlogCommentItem) item, authorClickable);
 		} else {
 			reblogger.setVisibility(GONE);
+		}
+	}
+
+	private MapMessageData parseMapMessage(String text) {
+		String payload = text.substring(6); // Remove "::map:"
+		String[] parts = payload.split(";");
+		String label = (parts.length > 0) ? parts[0].trim() : "Unknown";
+		String location = (parts.length > 1) ? parts[1].trim() : "";
+		String zoom = (parts.length > 2) ? parts[2].trim() : "";
+
+		try {
+			String[] latLon = location.split(",");
+			String latStr = (latLon.length > 0) ?
+					latLon[0].trim().replace(":", "") : "0";
+			String lonStr = (latLon.length > 1) ?
+					latLon[1].trim().replace(":", "") : "0";
+			double lat = Double.parseDouble(latStr);
+			double lon = Double.parseDouble(lonStr);
+			return new MapMessageData(label, lat, lon, zoom);
+		} catch (Exception e) {
+			return new MapMessageData(label, 0, 0, zoom);
 		}
 	}
 
