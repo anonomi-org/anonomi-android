@@ -116,6 +116,12 @@ public class TextInputView extends LinearLayout {
 		return textInput;
 	}
 
+	@Nullable
+	public String getText() {
+		CharSequence cs = textInput.getText();
+		return cs != null ? cs.toString() : null;
+	}
+
 	public void clearText() {
 		textInput.clearText();
 	}

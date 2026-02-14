@@ -440,6 +440,8 @@ public class GroupActivity extends
 
 	private void onImageSelected(@Nullable Uri uri) {
 		if (uri == null) return;
+		String text = textInput.getText();
+		textInput.clearText();
 		MessageId replyId = viewModel.getCurrentReplyId();
 		new Thread(() -> {
 			try {
@@ -462,7 +464,7 @@ public class GroupActivity extends
 				byte[] imageBytes = bos.toByteArray();
 				runOnUiThread(() -> {
 					viewModel.createAndStoreImageMessage(
-							imageBytes, "image/jpeg", replyId);
+							imageBytes, "image/jpeg", replyId, text);
 					viewModel.clearReplyId();
 					Toast.makeText(this,
 							getString(R.string.image_sent),
