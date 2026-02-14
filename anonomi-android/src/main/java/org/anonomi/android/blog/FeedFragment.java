@@ -13,7 +13,9 @@ import org.anonchatsecure.bramble.api.sync.GroupId;
 import org.anonomi.R;
 import org.anonomi.android.activity.ActivityComponent;
 import org.anonomi.android.blog.BaseViewModel.ListUpdate;
+import org.anonomi.android.conversation.MapMessageData;
 import org.anonomi.android.fragment.BaseFragment;
+import org.anonomi.android.map.MapViewActivity;
 import org.anonomi.android.util.BriarSnackbarBuilder;
 import org.anonomi.android.view.BriarRecyclerView;
 import org.anonomi.android.widget.LinkDialogFragment;
@@ -158,6 +160,16 @@ public class FeedFragment extends BaseFragment
 	public void onLinkClick(String url) {
 		LinkDialogFragment f = LinkDialogFragment.newInstance(url);
 		f.show(getParentFragmentManager(), f.getUniqueTag());
+	}
+
+	@Override
+	public void onMapMessageClicked(MapMessageData data) {
+		Intent i = new Intent(requireContext(), MapViewActivity.class);
+		i.putExtra(MapViewActivity.EXTRA_LABEL, data.label);
+		i.putExtra(MapViewActivity.EXTRA_LATITUDE, data.latitude);
+		i.putExtra(MapViewActivity.EXTRA_LONGITUDE, data.longitude);
+		i.putExtra(MapViewActivity.EXTRA_ZOOM, data.zoom);
+		startActivity(i);
 	}
 
 	@Override

@@ -1,9 +1,13 @@
 package org.anonomi.android.blog;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import org.anonchatsecure.bramble.api.FormatException;
 import org.anonchatsecure.bramble.api.db.DbException;
@@ -13,6 +17,8 @@ import org.anonchatsecure.bramble.api.sync.GroupId;
 import org.anonomi.R;
 import org.anonomi.android.activity.ActivityComponent;
 import org.anonomi.android.activity.BriarActivity;
+import org.anonomi.android.attachment.media.ImageCompressor;
+import org.anonomi.android.map.MapLocationPickerActivity;
 import org.anonomi.android.view.TextInputView;
 import org.anonomi.android.view.TextSendController;
 import org.anonomi.android.view.TextSendController.SendListener;
@@ -24,12 +30,17 @@ import org.anonchatsecure.anonchat.api.blog.BlogPostFactory;
 import org.briarproject.nullsafety.MethodsNotNullByDefault;
 import org.briarproject.nullsafety.ParametersNotNullByDefault;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.security.GeneralSecurityException;
 import java.util.List;
 import java.util.logging.Logger;
 
 import javax.inject.Inject;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -41,6 +52,7 @@ import static org.anonchatsecure.bramble.util.LogUtils.logException;
 import static org.anonchatsecure.bramble.util.StringUtils.isNullOrEmpty;
 import static org.anonomi.android.view.TextSendController.SendState;
 import static org.anonomi.android.view.TextSendController.SendState.SENT;
+import static org.anonchatsecure.anonchat.api.blog.BlogConstants.MAX_BLOG_IMAGE_SIZE;
 import static org.anonchatsecure.anonchat.api.blog.BlogConstants.MAX_BLOG_POST_TEXT_LENGTH;
 
 @MethodsNotNullByDefault
@@ -51,8 +63,12 @@ public class WriteBlogPostActivity extends BriarActivity
 	private static final Logger LOG =
 			Logger.getLogger(WriteBlogPostActivity.class.getName());
 
+	private static final int REQUEST_SEND_LOCATION = 2001;
+
 	@Inject
 	AndroidNotificationManager notificationManager;
+	@Inject
+	ImageCompressor imageCompressor;
 
 	private TextInputView input;
 	private ProgressBar progressBar;
@@ -65,6 +81,11 @@ public class WriteBlogPostActivity extends BriarActivity
 	volatile BlogPostFactory blogPostFactory;
 	@Inject
 	volatile BlogManager blogManager;
+
+	private final ActivityResultLauncher<String> imagePickerLauncher =
+			registerForActivityResult(
+					new ActivityResultContracts.GetContent(),
+					this::onImageSelected);
 
 	@Override
 	public void onCreate(@Nullable Bundle state) {
@@ -100,12 +121,45 @@ public class WriteBlogPostActivity extends BriarActivity
 	}
 
 	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.blog_write_actions, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == android.R.id.home) {
+		int itemId = item.getItemId();
+		if (itemId == android.R.id.home) {
 			onBackPressed();
+			return true;
+		} else if (itemId == R.id.action_attach_image) {
+			imagePickerLauncher.launch("image/*");
+			return true;
+		} else if (itemId == R.id.action_send_location) {
+			Intent intent = new Intent(this, MapLocationPickerActivity.class);
+			startActivityForResult(intent, REQUEST_SEND_LOCATION);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	protected void onActivityResult(int request, int result,
+			@Nullable Intent data) {
+		if (request == REQUEST_SEND_LOCATION &&
+				result == RESULT_OK && data != null) {
+			String message = data.getStringExtra(
+					MapLocationPickerActivity.RESULT_MAP_MESSAGE);
+			if (message != null) {
+				input.hideSoftKeyboard();
+				input.setVisibility(GONE);
+				progressBar.setVisibility(VISIBLE);
+				storePost(message);
+			}
+		} else {
+			super.onActivityResult(request, result, data);
+		}
 	}
 
 	@Override
@@ -135,6 +189,65 @@ public class WriteBlogPostActivity extends BriarActivity
 				BlogPost p = blogPostFactory
 						.createBlogPost(groupId, timestamp, null, author, text);
 				blogManager.addLocalPost(p);
+				postPublished();
+			} catch (DbException | GeneralSecurityException
+					| FormatException e) {
+				logException(LOG, WARNING, e);
+				postFailedToPublish();
+			}
+		});
+	}
+
+	private void onImageSelected(@Nullable Uri uri) {
+		if (uri == null) return;
+		input.hideSoftKeyboard();
+		input.setVisibility(GONE);
+		progressBar.setVisibility(VISIBLE);
+
+		new Thread(() -> {
+			try {
+				String mimeType = getContentResolver().getType(uri);
+				if (mimeType == null) mimeType = "image/jpeg";
+				InputStream is = getContentResolver().openInputStream(uri);
+				if (is == null) {
+					runOnUiThread(() -> {
+						Toast.makeText(this,
+								getString(R.string.image_compression_failed),
+								Toast.LENGTH_SHORT).show();
+						postFailedToPublish();
+					});
+					return;
+				}
+				InputStream compressed = imageCompressor.compressImage(
+						is, mimeType, MAX_BLOG_IMAGE_SIZE);
+				ByteArrayOutputStream bos = new ByteArrayOutputStream();
+				byte[] buf = new byte[4096];
+				int len;
+				while ((len = compressed.read(buf)) != -1)
+					bos.write(buf, 0, len);
+				byte[] imageBytes = bos.toByteArray();
+				storeImagePost(imageBytes, "image/jpeg");
+			} catch (IOException e) {
+				logException(LOG, WARNING, e);
+				runOnUiThread(() -> {
+					Toast.makeText(this,
+							getString(R.string.image_compression_failed),
+							Toast.LENGTH_SHORT).show();
+					postFailedToPublish();
+				});
+			}
+		}).start();
+	}
+
+	private void storeImagePost(byte[] imageData, String contentType) {
+		runOnDbThread(() -> {
+			long timestamp = System.currentTimeMillis();
+			try {
+				LocalAuthor author = identityManager.getLocalAuthor();
+				BlogPost p = blogPostFactory.createBlogImagePost(
+						groupId, timestamp, null, author, "", imageData,
+						contentType);
+				blogManager.addLocalImagePost(p);
 				postPublished();
 			} catch (DbException | GeneralSecurityException
 					| FormatException e) {

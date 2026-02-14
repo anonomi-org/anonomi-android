@@ -70,6 +70,7 @@ import javax.inject.Inject;
 
 import static org.anonchatsecure.bramble.api.sync.validation.IncomingMessageHook.DeliveryAction.ACCEPT_DO_NOT_SHARE;
 import static org.anonchatsecure.bramble.api.sync.validation.IncomingMessageHook.DeliveryAction.ACCEPT_SHARE;
+import static org.anonchatsecure.anonchat.api.blog.BlogConstants.KEY_HAS_IMAGE;
 import static org.anonchatsecure.anonchat.api.blog.BlogConstants.KEY_AUTHOR;
 import static org.anonchatsecure.anonchat.api.blog.BlogConstants.KEY_COMMENT;
 import static org.anonchatsecure.anonchat.api.blog.BlogConstants.KEY_ORIGINAL_MSG_ID;
@@ -272,6 +273,114 @@ class BlogManagerImpl extends BdfIncomingMessageHook implements BlogManager,
 	}
 
 	@Override
+	public void addLocalImagePost(BlogPost p) throws DbException {
+		Transaction txn = db.startTransaction(false);
+		try {
+			addLocalImagePost(txn, p);
+			db.commitTransaction(txn);
+		} finally {
+			db.endTransaction(txn);
+		}
+	}
+
+	@Override
+	public void addLocalImagePost(Transaction txn, BlogPost p)
+			throws DbException {
+		try {
+			GroupId groupId = p.getMessage().getGroupId();
+			Blog b = getBlog(txn, groupId);
+
+			BdfDictionary meta = new BdfDictionary();
+			meta.put(KEY_TYPE, POST.getInt());
+			meta.put(KEY_TIMESTAMP, p.getMessage().getTimestamp());
+			meta.put(KEY_AUTHOR, clientHelper.toList(p.getAuthor()));
+			meta.put(KEY_READ, true);
+			meta.put(KEY_RSS_FEED, b.isRssFeed());
+			meta.put(KEY_HAS_IMAGE, true);
+			clientHelper.addLocalMessage(txn, p.getMessage(), meta, true,
+					false);
+
+			// broadcast event about new post
+			MessageId postId = p.getMessage().getId();
+			BlogPostHeader h =
+					getPostHeaderFromMetadata(txn, groupId, postId, meta);
+			boolean local = !b.isRssFeed();
+			BlogPostAddedEvent event =
+					new BlogPostAddedEvent(groupId, h, local);
+			txn.attach(event);
+		} catch (FormatException e) {
+			throw new DbException(e);
+		}
+	}
+
+	@Override
+	@Nullable
+	public byte[] getPostImageData(MessageId m) throws DbException {
+		try {
+			return getImageData(clientHelper.getMessageAsList(m));
+		} catch (FormatException e) {
+			throw new DbException(e);
+		}
+	}
+
+	@Override
+	@Nullable
+	public byte[] getPostImageData(Transaction txn, MessageId m)
+			throws DbException {
+		try {
+			return getImageData(clientHelper.getMessageAsList(txn, m));
+		} catch (FormatException e) {
+			throw new DbException(e);
+		}
+	}
+
+	@Override
+	@Nullable
+	public String getPostImageContentType(MessageId m) throws DbException {
+		try {
+			return getImageContentType(clientHelper.getMessageAsList(m));
+		} catch (FormatException e) {
+			throw new DbException(e);
+		}
+	}
+
+	@Override
+	@Nullable
+	public String getPostImageContentType(Transaction txn, MessageId m)
+			throws DbException {
+		try {
+			return getImageContentType(clientHelper.getMessageAsList(txn, m));
+		} catch (FormatException e) {
+			throw new DbException(e);
+		}
+	}
+
+	@Nullable
+	private byte[] getImageData(BdfList message) throws FormatException {
+		MessageType type = MessageType.valueOf(message.getInt(0));
+		if (type == POST && message.size() == 5) {
+			// type, text, sig, imageData, contentType
+			return message.getRaw(3);
+		} else if (type == WRAPPED_POST && message.size() == 7) {
+			// type, descriptor, timestamp, text, sig, imageData, contentType
+			return message.getRaw(5);
+		}
+		return null;
+	}
+
+	@Nullable
+	private String getImageContentType(BdfList message)
+			throws FormatException {
+		MessageType type = MessageType.valueOf(message.getInt(0));
+		if (type == POST && message.size() == 5) {
+			return message.getString(4);
+		} else if (type == WRAPPED_POST && message.size() == 7) {
+			return message.getString(6);
+		}
+		return null;
+	}
+
+	@Override
 	public void addLocalComment(LocalAuthor author, GroupId groupId,
 			@Nullable String comment, BlogPostHeader parentHeader)
 			throws DbException {
@@ -357,6 +466,7 @@ class BlogManagerImpl extends BdfIncomingMessageHook implements BlogManager,
 					timestamp, body);
 			meta.put(KEY_TYPE, WRAPPED_POST.getInt());
 			meta.put(KEY_RSS_FEED, header.isRssFeed());
+			if (header.hasImage()) meta.put(KEY_HAS_IMAGE, true);
 		} else if (type == COMMENT) {
 			// Recursively wrap parent
 			BlogCommentHeader commentHeader = (BlogCommentHeader) header;
@@ -379,6 +489,7 @@ class BlogManagerImpl extends BdfIncomingMessageHook implements BlogManager,
 			wrappedMessage = blogPostFactory.rewrapWrappedPost(groupId, body);
 			meta.put(KEY_TYPE, WRAPPED_POST.getInt());
 			meta.put(KEY_RSS_FEED, header.isRssFeed());
+			if (header.hasImage()) meta.put(KEY_HAS_IMAGE, true);
 		} else if (type == WRAPPED_COMMENT) {
 			// Recursively wrap parent
 			BlogCommentHeader commentHeader = (BlogCommentHeader) header;
@@ -511,11 +622,11 @@ class BlogManagerImpl extends BdfIncomingMessageHook implements BlogManager,
 	private String getPostText(BdfList message) throws FormatException {
 		MessageType type = MessageType.valueOf(message.getInt(0));
 		if (type == POST) {
-			// Type, text, signature
+			// Type, text, signature [, imageData, contentType]
 			return message.getString(1);
 		} else if (type == WRAPPED_POST) {
 			// Type, copied group descriptor, copied timestamp, copied text,
-			// copied signature
+			// copied signature [, imageData, contentType]
 			return message.getString(3);
 		} else {
 			throw new FormatException();
@@ -636,6 +747,8 @@ class BlogManagerImpl extends BdfIncomingMessageHook implements BlogManager,
 		}
 
 		boolean read = meta.getBoolean(KEY_READ, false);
+		boolean hasImage = meta.containsKey(KEY_HAS_IMAGE) &&
+				meta.getBoolean(KEY_HAS_IMAGE);
 
 		if (type == COMMENT || type == WRAPPED_COMMENT) {
 			String comment = meta.getOptionalString(KEY_COMMENT);
@@ -645,8 +758,9 @@ class BlogManagerImpl extends BdfIncomingMessageHook implements BlogManager,
 			return new BlogCommentHeader(type, groupId, comment, parent, id,
 					timestamp, timeReceived, author, authorInfo, read);
 		} else {
-			return new BlogPostHeader(type, groupId, id, timestamp,
-					timeReceived, author, authorInfo, isFeedPost, read);
+			return new BlogPostHeader(type, groupId, id, null, timestamp,
+					timeReceived, author, authorInfo, isFeedPost, read,
+					hasImage);
 		}
 	}
 

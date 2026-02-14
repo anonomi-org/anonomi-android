@@ -43,6 +43,20 @@
 			app:srcCompat="@drawable/ic_repeat"
 			app:tint="?attr/colorControlNormal" />
 
+		<ImageView
+			android:id="@+id/imageContent"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:adjustViewBounds="true"
+			android:maxHeight="300dp"
+			android:padding="@dimen/listitem_vertical_margin"
+			android:scaleType="centerCrop"
+			android:visibility="gone"
+			android:contentDescription="@string/image_sent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/authorView" />
+
 		<com.vanniktech.emoji.EmojiTextView
 			android:id="@+id/textView"
 			android:layout_width="0dp"
@@ -52,7 +66,7 @@
 			android:textSize="@dimen/text_size_medium"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/authorView"
+			app:layout_constraintTop_toBottomOf="@+id/imageContent"
 			tools:text="This is a body text that shows the content of a blog post.\n\nThis one is not short, but it is also not too long." />
 
 		<!-- TODO replace with RecyclerView -->

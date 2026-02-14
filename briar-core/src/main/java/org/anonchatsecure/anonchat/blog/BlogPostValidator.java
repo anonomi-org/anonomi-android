@@ -57,11 +57,14 @@ import static org.anonchatsecure.anonchat.api.blog.BlogConstants.KEY_RSS_FEED;
 import static org.anonchatsecure.anonchat.api.blog.BlogConstants.KEY_TIMESTAMP;
 import static org.anonchatsecure.anonchat.api.blog.BlogConstants.KEY_TIME_RECEIVED;
 import static org.anonchatsecure.anonchat.api.blog.BlogConstants.KEY_TYPE;
+import static org.anonchatsecure.anonchat.api.blog.BlogConstants.KEY_HAS_IMAGE;
 import static org.anonchatsecure.anonchat.api.blog.BlogConstants.MAX_BLOG_COMMENT_TEXT_LENGTH;
+import static org.anonchatsecure.anonchat.api.blog.BlogConstants.MAX_BLOG_IMAGE_SIZE;
 import static org.anonchatsecure.anonchat.api.blog.BlogConstants.MAX_BLOG_POST_TEXT_LENGTH;
 import static org.anonchatsecure.anonchat.api.blog.BlogManager.CLIENT_ID;
 import static org.anonchatsecure.anonchat.api.blog.BlogManager.MAJOR_VERSION;
 import static org.anonchatsecure.anonchat.api.blog.BlogPostFactory.SIGNING_LABEL_COMMENT;
+import static org.anonchatsecure.anonchat.api.blog.BlogPostFactory.SIGNING_LABEL_IMAGE_POST;
 import static org.anonchatsecure.anonchat.api.blog.BlogPostFactory.SIGNING_LABEL_POST;
 import static org.anonchatsecure.anonchat.api.blog.MessageType.COMMENT;
 import static org.anonchatsecure.anonchat.api.blog.MessageType.POST;
@@ -117,19 +120,43 @@ class BlogPostValidator extends BdfMessageValidator {
 	private BdfMessageContext validatePost(Message m, Group g, BdfList body)
 			throws InvalidMessageException, FormatException {
 
-		// Text, signature
-		checkSize(body, 2);
+		// Text, signature [, imageData, contentType]
+		boolean hasImage = body.size() == 4;
+		if (!hasImage) checkSize(body, 2);
+
 		String text = body.getString(0);
 		checkLength(text, 0, MAX_BLOG_POST_TEXT_LENGTH);
 
 		// Verify signature
 		byte[] sig = body.getRaw(1);
 		checkLength(sig, 1, MAX_SIGNATURE_LENGTH);
-		BdfList signed = BdfList.of(g.getId(), m.getTimestamp(), text);
+
+		// Image data (optional)
+		byte[] imageData = null;
+		String contentType = null;
+		if (hasImage) {
+			imageData = body.getRaw(2);
+			contentType = body.getString(3);
+			checkLength(contentType, 1, 50);
+			if (!contentType.startsWith("image/"))
+				throw new InvalidMessageException();
+			checkLength(imageData, 1, MAX_BLOG_IMAGE_SIZE);
+		}
+
+		String signingLabel;
+		BdfList signed;
+		if (hasImage) {
+			signingLabel = SIGNING_LABEL_IMAGE_POST;
+			signed = BdfList.of(g.getId(), m.getTimestamp(), text, imageData,
+					contentType);
+		} else {
+			signingLabel = SIGNING_LABEL_POST;
+			signed = BdfList.of(g.getId(), m.getTimestamp(), text);
+		}
 		Blog b = blogFactory.parseBlog(g);
 		Author a = b.getAuthor();
 		try {
-			clientHelper.verifySignature(sig, SIGNING_LABEL_POST, signed,
+			clientHelper.verifySignature(sig, signingLabel, signed,
 					a.getPublicKey());
 		} catch (GeneralSecurityException e) {
 			throw new InvalidMessageException(e);
@@ -140,6 +167,7 @@ class BlogPostValidator extends BdfMessageValidator {
 		meta.put(KEY_ORIGINAL_MSG_ID, m.getId());
 		meta.put(KEY_AUTHOR, clientHelper.toList(a));
 		meta.put(KEY_RSS_FEED, b.isRssFeed());
+		if (hasImage) meta.put(KEY_HAS_IMAGE, true);
 		return new BdfMessageContext(meta);
 	}
 
@@ -196,8 +224,9 @@ class BlogPostValidator extends BdfMessageValidator {
 			throws InvalidMessageException, FormatException {
 
 		// Copied group descriptor, copied timestamp, copied text, copied
-		// signature
-		checkSize(body, 4);
+		// signature [, copied imageData, copied contentType]
+		boolean hasImage = body.size() == 6;
+		if (!hasImage) checkSize(body, 4);
 
 		// Copied group descriptor of original post
 		byte[] descriptor = body.getRaw(0);
@@ -218,7 +247,15 @@ class BlogPostValidator extends BdfMessageValidator {
 		Group wGroup = groupFactory.createGroup(CLIENT_ID, MAJOR_VERSION,
 				descriptor);
 		Blog wBlog = blogFactory.parseBlog(wGroup);
-		BdfList wBodyList = BdfList.of(POST.getInt(), text, signature);
+		BdfList wBodyList;
+		if (hasImage) {
+			byte[] imageData = body.getRaw(4);
+			String contentType = body.getString(5);
+			wBodyList = BdfList.of(POST.getInt(), text, signature, imageData,
+					contentType);
+		} else {
+			wBodyList = BdfList.of(POST.getInt(), text, signature);
+		}
 		byte[] wBody = clientHelper.toByteArray(wBodyList);
 		Message wMessage =
 				messageFactory.createMessage(wGroup.getId(), wTimestamp, wBody);
@@ -231,6 +268,7 @@ class BlogPostValidator extends BdfMessageValidator {
 		meta.put(KEY_TIMESTAMP, wTimestamp);
 		meta.put(KEY_AUTHOR, c.getDictionary().getList(KEY_AUTHOR));
 		meta.put(KEY_RSS_FEED, wBlog.isRssFeed());
+		if (hasImage) meta.put(KEY_HAS_IMAGE, true);
 		return new BdfMessageContext(meta);
 	}
 
