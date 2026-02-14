@@ -19,9 +19,9 @@ public class BlogPostItem implements Comparable<BlogPostItem> {
 	protected String text;
 	private final boolean read;
 	@Nullable
-	private final byte[] imageData;
+	protected byte[] imageData;
 	@Nullable
-	private final String imageContentType;
+	protected String imageContentType;
 
 	BlogPostItem(BlogPostHeader header, @Nullable String text) {
 		this(header, text, null, null);
@@ -89,6 +89,12 @@ public class BlogPostItem implements Comparable<BlogPostItem> {
 	@Nullable
 	public String getImageContentType() {
 		return imageContentType;
+	}
+
+	void setImageData(@Nullable byte[] imageData,
+			@Nullable String imageContentType) {
+		this.imageData = imageData;
+		this.imageContentType = imageContentType;
 	}
 
 	@Override

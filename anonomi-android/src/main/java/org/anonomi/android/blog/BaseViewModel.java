@@ -102,8 +102,15 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 		if (h instanceof BlogCommentHeader) {
 			BlogCommentHeader c = (BlogCommentHeader) h;
 			BlogCommentItem item = new BlogCommentItem(c);
-			text = getPostText(txn, item.getPostHeader().getId());
+			BlogPostHeader postHeader = item.getPostHeader();
+			text = getPostText(txn, postHeader.getId());
 			item.setText(text);
+			if (postHeader.hasImage()) {
+				item.setImageData(
+						blogManager.getPostImageData(txn, postHeader.getId()),
+						blogManager.getPostImageContentType(txn,
+								postHeader.getId()));
+			}
 			return item;
 		} else {
 			text = getPostText(txn, h.getId());

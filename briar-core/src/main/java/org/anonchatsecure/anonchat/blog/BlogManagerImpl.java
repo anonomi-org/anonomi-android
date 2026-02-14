@@ -466,6 +466,7 @@ class BlogManagerImpl extends BdfIncomingMessageHook implements BlogManager,
 					timestamp, body);
 			meta.put(KEY_TYPE, WRAPPED_POST.getInt());
 			meta.put(KEY_RSS_FEED, header.isRssFeed());
+			if (header.hasImage()) meta.put(KEY_HAS_IMAGE, true);
 		} else if (type == COMMENT) {
 			// Recursively wrap parent
 			BlogCommentHeader commentHeader = (BlogCommentHeader) header;
@@ -488,6 +489,7 @@ class BlogManagerImpl extends BdfIncomingMessageHook implements BlogManager,
 			wrappedMessage = blogPostFactory.rewrapWrappedPost(groupId, body);
 			meta.put(KEY_TYPE, WRAPPED_POST.getInt());
 			meta.put(KEY_RSS_FEED, header.isRssFeed());
+			if (header.hasImage()) meta.put(KEY_HAS_IMAGE, true);
 		} else if (type == WRAPPED_COMMENT) {
 			// Recursively wrap parent
 			BlogCommentHeader commentHeader = (BlogCommentHeader) header;
