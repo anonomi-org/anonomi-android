@@ -23,6 +23,19 @@
 			app:persona="reblogger"
 			tools:visibility="visible" />
 
+		<com.vanniktech.emoji.EmojiTextView
+			android:id="@+id/reblogCommentText"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/listitem_vertical_margin"
+			android:layout_marginEnd="@dimen/listitem_vertical_margin"
+			android:textColor="?android:attr/textColorPrimary"
+			android:textSize="@dimen/text_size_medium"
+			android:visibility="gone"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/rebloggerView" />
+
 		<org.anonomi.android.view.AuthorView
 			android:id="@+id/authorView"
 			android:layout_width="0dp"
@@ -30,7 +43,7 @@
 			android:padding="@dimen/listitem_vertical_margin"
 			app:layout_constraintEnd_toStartOf="@+id/commentView"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/rebloggerView" />
+			app:layout_constraintTop_toBottomOf="@+id/reblogCommentText" />
 
 		<androidx.appcompat.widget.AppCompatImageButton
 			android:id="@+id/commentView"

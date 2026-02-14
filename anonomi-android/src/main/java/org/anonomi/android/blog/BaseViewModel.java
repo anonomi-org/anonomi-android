@@ -160,6 +160,13 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 			long start = now();
 			BlogPostHeader header = blogManager.getPostHeader(txn, g, m);
 			BlogPostItem item = getItem(txn, header);
+			// Load all blog items to aggregate cross-blog likes/comments
+			List<BlogPostItem> allItems = loadAllBlogItems(txn);
+			AuthorId localAuthorId =
+					identityManager.getLocalAuthor().getId();
+			// Add the target post so aggregation can attach data to it
+			allItems.add(item);
+			filterAndAggregateLikes(allItems, localAuthorId);
 			logDuration(LOG, "Loading post", start);
 			result.postValue(new LiveResult<>(item));
 		}, e -> {
@@ -232,7 +239,7 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 				LocalAuthor a = identityManager.getLocalAuthor();
 				Blog b = blogManager.getPersonalBlog(a);
 				blogManager.addLocalComment(a, b.getId(), LIKE_MARKER,
-						item.getPostHeader());
+						item.getHeader());
 			} catch (DbException e) {
 				handleException(e);
 			}
@@ -245,7 +252,7 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 				LocalAuthor a = identityManager.getLocalAuthor();
 				Blog b = blogManager.getPersonalBlog(a);
 				blogManager.addLocalComment(a, b.getId(), UNLIKE_MARKER,
-						item.getPostHeader());
+						item.getHeader());
 			} catch (DbException e) {
 				handleException(e);
 			}
@@ -258,7 +265,7 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 				LocalAuthor a = identityManager.getLocalAuthor();
 				Blog b = blogManager.getPersonalBlog(a);
 				blogManager.addLocalComment(a, b.getId(),
-						COMMENT_MARKER + comment, item.getPostHeader());
+						COMMENT_MARKER + comment, item.getHeader());
 			} catch (DbException e) {
 				handleException(e);
 			}
@@ -314,7 +321,9 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 			String comment = header.getComment();
 
 			if (isLikeOrUnlike(comment)) {
-				String targetKey = postKey(commentItem.getPostHeader());
+				// Use direct parent as target (not root post) so likes
+				// on reblogs attach to the reblog, not the original
+				String targetKey = postKey(header.getParent());
 				AuthorId authorId = header.getAuthor().getId();
 				boolean isLike = LIKE_MARKER.equals(comment);
 				long timestamp = header.getTimestamp();
@@ -333,7 +342,8 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 				}
 				toRemove.add(item);
 			} else if (isComment(comment)) {
-				String targetKey = postKey(commentItem.getPostHeader());
+				// Use direct parent as target
+				String targetKey = postKey(header.getParent());
 				String commentText =
 						comment.substring(COMMENT_MARKER.length());
 				long timestamp = header.getTimestamp();
@@ -352,9 +362,11 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 		// Remove like/unlike/comment items from the list
 		items.removeAll(toRemove);
 
-		// Apply like counts, likedByMe, and comments to matching posts
+		// Apply like counts, likedByMe, and comments to matching posts.
+		// Match on the item's own header (not inner post header) so
+		// reblogs get their own like/comment counts.
 		for (BlogPostItem item : items) {
-			String key = postKey(item.getPostHeader());
+			String key = postKey(item.getHeader());
 
 			// Likes
 			Map<AuthorId, LikeAction> authorMap = postLikes.get(key);

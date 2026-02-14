@@ -115,6 +115,7 @@ public class ReblogFragment extends BaseFragment implements SendListener {
 
 		ui.post.bindItem(this.item);
 		ui.post.hideReblogButton();
+		ui.post.hideActionButtons();
 
 		ui.input.setReady(true);
 		ui.scrollView.post(() -> ui.scrollView.fullScroll(FOCUS_DOWN));

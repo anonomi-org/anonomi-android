@@ -53,6 +53,7 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 	@Nullable
 	private final ImageButton commentButton;
 	private final TextView text;
+	private final TextView reblogCommentText;
 	private final ViewGroup commentContainer;
 	@Nullable
 	private final ImageView imageContent;
@@ -78,6 +79,7 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 		likeCountText = v.findViewById(R.id.likeCount);
 		commentButton = v.findViewById(R.id.commentButton);
 		text = v.findViewById(R.id.textView);
+		reblogCommentText = v.findViewById(R.id.reblogCommentText);
 		commentContainer = v.findViewById(R.id.commentContainer);
 		imageContent = v.findViewById(R.id.imageContent);
 		mapContent = v.findViewById(R.id.mapContent);
@@ -87,6 +89,12 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 
 	void hideReblogButton() {
 		reblogButton.setVisibility(GONE);
+	}
+
+	void hideActionButtons() {
+		if (likeButton != null) likeButton.setVisibility(GONE);
+		if (likeCountText != null) likeCountText.setVisibility(GONE);
+		if (commentButton != null) commentButton.setVisibility(GONE);
 	}
 
 	void updateDate(long time) {
@@ -240,6 +248,7 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 			onBindComment((BlogCommentItem) item, authorClickable);
 		} else {
 			reblogger.setVisibility(GONE);
+			reblogCommentText.setVisibility(GONE);
 		}
 
 		// cross-blog comments (from ::comment: entries)
@@ -295,13 +304,25 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 		reblogger.setVisibility(VISIBLE);
 		reblogger.setPersona(REBLOGGER);
 
+		// reblogger's own comment text (shown above the reblogged post)
+		String reblogComment = item.getHeader().getComment();
+		if (reblogComment != null && !reblogComment.isEmpty()
+				&& !BaseViewModel.isSpecialComment(reblogComment)) {
+			reblogCommentText.setText(reblogComment);
+			reblogCommentText.setVisibility(VISIBLE);
+		} else {
+			reblogCommentText.setVisibility(GONE);
+		}
+
 		author.setPersona(item.getHeader().getRootPost().isRssFeed() ?
 				RSS_FEED_REBLOGGED : COMMENTER);
 
-		// comments
+		// comments (skip reblogger's own comment since it's shown above)
 		// TODO use nested RecyclerView instead like we do for Image Attachments
+		BlogCommentHeader rebloggerHeader = item.getHeader();
 		for (BlogCommentHeader c : item.getComments()) {
 			if (BaseViewModel.isSpecialComment(c.getComment())) continue;
+			if (c == rebloggerHeader) continue;
 			View v = LayoutInflater.from(ctx).inflate(
 					R.layout.list_item_blog_comment, commentContainer, false);
 
