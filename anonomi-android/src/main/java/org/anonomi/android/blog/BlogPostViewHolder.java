@@ -48,6 +48,10 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 	private final AuthorView reblogger;
 	private final AuthorView author;
 	private final ImageButton reblogButton;
+	private final ImageButton likeButton;
+	private final TextView likeCountText;
+	@Nullable
+	private final ImageButton commentButton;
 	private final TextView text;
 	private final ViewGroup commentContainer;
 	@Nullable
@@ -70,6 +74,9 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 		reblogger = v.findViewById(R.id.rebloggerView);
 		author = v.findViewById(R.id.authorView);
 		reblogButton = v.findViewById(R.id.commentView);
+		likeButton = v.findViewById(R.id.likeButton);
+		likeCountText = v.findViewById(R.id.likeCount);
+		commentButton = v.findViewById(R.id.commentButton);
 		text = v.findViewById(R.id.textView);
 		commentContainer = v.findViewById(R.id.commentContainer);
 		imageContent = v.findViewById(R.id.imageContent);
@@ -198,12 +205,60 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 			ctx.startActivity(i);
 		});
 
+		// like button
+		if (likeButton != null) {
+			if (item.isLikedByMe()) {
+				likeButton.setImageResource(R.drawable.ic_heart_filled);
+				likeButton.setImageTintList(null);
+			} else {
+				likeButton.setImageResource(R.drawable.ic_heart_outline);
+				likeButton.setImageTintList(
+						reblogButton.getImageTintList());
+			}
+			likeButton.setOnClickListener(
+					v -> listener.onLikeClick(item));
+		}
+		if (likeCountText != null) {
+			int count = item.getLikeCount();
+			if (count > 0) {
+				likeCountText.setText(String.valueOf(count));
+				likeCountText.setVisibility(VISIBLE);
+			} else {
+				likeCountText.setVisibility(GONE);
+			}
+		}
+
+		// comment button
+		if (commentButton != null) {
+			commentButton.setOnClickListener(
+					v -> listener.onCommentClick(item));
+		}
+
 		// comments
 		commentContainer.removeAllViews();
 		if (isReblog) {
 			onBindComment((BlogCommentItem) item, authorClickable);
 		} else {
 			reblogger.setVisibility(GONE);
+		}
+
+		// cross-blog comments (from ::comment: entries)
+		for (BaseViewModel.BlogComment bc : item.getBlogComments()) {
+			View cv = LayoutInflater.from(ctx).inflate(
+					R.layout.list_item_blog_comment, commentContainer,
+					false);
+			AuthorView commentAuthor = cv.findViewById(R.id.authorView);
+			TextView commentText = cv.findViewById(R.id.textView);
+			commentAuthor.setAuthor(bc.author, bc.authorInfo);
+			commentAuthor.setDate(bc.timestamp);
+			commentText.setText(bc.text);
+			Linkify.addLinks(commentText, Linkify.WEB_URLS);
+			commentText.setMovementMethod(null);
+			if (fullText) {
+				commentText.setTextIsSelectable(true);
+				makeLinksClickable(commentText, listener::onLinkClick);
+			}
+			commentContainer.addView(cv);
 		}
 	}
 
@@ -246,6 +301,7 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 		// comments
 		// TODO use nested RecyclerView instead like we do for Image Attachments
 		for (BlogCommentHeader c : item.getComments()) {
+			if (BaseViewModel.isSpecialComment(c.getComment())) continue;
 			View v = LayoutInflater.from(ctx).inflate(
 					R.layout.list_item_blog_comment, commentContainer, false);
 

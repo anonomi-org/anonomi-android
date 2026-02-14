@@ -16,6 +16,8 @@ import org.anonomi.android.blog.BaseViewModel.ListUpdate;
 import org.anonomi.android.conversation.MapMessageData;
 import org.anonomi.android.fragment.BaseFragment;
 import org.anonomi.android.map.MapViewActivity;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 import org.anonomi.android.util.BriarSnackbarBuilder;
 import org.anonomi.android.view.BriarRecyclerView;
 import org.anonomi.android.widget.LinkDialogFragment;
@@ -170,6 +172,40 @@ public class FeedFragment extends BaseFragment
 		i.putExtra(MapViewActivity.EXTRA_LONGITUDE, data.longitude);
 		i.putExtra(MapViewActivity.EXTRA_ZOOM, data.zoom);
 		startActivity(i);
+	}
+
+	@Override
+	public void onLikeClick(BlogPostItem post) {
+		if (post.isLikedByMe()) viewModel.unlikePost(post);
+		else viewModel.likePost(post);
+	}
+
+	@Override
+	public void onCommentClick(BlogPostItem post) {
+		if (getContext() == null) return;
+		android.widget.EditText input = new android.widget.EditText(getContext());
+		input.setHint(R.string.comment_blog_post_hint);
+		input.setInputType(android.text.InputType.TYPE_CLASS_TEXT
+				| android.text.InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
+				| android.text.InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+		int pad = getResources().getDimensionPixelSize(
+				R.dimen.listitem_vertical_margin);
+		android.widget.FrameLayout container =
+				new android.widget.FrameLayout(getContext());
+		container.setPadding(pad, pad / 2, pad, 0);
+		container.addView(input);
+		new MaterialAlertDialogBuilder(getContext(),
+				R.style.AnonDialogTheme)
+				.setTitle(R.string.comment_blog_post)
+				.setView(container)
+				.setPositiveButton(android.R.string.ok, (d, w) -> {
+					String comment = input.getText().toString().trim();
+					if (!comment.isEmpty()) {
+						viewModel.commentOnPost(post, comment);
+					}
+				})
+				.setNegativeButton(R.string.cancel, null)
+				.show();
 	}
 
 	@Override

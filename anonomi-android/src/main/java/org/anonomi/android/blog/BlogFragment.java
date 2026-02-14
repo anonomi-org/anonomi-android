@@ -22,6 +22,7 @@ import org.anonomi.android.map.MapViewActivity;
 import org.anonomi.android.sharing.BlogSharingStatusActivity;
 import org.anonomi.android.sharing.ShareBlogActivity;
 import org.anonomi.android.util.BriarSnackbarBuilder;
+import org.anonomi.android.util.UiUtils;
 import org.anonomi.android.view.BriarRecyclerView;
 import org.anonomi.android.widget.LinkDialogFragment;
 import org.briarproject.nullsafety.MethodsNotNullByDefault;
@@ -222,6 +223,44 @@ public class BlogFragment extends BaseFragment
 		i.putExtra(MapViewActivity.EXTRA_LONGITUDE, data.longitude);
 		i.putExtra(MapViewActivity.EXTRA_ZOOM, data.zoom);
 		startActivity(i);
+	}
+
+	@Override
+	public void onLikeClick(BlogPostItem post) {
+		if (post.isLikedByMe()) viewModel.unlikePost(post);
+		else viewModel.likePost(post);
+	}
+
+	@Override
+	public void onCommentClick(BlogPostItem post) {
+		showCommentDialog(post);
+	}
+
+	private void showCommentDialog(BlogPostItem post) {
+		if (getContext() == null) return;
+		android.widget.EditText input = new android.widget.EditText(getContext());
+		input.setHint(R.string.comment_blog_post_hint);
+		input.setInputType(android.text.InputType.TYPE_CLASS_TEXT
+				| android.text.InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
+				| android.text.InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+		int pad = getResources().getDimensionPixelSize(
+				R.dimen.listitem_vertical_margin);
+		android.widget.FrameLayout container =
+				new android.widget.FrameLayout(getContext());
+		container.setPadding(pad, pad / 2, pad, 0);
+		container.addView(input);
+		new MaterialAlertDialogBuilder(getContext(),
+				R.style.AnonDialogTheme)
+				.setTitle(R.string.comment_blog_post)
+				.setView(container)
+				.setPositiveButton(android.R.string.ok, (d, w) -> {
+					String comment = input.getText().toString().trim();
+					if (!comment.isEmpty()) {
+						viewModel.commentOnPost(post, comment);
+					}
+				})
+				.setNegativeButton(R.string.cancel, null)
+				.show();
 	}
 
 	private void displaySnackbar(int stringId, boolean scroll) {

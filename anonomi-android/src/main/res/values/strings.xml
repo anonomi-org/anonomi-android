@@ -541,6 +541,9 @@
     <string name="blogs_blog_removed">Blog removed</string>
     <string name="blogs_reblog_comment_hint">Add a comment (optional)</string>
     <string name="blogs_reblog_button">Reblog</string>
+    <string name="like_blog_post">Like</string>
+    <string name="comment_blog_post">Comment</string>
+    <string name="comment_blog_post_hint">Write a comment…</string>
     <!-- Blog Sharing -->
 	<string name="blogs_sharing_share">Share Blog</string>
     <string name="blogs_sharing_error">There was an error sharing this blog.</string>

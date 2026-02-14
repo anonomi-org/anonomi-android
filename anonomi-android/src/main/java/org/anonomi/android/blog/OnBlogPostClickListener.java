@@ -11,4 +11,8 @@ interface OnBlogPostClickListener {
 	void onLinkClick(String url);
 
 	void onMapMessageClicked(MapMessageData data);
+
+	void onLikeClick(BlogPostItem post);
+
+	void onCommentClick(BlogPostItem post);
 }

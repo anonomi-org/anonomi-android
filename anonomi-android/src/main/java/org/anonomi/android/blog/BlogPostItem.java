@@ -6,6 +6,9 @@ import org.anonchatsecure.bramble.api.sync.MessageId;
 import org.anonchatsecure.anonchat.api.blog.BlogPostHeader;
 import org.anonchatsecure.anonchat.api.identity.AuthorInfo;
 
+import java.util.Collections;
+import java.util.List;
+
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
@@ -22,6 +25,10 @@ public class BlogPostItem implements Comparable<BlogPostItem> {
 	protected byte[] imageData;
 	@Nullable
 	protected String imageContentType;
+	private int likeCount = 0;
+	private boolean likedByMe = false;
+	private List<BaseViewModel.BlogComment> blogComments =
+			Collections.emptyList();
 
 	BlogPostItem(BlogPostHeader header, @Nullable String text) {
 		this(header, text, null, null);
@@ -95,6 +102,30 @@ public class BlogPostItem implements Comparable<BlogPostItem> {
 			@Nullable String imageContentType) {
 		this.imageData = imageData;
 		this.imageContentType = imageContentType;
+	}
+
+	public int getLikeCount() {
+		return likeCount;
+	}
+
+	public void setLikeCount(int likeCount) {
+		this.likeCount = likeCount;
+	}
+
+	public boolean isLikedByMe() {
+		return likedByMe;
+	}
+
+	public void setLikedByMe(boolean likedByMe) {
+		this.likedByMe = likedByMe;
+	}
+
+	public List<BaseViewModel.BlogComment> getBlogComments() {
+		return blogComments;
+	}
+
+	public void setBlogComments(List<BaseViewModel.BlogComment> comments) {
+		this.blogComments = comments;
 	}
 
 	@Override

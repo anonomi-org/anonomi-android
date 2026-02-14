@@ -179,6 +179,16 @@ public class ReblogFragment extends BaseFragment implements SendListener {
 			i.putExtra(MapViewActivity.EXTRA_ZOOM, data.zoom);
 			startActivity(i);
 		}
+
+		@Override
+		public void onLikeClick(BlogPostItem post) {
+			// do nothing in reblog view
+		}
+
+		@Override
+		public void onCommentClick(BlogPostItem post) {
+			// do nothing in reblog view
+		}
 	}
 
 }

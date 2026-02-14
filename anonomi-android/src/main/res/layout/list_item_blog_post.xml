@@ -81,6 +81,48 @@
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@+id/imageContent" />
 
+		<LinearLayout
+			android:id="@+id/actionContainer"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/listitem_vertical_margin"
+			android:gravity="center_vertical"
+			android:orientation="horizontal"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/mapContent">
+
+			<androidx.appcompat.widget.AppCompatImageButton
+				android:id="@+id/likeButton"
+				android:layout_width="36dp"
+				android:layout_height="36dp"
+				android:background="?attr/selectableItemBackgroundBorderless"
+				android:contentDescription="@string/like_blog_post"
+				app:srcCompat="@drawable/ic_heart_outline"
+				app:tint="?attr/colorControlNormal" />
+
+			<TextView
+				android:id="@+id/likeCount"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="2dp"
+				android:layout_marginEnd="8dp"
+				android:textColor="?android:attr/textColorSecondary"
+				android:textSize="@dimen/text_size_small"
+				android:visibility="gone"
+				tools:text="3"
+				tools:visibility="visible" />
+
+			<androidx.appcompat.widget.AppCompatImageButton
+				android:id="@+id/commentButton"
+				android:layout_width="36dp"
+				android:layout_height="36dp"
+				android:background="?attr/selectableItemBackgroundBorderless"
+				android:contentDescription="@string/comment_blog_post"
+				app:srcCompat="@drawable/ic_comment_outline"
+				app:tint="?attr/colorControlNormal" />
+
+		</LinearLayout>
+
 		<!-- TODO replace with RecyclerView -->
 		<LinearLayout
 			android:id="@+id/commentContainer"
@@ -88,7 +130,7 @@
 			android:layout_height="wrap_content"
 			android:layout_marginTop="@dimen/listitem_vertical_margin"
 			android:orientation="vertical"
-			app:layout_constraintTop_toBottomOf="@+id/mapContent">
+			app:layout_constraintTop_toBottomOf="@+id/actionContainer">
 
 			<include
 				layout="@layout/list_item_blog_comment"
