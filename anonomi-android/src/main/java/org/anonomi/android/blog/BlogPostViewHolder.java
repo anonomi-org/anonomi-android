@@ -52,6 +52,7 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 	private final ViewGroup commentContainer;
 	@Nullable
 	private final ImageView imageContent;
+	private final TextView mapContent;
 	private final boolean fullText, authorClickable;
 	private final int padding;
 
@@ -72,6 +73,7 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 		text = v.findViewById(R.id.textView);
 		commentContainer = v.findViewById(R.id.commentContainer);
 		imageContent = v.findViewById(R.id.imageContent);
+		mapContent = v.findViewById(R.id.mapContent);
 		padding = ctx.getResources()
 				.getDimensionPixelSize(R.dimen.listitem_vertical_margin);
 	}
@@ -137,19 +139,25 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 			}
 		}
 
-		// post text - check for map message
+		// post text and map message
 		String postTextStr = item.getText();
-		if (postTextStr != null && postTextStr.trim().startsWith("::map:")) {
-			MapMessageData mapData = parseMapMessage(postTextStr.trim());
-			text.setText("\uD83D\uDCCD" + mapData.label +
-					"\n   " + mapData.latitude +
-					"\n   " + mapData.longitude +
-					"\n   " + ctx.getString(R.string.tap_to_view_on_map));
-			text.setOnClickListener(
-					v -> listener.onMapMessageClicked(mapData));
-		} else {
-			text.setOnClickListener(null);
-			Spanned postText = getSpanned(postTextStr);
+		String regularText = null;
+		String mapPart = null;
+
+		if (postTextStr != null) {
+			int mapIndex = postTextStr.indexOf("::map:");
+			if (mapIndex >= 0) {
+				regularText = postTextStr.substring(0, mapIndex).trim();
+				mapPart = postTextStr.substring(mapIndex).trim();
+			} else {
+				regularText = postTextStr;
+			}
+		}
+
+		// render regular text
+		text.setOnClickListener(null);
+		if (regularText != null && !regularText.isEmpty()) {
+			Spanned postText = getSpanned(regularText);
 			if (fullText) {
 				text.setText(postText);
 				text.setTextIsSelectable(true);
@@ -160,6 +168,26 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 					postText = getTeaser(ctx, postText);
 				text.setText(postText);
 			}
+			text.setVisibility(VISIBLE);
+		} else {
+			text.setText("");
+			text.setVisibility(GONE);
+		}
+
+		// render map content
+		if (mapPart != null) {
+			MapMessageData mapData = parseMapMessage(mapPart);
+			mapContent.setText("\uD83D\uDCCD" + mapData.label +
+					"\n   " + mapData.latitude +
+					"\n   " + mapData.longitude +
+					"\n   " + ctx.getString(R.string.tap_to_view_on_map));
+			mapContent.setOnClickListener(
+					v -> listener.onMapMessageClicked(mapData));
+			mapContent.setVisibility(VISIBLE);
+		} else {
+			mapContent.setText("");
+			mapContent.setOnClickListener(null);
+			mapContent.setVisibility(GONE);
 		}
 
 		// reblog button

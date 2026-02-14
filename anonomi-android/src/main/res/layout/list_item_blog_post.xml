@@ -43,6 +43,18 @@
 			app:srcCompat="@drawable/ic_repeat"
 			app:tint="?attr/colorControlNormal" />
 
+		<com.vanniktech.emoji.EmojiTextView
+			android:id="@+id/textView"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_margin="@dimen/listitem_vertical_margin"
+			android:textColor="?android:attr/textColorSecondary"
+			android:textSize="@dimen/text_size_medium"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/authorView"
+			tools:text="This is a body text that shows the content of a blog post.\n\nThis one is not short, but it is also not too long." />
+
 		<ImageView
 			android:id="@+id/imageContent"
 			android:layout_width="0dp"
@@ -55,19 +67,19 @@
 			android:contentDescription="@string/image_sent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/authorView" />
+			app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-		<com.vanniktech.emoji.EmojiTextView
-			android:id="@+id/textView"
+		<TextView
+			android:id="@+id/mapContent"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
 			android:layout_margin="@dimen/listitem_vertical_margin"
 			android:textColor="?android:attr/textColorSecondary"
 			android:textSize="@dimen/text_size_medium"
+			android:visibility="gone"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/imageContent"
-			tools:text="This is a body text that shows the content of a blog post.\n\nThis one is not short, but it is also not too long." />
+			app:layout_constraintTop_toBottomOf="@+id/imageContent" />
 
 		<!-- TODO replace with RecyclerView -->
 		<LinearLayout
@@ -76,7 +88,7 @@
 			android:layout_height="wrap_content"
 			android:layout_marginTop="@dimen/listitem_vertical_margin"
 			android:orientation="vertical"
-			app:layout_constraintTop_toBottomOf="@+id/textView">
+			app:layout_constraintTop_toBottomOf="@+id/mapContent">
 
 			<include
 				layout="@layout/list_item_blog_comment"

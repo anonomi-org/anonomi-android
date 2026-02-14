@@ -1,12 +1,18 @@
 package org.anonomi.android.blog;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.anonchatsecure.bramble.api.FormatException;
@@ -42,6 +48,7 @@ import javax.inject.Inject;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -71,7 +78,21 @@ public class WriteBlogPostActivity extends BriarActivity
 	ImageCompressor imageCompressor;
 
 	private TextInputView input;
+	private TextSendController sendController;
+	private NestedScrollView scrollView;
 	private ProgressBar progressBar;
+
+	private View pendingImageContainer;
+	private ImageView pendingImagePreview;
+	private View pendingLocationContainer;
+	private TextView pendingLocationText;
+
+	@Nullable
+	private byte[] pendingImageBytes;
+	@Nullable
+	private String pendingImageContentType;
+	@Nullable
+	private String pendingLocationMessage;
 
 	// Fields that are accessed from background threads must be volatile
 	private volatile GroupId groupId;
@@ -99,13 +120,31 @@ public class WriteBlogPostActivity extends BriarActivity
 		setContentView(R.layout.activity_write_blog_post);
 
 		input = findViewById(R.id.textInput);
-		TextSendController sendController =
-				new TextSendController(input, this, false);
+		sendController = new TextSendController(input, this, false);
 		input.setSendController(sendController);
 		input.setMaxTextLength(MAX_BLOG_POST_TEXT_LENGTH);
 		input.setReady(true);
 
+		// Move publish button to end so attachment previews appear
+		// between the text input and the button.
+		// LargeTextInputView is a LinearLayout; merge content adds
+		// CardView(0), Button(1), then XML children follow.
+		View publishButton = input.findViewById(R.id.compositeSendButton);
+		((ViewGroup) input).removeView(publishButton);
+		((ViewGroup) input).addView(publishButton);
+
+		scrollView = findViewById(R.id.scrollView);
 		progressBar = findViewById(R.id.progressBar);
+
+		pendingImageContainer = findViewById(R.id.pendingImageContainer);
+		pendingImagePreview = findViewById(R.id.pendingImagePreview);
+		pendingLocationContainer = findViewById(R.id.pendingLocationContainer);
+		pendingLocationText = findViewById(R.id.pendingLocationText);
+
+		findViewById(R.id.removeImageButton)
+				.setOnClickListener(v -> clearPendingImage());
+		findViewById(R.id.removeLocationButton)
+				.setOnClickListener(v -> clearPendingLocation());
 	}
 
 	@Override
@@ -152,10 +191,11 @@ public class WriteBlogPostActivity extends BriarActivity
 			String message = data.getStringExtra(
 					MapLocationPickerActivity.RESULT_MAP_MESSAGE);
 			if (message != null) {
-				input.hideSoftKeyboard();
-				input.setVisibility(GONE);
-				progressBar.setVisibility(VISIBLE);
-				storePost(message);
+				pendingLocationMessage = message;
+				String label = parseLocationLabel(message);
+				pendingLocationText.setText(label);
+				pendingLocationContainer.setVisibility(VISIBLE);
+				updatePendingState();
 			}
 		} else {
 			super.onActivityResult(request, result, data);
@@ -170,15 +210,137 @@ public class WriteBlogPostActivity extends BriarActivity
 	@Override
 	public LiveData<SendState> onSendClick(@Nullable String text,
 			List<AttachmentHeader> headers, long expectedAutoDeleteTimer) {
-		if (isNullOrEmpty(text)) throw new AssertionError();
+		// Build final text: user text + location message
+		StringBuilder finalText = new StringBuilder();
+		if (!isNullOrEmpty(text)) {
+			finalText.append(text);
+		}
+		if (pendingLocationMessage != null) {
+			if (finalText.length() > 0) finalText.append("\n");
+			finalText.append(pendingLocationMessage);
+		}
 
-		// hide publish button, show progress bar
+		// hide editor, show progress bar
 		input.hideSoftKeyboard();
-		input.setVisibility(GONE);
+		scrollView.setVisibility(GONE);
 		progressBar.setVisibility(VISIBLE);
 
-		storePost(text);
+		if (pendingImageBytes != null) {
+			storeImagePost(pendingImageBytes, pendingImageContentType,
+					finalText.toString());
+		} else if (finalText.length() > 0) {
+			storePost(finalText.toString());
+		}
 		return new MutableLiveData<>(SENT);
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	public void onBackPressed() {
+		if (pendingImageBytes != null || pendingLocationMessage != null) {
+			clearPendingImage();
+			clearPendingLocation();
+			return;
+		}
+		super.onBackPressed();
+	}
+
+	private void onImageSelected(@Nullable Uri uri) {
+		if (uri == null) return;
+
+		new Thread(() -> {
+			try {
+				String mimeType = getContentResolver().getType(uri);
+				if (mimeType == null) mimeType = "image/jpeg";
+				InputStream is = getContentResolver().openInputStream(uri);
+				if (is == null) {
+					runOnUiThread(() -> {
+						Toast.makeText(this,
+								getString(R.string.image_compression_failed),
+								Toast.LENGTH_SHORT).show();
+						clearPendingImage();
+					});
+					return;
+				}
+
+				// Load bitmap for preview
+				Bitmap preview = BitmapFactory.decodeStream(is);
+				is.close();
+
+				// Compress for sending
+				InputStream is2 =
+						getContentResolver().openInputStream(uri);
+				if (is2 == null) {
+					runOnUiThread(() -> {
+						Toast.makeText(this,
+								getString(R.string.image_compression_failed),
+								Toast.LENGTH_SHORT).show();
+						clearPendingImage();
+					});
+					return;
+				}
+				InputStream compressed = imageCompressor.compressImage(
+						is2, mimeType, MAX_BLOG_IMAGE_SIZE);
+				ByteArrayOutputStream bos = new ByteArrayOutputStream();
+				byte[] buf = new byte[4096];
+				int len;
+				while ((len = compressed.read(buf)) != -1)
+					bos.write(buf, 0, len);
+				byte[] imageBytes = bos.toByteArray();
+
+				runOnUiThread(() -> {
+					pendingImageBytes = imageBytes;
+					pendingImageContentType = "image/jpeg";
+					if (preview != null) {
+						pendingImagePreview.setImageBitmap(preview);
+					}
+					pendingImageContainer.setVisibility(VISIBLE);
+					updatePendingState();
+				});
+			} catch (IOException e) {
+				logException(LOG, WARNING, e);
+				runOnUiThread(() -> {
+					Toast.makeText(this,
+							getString(R.string.image_compression_failed),
+							Toast.LENGTH_SHORT).show();
+					clearPendingImage();
+				});
+			}
+		}).start();
+	}
+
+	private void clearPendingImage() {
+		pendingImageBytes = null;
+		pendingImageContentType = null;
+		pendingImagePreview.setImageDrawable(null);
+		pendingImageContainer.setVisibility(GONE);
+		updatePendingState();
+	}
+
+	private void clearPendingLocation() {
+		pendingLocationMessage = null;
+		pendingLocationText.setText("");
+		pendingLocationContainer.setVisibility(GONE);
+		updatePendingState();
+	}
+
+	private void updatePendingState() {
+		boolean hasAttachment = pendingImageBytes != null ||
+				pendingLocationMessage != null;
+		sendController.setHasPendingAttachment(hasAttachment);
+		if (hasAttachment) {
+			scrollView.post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
+		}
+	}
+
+	private String parseLocationLabel(String message) {
+		// Format: "::map:label;:lat,lon;:zoom"
+		String payload = message.substring(6); // Remove "::map:"
+		int end = payload.indexOf(";:");
+		if (end > 0) {
+			return payload.substring(0, end);
+		}
+		return payload;
 	}
 
 	private void storePost(String text) {
@@ -198,51 +360,8 @@ public class WriteBlogPostActivity extends BriarActivity
 		});
 	}
 
-	private void onImageSelected(@Nullable Uri uri) {
-		if (uri == null) return;
-		String text = input.getText();
-		input.clearText();
-		input.hideSoftKeyboard();
-		input.setVisibility(GONE);
-		progressBar.setVisibility(VISIBLE);
-
-		new Thread(() -> {
-			try {
-				String mimeType = getContentResolver().getType(uri);
-				if (mimeType == null) mimeType = "image/jpeg";
-				InputStream is = getContentResolver().openInputStream(uri);
-				if (is == null) {
-					runOnUiThread(() -> {
-						Toast.makeText(this,
-								getString(R.string.image_compression_failed),
-								Toast.LENGTH_SHORT).show();
-						postFailedToPublish();
-					});
-					return;
-				}
-				InputStream compressed = imageCompressor.compressImage(
-						is, mimeType, MAX_BLOG_IMAGE_SIZE);
-				ByteArrayOutputStream bos = new ByteArrayOutputStream();
-				byte[] buf = new byte[4096];
-				int len;
-				while ((len = compressed.read(buf)) != -1)
-					bos.write(buf, 0, len);
-				byte[] imageBytes = bos.toByteArray();
-				storeImagePost(imageBytes, "image/jpeg", text);
-			} catch (IOException e) {
-				logException(LOG, WARNING, e);
-				runOnUiThread(() -> {
-					Toast.makeText(this,
-							getString(R.string.image_compression_failed),
-							Toast.LENGTH_SHORT).show();
-					postFailedToPublish();
-				});
-			}
-		}).start();
-	}
-
-	private void storeImagePost(byte[] imageData, String contentType,
-			@Nullable String text) {
+	private void storeImagePost(byte[] imageData,
+			@Nullable String contentType, @Nullable String text) {
 		runOnDbThread(() -> {
 			long timestamp = System.currentTimeMillis();
 			try {
@@ -250,7 +369,7 @@ public class WriteBlogPostActivity extends BriarActivity
 				BlogPost p = blogPostFactory.createBlogImagePost(
 						groupId, timestamp, null, author,
 						text != null ? text : "", imageData,
-						contentType);
+						contentType != null ? contentType : "image/jpeg");
 				blogManager.addLocalImagePost(p);
 				postPublished();
 			} catch (DbException | GeneralSecurityException
@@ -270,10 +389,9 @@ public class WriteBlogPostActivity extends BriarActivity
 
 	private void postFailedToPublish() {
 		runOnUiThreadUnlessDestroyed(() -> {
-			// hide progress bar, show publish button
+			// hide progress bar, show editor
 			progressBar.setVisibility(GONE);
-			input.setVisibility(VISIBLE);
-			// TODO show error
+			scrollView.setVisibility(VISIBLE);
 		});
 	}
 }
