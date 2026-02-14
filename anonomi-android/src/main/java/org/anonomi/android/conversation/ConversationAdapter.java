@@ -79,6 +79,8 @@ class ConversationAdapter
 				type == R.layout.list_item_conversation_msg_out ||
 				type == R.layout.list_item_conversation_msg_image ||
 				type == R.layout.list_item_conversation_msg_image_text ||
+				type == R.layout.list_item_conversation_msg_image_out ||
+				type == R.layout.list_item_conversation_msg_image_text_out ||
 				type == R.layout.list_item_conversation_msg_audio ||
 				type == R.layout.list_item_conversation_msg_audio_in) {
 			boolean isIncoming = (type == R.layout.list_item_conversation_msg_in ||

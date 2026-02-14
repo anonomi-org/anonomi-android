@@ -69,7 +69,7 @@ class ConversationVisitor implements
 			} else if (contentType.startsWith("image/")) {
 				boolean hasText = h.hasText();
 				layoutRes = isOutgoing
-						? (hasText ? R.layout.list_item_conversation_msg_image_text : R.layout.list_item_conversation_msg_image)
+						? (hasText ? R.layout.list_item_conversation_msg_image_text_out : R.layout.list_item_conversation_msg_image_out)
 						: (hasText ? R.layout.list_item_conversation_msg_image_text : R.layout.list_item_conversation_msg_image);
 			} else {
 				layoutRes = isOutgoing
