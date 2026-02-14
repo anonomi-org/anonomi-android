@@ -38,6 +38,7 @@ public class TextSendController implements TextInputListener {
 	protected final SendListener listener;
 
 	protected boolean textIsEmpty = true;
+	protected boolean hasPendingAttachment = false;
 	private boolean ready = true;
 	private long currentTimer = NO_AUTO_DELETE_TIMER;
 	protected long expectedTimer = NO_AUTO_DELETE_TIMER;
@@ -92,6 +93,11 @@ public class TextSendController implements TextInputListener {
 		expectedTimer = currentTimer;
 	}
 
+	public void setHasPendingAttachment(boolean hasPendingAttachment) {
+		this.hasPendingAttachment = hasPendingAttachment;
+		updateViewState();
+	}
+
 	public void setReady(boolean ready) {
 		this.ready = ready;
 		updateViewState();
@@ -113,7 +119,7 @@ public class TextSendController implements TextInputListener {
 		if (compositeSendButton instanceof CompositeSendButton) {
 			CompositeSendButton button = (CompositeSendButton) compositeSendButton;
 			button.setBombVisible(isBombVisible());
-			button.showSendButtonInstead(!textIsEmpty, canSend());
+			button.showSendButtonInstead(!textIsEmpty || hasPendingAttachment, canSend());
 		}
 	}
 
@@ -130,7 +136,10 @@ public class TextSendController implements TextInputListener {
 	}
 
 	protected CharSequence getCurrentTextHint() {
-		if (currentTimer == NO_AUTO_DELETE_TIMER) {
+		if (hasPendingAttachment) {
+			Context ctx = textInput.getContext();
+			return ctx.getString(R.string.image_caption_hint);
+		} else if (currentTimer == NO_AUTO_DELETE_TIMER) {
 			return defaultHint;
 		} else {
 			Context ctx = textInput.getContext();
@@ -148,7 +157,7 @@ public class TextSendController implements TextInputListener {
 	}
 
 	protected boolean canSendEmptyText() {
-		return allowEmptyText;
+		return allowEmptyText || hasPendingAttachment;
 	}
 
 	private void showTimerChangedDialog(boolean enabled) {

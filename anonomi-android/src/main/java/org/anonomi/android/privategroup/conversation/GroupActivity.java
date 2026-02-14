@@ -249,6 +249,9 @@ public class GroupActivity extends
 		compositeSendButton = textInput.findViewById(R.id.compositeSendButton);
 		updateMicColor();
 
+		// Image preview
+		initImagePreview();
+
 		// Image picker
 		compositeSendButton.setImagesSupported();
 		compositeSendButton.setOnImageClickListener(
@@ -440,16 +443,21 @@ public class GroupActivity extends
 
 	private void onImageSelected(@Nullable Uri uri) {
 		if (uri == null) return;
-		MessageId replyId = viewModel.getCurrentReplyId();
+		showImagePreview(uri);
+		compositeSendButton.showProgress(true);
 		new Thread(() -> {
 			try {
 				String mimeType = getContentResolver().getType(uri);
 				if (mimeType == null) mimeType = "image/jpeg";
 				InputStream is = getContentResolver().openInputStream(uri);
 				if (is == null) {
-					runOnUiThread(() -> Toast.makeText(this,
-							getString(R.string.image_compression_failed),
-							Toast.LENGTH_SHORT).show());
+					runOnUiThread(() -> {
+						compositeSendButton.showProgress(false);
+						clearPendingImage();
+						Toast.makeText(this,
+								getString(R.string.image_compression_failed),
+								Toast.LENGTH_SHORT).show();
+					});
 					return;
 				}
 				InputStream compressed = imageCompressor.compressImage(
@@ -461,19 +469,30 @@ public class GroupActivity extends
 					bos.write(buf, 0, len);
 				byte[] imageBytes = bos.toByteArray();
 				runOnUiThread(() -> {
-					viewModel.createAndStoreImageMessage(
-							imageBytes, "image/jpeg", replyId);
-					viewModel.clearReplyId();
-					Toast.makeText(this,
-							getString(R.string.image_sent),
-							Toast.LENGTH_SHORT).show();
+					compositeSendButton.showProgress(false);
+					setPendingImage(imageBytes, "image/jpeg");
 				});
 			} catch (IOException e) {
-				runOnUiThread(() -> Toast.makeText(this,
-						getString(R.string.image_compression_failed),
-						Toast.LENGTH_SHORT).show());
+				runOnUiThread(() -> {
+					compositeSendButton.showProgress(false);
+					clearPendingImage();
+					Toast.makeText(this,
+							getString(R.string.image_compression_failed),
+							Toast.LENGTH_SHORT).show();
+				});
 			}
 		}).start();
+	}
+
+	@Override
+	protected void onSendImageWithText(byte[] imageBytes,
+			@javax.annotation.Nullable String contentType,
+			@javax.annotation.Nullable MessageId replyId,
+			@javax.annotation.Nullable String text) {
+		viewModel.createAndStoreImageMessage(
+				imageBytes, contentType != null ? contentType : "image/jpeg",
+				replyId, text);
+		viewModel.clearReplyId();
 	}
 
 	// Voice recording

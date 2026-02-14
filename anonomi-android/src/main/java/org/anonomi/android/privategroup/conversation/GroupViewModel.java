@@ -341,7 +341,7 @@ class GroupViewModel extends ThreadListViewModel<GroupMessageItem> {
 	}
 
 	void createAndStoreImageMessage(byte[] imageData, String contentType,
-			@Nullable MessageId parentId) {
+			@Nullable MessageId parentId, @Nullable String text) {
 		runOnDbThread(() -> {
 			try {
 				LocalAuthor author = identityManager.getLocalAuthor();
@@ -351,7 +351,7 @@ class GroupViewModel extends ThreadListViewModel<GroupMessageItem> {
 				long timestamp = count.getLatestMsgTime();
 				timestamp = max(clock.currentTimeMillis(), timestamp + 1);
 				createImageMessage(imageData, contentType, timestamp,
-						parentId, author, previousMsgId);
+						parentId, author, previousMsgId, text);
 			} catch (DbException e) {
 				handleException(e);
 			}
@@ -360,25 +360,27 @@ class GroupViewModel extends ThreadListViewModel<GroupMessageItem> {
 
 	private void createImageMessage(byte[] imageData, String contentType,
 			long timestamp, @Nullable MessageId parentId,
-			LocalAuthor author, MessageId previousMsgId) {
+			LocalAuthor author, MessageId previousMsgId,
+			@Nullable String text) {
 		cryptoExecutor.execute(() -> {
 			LOG.info("Creating group image message...");
+			String t = text != null ? text : "";
 			GroupMessage msg = groupMessageFactory.createGroupImageMessage(
-					groupId, timestamp, parentId, author, "",
+					groupId, timestamp, parentId, author, t,
 					imageData, contentType, previousMsgId);
-			storeImagePost(msg, imageData, contentType);
+			storeImagePost(msg, t, imageData, contentType);
 		});
 	}
 
-	private void storeImagePost(GroupMessage msg, byte[] imageData,
-			String contentType) {
+	private void storeImagePost(GroupMessage msg, String text,
+			byte[] imageData, String contentType) {
 		runOnDbThread(false, txn -> {
 			long start = now();
 			GroupMessageHeader header =
 					privateGroupManager.addLocalMessage(txn, msg);
 			logDuration(LOG, "Storing group image message", start);
 			txn.attach(() ->
-					addItem(buildItemWithImage(header, "", imageData,
+					addItem(buildItemWithImage(header, text, imageData,
 							contentType), true)
 			);
 		}, this::handleException);

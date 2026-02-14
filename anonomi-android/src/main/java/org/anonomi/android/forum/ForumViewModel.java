@@ -278,7 +278,7 @@ class ForumViewModel extends ThreadListViewModel<ForumPostItem> {
 	}
 
 	void createAndStoreImageMessage(byte[] imageData, String contentType,
-			@Nullable MessageId parentId) {
+			@Nullable MessageId parentId, @Nullable String text) {
 		runOnDbThread(() -> {
 			try {
 				LocalAuthor author = identityManager.getLocalAuthor();
@@ -286,7 +286,7 @@ class ForumViewModel extends ThreadListViewModel<ForumPostItem> {
 				long timestamp = max(count.getLatestMsgTime() + 1,
 						clock.currentTimeMillis());
 				createImageMessage(imageData, contentType, timestamp,
-						parentId, author);
+						parentId, author, text);
 			} catch (DbException e) {
 				handleException(e);
 			}
@@ -295,23 +295,24 @@ class ForumViewModel extends ThreadListViewModel<ForumPostItem> {
 
 	private void createImageMessage(byte[] imageData, String contentType,
 			long timestamp, @Nullable MessageId parentId,
-			LocalAuthor author) {
+			LocalAuthor author, @Nullable String text) {
 		cryptoExecutor.execute(() -> {
 			LOG.info("Creating forum image post...");
-			ForumPost msg = forumManager.createLocalImagePost(groupId, "",
+			String t = text != null ? text : "";
+			ForumPost msg = forumManager.createLocalImagePost(groupId, t,
 					timestamp, parentId, author, imageData, contentType);
-			storeImagePost(msg, imageData, contentType);
+			storeImagePost(msg, t, imageData, contentType);
 		});
 	}
 
-	private void storeImagePost(ForumPost msg, byte[] imageData,
-			String contentType) {
+	private void storeImagePost(ForumPost msg, String text,
+			byte[] imageData, String contentType) {
 		runOnDbThread(false, txn -> {
 			long start = now();
 			ForumPostHeader header = forumManager.addLocalPost(txn, msg);
 			logDuration(LOG, "Storing forum image post", start);
 			txn.attach(() -> {
-				ForumPostItem item = new ForumPostItem(header, "",
+				ForumPostItem item = new ForumPostItem(header, text,
 						null, null, imageData, contentType);
 				addItem(item, true);
 			});

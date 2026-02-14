@@ -200,6 +200,8 @@ public class WriteBlogPostActivity extends BriarActivity
 
 	private void onImageSelected(@Nullable Uri uri) {
 		if (uri == null) return;
+		String text = input.getText();
+		input.clearText();
 		input.hideSoftKeyboard();
 		input.setVisibility(GONE);
 		progressBar.setVisibility(VISIBLE);
@@ -226,7 +228,7 @@ public class WriteBlogPostActivity extends BriarActivity
 				while ((len = compressed.read(buf)) != -1)
 					bos.write(buf, 0, len);
 				byte[] imageBytes = bos.toByteArray();
-				storeImagePost(imageBytes, "image/jpeg");
+				storeImagePost(imageBytes, "image/jpeg", text);
 			} catch (IOException e) {
 				logException(LOG, WARNING, e);
 				runOnUiThread(() -> {
@@ -239,13 +241,15 @@ public class WriteBlogPostActivity extends BriarActivity
 		}).start();
 	}
 
-	private void storeImagePost(byte[] imageData, String contentType) {
+	private void storeImagePost(byte[] imageData, String contentType,
+			@Nullable String text) {
 		runOnDbThread(() -> {
 			long timestamp = System.currentTimeMillis();
 			try {
 				LocalAuthor author = identityManager.getLocalAuthor();
 				BlogPost p = blogPostFactory.createBlogImagePost(
-						groupId, timestamp, null, author, "", imageData,
+						groupId, timestamp, null, author,
+						text != null ? text : "", imageData,
 						contentType);
 				blogManager.addLocalImagePost(p);
 				postPublished();
