@@ -1066,4 +1066,5 @@
     <string name="notify_blog_posts_likes_setting_summary">Stel meldingen in voor likes op je blogberichten.</string>
     <string name="comment_blog_post_hint">Schrijf een reactie…</string>
     <string name="action_attach_location">Bevestigingslocatie</string>
+    <string name="action_attach_image">Voeg een afbeelding toe</string>
 </resources>
