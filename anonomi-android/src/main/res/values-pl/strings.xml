@@ -1108,4 +1108,12 @@ Brak dostępu do aparatu. Spróbuj ponownie, może po ponownym uruchomieniu urz�
     <string name="ptt_conflict_message">Ten przycisk koliduje z sekwencją wyzwalacza paniki.</string>
     <string name="panic_conflict_ptt">Konflikt z przyciskiem „Naciśnij i mów”. Zmień to najpierw w Ustawieniach.</string>
     <string name="walkie_talkie_recording_timer">Nagrywanie… %1$d/12s</string>
+    <string name="like_blog_post">Tak jak</string>
+    <string name="comment_blog_post">Komentarz</string>
+    <string name="settings_notification_comments_blog_post">Wpisy na blogu – Komentarze</string>
+    <string name="notify_blog_posts_comments_setting_summary">Skonfiguruj alerty dotyczące komentarzy w swoich wpisach na blogu</string>
+    <string name="settings_notification_likes_blog_post">Wpisy na blogu – polubienia</string>
+    <string name="notify_blog_posts_likes_setting_summary">Skonfiguruj alerty dotyczące polubień wpisów na blogu</string>
+    <string name="comment_blog_post_hint">Napisz komentarz…</string>
+    <string name="action_attach_location">Dołącz lokalizację</string>
 </resources>
