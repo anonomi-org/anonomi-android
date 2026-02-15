@@ -1092,4 +1092,12 @@ Per prima cosa, installa l\'app Anonomi Postbox su un altro dispositivo da dove 
     <string name="ptt_conflict_message">Questo pulsante è in conflitto con la sequenza Panic Trigger.</string>
     <string name="panic_conflict_ptt">Conflitti con il pulsante Push-to-Talk. Modificalo prima nelle Impostazioni.</string>
     <string name="walkie_talkie_recording_timer">Registrazione… %1$d/12s</string>
+    <string name="like_blog_post">Come</string>
+    <string name="comment_blog_post">Commento</string>
+    <string name="settings_notification_comments_blog_post">Post del blog - Commenti</string>
+    <string name="notify_blog_posts_comments_setting_summary">Configura gli avvisi per i commenti sui post del tuo blog</string>
+    <string name="settings_notification_likes_blog_post">Post del blog - Mi piace</string>
+    <string name="notify_blog_posts_likes_setting_summary">Configura gli avvisi per i Mi piace sui post del tuo blog</string>
+    <string name="comment_blog_post_hint">Scrivi un commento…</string>
+    <string name="action_attach_location">Allega posizione</string>
 </resources>
