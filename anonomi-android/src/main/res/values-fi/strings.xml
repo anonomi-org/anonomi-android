@@ -1056,4 +1056,5 @@
     <string name="notify_blog_posts_likes_setting_summary">Määritä tykkäysilmoituksia blogikirjoituksissasi</string>
     <string name="comment_blog_post_hint">Kirjoita kommentti…</string>
     <string name="action_attach_location">Liitä sijainti</string>
+    <string name="action_attach_image">Liitä kuva</string>
 </resources>
