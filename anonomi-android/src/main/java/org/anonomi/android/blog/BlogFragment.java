@@ -233,34 +233,7 @@ public class BlogFragment extends BaseFragment
 
 	@Override
 	public void onCommentClick(BlogPostItem post) {
-		showCommentDialog(post);
-	}
-
-	private void showCommentDialog(BlogPostItem post) {
-		if (getContext() == null) return;
-		android.widget.EditText input = new android.widget.EditText(getContext());
-		input.setHint(R.string.comment_blog_post_hint);
-		input.setInputType(android.text.InputType.TYPE_CLASS_TEXT
-				| android.text.InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
-				| android.text.InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-		int pad = getResources().getDimensionPixelSize(
-				R.dimen.listitem_vertical_margin);
-		android.widget.FrameLayout container =
-				new android.widget.FrameLayout(getContext());
-		container.setPadding(pad, pad / 2, pad, 0);
-		container.addView(input);
-		new MaterialAlertDialogBuilder(getContext(),
-				R.style.AnonDialogTheme)
-				.setTitle(R.string.comment_blog_post)
-				.setView(container)
-				.setPositiveButton(android.R.string.ok, (d, w) -> {
-					String comment = input.getText().toString().trim();
-					if (!comment.isEmpty()) {
-						viewModel.commentOnPost(post, comment);
-					}
-				})
-				.setNegativeButton(R.string.cancel, null)
-				.show();
+		onBlogPostClick(post);
 	}
 
 	private void displaySnackbar(int stringId, boolean scroll) {

@@ -134,6 +134,18 @@
 				app:srcCompat="@drawable/ic_comment_outline"
 				app:tint="?attr/colorControlNormal" />
 
+			<TextView
+				android:id="@+id/commentCount"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="2dp"
+				android:layout_marginEnd="8dp"
+				android:textColor="?android:attr/textColorSecondary"
+				android:textSize="@dimen/text_size_small"
+				android:visibility="gone"
+				tools:text="5"
+				tools:visibility="visible" />
+
 		</LinearLayout>
 
 		<!-- TODO replace with RecyclerView -->

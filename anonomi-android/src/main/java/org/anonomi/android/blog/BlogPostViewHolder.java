@@ -52,6 +52,7 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 	private final TextView likeCountText;
 	@Nullable
 	private final ImageButton commentButton;
+	private final TextView commentCountText;
 	private final TextView text;
 	private final TextView reblogCommentText;
 	private final ViewGroup commentContainer;
@@ -78,6 +79,7 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 		likeButton = v.findViewById(R.id.likeButton);
 		likeCountText = v.findViewById(R.id.likeCount);
 		commentButton = v.findViewById(R.id.commentButton);
+		commentCountText = v.findViewById(R.id.commentCount);
 		text = v.findViewById(R.id.textView);
 		reblogCommentText = v.findViewById(R.id.reblogCommentText);
 		commentContainer = v.findViewById(R.id.commentContainer);
@@ -95,6 +97,7 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 		if (likeButton != null) likeButton.setVisibility(GONE);
 		if (likeCountText != null) likeCountText.setVisibility(GONE);
 		if (commentButton != null) commentButton.setVisibility(GONE);
+		if (commentCountText != null) commentCountText.setVisibility(GONE);
 	}
 
 	void updateDate(long time) {
@@ -240,6 +243,15 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 		if (commentButton != null) {
 			commentButton.setOnClickListener(
 					v -> listener.onCommentClick(item));
+		}
+		if (commentCountText != null) {
+			int count = item.getBlogComments().size();
+			if (count > 0) {
+				commentCountText.setText(String.valueOf(count));
+				commentCountText.setVisibility(VISIBLE);
+			} else {
+				commentCountText.setVisibility(GONE);
+			}
 		}
 
 		// comments
