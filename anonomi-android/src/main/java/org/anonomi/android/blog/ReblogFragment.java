@@ -150,8 +150,9 @@ public class ReblogFragment extends BaseFragment implements SendListener {
 		private ViewHolder(View v) {
 			scrollView = v.findViewById(R.id.scrollView);
 			progressBar = v.findViewById(R.id.progressBar);
+			// Set fullText to false to hide comments in the reblog preview
 			post = new BlogPostViewHolder(v.findViewById(R.id.postLayout),
-					true, this, false);
+					false, this, false);
 			input = v.findViewById(R.id.inputText);
 		}
 
