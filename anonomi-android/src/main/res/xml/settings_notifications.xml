@@ -47,7 +47,6 @@
 		android:persistent="false"
 		android:summary="@string/notify_blog_posts_setting_summary"
 		android:title="@string/notify_blog_posts_setting_title"
-		android:visible="false"
 		app:iconSpaceReserved="false"
 		app:singleLineTitle="false" />
 

@@ -43,6 +43,7 @@ import static org.anonchatsecure.bramble.util.StringUtils.isNullOrEmpty;
 import static org.anonomi.android.AppModule.getAndroidComponent;
 import static org.anonomi.android.activity.RequestCodes.REQUEST_RINGTONE;
 import static org.anonomi.android.settings.SettingsActivity.enableAndPersist;
+import static org.anonchatsecure.anonchat.api.android.AndroidNotificationManager.BLOG_CHANNEL_ID;
 import static org.anonchatsecure.anonchat.api.android.AndroidNotificationManager.CONTACT_CHANNEL_ID;
 import static org.anonchatsecure.anonchat.api.android.AndroidNotificationManager.FORUM_CHANNEL_ID;
 import static org.anonchatsecure.anonchat.api.android.AndroidNotificationManager.GROUP_CHANNEL_ID;
@@ -94,13 +95,11 @@ public class NotificationsFragment extends PreferenceFragmentCompat {
 		notifyVibration = findPreference(PREF_NOTIFY_VIBRATION);
 		notifySound = findPreference(PREF_NOTIFY_SOUND);
 
-		// ✅ Hide Blogs Notification
-		if (notifyBlogPosts != null) notifyBlogPosts.setVisible(false);
-
 		if (SDK_INT < NOTIFICATION_CHANNEL_API) {
 			notifyPrivateMessages.setPreferenceDataStore(viewModel.settingsStore);
 			notifyGroupMessages.setPreferenceDataStore(viewModel.settingsStore);
 			notifyForumPosts.setPreferenceDataStore(viewModel.settingsStore);
+			notifyBlogPosts.setPreferenceDataStore(viewModel.settingsStore);
 			notifyVibration.setPreferenceDataStore(viewModel.settingsStore);
 
 			notifySound.setOnPreferenceClickListener(pref ->
@@ -116,8 +115,9 @@ public class NotificationsFragment extends PreferenceFragmentCompat {
 			setupNotificationPreference(notifyForumPosts,
 					FORUM_CHANNEL_ID,
 					R.string.notify_forum_posts_setting_summary_26);
-			// ⛔ Do NOT show Blogs notification on Android 8+ either
-			if (notifyBlogPosts != null) notifyBlogPosts.setVisible(false);
+			setupNotificationPreference(notifyBlogPosts,
+					BLOG_CHANNEL_ID,
+					R.string.notify_blog_posts_setting_summary_26);
 
 			notifyVibration.setVisible(false);
 			notifySound.setVisible(false);
@@ -141,6 +141,10 @@ public class NotificationsFragment extends PreferenceFragmentCompat {
 			nm.getNotifyForumPosts().observe(lifecycleOwner, enabled -> {
 				notifyForumPosts.setChecked(enabled);
 				enableAndPersist(notifyForumPosts);
+			});
+			nm.getNotifyBlogPosts().observe(lifecycleOwner, enabled -> {
+				notifyBlogPosts.setChecked(enabled);
+				enableAndPersist(notifyBlogPosts);
 			});
 			nm.getNotifyVibration().observe(lifecycleOwner, enabled -> {
 				notifyVibration.setChecked(enabled);
