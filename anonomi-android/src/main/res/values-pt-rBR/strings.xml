@@ -1105,4 +1105,12 @@ Primeiro, instale o app Anonomi Postbox em outro dispositivo a partir do mesmo l
     <string name="ptt_conflict_message">Este botão entra em conflito com a sua sequência de ativação de pânico.</string>
     <string name="panic_conflict_ptt">Conflito com o botão Push-to-Talk. Altere-o primeiro nas Configurações.</string>
     <string name="walkie_talkie_recording_timer">Gravando… %1$d/12s</string>
+    <string name="like_blog_post">Como</string>
+    <string name="comment_blog_post">Comentário</string>
+    <string name="settings_notification_comments_blog_post">Postagens em blogs - Comentários</string>
+    <string name="notify_blog_posts_comments_setting_summary">Configure alertas para comentários em suas postagens de blog.</string>
+    <string name="settings_notification_likes_blog_post">Postagens em blogs - Curtidas</string>
+    <string name="notify_blog_posts_likes_setting_summary">Configure alertas para curtidas nas suas postagens do blog.</string>
+    <string name="comment_blog_post_hint">Escreva um comentário…</string>
+    <string name="action_attach_location">Localização do anexo</string>
 </resources>
