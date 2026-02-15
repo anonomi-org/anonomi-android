@@ -1050,4 +1050,12 @@
     <string name="ptt_conflict_message">यह बटन आपके पैनिक ट्रिगर अनुक्रम के साथ असंगत है।</string>
     <string name="panic_conflict_ptt">पुश-टू-टॉक बटन के साथ समस्या आ रही है। कृपया पहले सेटिंग्स में जाकर इसे बदलें।</string>
     <string name="walkie_talkie_recording_timer">रिकॉर्डिंग… %1$d/12s</string>
+    <string name="like_blog_post">पसंद</string>
+    <string name="comment_blog_post">टिप्पणी</string>
+    <string name="settings_notification_comments_blog_post">ब्लॉग पोस्ट - टिप्पणियाँ</string>
+    <string name="notify_blog_posts_comments_setting_summary">अपने ब्लॉग पोस्ट पर टिप्पणियों के लिए अलर्ट कॉन्फ़िगर करें</string>
+    <string name="settings_notification_likes_blog_post">ब्लॉग पोस्ट - पसंद</string>
+    <string name="notify_blog_posts_likes_setting_summary">अपने ब्लॉग पोस्ट पर लाइक के लिए अलर्ट कॉन्फ़िगर करें</string>
+    <string name="comment_blog_post_hint">एक टिप्पणी लिखें…</string>
+    <string name="action_attach_location">स्थान संलग्न करें</string>
 </resources>
