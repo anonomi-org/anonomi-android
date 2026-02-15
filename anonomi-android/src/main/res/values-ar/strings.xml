@@ -1147,4 +1147,5 @@
     <string name="notify_blog_posts_likes_setting_summary">قم بضبط التنبيهات الخاصة بالإعجابات على منشورات مدونتك</string>
     <string name="comment_blog_post_hint">اكتب تعليقًا…</string>
     <string name="action_attach_location">إرفاق الموقع</string>
+    <string name="action_attach_image">إرفاق صورة</string>
 </resources>
