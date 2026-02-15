@@ -1087,4 +1087,5 @@
     <string name="notify_blog_posts_likes_setting_summary">Blog yazılarınızdaki beğeniler için uyarıları yapılandırın.</string>
     <string name="comment_blog_post_hint">Yorum yazın…</string>
     <string name="action_attach_location">Konumu Ekle</string>
+    <string name="action_attach_image">Görsel ekle</string>
 </resources>
