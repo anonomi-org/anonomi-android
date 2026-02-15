@@ -1058,4 +1058,13 @@
     <string name="ptt_conflict_message">Deze knop conflicteert met uw paniektriggersequentie.</string>
     <string name="panic_conflict_ptt">Conflicteert met de Push-to-Talk-knop. Wijzig dit eerst in de instellingen.</string>
     <string name="walkie_talkie_recording_timer">Opname… %1$d/12s</string>
+    <string name="like_blog_post">Leuk vinden</string>
+    <string name="comment_blog_post">Opmerking</string>
+    <string name="settings_notification_comments_blog_post">Blogberichten - Reacties</string>
+    <string name="notify_blog_posts_comments_setting_summary">Stel meldingen in voor reacties op je blogberichten.</string>
+    <string name="settings_notification_likes_blog_post">Blogberichten - Vind ik leuk</string>
+    <string name="notify_blog_posts_likes_setting_summary">Stel meldingen in voor likes op je blogberichten.</string>
+    <string name="comment_blog_post_hint">Schrijf een reactie…</string>
+    <string name="action_attach_location">Bevestigingslocatie</string>
+    <string name="action_attach_image">Voeg een afbeelding toe</string>
 </resources>

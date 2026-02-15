@@ -1099,4 +1099,13 @@
     <string name="ptt_conflict_message">Este botón entra en conflicto con la secuencia de activación del pánico.</string>
     <string name="panic_conflict_ptt">Hay conflictos con el botón Pulsar para hablar. Cámbielo primero en Configuración.</string>
     <string name="walkie_talkie_recording_timer">Grabando… %1$d/12s</string>
+    <string name="like_blog_post">Como</string>
+    <string name="comment_blog_post">Comentario</string>
+    <string name="settings_notification_comments_blog_post">Entradas de blogs - Comentarios</string>
+    <string name="notify_blog_posts_comments_setting_summary">Configurar alertas para comentarios en las publicaciones de tu blog</string>
+    <string name="settings_notification_likes_blog_post">Publicaciones de blogs - Me gusta</string>
+    <string name="notify_blog_posts_likes_setting_summary">Configura alertas de Me gusta en tus publicaciones de blog</string>
+    <string name="comment_blog_post_hint">Escribe un comentario…</string>
+    <string name="action_attach_location">Adjuntar ubicación</string>
+    <string name="action_attach_image">Adjuntar imagen</string>
 </resources>

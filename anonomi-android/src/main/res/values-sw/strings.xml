@@ -1060,4 +1060,13 @@ Umepoteza nenosiri.</string>
     <string name="ptt_conflict_message">Kitufe hiki kinapingana na mfuatano wako wa Kichochezi cha Panic.</string>
     <string name="panic_conflict_ptt">Inakinzana na kitufe cha Push-to-Talk. Kibadilishe katika Mipangilio kwanza.</string>
     <string name="walkie_talkie_recording_timer">Kurekodi… %1$d/sekunde 12</string>
+    <string name="like_blog_post">Kama</string>
+    <string name="comment_blog_post">Maoni</string>
+    <string name="settings_notification_comments_blog_post">Machapisho ya blogu - Maoni</string>
+    <string name="notify_blog_posts_comments_setting_summary">Sanidi arifa za Maoni kwenye machapisho yako ya blogu</string>
+    <string name="settings_notification_likes_blog_post">Machapisho ya blogu - Vipendwa</string>
+    <string name="notify_blog_posts_likes_setting_summary">Sanidi arifa za Vipendwa kwenye machapisho yako ya blogu</string>
+    <string name="comment_blog_post_hint">Andika maoni…</string>
+    <string name="action_attach_location">Ambatisha Mahali</string>
+    <string name="action_attach_image">Ambatanisha taswira</string>
 </resources>

@@ -1060,4 +1060,13 @@
     <string name="ptt_conflict_message">Ovo dugme je u sukobu sa vašom sekvencom za okidanje panike.</string>
     <string name="panic_conflict_ptt">Konflikt sa dugmetom Pritisni za razgovor. Prvo to promijenite u Postavkama.</string>
     <string name="walkie_talkie_recording_timer">Snimanje… %1$d/12s</string>
+    <string name="like_blog_post">Sviđa mi se</string>
+    <string name="comment_blog_post">Komentar</string>
+    <string name="settings_notification_comments_blog_post">Objave na blogu - Komentari</string>
+    <string name="notify_blog_posts_comments_setting_summary">Konfigurišite upozorenja za komentare na vašim objavama na blogu</string>
+    <string name="settings_notification_likes_blog_post">Objave na blogu - Sviđanja</string>
+    <string name="notify_blog_posts_likes_setting_summary">Konfigurišite obavještenja za lajkove na vašim objavama na blogu</string>
+    <string name="comment_blog_post_hint">Napišite komentar…</string>
+    <string name="action_attach_location">Priloži lokaciju</string>
+    <string name="action_attach_image">Priloži fotografiju</string>
 </resources>

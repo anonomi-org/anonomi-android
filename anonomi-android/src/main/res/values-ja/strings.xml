@@ -1063,4 +1063,13 @@
     <string name="ptt_conflict_message">このボタンはパニック トリガー シーケンスと競合します。</string>
     <string name="panic_conflict_ptt">プッシュ・トゥ・トークボタンと競合しています。まず設定で変更してください。</string>
     <string name="walkie_talkie_recording_timer">録音中…%1$d/12秒</string>
+    <string name="like_blog_post">のように</string>
+    <string name="comment_blog_post">コメント</string>
+    <string name="settings_notification_comments_blog_post">ブログ投稿 - コメント</string>
+    <string name="notify_blog_posts_comments_setting_summary">ブログ投稿のコメントのアラートを設定する</string>
+    <string name="settings_notification_likes_blog_post">ブログ投稿 - いいね</string>
+    <string name="notify_blog_posts_likes_setting_summary">ブログ投稿の「いいね！」に関するアラートを設定する</string>
+    <string name="comment_blog_post_hint">コメントを書く…</string>
+    <string name="action_attach_location">場所を添付</string>
+    <string name="action_attach_image">画像を添付</string>
 </resources>

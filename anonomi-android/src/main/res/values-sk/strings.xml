@@ -1108,4 +1108,13 @@ Najprv nainštalujte aplikáciu Anonomi Postbox do iného zariadenia z rovnakéh
     <string name="ptt_conflict_message">Toto tlačidlo je v konflikte s vašou sekvenciou spúšťania paniky.</string>
     <string name="panic_conflict_ptt">Konflikt s tlačidlom Push-to-Talk. Najprv to zmeňte v nastaveniach.</string>
     <string name="walkie_talkie_recording_timer">Nahrávanie… %1$d/12 s</string>
+    <string name="like_blog_post">Páči sa mi</string>
+    <string name="comment_blog_post">Komentár</string>
+    <string name="settings_notification_comments_blog_post">Príspevky na blogu - Komentáre</string>
+    <string name="notify_blog_posts_comments_setting_summary">Nakonfigurujte upozornenia na komentáre k vašim blogovým príspevkom</string>
+    <string name="settings_notification_likes_blog_post">Príspevky na blogu - Páči sa mi to</string>
+    <string name="notify_blog_posts_likes_setting_summary">Nakonfigurujte si upozornenia na označenia „Páči sa mi to“ vo svojich blogových príspevkoch</string>
+    <string name="comment_blog_post_hint">Napíšte komentár…</string>
+    <string name="action_attach_location">Priložiť polohu</string>
+    <string name="action_attach_image">Priložiť obrázok</string>
 </resources>

@@ -1048,4 +1048,13 @@
     <string name="ptt_conflict_message">Tämä painike on ristiriidassa paniikkihälytystoimintojesi kanssa.</string>
     <string name="panic_conflict_ptt">Ristiriidassa Push-to-Talk-painikkeen kanssa. Muuta se ensin asetuksista.</string>
     <string name="walkie_talkie_recording_timer">Tallennus… %1$d/12s</string>
+    <string name="like_blog_post">Pitää</string>
+    <string name="comment_blog_post">Kommentti</string>
+    <string name="settings_notification_comments_blog_post">Blogikirjoitukset - Kommentit</string>
+    <string name="notify_blog_posts_comments_setting_summary">Määritä blogikirjoitustesi kommenttien hälytykset</string>
+    <string name="settings_notification_likes_blog_post">Blogikirjoitukset - Tykkäykset</string>
+    <string name="notify_blog_posts_likes_setting_summary">Määritä tykkäysilmoituksia blogikirjoituksissasi</string>
+    <string name="comment_blog_post_hint">Kirjoita kommentti…</string>
+    <string name="action_attach_location">Liitä sijainti</string>
+    <string name="action_attach_image">Liitä kuva</string>
 </resources>

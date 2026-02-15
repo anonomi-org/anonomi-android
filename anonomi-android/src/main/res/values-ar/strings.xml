@@ -1139,4 +1139,13 @@
     <string name="ptt_conflict_message">يتعارض هذا الزر مع تسلسل تشغيل حالة الذعر لديك.</string>
     <string name="panic_conflict_ptt">يتعارض مع زر الضغط للتحدث. قم بتغييره في الإعدادات أولاً.</string>
     <string name="walkie_talkie_recording_timer">جارٍ التسجيل... %1$d/12 ثانية</string>
+    <string name="like_blog_post">يحب</string>
+    <string name="comment_blog_post">تعليق</string>
+    <string name="settings_notification_comments_blog_post">منشورات المدونات - التعليقات</string>
+    <string name="notify_blog_posts_comments_setting_summary">قم بضبط التنبيهات للتعليقات على منشورات مدونتك</string>
+    <string name="settings_notification_likes_blog_post">منشورات المدونات - الإعجابات</string>
+    <string name="notify_blog_posts_likes_setting_summary">قم بضبط التنبيهات الخاصة بالإعجابات على منشورات مدونتك</string>
+    <string name="comment_blog_post_hint">اكتب تعليقًا…</string>
+    <string name="action_attach_location">إرفاق الموقع</string>
+    <string name="action_attach_image">إرفاق صورة</string>
 </resources>

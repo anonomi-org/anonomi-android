@@ -1069,4 +1069,13 @@
     <string name="ptt_conflict_message">此按鈕與您的緊急觸發序列衝突。</string>
     <string name="panic_conflict_ptt">與一鍵通按鈕衝突。請先在設定中更改。</string>
     <string name="walkie_talkie_recording_timer">正在錄製中… %1$d/12秒</string>
+    <string name="like_blog_post">喜歡</string>
+    <string name="comment_blog_post">評論</string>
+    <string name="settings_notification_comments_blog_post">部落格文章 - 評論</string>
+    <string name="notify_blog_posts_comments_setting_summary">設定部落格文章評論提醒</string>
+    <string name="settings_notification_likes_blog_post">部落格文章 - 讚</string>
+    <string name="notify_blog_posts_likes_setting_summary">設定部落格文章按讚提醒</string>
+    <string name="comment_blog_post_hint">請留言…</string>
+    <string name="action_attach_location">附加位置</string>
+    <string name="action_attach_image">附加圖片</string>
 </resources>

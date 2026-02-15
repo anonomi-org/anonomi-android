@@ -1123,4 +1123,13 @@ Anonomi (برایر) موقعیت شما را ذخیره نمی‌کند و آن
     <string name="ptt_conflict_message">این دکمه با توالی Panic Trigger شما تداخل دارد.</string>
     <string name="panic_conflict_ptt">با دکمه‌ی «فشار برای صحبت» تداخل دارد. ابتدا آن را در تنظیمات تغییر دهید.</string>
     <string name="walkie_talkie_recording_timer">در حال ضبط… %1$d/12s</string>
+    <string name="like_blog_post">مانند</string>
+    <string name="comment_blog_post">نظر دهید</string>
+    <string name="settings_notification_comments_blog_post">پست‌های وبلاگ - نظرات</string>
+    <string name="notify_blog_posts_comments_setting_summary">هشدارها را برای نظرات در مورد پست‌های وبلاگ خود پیکربندی کنید</string>
+    <string name="settings_notification_likes_blog_post">پست‌های وبلاگ - لایک‌ها</string>
+    <string name="notify_blog_posts_likes_setting_summary">هشدارها را برای لایک‌ها در پست‌های وبلاگ خود پیکربندی کنید</string>
+    <string name="comment_blog_post_hint">نظر خود را بنویسید…</string>
+    <string name="action_attach_location">محل اتصال</string>
+    <string name="action_attach_image">پیوست کردن تصویر</string>
 </resources>

@@ -1079,4 +1079,13 @@
     <string name="ptt_conflict_message">ეს ღილაკი კონფლიქტშია თქვენს პანიკის გამშვები სიგნალის თანმიმდევრობასთან.</string>
     <string name="panic_conflict_ptt">კონფლიქტშია Push-to-Talk ღილაკთან. ჯერ პარამეტრებში შეცვალეთ.</string>
     <string name="walkie_talkie_recording_timer">ჩაწერა… %1$d/12 წმ</string>
+    <string name="like_blog_post">მოწონება</string>
+    <string name="comment_blog_post">კომენტარი</string>
+    <string name="settings_notification_comments_blog_post">ბლოგის პოსტები - კომენტარები</string>
+    <string name="notify_blog_posts_comments_setting_summary">დააკონფიგურირეთ შეტყობინებები კომენტარებისთვის თქვენს ბლოგ პოსტებზე</string>
+    <string name="settings_notification_likes_blog_post">ბლოგის პოსტები - მოწონებები</string>
+    <string name="notify_blog_posts_likes_setting_summary">დააკონფიგურირეთ შეტყობინებები თქვენს ბლოგ პოსტებზე მოწონებების შესახებ</string>
+    <string name="comment_blog_post_hint">დაწერეთ კომენტარი…</string>
+    <string name="action_attach_location">მდებარეობის მიმაგრება</string>
+    <string name="action_attach_image">სურათის მიმაგრება</string>
 </resources>

@@ -1050,4 +1050,13 @@
     <string name="ptt_conflict_message">Ова копче е во конфликт со вашата секвенца на активирање на паника.</string>
     <string name="panic_conflict_ptt">Конфликт со копчето „Притисни за разговор“. Прво променете го во Поставки.</string>
     <string name="walkie_talkie_recording_timer">Снимање… %1$d/12 секунди</string>
+    <string name="like_blog_post">Како</string>
+    <string name="comment_blog_post">Коментар</string>
+    <string name="settings_notification_comments_blog_post">Објави на блогови - Коментари</string>
+    <string name="notify_blog_posts_comments_setting_summary">Конфигурирајте известувања за коментари на вашите објави на блогот</string>
+    <string name="settings_notification_likes_blog_post">Објави на блогови - Допаѓања</string>
+    <string name="notify_blog_posts_likes_setting_summary">Конфигурирајте известувања за лајкови на вашите објави на блогот</string>
+    <string name="comment_blog_post_hint">Напишете коментар…</string>
+    <string name="action_attach_location">Прикачи локација</string>
+    <string name="action_attach_image">Прикачи слика</string>
 </resources>

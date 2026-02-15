@@ -1107,4 +1107,13 @@ Pirmiausia, įdiekite „Anonomi Postbox“ programėlę į kitą įrenginį iš
     <string name="ptt_conflict_message">Šis mygtukas prieštarauja jūsų panikos suveikimo sekai.</string>
     <string name="panic_conflict_ptt">Konfliktuoja su mygtuku „Push to Talk“. Pirmiausia pakeiskite jį nustatymuose.</string>
     <string name="walkie_talkie_recording_timer">Įrašoma… %1$d/12 sek.</string>
+    <string name="like_blog_post">Patinka</string>
+    <string name="comment_blog_post">Komentaras</string>
+    <string name="settings_notification_comments_blog_post">Tinklaraščio įrašai – komentarai</string>
+    <string name="notify_blog_posts_comments_setting_summary">Įspėjimų apie komentarus po tinklaraščio įrašais konfigūravimas</string>
+    <string name="settings_notification_likes_blog_post">Tinklaraščio įrašai – patiktukai</string>
+    <string name="notify_blog_posts_likes_setting_summary">Konfigūruokite įspėjimus apie patiktukus savo tinklaraščio įrašuose</string>
+    <string name="comment_blog_post_hint">Parašykite komentarą…</string>
+    <string name="action_attach_location">Pridėti vietą</string>
+    <string name="action_attach_image">Pridėti atvaizdą</string>
 </resources>

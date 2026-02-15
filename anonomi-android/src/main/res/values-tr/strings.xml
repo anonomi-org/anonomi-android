@@ -1079,4 +1079,13 @@
     <string name="ptt_conflict_message">Bu düğme, panik tetikleme dizinizle çakışıyor.</string>
     <string name="panic_conflict_ptt">Bas-konuş düğmesiyle çakışma var. Öncelikle Ayarlar\'dan değiştirin.</string>
     <string name="walkie_talkie_recording_timer">Kayıt… %1$d/12s</string>
+    <string name="like_blog_post">Beğenmek</string>
+    <string name="comment_blog_post">Yorum</string>
+    <string name="settings_notification_comments_blog_post">Blog yazıları - Yorumlar</string>
+    <string name="notify_blog_posts_comments_setting_summary">Blog yazılarınızdaki yorumlar için uyarıları yapılandırın.</string>
+    <string name="settings_notification_likes_blog_post">Blog yazıları - Beğeniler</string>
+    <string name="notify_blog_posts_likes_setting_summary">Blog yazılarınızdaki beğeniler için uyarıları yapılandırın.</string>
+    <string name="comment_blog_post_hint">Yorum yazın…</string>
+    <string name="action_attach_location">Konumu Ekle</string>
+    <string name="action_attach_image">Görsel ekle</string>
 </resources>

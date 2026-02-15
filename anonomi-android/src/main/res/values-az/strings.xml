@@ -1044,4 +1044,13 @@
     <string name="ptt_conflict_message">Bu düymə Panic Tetikleyici ardıcıllığınızla ziddiyyət təşkil edir.</string>
     <string name="panic_conflict_ptt">Push-to-Talk düyməsi ilə ziddiyyət təşkil edir. Əvvəlcə onu Parametrlərdə dəyişdirin.</string>
     <string name="walkie_talkie_recording_timer">Qeydə alınır… %1$d/12s</string>
+    <string name="like_blog_post">Bəyən</string>
+    <string name="comment_blog_post">Şərh</string>
+    <string name="settings_notification_comments_blog_post">Bloq yazıları - Şərhlər</string>
+    <string name="notify_blog_posts_comments_setting_summary">Bloq yazılarınızdakı şərhlər üçün bildirişləri konfiqurasiya edin</string>
+    <string name="settings_notification_likes_blog_post">Bloq yazıları - Bəyənmələr</string>
+    <string name="notify_blog_posts_likes_setting_summary">Bloq yazılarınızdakı bəyənmələr üçün bildirişləri konfiqurasiya edin</string>
+    <string name="comment_blog_post_hint">Şərh yazın…</string>
+    <string name="action_attach_location">Yer əlavə edin</string>
+    <string name="action_attach_image">Şəkil əlavə edin</string>
 </resources>

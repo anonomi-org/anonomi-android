@@ -1107,4 +1107,13 @@
     <string name="ptt_conflict_message">Эта кнопка конфликтует с вашей последовательностью срабатывания триггера паники.</string>
     <string name="panic_conflict_ptt">Конфликт с кнопкой \"Нажми и говори\". Сначала измените это в настройках.</string>
     <string name="walkie_talkie_recording_timer">Запись… %1$d/12с</string>
+    <string name="like_blog_post">Нравиться</string>
+    <string name="comment_blog_post">Комментарий</string>
+    <string name="settings_notification_comments_blog_post">Записи в блоге - Комментарии</string>
+    <string name="notify_blog_posts_comments_setting_summary">Настройте оповещения для комментариев к вашим записям в блоге.</string>
+    <string name="settings_notification_likes_blog_post">Записи в блоге - Лайки</string>
+    <string name="notify_blog_posts_likes_setting_summary">Настройте оповещения о лайках к вашим записям в блоге.</string>
+    <string name="comment_blog_post_hint">Напишите комментарий…</string>
+    <string name="action_attach_location">Прикрепить местоположение</string>
+    <string name="action_attach_image">Прикрепить изображение</string>
 </resources>

@@ -1057,4 +1057,13 @@ parteja pas amb degun.</string>
     <string name="ptt_conflict_message">Aqueste boton es en conflicte amb vòstra sequéncia de Panic Trigger.</string>
     <string name="panic_conflict_ptt">Conflictes amb lo boton Push-to-Talk. Cambiatz-lo dins los Paramètres d\'en primièr.</string>
     <string name="walkie_talkie_recording_timer">Enregistrament… %1$d/12s</string>
+    <string name="like_blog_post">Aimar</string>
+    <string name="comment_blog_post">Comentari</string>
+    <string name="settings_notification_comments_blog_post">Articles de blògs - Comentaris</string>
+    <string name="notify_blog_posts_comments_setting_summary">Configurar las alèrtas pels comentaris sus vòstres articles de blòg</string>
+    <string name="settings_notification_likes_blog_post">Articles de blògs - M\'agrada</string>
+    <string name="notify_blog_posts_likes_setting_summary">Configurar las alèrtas pels M\'agrada sus vòstres articles de blòg</string>
+    <string name="comment_blog_post_hint">Escrivètz un comentari…</string>
+    <string name="action_attach_location">Adjuntar l\'emplaçament</string>
+    <string name="action_attach_image">Juntar un imatge</string>
 </resources>
