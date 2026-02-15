@@ -993,4 +993,12 @@
     <string name="ptt_conflict_message">Butang ini bercanggah dengan urutan Pencetus Panik anda.</string>
     <string name="panic_conflict_ptt">Berkonflik dengan butang Tekan untuk Bercakap. Tukarkannya dalam Tetapan terlebih dahulu.</string>
     <string name="walkie_talkie_recording_timer">Rakaman… %1$d/12s</string>
+    <string name="like_blog_post">Suka</string>
+    <string name="comment_blog_post">Komen</string>
+    <string name="settings_notification_comments_blog_post">Siaran blog - Komen</string>
+    <string name="notify_blog_posts_comments_setting_summary">Konfigurasikan makluman untuk Komen pada catatan blog anda</string>
+    <string name="settings_notification_likes_blog_post">Siaran blog - Suka</string>
+    <string name="notify_blog_posts_likes_setting_summary">Konfigurasikan makluman untuk Suka pada catatan blog anda</string>
+    <string name="comment_blog_post_hint">Tulis komen…</string>
+    <string name="action_attach_location">Lampirkan Lokasi</string>
 </resources>
