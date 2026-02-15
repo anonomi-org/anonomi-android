@@ -1101,4 +1101,5 @@
     <string name="notify_blog_posts_likes_setting_summary">Configurați alerte pentru aprecieri la postările de pe blog</string>
     <string name="comment_blog_post_hint">Scrie un comentariu…</string>
     <string name="action_attach_location">Atașați locația</string>
+    <string name="action_attach_image">Atașați imagine</string>
 </resources>
