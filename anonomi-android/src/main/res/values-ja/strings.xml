@@ -1071,4 +1071,5 @@
     <string name="notify_blog_posts_likes_setting_summary">ブログ投稿の「いいね！」に関するアラートを設定する</string>
     <string name="comment_blog_post_hint">コメントを書く…</string>
     <string name="action_attach_location">場所を添付</string>
+    <string name="action_attach_image">画像を添付</string>
 </resources>
