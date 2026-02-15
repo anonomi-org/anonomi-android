@@ -1085,4 +1085,5 @@
     <string name="notify_blog_posts_likes_setting_summary">Konfigurieren Sie Benachrichtigungen für „Gefällt mir“-Angaben zu Ihren Blogbeiträgen</string>
     <string name="comment_blog_post_hint">Schreiben Sie einen Kommentar…</string>
     <string name="action_attach_location">Befestigungsort</string>
+    <string name="action_attach_image">Bild anhängen</string>
 </resources>
