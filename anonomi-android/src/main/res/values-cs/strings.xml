@@ -1099,4 +1099,12 @@
     <string name="ptt_conflict_message">Toto tlačítko je v konfliktu s vaší sekvencí pro spuštění paniky.</string>
     <string name="panic_conflict_ptt">Konflikt s tlačítkem Push-to-Talk. Nejprve to změňte v Nastavení.</string>
     <string name="walkie_talkie_recording_timer">Nahrávání… %1$d/12 s</string>
+    <string name="like_blog_post">Jako</string>
+    <string name="comment_blog_post">Komentář</string>
+    <string name="settings_notification_comments_blog_post">Příspěvky na blogu - Komentáře</string>
+    <string name="notify_blog_posts_comments_setting_summary">Nastavení upozornění na komentáře k příspěvkům na vašem blogu</string>
+    <string name="settings_notification_likes_blog_post">Příspěvky na blogu - To se mi líbí</string>
+    <string name="notify_blog_posts_likes_setting_summary">Nastavte si upozornění na lajky u příspěvků na blogu</string>
+    <string name="comment_blog_post_hint">Napište komentář…</string>
+    <string name="action_attach_location">Připojit umístění</string>
 </resources>
