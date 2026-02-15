@@ -1058,4 +1058,5 @@
     <string name="notify_blog_posts_likes_setting_summary">Конфигурирајте известувања за лајкови на вашите објави на блогот</string>
     <string name="comment_blog_post_hint">Напишете коментар…</string>
     <string name="action_attach_location">Прикачи локација</string>
+    <string name="action_attach_image">Прикачи слика</string>
 </resources>
