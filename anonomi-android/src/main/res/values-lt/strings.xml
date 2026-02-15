@@ -1115,4 +1115,5 @@ Pirmiausia, įdiekite „Anonomi Postbox“ programėlę į kitą įrenginį iš
     <string name="notify_blog_posts_likes_setting_summary">Konfigūruokite įspėjimus apie patiktukus savo tinklaraščio įrašuose</string>
     <string name="comment_blog_post_hint">Parašykite komentarą…</string>
     <string name="action_attach_location">Pridėti vietą</string>
+    <string name="action_attach_image">Pridėti atvaizdą</string>
 </resources>
