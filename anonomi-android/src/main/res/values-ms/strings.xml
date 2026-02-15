@@ -1001,4 +1001,5 @@
     <string name="notify_blog_posts_likes_setting_summary">Konfigurasikan makluman untuk Suka pada catatan blog anda</string>
     <string name="comment_blog_post_hint">Tulis komen…</string>
     <string name="action_attach_location">Lampirkan Lokasi</string>
+    <string name="action_attach_image">Lampirkan imej</string>
 </resources>
