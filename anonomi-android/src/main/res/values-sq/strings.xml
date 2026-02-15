@@ -1091,4 +1091,5 @@ Anonomi-i i përdor ato paralelisht.</string>
     <string name="notify_blog_posts_likes_setting_summary">Konfiguro njoftimet për Pëlqimet në postimet e blogut tënd</string>
     <string name="comment_blog_post_hint">Shkruaj një koment…</string>
     <string name="action_attach_location">Bashkangjit vendndodhjen</string>
+    <string name="action_attach_image">Bashkëngjitni figurë</string>
 </resources>
