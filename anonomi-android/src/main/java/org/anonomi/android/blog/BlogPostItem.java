@@ -44,7 +44,7 @@ public class BlogPostItem implements Comparable<BlogPostItem> {
 		this.imageContentType = imageContentType;
 	}
 
-	BlogPostItem(BlogPostItem other) {
+	protected BlogPostItem(BlogPostItem other) {
 		this.header = other.header;
 		this.text = other.text;
 		this.read = other.read;

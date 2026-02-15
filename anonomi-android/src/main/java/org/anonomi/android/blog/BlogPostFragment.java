@@ -17,11 +17,13 @@ import org.anonomi.android.conversation.MapMessageData;
 import org.anonomi.android.fragment.BaseFragment;
 import org.anonomi.android.map.MapViewActivity;
 import org.anonomi.android.widget.LinkDialogFragment;
+import org.anonomi.android.viewmodel.LiveResult;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import org.briarproject.nullsafety.MethodsNotNullByDefault;
 import org.briarproject.nullsafety.ParametersNotNullByDefault;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.annotation.Nullable;
@@ -29,6 +31,7 @@ import javax.inject.Inject;
 
 import androidx.annotation.UiThread;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
@@ -56,6 +59,9 @@ public class BlogPostFragment extends BaseFragment
 	private BlogPostViewHolder ui;
 	private BlogPostItem post;
 	private Runnable refresher;
+
+	private final MutableLiveData<LiveResult<BlogPostItem>> individualPost =
+			new MutableLiveData<>();
 
 	@Inject
 	ViewModelProvider.Factory viewModelFactory;
@@ -93,11 +99,35 @@ public class BlogPostFragment extends BaseFragment
 		progressBar.setVisibility(VISIBLE);
 		ui = new BlogPostViewHolder(view, true, this, false);
 		LifecycleOwner owner = getViewLifecycleOwner();
-		viewModel.loadBlogPost(groupId, postId).observe(owner, result ->
+
+		// Combine initial load and updates into one LiveData
+		individualPost.observe(owner, result ->
 				result.onError(this::handleException)
 						.onSuccess(this::onBlogPostLoaded)
 		);
+
+		// Observe the main posts list for updates to this specific post
+		viewModel.getBlogPosts().observe(owner, result ->
+				result.onSuccess(this::onBlogPostsLoaded)
+		);
+
+		viewModel.loadBlogPost(groupId, postId).observe(owner, individualPost::setValue);
+
 		return view;
+	}
+
+	private void onBlogPostsLoaded(BaseViewModel.ListUpdate update) {
+		// Try to find the latest version of the post in the main list
+		byte[] postIdBytes = requireArguments().getByteArray(POST_ID);
+		if (postIdBytes == null) return;
+		MessageId currentId = new MessageId(postIdBytes);
+		
+		for (BlogPostItem item : update.getItems()) {
+			if (item.getId().equals(currentId)) {
+				individualPost.setValue(new LiveResult<>(item));
+				return;
+			}
+		}
 	}
 
 	@Override
@@ -184,17 +214,14 @@ public class BlogPostFragment extends BaseFragment
 
 	private void startPeriodicUpdate() {
 		refresher = () -> {
-			// LOG.info("Updating Content...");
-			ui.updateDate(post.getTimestamp());
+			if (post != null) ui.updateDate(post.getTimestamp());
 			handler.postDelayed(refresher, MIN_DATE_RESOLUTION);
 		};
-		// LOG.info("Adding Handler Callback");
 		handler.postDelayed(refresher, MIN_DATE_RESOLUTION);
 	}
 
 	private void stopPeriodicUpdate() {
 		if (refresher != null) {
-			// LOG.info("Removing Handler Callback");
 			handler.removeCallbacks(refresher);
 		}
 	}
