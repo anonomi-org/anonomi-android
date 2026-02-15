@@ -1079,4 +1079,5 @@
     <string name="notify_blog_posts_likes_setting_summary">Конфигурирайте известия за харесвания на публикациите в блога си</string>
     <string name="comment_blog_post_hint">Напишете коментар…</string>
     <string name="action_attach_location">Прикачи местоположение</string>
+    <string name="action_attach_image">Прикачване на изображение</string>
 </resources>
