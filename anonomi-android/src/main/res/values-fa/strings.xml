@@ -1131,4 +1131,5 @@ Anonomi (برایر) موقعیت شما را ذخیره نمی‌کند و آن
     <string name="notify_blog_posts_likes_setting_summary">هشدارها را برای لایک‌ها در پست‌های وبلاگ خود پیکربندی کنید</string>
     <string name="comment_blog_post_hint">نظر خود را بنویسید…</string>
     <string name="action_attach_location">محل اتصال</string>
+    <string name="action_attach_image">پیوست کردن تصویر</string>
 </resources>
