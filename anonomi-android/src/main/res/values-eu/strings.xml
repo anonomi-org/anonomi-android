@@ -1058,4 +1058,5 @@
     <string name="notify_blog_posts_likes_setting_summary">Konfiguratu zure blog argitalpenetan Atsegin dudanaren alertak</string>
     <string name="comment_blog_post_hint">Idatzi iruzkin bat…</string>
     <string name="action_attach_location">Erantsi kokapena</string>
+    <string name="action_attach_image">Erantsi irudia</string>
 </resources>
