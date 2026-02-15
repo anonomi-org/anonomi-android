@@ -1071,4 +1071,12 @@
     <string name="ptt_conflict_message">Този бутон е в конфликт с вашата последователност за задействане на паника.</string>
     <string name="panic_conflict_ptt">Конфликт с бутона „Натисни и говори“. Първо го променете в „Настройки“.</string>
     <string name="walkie_talkie_recording_timer">Запис… %1$d/12 сек.</string>
+    <string name="like_blog_post">Харесвам</string>
+    <string name="comment_blog_post">Коментар</string>
+    <string name="settings_notification_comments_blog_post">Публикации в блогове - Коментари</string>
+    <string name="notify_blog_posts_comments_setting_summary">Конфигурирайте известия за коментари към публикациите в блога си</string>
+    <string name="settings_notification_likes_blog_post">Публикации в блогове - Харесвания</string>
+    <string name="notify_blog_posts_likes_setting_summary">Конфигурирайте известия за харесвания на публикациите в блога си</string>
+    <string name="comment_blog_post_hint">Напишете коментар…</string>
+    <string name="action_attach_location">Прикачи местоположение</string>
 </resources>
