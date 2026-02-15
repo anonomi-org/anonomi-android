@@ -403,6 +403,11 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 			List<BlogPostItem> newList = new ArrayList<>(items);
 			newList.set(targetIndex, target);
 			blogPosts.setValue(new LiveResult<>(new ListUpdate(null, newList)));
+		} else {
+			// If not in the current list (e.g. detailed view started from notification), 
+			// we can't do a list-based optimistic update, but the individual view
+			// should still update if it's observing the same post.
+			// However, our architecture currently relies on the global blogPosts list.
 		}
 	}
 

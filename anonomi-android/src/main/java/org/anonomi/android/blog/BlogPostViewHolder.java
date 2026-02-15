@@ -331,13 +331,14 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 		author.setPersona(item.getHeader().getRootPost().isRssFeed() ?
 				RSS_FEED_REBLOGGED : COMMENTER);
 
-		if (fullText) {
-			// comments (skip reblogger's own comment since it's shown above)
-			// TODO use nested RecyclerView instead like we do for Image Attachments
-			BlogCommentHeader rebloggerHeader = item.getHeader();
-			for (BlogCommentHeader c : item.getComments()) {
-				if (BaseViewModel.isSpecialComment(c.getComment())) continue;
-				if (c == rebloggerHeader) continue;
+		// comments (skip reblogger's own comment since it's shown above)
+		// TODO use nested RecyclerView instead like we do for Image Attachments
+		BlogCommentHeader rebloggerHeader = item.getHeader();
+		for (BlogCommentHeader c : item.getComments()) {
+			if (BaseViewModel.isSpecialComment(c.getComment())) continue;
+			if (c == rebloggerHeader) continue;
+			
+			if (fullText) {
 				View v = LayoutInflater.from(ctx).inflate(
 						R.layout.list_item_blog_comment, commentContainer, false);
 
