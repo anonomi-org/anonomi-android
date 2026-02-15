@@ -1077,4 +1077,5 @@ Així que l\'actualitzi li veureu una icona diferent .</string>
     <string name="notify_blog_posts_likes_setting_summary">Configura alertes per a M\'agrada a les entrades del teu blog</string>
     <string name="comment_blog_post_hint">Escriu un comentari…</string>
     <string name="action_attach_location">Adjunta la ubicació</string>
+    <string name="action_attach_image">Afegeix una imatge</string>
 </resources>
