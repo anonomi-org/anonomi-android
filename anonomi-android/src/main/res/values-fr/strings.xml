@@ -1097,4 +1097,5 @@ copies des messages que vous envoyez.
     <string name="notify_blog_posts_likes_setting_summary">Configurez des alertes pour les mentions « J’aime » sur vos articles de blog.</string>
     <string name="comment_blog_post_hint">Écrire un commentaire…</string>
     <string name="action_attach_location">Attacher l\'emplacement</string>
+    <string name="action_attach_image">Joindre une image</string>
 </resources>
