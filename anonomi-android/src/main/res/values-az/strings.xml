@@ -1052,4 +1052,5 @@
     <string name="notify_blog_posts_likes_setting_summary">Bloq yazılarınızdakı bəyənmələr üçün bildirişləri konfiqurasiya edin</string>
     <string name="comment_blog_post_hint">Şərh yazın…</string>
     <string name="action_attach_location">Yer əlavə edin</string>
+    <string name="action_attach_image">Şəkil əlavə edin</string>
 </resources>
