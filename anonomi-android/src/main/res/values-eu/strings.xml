@@ -1050,4 +1050,12 @@
     <string name="ptt_conflict_message">Botoi honek zure Panic Trigger sekuentziarekin gatazkan jartzen du.</string>
     <string name="panic_conflict_ptt">Gatazkak sortzen ditu Sakatu eta hitz egiteko botoiarekin. Aldatu lehenik Ezarpenetan.</string>
     <string name="walkie_talkie_recording_timer">Grabatzen… %1$d/12s</string>
+    <string name="like_blog_post">Atsegin dut</string>
+    <string name="comment_blog_post">Iruzkina</string>
+    <string name="settings_notification_comments_blog_post">Blog-argitalpenak - Iruzkinak</string>
+    <string name="notify_blog_posts_comments_setting_summary">Konfiguratu alertak zure blogeko argitalpenetako iruzkinetarako</string>
+    <string name="settings_notification_likes_blog_post">Blog-argitalpenak - Atsegin dut</string>
+    <string name="notify_blog_posts_likes_setting_summary">Konfiguratu zure blog argitalpenetan Atsegin dudanaren alertak</string>
+    <string name="comment_blog_post_hint">Idatzi iruzkin bat…</string>
+    <string name="action_attach_location">Erantsi kokapena</string>
 </resources>
