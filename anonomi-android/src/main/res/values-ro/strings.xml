@@ -1093,4 +1093,12 @@
     <string name="ptt_conflict_message">Acest buton intră în conflict cu secvența de declanșare a panicii.</string>
     <string name="panic_conflict_ptt">Conflict cu butonul Apasă și vorbește. Schimbați-l mai întâi în Setări.</string>
     <string name="walkie_talkie_recording_timer">Înregistrare… %1$d/12s</string>
+    <string name="like_blog_post">Ca</string>
+    <string name="comment_blog_post">Comentariu</string>
+    <string name="settings_notification_comments_blog_post">Postări de blog - Comentarii</string>
+    <string name="notify_blog_posts_comments_setting_summary">Configurați alerte pentru comentariile la postările de pe blog</string>
+    <string name="settings_notification_likes_blog_post">Postări de blog - Aprecieri</string>
+    <string name="notify_blog_posts_likes_setting_summary">Configurați alerte pentru aprecieri la postările de pe blog</string>
+    <string name="comment_blog_post_hint">Scrie un comentariu…</string>
+    <string name="action_attach_location">Atașați locația</string>
 </resources>
