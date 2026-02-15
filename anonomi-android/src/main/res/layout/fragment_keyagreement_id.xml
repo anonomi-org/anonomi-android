@@ -69,7 +69,7 @@
 
 	<Button
 		android:id="@+id/continueButton"
-		style="@style/BriarButton"
+		style="@style/AnonomiButton"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_marginHorizontal="16dp"

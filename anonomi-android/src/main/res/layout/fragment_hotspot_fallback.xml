@@ -30,7 +30,7 @@
 
 	<Button
 		android:id="@+id/fallbackButton"
-		style="@style/BriarButtonOutline.Neutral"
+		style="@style/AnonomiButtonOutline.Neutral"
 		android:layout_marginTop="16dp"
 		android:text="@string/hotspot_help_fallback_button"
 		app:layout_constraintEnd_toEndOf="parent"

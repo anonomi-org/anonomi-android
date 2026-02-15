@@ -5,7 +5,7 @@
 
 	<de.hdodenhof.circleimageview.CircleImageView
 		android:id="@+id/avatarBackground"
-		style="@style/BriarAvatar"
+		style="@style/AnonomiAvatar"
 		android:layout_width="@dimen/avatar_forum_size"
 		android:layout_height="@dimen/avatar_forum_size"
 		android:layout_gravity="bottom|left|start"

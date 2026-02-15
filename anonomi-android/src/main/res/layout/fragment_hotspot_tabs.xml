@@ -71,7 +71,7 @@
 
 	<Button
 		android:id="@+id/connectedButton"
-		style="@style/BriarButton"
+		style="@style/AnonomiButton"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:layout_marginHorizontal="16dp"
@@ -87,7 +87,7 @@
 
 	<Button
 		android:id="@+id/stopButton"
-		style="@style/BriarButtonOutline.Negative"
+		style="@style/AnonomiButtonOutline.Negative"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:layout_marginHorizontal="16dp"

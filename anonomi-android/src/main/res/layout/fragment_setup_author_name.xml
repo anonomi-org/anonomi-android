@@ -82,7 +82,7 @@
 
 		<Button
 			android:id="@+id/info_button"
-			style="@style/BriarButtonFlat.Neutral"
+			style="@style/AnonomiButtonFlat.Neutral"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="8dp"
@@ -95,7 +95,7 @@
 
 		<Button
 			android:id="@+id/next"
-			style="@style/BriarButton"
+			style="@style/AnonomiButton"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="24dp"

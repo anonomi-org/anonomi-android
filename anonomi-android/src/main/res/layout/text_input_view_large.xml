@@ -32,7 +32,7 @@
 
 	<Button
 		android:id="@+id/compositeSendButton"
-		style="@style/BriarButton"
+		style="@style/AnonomiButton"
 		android:layout_margin="@dimen/margin_medium"
 		tools:text="@string/send" />
 

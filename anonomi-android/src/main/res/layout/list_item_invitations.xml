@@ -60,7 +60,7 @@
 
 	<Button
 		android:id="@+id/acceptButton"
-		style="@style/BriarButtonFlat.Positive"
+		style="@style/AnonomiButtonFlat.Positive"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:text="@string/accept"
@@ -69,7 +69,7 @@
 
 	<Button
 		android:id="@+id/declineButton"
-		style="@style/BriarButtonFlat.Negative"
+		style="@style/AnonomiButtonFlat.Negative"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:text="@string/decline"

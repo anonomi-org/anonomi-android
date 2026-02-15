@@ -17,7 +17,7 @@
 		<item name="android:colorBackground">@color/window_background</item>
 	</style>
 
-	<style name="BriarButton" parent="Widget.Material3.Button">
+	<style name="AnonomiButton" parent="Widget.Material3.Button">
 		<item name="android:layout_width">match_parent</item>
 		<item name="android:layout_height">wrap_content</item>
 		<item name="android:textSize">@dimen/text_size_medium</item>
@@ -26,32 +26,32 @@
 		<item name="cornerRadius">6dp</item>
 	</style>
 
-	<style name="BriarButtonFlat" parent="Widget.Material3.Button.TextButton">
+	<style name="AnonomiButtonFlat" parent="Widget.Material3.Button.TextButton">
 		<item name="android:textSize">@dimen/text_size_medium</item>
 	</style>
 
-	<style name="BriarButtonFlat.Negative" parent="BriarButtonFlat">
+	<style name="AnonomiButtonFlat.Negative" parent="AnonomiButtonFlat">
 		<item name="android:textColor">@color/briar_button_text_negative</item>
 		<item name="iconTint">@color/briar_button_text_negative</item>
 	</style>
 
-	<style name="BriarButtonFlat.Positive" parent="BriarButtonFlat">
+	<style name="AnonomiButtonFlat.Positive" parent="AnonomiButtonFlat">
 		<item name="android:textColor">@color/briar_button_text_positive</item>
 		<item name="iconTint">@color/briar_button_text_positive</item>
 	</style>
 
-	<style name="BriarButtonFlat.Neutral" parent="BriarButtonFlat">
+	<style name="AnonomiButtonFlat.Neutral" parent="AnonomiButtonFlat">
 		<item name="android:textColor">@color/briar_button_text_neutral</item>
 		<item name="iconTint">@color/briar_button_text_neutral</item>
 	</style>
 
-	<style name="BriarButtonFlat.Positive.Tiny" parent="BriarButtonFlat.Positive">
+	<style name="AnonomiButtonFlat.Positive.Tiny" parent="AnonomiButtonFlat.Positive">
 		<item name="android:textSize">@dimen/text_size_tiny</item>
 		<item name="android:padding">@dimen/margin_medium</item>
 		<item name="android:minWidth">@dimen/button_size</item>
 	</style>
 
-	<style name="BriarButtonOutline" parent="Widget.Material3.Button.OutlinedButton">
+	<style name="AnonomiButtonOutline" parent="Widget.Material3.Button.OutlinedButton">
 		<item name="android:layout_width">match_parent</item>
 		<item name="android:layout_height">wrap_content</item>
 		<item name="android:textSize">@dimen/text_size_medium</item>
@@ -61,15 +61,15 @@
 		<item name="cornerRadius">6dp</item>
 	</style>
 
-	<style name="BriarButtonOutline.Negative" parent="BriarButtonOutline">
+	<style name="AnonomiButtonOutline.Negative" parent="AnonomiButtonOutline">
 		<item name="android:textColor">@color/briar_button_text_negative</item>
 	</style>
 
-	<style name="BriarButtonOutline.Positive" parent="BriarButtonOutline">
+	<style name="AnonomiButtonOutline.Positive" parent="AnonomiButtonOutline">
 		<item name="android:textColor">@color/briar_button_text_positive</item>
 	</style>
 
-	<style name="BriarButtonOutline.Neutral" parent="BriarButtonOutline">
+	<style name="AnonomiButtonOutline.Neutral" parent="AnonomiButtonOutline">
 		<item name="android:textColor">@color/briar_button_text_neutral</item>
 	</style>
 
@@ -104,7 +104,7 @@
 		<item name="indicatorSize">76dp</item>
 	</style>
 
-	<style name="BriarAvatar">
+	<style name="AnonomiAvatar">
 		<item name="civ_border_width">@dimen/avatar_border_width</item>
 		<item name="civ_border_color">?android:attr/textColorSecondary</item>
 	</style>
@@ -138,10 +138,15 @@
 		<item name="android:visibility">gone</item>
 	</style>
 
-	<style name="BriarCard" parent="CardView">
+	<style name="AnonomiCard" parent="CardView">
 		<item name="cardUseCompatPadding">true</item>
 		<item name="cardBackgroundColor">@color/card_background</item>
 		<item name="android:layout_margin">@dimen/margin_small</item>
+	</style>
+
+	<style name="ShapeAppearance.Anonomi.Rounded" parent="">
+		<item name="cornerFamily">rounded</item>
+		<item name="cornerSize">12dp</item>
 	</style>
 
 	<style name="StepBubble">

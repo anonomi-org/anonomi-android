@@ -273,9 +273,9 @@
 
 	<style name="AnonDialogTheme" parent="Theme.Material3.DayNight.Dialog">
 		<item name="colorPrimary">@color/anon_primary</item>
-		<item name="buttonBarPositiveButtonStyle">@style/BriarButtonFlat.Positive</item>
-		<item name="buttonBarNeutralButtonStyle">@style/BriarButtonFlat.Neutral</item>
-		<item name="buttonBarNegativeButtonStyle">@style/BriarButtonFlat.Negative</item>
+		<item name="buttonBarPositiveButtonStyle">@style/AnonomiButtonFlat.Positive</item>
+		<item name="buttonBarNeutralButtonStyle">@style/AnonomiButtonFlat.Neutral</item>
+		<item name="buttonBarNegativeButtonStyle">@style/AnonomiButtonFlat.Negative</item>
 		<item name="android:textColorLink">@color/anon_text_link</item>
 		<item name="android:windowBackground">@color/window_background</item>
 		<item name="android:windowAnimationStyle">@style/DialogAnimation</item>
@@ -297,9 +297,9 @@
 	</style>
 
 	<style name="AnonDialogTheme.Neutral" parent="AnonDialogTheme">
-		<item name="buttonBarPositiveButtonStyle">@style/BriarButtonFlat.Neutral</item>
-		<item name="buttonBarNeutralButtonStyle">@style/BriarButtonFlat.Neutral</item>
-		<item name="buttonBarNegativeButtonStyle">@style/BriarButtonFlat.Neutral</item>
+		<item name="buttonBarPositiveButtonStyle">@style/AnonomiButtonFlat.Neutral</item>
+		<item name="buttonBarNeutralButtonStyle">@style/AnonomiButtonFlat.Neutral</item>
+		<item name="buttonBarNegativeButtonStyle">@style/AnonomiButtonFlat.Neutral</item>
 	</style>
 
 	<style name="DialogAnimation" parent="@android:style/Animation.Dialog">

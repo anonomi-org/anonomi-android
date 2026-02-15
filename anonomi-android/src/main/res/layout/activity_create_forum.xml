@@ -30,7 +30,7 @@
 
 	<Button
 		android:id="@+id/createForumButton"
-		style="@style/BriarButton"
+		style="@style/AnonomiButton"
 		android:enabled="false"
 		android:text="@string/create_forum_button"
 		tools:enabled="true" />

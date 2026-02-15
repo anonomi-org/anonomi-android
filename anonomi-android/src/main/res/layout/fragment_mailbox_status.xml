@@ -79,7 +79,7 @@
 			android:layout_height="wrap_content"
 			android:layout_marginHorizontal="16dp"
 			android:layout_marginTop="16dp"
-			app:buttonStyle="@style/BriarButtonOutline.Neutral"
+			app:buttonStyle="@style/AnonomiButtonOutline.Neutral"
 			app:layout_constraintBottom_toTopOf="@+id/wizardButton"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
@@ -88,7 +88,7 @@
 
 		<Button
 			android:id="@+id/wizardButton"
-			style="@style/BriarButtonOutline.Neutral"
+			style="@style/AnonomiButtonOutline.Neutral"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_marginHorizontal="16dp"
@@ -104,7 +104,7 @@
 
 		<Button
 			android:id="@+id/unlinkButton"
-			style="@style/BriarButtonOutline.Negative"
+			style="@style/AnonomiButtonOutline.Negative"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_margin="16dp"

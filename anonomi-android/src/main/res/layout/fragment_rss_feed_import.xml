@@ -37,7 +37,7 @@
 
 	<Button
 		android:id="@+id/importButton"
-		style="@style/BriarButton"
+		style="@style/AnonomiButton"
 		android:enabled="false"
 		android:text="@string/blogs_rss_feeds_import_button"
 		tools:enabled="true" />

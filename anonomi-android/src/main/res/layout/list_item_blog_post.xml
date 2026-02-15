@@ -3,7 +3,7 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/postLayout"
-	style="@style/BriarCard"
+	style="@style/AnonomiCard"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:foreground="?attr/selectableItemBackground">
@@ -68,19 +68,22 @@
 			app:layout_constraintTop_toBottomOf="@+id/authorView"
 			tools:text="This is a body text that shows the content of a blog post.\n\nThis one is not short, but it is also not too long." />
 
-		<ImageView
+		<com.google.android.material.imageview.ShapeableImageView
 			android:id="@+id/imageContent"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
+			android:layout_marginTop="8dp"
 			android:adjustViewBounds="true"
 			android:maxHeight="300dp"
-			android:padding="@dimen/listitem_vertical_margin"
+			android:paddingStart="@dimen/listitem_vertical_margin"
+			android:paddingEnd="@dimen/listitem_vertical_margin"
 			android:scaleType="centerCrop"
 			android:visibility="gone"
 			android:contentDescription="@string/image_sent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/textView" />
+			app:layout_constraintTop_toBottomOf="@+id/textView"
+			app:shapeAppearanceOverlay="@style/ShapeAppearance.Anonomi.Rounded" />
 
 		<TextView
 			android:id="@+id/mapContent"

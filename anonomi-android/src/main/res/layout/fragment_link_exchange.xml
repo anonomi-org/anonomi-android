@@ -134,7 +134,7 @@
 
 			<Button
 				android:id="@+id/copyButton"
-				style="@style/BriarButtonFlat.Positive.Tiny"
+				style="@style/AnonomiButtonFlat.Positive.Tiny"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:enabled="false"
@@ -149,7 +149,7 @@
 
 			<Button
 				android:id="@+id/shareButton"
-				style="@style/BriarButtonFlat.Positive.Tiny"
+				style="@style/AnonomiButtonFlat.Positive.Tiny"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:enabled="false"
@@ -211,7 +211,7 @@
 
 			<Button
 				android:id="@+id/pasteButton"
-				style="@style/BriarButtonFlat.Positive.Tiny"
+				style="@style/AnonomiButtonFlat.Positive.Tiny"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="@string/paste_button"
@@ -238,7 +238,7 @@
 
 	<Button
 		android:id="@+id/addButton"
-		style="@style/BriarButton"
+		style="@style/AnonomiButton"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_marginHorizontal="16dp"
