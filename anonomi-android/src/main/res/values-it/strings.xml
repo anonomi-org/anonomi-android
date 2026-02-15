@@ -1100,4 +1100,5 @@ Per prima cosa, installa l\'app Anonomi Postbox su un altro dispositivo da dove 
     <string name="notify_blog_posts_likes_setting_summary">Configura gli avvisi per i Mi piace sui post del tuo blog</string>
     <string name="comment_blog_post_hint">Scrivi un commento…</string>
     <string name="action_attach_location">Allega posizione</string>
+    <string name="action_attach_image">Allega immagine</string>
 </resources>
