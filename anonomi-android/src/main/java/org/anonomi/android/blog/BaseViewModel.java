@@ -29,8 +29,10 @@ import org.briarproject.nullsafety.NotNullByDefault;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executor;
@@ -183,8 +185,16 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 			// Add the target post so aggregation can attach data to it
 			allItems.add(item);
 			filterAndAggregateLikes(allItems, localAuthorId);
+			// deduplicate
+			allItems = deduplicate(allItems);
+			// Find the item again after deduplication
+			for (BlogPostItem i : allItems) {
+				if (postKey(i.getHeader()).equals(postKey(header))) {
+					result.postValue(new LiveResult<>(i));
+					return;
+				}
+			}
 			logDuration(LOG, "Loading post", start);
-			result.postValue(new LiveResult<>(item));
 		}, e -> {
 			logException(LOG, WARNING, e);
 			result.postValue(new LiveResult<>(e));
@@ -270,15 +280,15 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 			// Check if we already have this comment (non-optimistic)
 			for (BlogComment c : comments) {
 				if (c.author.getId().equals(header.getAuthor().getId()) &&
-						c.timestamp == header.getTimestamp()) {
+						c.timestamp == header.getTimestamp() &&
+						c.text.equals(commentText)) {
 					return;
 				}
 			}
 			comments.add(new BlogComment(header.getAuthor(),
 					header.getAuthorInfo(), commentText,
-					header.getTimestamp()));
-			Collections.sort(comments, (a, b) ->
-					Long.compare(a.timestamp, b.timestamp));
+					header.getTimestamp(), header.getTimeReceived(), false));
+			sortComments(comments);
 			target.setBlogComments(comments);
 		}
 
@@ -289,11 +299,15 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 
 	@UiThread
 	private void onBlogPostItemAdded(BlogPostItem item, boolean local) {
-		List<BlogPostItem> items = addListItem(getBlogPostItems(), item);
-		if (items != null) {
-			Collections.sort(items);
-			blogPosts.setValue(new LiveResult<>(new ListUpdate(local, items)));
-		}
+		List<BlogPostItem> items = getBlogPostItems();
+		if (items == null) return;
+		
+		List<BlogPostItem> updatedList = new ArrayList<>(items);
+		updatedList.add(item);
+		updatedList = deduplicate(updatedList);
+		
+		Collections.sort(updatedList);
+		blogPosts.setValue(new LiveResult<>(new ListUpdate(local, updatedList)));
 	}
 
 	void repeatPost(BlogPostItem item, @Nullable String comment) {
@@ -393,21 +407,16 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 				}
 				List<BlogComment> comments =
 						new ArrayList<>(target.getBlogComments());
+				long now = System.currentTimeMillis();
 				comments.add(new BlogComment(localAuthor,
 						new AuthorInfo(OURSELVES), comment,
-						System.currentTimeMillis(), true));
-				Collections.sort(comments, (c1, c2) ->
-						Long.compare(c1.timestamp, c2.timestamp));
+						now, now, true));
+				sortComments(comments);
 				target.setBlogComments(comments);
 			}
 			List<BlogPostItem> newList = new ArrayList<>(items);
 			newList.set(targetIndex, target);
 			blogPosts.setValue(new LiveResult<>(new ListUpdate(null, newList)));
-		} else {
-			// If not in the current list (e.g. detailed view started from notification), 
-			// we can't do a list-based optimistic update, but the individual view
-			// should still update if it's observing the same post.
-			// However, our architecture currently relies on the global blogPosts list.
 		}
 	}
 
@@ -486,14 +495,28 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 				String commentText =
 						comment.substring(COMMENT_MARKER.length());
 				long timestamp = header.getTimestamp();
+				long timeReceived = header.getTimeReceived();
 
 				List<BlogComment> comments = postComments.get(targetKey);
 				if (comments == null) {
 					comments = new ArrayList<>();
 					postComments.put(targetKey, comments);
 				}
-				comments.add(new BlogComment(header.getAuthor(),
-						header.getAuthorInfo(), commentText, timestamp));
+				
+				// Deduplicate comments (same author, timestamp and text)
+				boolean duplicate = false;
+				for (BlogComment existing : comments) {
+					if (existing.author.getId().equals(header.getAuthor().getId()) &&
+							existing.timestamp == timestamp &&
+							existing.text.equals(commentText)) {
+						duplicate = true;
+						break;
+					}
+				}
+				if (!duplicate) {
+					comments.add(new BlogComment(header.getAuthor(),
+							header.getAuthorInfo(), commentText, timestamp, timeReceived, false));
+				}
 				toRemove.add(item);
 			}
 		}
@@ -528,11 +551,35 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 			// Comments
 			List<BlogComment> comments = postComments.get(key);
 			if (comments != null) {
-				Collections.sort(comments, (a, b) ->
-						Long.compare(a.timestamp, b.timestamp));
+				sortComments(comments);
 				item.setBlogComments(comments);
 			}
 		}
+	}
+
+	protected static void sortComments(List<BlogComment> comments) {
+		Collections.sort(comments, (a, b) -> {
+			int res = Long.compare(a.timeReceived, b.timeReceived);
+			if (res != 0) return res;
+			return a.text.compareTo(b.text);
+		});
+	}
+
+	protected static List<BlogPostItem> deduplicate(List<BlogPostItem> items) {
+		Map<String, BlogPostItem> unique = new LinkedHashMap<>();
+		for (BlogPostItem item : items) {
+			String key = postKey(item.getHeader());
+			BlogPostItem existing = unique.get(key);
+			if (existing == null || isBetter(item, existing)) {
+				unique.put(key, item);
+			}
+		}
+		return new ArrayList<>(unique.values());
+	}
+
+	private static boolean isBetter(BlogPostItem newItem, BlogPostItem existing) {
+		if (newItem instanceof BlogCommentItem && !(existing instanceof BlogCommentItem)) return true;
+		return newItem.getHeader().getTimeReceived() > existing.getHeader().getTimeReceived();
 	}
 
 	private static class LikeAction {
@@ -551,25 +598,19 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 		final org.anonchatsecure.anonchat.api.identity.AuthorInfo authorInfo;
 		final String text;
 		final long timestamp;
+		final long timeReceived;
 		final boolean optimistic;
 
 		BlogComment(
 				org.anonchatsecure.bramble.api.identity.Author author,
 				@Nullable org.anonchatsecure.anonchat.api.identity.AuthorInfo
 						authorInfo,
-				String text, long timestamp) {
-			this(author, authorInfo, text, timestamp, false);
-		}
-
-		BlogComment(
-				org.anonchatsecure.bramble.api.identity.Author author,
-				@Nullable org.anonchatsecure.anonchat.api.identity.AuthorInfo
-						authorInfo,
-				String text, long timestamp, boolean optimistic) {
+				String text, long timestamp, long timeReceived, boolean optimistic) {
 			this.author = author;
 			this.authorInfo = authorInfo;
 			this.text = text;
 			this.timestamp = timestamp;
+			this.timeReceived = timeReceived;
 			this.optimistic = optimistic;
 		}
 	}

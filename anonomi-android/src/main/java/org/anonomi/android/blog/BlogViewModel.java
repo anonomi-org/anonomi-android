@@ -164,6 +164,7 @@ class BlogViewModel extends BaseViewModel {
 					posts.add(item);
 				}
 			}
+			posts = deduplicate(posts);
 			Collections.sort(posts);
 			return new ListUpdate(null, posts);
 		}, blogPosts::setValue);

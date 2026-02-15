@@ -21,6 +21,10 @@ import org.anonchatsecure.anonchat.api.blog.BlogCommentHeader;
 import org.anonchatsecure.anonchat.api.blog.BlogPostHeader;
 import org.briarproject.nullsafety.NotNullByDefault;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import javax.annotation.Nullable;
 
 import androidx.annotation.UiThread;
@@ -257,33 +261,95 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 
 		// comments
 		commentContainer.removeAllViews();
+		List<BaseViewModel.BlogComment> unifiedComments = new ArrayList<>();
+
 		if (isReblog) {
-			onBindComment((BlogCommentItem) item, authorClickable);
+			BlogCommentItem reblogItem = (BlogCommentItem) item;
+			setupRebloggerHeader(reblogItem, authorClickable);
+
+			// Collect historical reblog comments
+			BlogCommentHeader rebloggerHeader = reblogItem.getHeader();
+			for (BlogCommentHeader c : reblogItem.getComments()) {
+				if (BaseViewModel.isSpecialComment(c.getComment())) continue;
+				if (c == rebloggerHeader) continue;
+				String comment = c.getComment();
+				if (comment != null) {
+					unifiedComments.add(new BaseViewModel.BlogComment(
+							c.getAuthor(), c.getAuthorInfo(), comment,
+							c.getTimestamp(), c.getTimeReceived(), false));
+				}
+			}
 		} else {
 			reblogger.setVisibility(GONE);
 			reblogCommentText.setVisibility(GONE);
 		}
 
 		if (fullText) {
-			// cross-blog comments (from ::comment: entries)
-			for (BaseViewModel.BlogComment bc : item.getBlogComments()) {
-				View cv = LayoutInflater.from(ctx).inflate(
-						R.layout.list_item_blog_comment, commentContainer,
-						false);
-				AuthorView commentAuthor = cv.findViewById(R.id.authorView);
-				TextView commentText = cv.findViewById(R.id.textView);
-				commentAuthor.setAuthor(bc.author, bc.authorInfo);
-				commentAuthor.setDate(bc.timestamp);
-				commentText.setText(bc.text);
-				Linkify.addLinks(commentText, Linkify.WEB_URLS);
-				commentText.setMovementMethod(null);
-				if (fullText) {
-					commentText.setTextIsSelectable(true);
-					makeLinksClickable(commentText, listener::onLinkClick);
-				}
-				commentContainer.addView(cv);
+			// Collect social interaction comments
+			unifiedComments.addAll(item.getBlogComments());
+
+			// Sort unified list chronologically by reception time (oldest first)
+			Collections.sort(unifiedComments, (a, b) -> {
+				int res = Long.compare(a.timeReceived, b.timeReceived);
+				if (res != 0) return res;
+				return a.text.compareTo(b.text);
+			});
+
+			// Render all comments
+			for (BaseViewModel.BlogComment bc : unifiedComments) {
+				renderComment(bc);
 			}
 		}
+	}
+
+	private void setupRebloggerHeader(BlogCommentItem item,
+			boolean authorClickable) {
+		// reblogger
+		reblogger.setAuthor(item.getAuthor(), item.getAuthorInfo());
+		reblogger.setDate(item.getTimestamp());
+		if (authorClickable) {
+			reblogger.setAuthorClickable(v -> listener.onAuthorClick(item));
+		} else {
+			reblogger.setAuthorNotClickable();
+		}
+		reblogger.setVisibility(VISIBLE);
+		reblogger.setPersona(REBLOGGER);
+
+		// reblogger's own comment text (shown above the reblogged post)
+		String reblogComment = item.getHeader().getComment();
+		reblogCommentText.setOnClickListener(null);
+		if (reblogComment != null && !reblogComment.isEmpty()
+				&& !BaseViewModel.isSpecialComment(reblogComment)) {
+			reblogCommentText.setText(reblogComment);
+			reblogCommentText.setVisibility(VISIBLE);
+			if (!fullText) {
+				reblogCommentText.setOnClickListener(
+						v -> listener.onBlogPostClick(item));
+			}
+		} else {
+			reblogCommentText.setVisibility(GONE);
+		}
+
+		author.setPersona(item.getHeader().getRootPost().isRssFeed() ?
+				RSS_FEED_REBLOGGED : COMMENTER);
+	}
+
+	private void renderComment(BaseViewModel.BlogComment bc) {
+		View cv = LayoutInflater.from(ctx).inflate(
+				R.layout.list_item_blog_comment, commentContainer,
+				false);
+		AuthorView commentAuthor = cv.findViewById(R.id.authorView);
+		TextView commentText = cv.findViewById(R.id.textView);
+		commentAuthor.setAuthor(bc.author, bc.authorInfo);
+		commentAuthor.setDate(bc.timestamp);
+		commentText.setText(bc.text);
+		Linkify.addLinks(commentText, Linkify.WEB_URLS);
+		commentText.setMovementMethod(null);
+		if (fullText) {
+			commentText.setTextIsSelectable(true);
+			makeLinksClickable(commentText, listener::onLinkClick);
+		}
+		commentContainer.addView(cv);
 	}
 
 	private MapMessageData parseMapMessage(String text) {
@@ -304,66 +370,6 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 			return new MapMessageData(label, lat, lon, zoom);
 		} catch (Exception e) {
 			return new MapMessageData(label, 0, 0, zoom);
-		}
-	}
-
-	private void onBindComment(BlogCommentItem item, boolean authorClickable) {
-		// reblogger
-		reblogger.setAuthor(item.getAuthor(), item.getAuthorInfo());
-		reblogger.setDate(item.getTimestamp());
-		if (authorClickable) {
-			reblogger.setAuthorClickable(v -> listener.onAuthorClick(item));
-		} else {
-			reblogger.setAuthorNotClickable();
-		}
-		reblogger.setVisibility(VISIBLE);
-		reblogger.setPersona(REBLOGGER);
-
-		// reblogger's own comment text (shown above the reblogged post)
-		String reblogComment = item.getHeader().getComment();
-		reblogCommentText.setOnClickListener(null);
-		if (reblogComment != null && !reblogComment.isEmpty()
-				&& !BaseViewModel.isSpecialComment(reblogComment)) {
-			reblogCommentText.setText(reblogComment);
-			reblogCommentText.setVisibility(VISIBLE);
-			if (!fullText) {
-				reblogCommentText.setOnClickListener(v -> listener.onBlogPostClick(item));
-			}
-		} else {
-			reblogCommentText.setVisibility(GONE);
-		}
-
-		author.setPersona(item.getHeader().getRootPost().isRssFeed() ?
-				RSS_FEED_REBLOGGED : COMMENTER);
-
-		// comments (skip reblogger's own comment since it's shown above)
-		// TODO use nested RecyclerView instead like we do for Image Attachments
-		BlogCommentHeader rebloggerHeader = item.getHeader();
-		for (BlogCommentHeader c : item.getComments()) {
-			if (BaseViewModel.isSpecialComment(c.getComment())) continue;
-			if (c == rebloggerHeader) continue;
-			
-			if (fullText) {
-				View v = LayoutInflater.from(ctx).inflate(
-						R.layout.list_item_blog_comment, commentContainer, false);
-
-				AuthorView author = v.findViewById(R.id.authorView);
-				TextView text = v.findViewById(R.id.textView);
-
-				author.setAuthor(c.getAuthor(), c.getAuthorInfo());
-				author.setDate(c.getTimestamp());
-				// TODO make author clickable #624
-
-				text.setText(c.getComment());
-				Linkify.addLinks(text, Linkify.WEB_URLS);
-				text.setMovementMethod(null);
-				if (fullText) {
-					text.setTextIsSelectable(true);
-					makeLinksClickable(text, listener::onLinkClick);
-				}
-
-				commentContainer.addView(v);
-			}
 		}
 	}
 }
