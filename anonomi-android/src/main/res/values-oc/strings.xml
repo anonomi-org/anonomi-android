@@ -1065,4 +1065,5 @@ parteja pas amb degun.</string>
     <string name="notify_blog_posts_likes_setting_summary">Configurar las alèrtas pels M\'agrada sus vòstres articles de blòg</string>
     <string name="comment_blog_post_hint">Escrivètz un comentari…</string>
     <string name="action_attach_location">Adjuntar l\'emplaçament</string>
+    <string name="action_attach_image">Juntar un imatge</string>
 </resources>
