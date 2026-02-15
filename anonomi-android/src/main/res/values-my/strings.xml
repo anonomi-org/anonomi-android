@@ -1074,4 +1074,5 @@
     <string name="notify_blog_posts_likes_setting_summary">သင့်ဘလော့ဂ်ပို့စ်များတွင် Like များအတွက် သတိပေးချက်များကို ပြင်ဆင်သတ်မှတ်ပါ</string>
     <string name="comment_blog_post_hint">မှတ်ချက်ရေးပါ…</string>
     <string name="action_attach_location">တည်နေရာကို ပူးတွဲပါ</string>
+    <string name="action_attach_image">ရုပ်ပုံတွဲမည်</string>
 </resources>
