@@ -1044,4 +1044,5 @@
     <string name="notify_blog_posts_likes_setting_summary">블로그 게시물에 대한 좋아요 알림을 설정하세요</string>
     <string name="comment_blog_post_hint">댓글을 남겨주세요…</string>
     <string name="action_attach_location">부착 위치</string>
+    <string name="action_attach_image">이미지 첨부하기</string>
 </resources>
