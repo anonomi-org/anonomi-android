@@ -1078,4 +1078,12 @@
     <string name="ptt_conflict_message">এই বোতামটি আপনার প্যানিক ট্রিগার সিকোয়েন্সের সাথে সাংঘর্ষিক।</string>
     <string name="panic_conflict_ptt">পুশ-টু-টক বোতামের সাথে বিরোধ। প্রথমে সেটিংসে এটি পরিবর্তন করুন।</string>
     <string name="walkie_talkie_recording_timer">রেকর্ডিং... %1$d/১২ সেকেন্ড</string>
+    <string name="like_blog_post">লাইক</string>
+    <string name="comment_blog_post">মন্তব্য করুন</string>
+    <string name="settings_notification_comments_blog_post">ব্লগ পোস্ট - মন্তব্য</string>
+    <string name="notify_blog_posts_comments_setting_summary">আপনার ব্লগ পোস্টে মন্তব্যের জন্য সতর্কতা কনফিগার করুন</string>
+    <string name="settings_notification_likes_blog_post">ব্লগ পোস্ট - লাইক</string>
+    <string name="notify_blog_posts_likes_setting_summary">আপনার ব্লগ পোস্টে লাইকের জন্য সতর্কতা কনফিগার করুন</string>
+    <string name="comment_blog_post_hint">একটি মন্তব্য লিখুন…</string>
+    <string name="action_attach_location">অবস্থান সংযুক্ত করুন</string>
 </resources>
