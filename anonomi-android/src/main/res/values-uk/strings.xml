@@ -1120,4 +1120,5 @@
     <string name="notify_blog_posts_likes_setting_summary">Налаштуйте сповіщення про вподобання у ваших публікаціях у блозі</string>
     <string name="comment_blog_post_hint">Напишіть коментар…</string>
     <string name="action_attach_location">Додати місцезнаходження</string>
+    <string name="action_attach_image">Прикріпити зображення</string>
 </resources>
