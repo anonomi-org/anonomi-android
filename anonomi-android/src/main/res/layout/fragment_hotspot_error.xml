@@ -56,7 +56,7 @@
 
 		<Button
 			android:id="@+id/feedbackButton"
-			style="@style/BriarButtonOutline.Neutral"
+			style="@style/AnonomiButtonOutline.Neutral"
 			android:layout_marginTop="16dp"
 			android:text="@string/send_feedback"
 			app:layout_constraintEnd_toEndOf="parent"

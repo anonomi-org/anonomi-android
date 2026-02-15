@@ -5,13 +5,13 @@
 	<item
 		android:id="@+id/action_attach_image"
 		android:icon="@drawable/ic_image"
-		android:title="@string/image_sent"
+		android:title="@string/action_attach_image"
 		app:showAsAction="never" />
 
 	<item
 		android:id="@+id/action_send_location"
 		android:icon="@drawable/ic_menu_mylocation"
-		android:title="@string/action_send_location"
+		android:title="@string/action_attach_location"
 		app:showAsAction="never" />
 
 </menu>

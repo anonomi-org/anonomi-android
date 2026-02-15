@@ -16,6 +16,8 @@ import org.anonchatsecure.bramble.api.contact.event.ContactAddedEvent;
 import org.anonchatsecure.bramble.api.db.DbException;
 import org.anonchatsecure.bramble.api.event.Event;
 import org.anonchatsecure.bramble.api.event.EventListener;
+import org.anonchatsecure.bramble.api.identity.AuthorId;
+import org.anonchatsecure.bramble.api.identity.IdentityManager;
 import org.anonchatsecure.bramble.api.lifecycle.Service;
 import org.anonchatsecure.bramble.api.lifecycle.ServiceException;
 import org.anonchatsecure.bramble.api.mailbox.MailboxStatus;
@@ -39,6 +41,8 @@ import org.anonomi.android.privategroup.conversation.GroupActivity;
 import org.anonomi.android.splash.SplashScreenActivity;
 import org.anonomi.android.util.BriarNotificationBuilder;
 import org.anonchatsecure.anonchat.api.android.AndroidNotificationManager;
+import org.anonchatsecure.anonchat.api.blog.BlogCommentHeader;
+import org.anonchatsecure.anonchat.api.blog.BlogPostHeader;
 import org.anonchatsecure.anonchat.api.blog.event.BlogPostAddedEvent;
 import org.anonchatsecure.anonchat.api.conversation.ConversationResponse;
 import org.anonchatsecure.anonchat.api.conversation.event.ConversationMessageReceivedEvent;
@@ -53,6 +57,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Logger;
 
 import javax.annotation.concurrent.ThreadSafe;
 import javax.inject.Inject;
@@ -85,6 +90,7 @@ import static androidx.core.app.NotificationCompat.PRIORITY_MIN;
 import static androidx.core.app.NotificationCompat.VISIBILITY_SECRET;
 import static androidx.core.content.ContextCompat.getColor;
 import static org.anonchatsecure.bramble.util.AndroidUtils.getImmutableFlags;
+import static org.anonchatsecure.bramble.util.LogUtils.logException;
 import static org.anonomi.android.activity.BriarActivity.GROUP_ID;
 import static org.anonomi.android.conversation.ConversationActivity.CONTACT_ID;
 import static org.anonomi.android.navdrawer.NavDrawerActivity.BLOG_URI;
@@ -93,6 +99,10 @@ import static org.anonomi.android.navdrawer.NavDrawerActivity.CONTACT_URI;
 import static org.anonomi.android.navdrawer.NavDrawerActivity.FORUM_URI;
 import static org.anonomi.android.navdrawer.NavDrawerActivity.GROUP_URI;
 import static org.anonomi.android.settings.SettingsFragment.SETTINGS_NAMESPACE;
+import static org.anonchatsecure.anonchat.api.blog.BlogConstants.COMMENT_MARKER;
+import static org.anonchatsecure.anonchat.api.blog.BlogConstants.LIKE_MARKER;
+import static org.anonchatsecure.anonchat.api.blog.BlogConstants.UNLIKE_MARKER;
+import static java.util.logging.Level.WARNING;
 
 @ThreadSafe
 @MethodsNotNullByDefault
@@ -102,7 +112,11 @@ class AndroidNotificationManagerImpl implements AndroidNotificationManager,
 
 	private static final long SOUND_DELAY = TimeUnit.SECONDS.toMillis(2);
 
+	private static final Logger LOG =
+			Logger.getLogger(AndroidNotificationManagerImpl.class.getName());
+
 	private final SettingsManager settingsManager;
+	private final IdentityManager identityManager;
 	private final AndroidExecutor androidExecutor;
 	private final Clock clock;
 	private final Context appContext;
@@ -114,6 +128,8 @@ class AndroidNotificationManagerImpl implements AndroidNotificationManager,
 	private final Multiset<GroupId> groupCounts = new Multiset<>();
 	private final Multiset<GroupId> forumCounts = new Multiset<>();
 	private final Multiset<GroupId> blogCounts = new Multiset<>();
+	private final Multiset<GroupId> blogCommentCounts = new Multiset<>();
+	private final Multiset<GroupId> blogLikeCounts = new Multiset<>();
 	private int contactAddedTotal = 0;
 	private int nextRequestId = 0;
 	@Nullable
@@ -129,8 +145,10 @@ class AndroidNotificationManagerImpl implements AndroidNotificationManager,
 
 	@Inject
 	AndroidNotificationManagerImpl(SettingsManager settingsManager,
+			IdentityManager identityManager,
 			AndroidExecutor androidExecutor, Application app, Clock clock) {
 		this.settingsManager = settingsManager;
+		this.identityManager = identityManager;
 		this.androidExecutor = androidExecutor;
 		this.clock = clock;
 		appContext = app.getApplicationContext();
@@ -158,6 +176,10 @@ class AndroidNotificationManagerImpl implements AndroidNotificationManager,
 						R.string.forums_button);
 				createNotificationChannel(BLOG_CHANNEL_ID,
 						R.string.blogs_button);
+				createNotificationChannel(BLOG_COMMENT_CHANNEL_ID,
+						R.string.comment_blog_post);
+				createNotificationChannel(BLOG_LIKE_CHANNEL_ID,
+						R.string.like_blog_post);
 				return null;
 			};
 			try {
@@ -221,7 +243,11 @@ class AndroidNotificationManagerImpl implements AndroidNotificationManager,
 	@UiThread
 	private void clearBlogPostNotification() {
 		blogCounts.clear();
+		blogCommentCounts.clear();
+		blogLikeCounts.clear();
 		notificationManager.cancel(BLOG_POST_NOTIFICATION_ID);
+		notificationManager.cancel(BLOG_COMMENT_NOTIFICATION_ID);
+		notificationManager.cancel(BLOG_LIKE_NOTIFICATION_ID);
 	}
 
 	@UiThread
@@ -254,7 +280,7 @@ class AndroidNotificationManagerImpl implements AndroidNotificationManager,
 			showForumPostNotification(f.getGroupId());
 		} else if (e instanceof BlogPostAddedEvent) {
 			BlogPostAddedEvent b = (BlogPostAddedEvent) e;
-			if (!b.isLocal()) showBlogPostNotification(b.getGroupId());
+			if (!b.isLocal()) onBlogPostAdded(b);
 		} else if (e instanceof ContactAddedEvent) {
 			ContactAddedEvent c = (ContactAddedEvent) e;
 			// Don't show notifications for contacts added in person
@@ -267,6 +293,35 @@ class AndroidNotificationManagerImpl implements AndroidNotificationManager,
 				clearMailboxProblemNotification();
 			}
 		}
+	}
+
+	private void onBlogPostAdded(BlogPostAddedEvent b) {
+		BlogPostHeader h = b.getHeader();
+		if (h instanceof BlogCommentHeader) {
+			BlogCommentHeader c = (BlogCommentHeader) h;
+			String comment = c.getComment();
+			if (LIKE_MARKER.equals(comment) || UNLIKE_MARKER.equals(comment) ||
+					(comment != null && comment.startsWith(COMMENT_MARKER))) {
+				// This is an interaction (like or comment)
+				// Popup only if the interaction targets our own post
+				try {
+					AuthorId localId = identityManager.getLocalAuthor().getId();
+					if (c.getParent().getAuthor().getId().equals(localId)) {
+						if (LIKE_MARKER.equals(comment) ||
+								UNLIKE_MARKER.equals(comment)) {
+							showBlogLikeNotification(b.getGroupId());
+						} else {
+							showBlogCommentNotification(b.getGroupId());
+						}
+					}
+				} catch (DbException e) {
+					logException(LOG, WARNING, e);
+				}
+				return;
+			}
+		}
+		// Regular post or non-interaction reblog
+		showBlogPostNotification(b.getGroupId());
 	}
 
 	@UiThread
@@ -561,6 +616,8 @@ class AndroidNotificationManagerImpl implements AndroidNotificationManager,
 	public void clearBlogPostNotification(GroupId g) {
 		androidExecutor.runOnUiThread(() -> {
 			if (blogCounts.removeAll(g) > 0) updateBlogPostNotification(false);
+			if (blogCommentCounts.removeAll(g) > 0) updateBlogCommentNotification(false);
+			if (blogLikeCounts.removeAll(g) > 0) updateBlogLikeNotification(false);
 		});
 	}
 
@@ -568,7 +625,7 @@ class AndroidNotificationManagerImpl implements AndroidNotificationManager,
 	private void updateBlogPostNotification(boolean mayAlertAgain) {
 		int blogTotal = blogCounts.getTotal();
 		if (blogTotal == 0) {
-			clearBlogPostNotification();
+			notificationManager.cancel(BLOG_POST_NOTIFICATION_ID);
 		} else if (settings.getBoolean(PREF_NOTIFY_BLOG, true)) {
 			BriarNotificationBuilder b =
 					new BriarNotificationBuilder(appContext, BLOG_CHANNEL_ID);
@@ -593,6 +650,82 @@ class AndroidNotificationManagerImpl implements AndroidNotificationManager,
 					t.getPendingIntent(nextRequestId++, getImmutableFlags(0)));
 
 			notificationManager.notify(BLOG_POST_NOTIFICATION_ID, b.build());
+		}
+	}
+
+	@UiThread
+	private void showBlogCommentNotification(GroupId g) {
+		if (blockBlogs) return;
+		if (g.equals(blockedGroup)) return;
+		blogCommentCounts.add(g);
+		updateBlogCommentNotification(true);
+	}
+
+	@UiThread
+	private void updateBlogCommentNotification(boolean mayAlertAgain) {
+		int commentTotal = blogCommentCounts.getTotal();
+		if (commentTotal == 0) {
+			notificationManager.cancel(BLOG_COMMENT_NOTIFICATION_ID);
+		} else if (settings.getBoolean(PREF_NOTIFY_BLOG_COMMENTS, true)) {
+			BriarNotificationBuilder b =
+					new BriarNotificationBuilder(appContext, BLOG_COMMENT_CHANNEL_ID);
+			b.setSmallIcon(R.drawable.notification_blog);
+			b.setColorRes(R.color.anon_primary);
+			b.setContentTitle(appContext.getText(R.string.app_name));
+			// TODO add plurals for blog comment notification text
+			b.setContentText(commentTotal + " new blog comments");
+			b.setNumber(commentTotal);
+			b.setNotificationCategory(CATEGORY_SOCIAL);
+			if (mayAlertAgain) setAlertProperties(b);
+			setDeleteIntent(b, BLOG_URI);
+			Intent i = new Intent(appContext, NavDrawerActivity.class);
+			i.setFlags(FLAG_ACTIVITY_CLEAR_TOP);
+			i.setData(BLOG_URI);
+			TaskStackBuilder t = TaskStackBuilder.create(appContext);
+			t.addParentStack(NavDrawerActivity.class);
+			t.addNextIntent(i);
+			b.setContentIntent(
+					t.getPendingIntent(nextRequestId++, getImmutableFlags(0)));
+
+			notificationManager.notify(BLOG_COMMENT_NOTIFICATION_ID, b.build());
+		}
+	}
+
+	@UiThread
+	private void showBlogLikeNotification(GroupId g) {
+		if (blockBlogs) return;
+		if (g.equals(blockedGroup)) return;
+		blogLikeCounts.add(g);
+		updateBlogLikeNotification(true);
+	}
+
+	@UiThread
+	private void updateBlogLikeNotification(boolean mayAlertAgain) {
+		int likeTotal = blogLikeCounts.getTotal();
+		if (likeTotal == 0) {
+			notificationManager.cancel(BLOG_LIKE_NOTIFICATION_ID);
+		} else if (settings.getBoolean(PREF_NOTIFY_BLOG_LIKES, true)) {
+			BriarNotificationBuilder b =
+					new BriarNotificationBuilder(appContext, BLOG_LIKE_CHANNEL_ID);
+			b.setSmallIcon(R.drawable.notification_blog);
+			b.setColorRes(R.color.anon_primary);
+			b.setContentTitle(appContext.getText(R.string.app_name));
+			// TODO add plurals for blog like notification text
+			b.setContentText(likeTotal + " new blog likes");
+			b.setNumber(likeTotal);
+			b.setNotificationCategory(CATEGORY_SOCIAL);
+			if (mayAlertAgain) setAlertProperties(b);
+			setDeleteIntent(b, BLOG_URI);
+			Intent i = new Intent(appContext, NavDrawerActivity.class);
+			i.setFlags(FLAG_ACTIVITY_CLEAR_TOP);
+			i.setData(BLOG_URI);
+			TaskStackBuilder t = TaskStackBuilder.create(appContext);
+			t.addParentStack(NavDrawerActivity.class);
+			t.addNextIntent(i);
+			b.setContentIntent(
+					t.getPendingIntent(nextRequestId++, getImmutableFlags(0)));
+
+			notificationManager.notify(BLOG_LIKE_NOTIFICATION_ID, b.build());
 		}
 	}
 

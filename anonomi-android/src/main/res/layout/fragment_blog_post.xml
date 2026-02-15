@@ -14,7 +14,7 @@
 
 		<include
 			android:id="@+id/postLayout"
-			style="@style/BriarCard"
+			style="@style/AnonomiCard"
 			layout="@layout/list_item_blog_post"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content" />

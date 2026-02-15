@@ -7,6 +7,7 @@ import org.anonchatsecure.bramble.api.contact.ContactId;
 import org.anonchatsecure.bramble.api.db.DatabaseExecutor;
 import org.anonchatsecure.bramble.api.db.DbException;
 import org.anonchatsecure.bramble.api.db.TransactionManager;
+import org.anonchatsecure.bramble.api.identity.AuthorId;
 import org.anonchatsecure.bramble.api.event.Event;
 import org.anonchatsecure.bramble.api.event.EventBus;
 import org.anonchatsecure.bramble.api.identity.IdentityManager;
@@ -85,6 +86,10 @@ class BlogViewModel extends BaseViewModel {
 			if (b.getGroupId().equals(groupId)) {
 				// LOG.info("Blog post added");
 				onBlogPostAdded(b.getHeader(), b.isLocal());
+			} else {
+				// A post was added to another blog — check if it's a
+				// like/comment targeting a post in this blog
+				onBlogPostAdded(b.getHeader(), b.isLocal());
 			}
 		} else if (e instanceof BlogInvitationResponseReceivedEvent) {
 			BlogInvitationResponseReceivedEvent b =
@@ -148,7 +153,18 @@ class BlogViewModel extends BaseViewModel {
 
 	private void loadBlogPosts(GroupId groupId) {
 		loadFromDb(txn -> {
-			List<BlogPostItem> posts = loadBlogPosts(txn, groupId);
+			// Load all blogs so cross-blog likes/comments are aggregated
+			List<BlogPostItem> allItems = loadAllBlogItems(txn);
+			AuthorId localAuthorId = identityManager.getLocalAuthor().getId();
+			filterAndAggregateLikes(allItems, localAuthorId);
+			// Keep only items from the target blog
+			List<BlogPostItem> posts = new ArrayList<>();
+			for (BlogPostItem item : allItems) {
+				if (item.getGroupId().equals(groupId)) {
+					posts.add(item);
+				}
+			}
+			posts = deduplicate(posts);
 			Collections.sort(posts);
 			return new ListUpdate(null, posts);
 		}, blogPosts::setValue);

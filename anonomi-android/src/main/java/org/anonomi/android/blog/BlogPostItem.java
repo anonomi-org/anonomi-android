@@ -6,6 +6,10 @@ import org.anonchatsecure.bramble.api.sync.MessageId;
 import org.anonchatsecure.anonchat.api.blog.BlogPostHeader;
 import org.anonchatsecure.anonchat.api.identity.AuthorInfo;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
@@ -22,6 +26,10 @@ public class BlogPostItem implements Comparable<BlogPostItem> {
 	protected byte[] imageData;
 	@Nullable
 	protected String imageContentType;
+	private int likeCount = 0;
+	private boolean likedByMe = false;
+	private List<BaseViewModel.BlogComment> blogComments =
+			Collections.emptyList();
 
 	BlogPostItem(BlogPostHeader header, @Nullable String text) {
 		this(header, text, null, null);
@@ -34,6 +42,17 @@ public class BlogPostItem implements Comparable<BlogPostItem> {
 		this.read = header.isRead();
 		this.imageData = imageData;
 		this.imageContentType = imageContentType;
+	}
+
+	protected BlogPostItem(BlogPostItem other) {
+		this.header = other.header;
+		this.text = other.text;
+		this.read = other.read;
+		this.imageData = other.imageData;
+		this.imageContentType = other.imageContentType;
+		this.likeCount = other.likeCount;
+		this.likedByMe = other.likedByMe;
+		this.blogComments = new ArrayList<>(other.blogComments);
 	}
 
 	public MessageId getId() {
@@ -97,6 +116,30 @@ public class BlogPostItem implements Comparable<BlogPostItem> {
 		this.imageContentType = imageContentType;
 	}
 
+	public int getLikeCount() {
+		return likeCount;
+	}
+
+	public void setLikeCount(int likeCount) {
+		this.likeCount = likeCount;
+	}
+
+	public boolean isLikedByMe() {
+		return likedByMe;
+	}
+
+	public void setLikedByMe(boolean likedByMe) {
+		this.likedByMe = likedByMe;
+	}
+
+	public List<BaseViewModel.BlogComment> getBlogComments() {
+		return blogComments;
+	}
+
+	public void setBlogComments(List<BaseViewModel.BlogComment> comments) {
+		this.blogComments = comments;
+	}
+
 	@Override
 	public int compareTo(@NonNull BlogPostItem other) {
 		if (this == other) return 0;
@@ -106,5 +149,9 @@ public class BlogPostItem implements Comparable<BlogPostItem> {
 	protected static int compare(BlogPostHeader h1, BlogPostHeader h2) {
 		// The newest post comes first
 		return Long.compare(h2.getTimeReceived(), h1.getTimeReceived());
+	}
+
+	public BlogPostItem copy() {
+		return new BlogPostItem(this);
 	}
 }

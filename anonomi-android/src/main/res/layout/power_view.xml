@@ -36,7 +36,7 @@
 
 	<Button
 		android:id="@+id/button"
-		style="@style/BriarButtonOutline"
+		style="@style/AnonomiButtonOutline"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:layout_margin="@dimen/margin_medium"
@@ -47,7 +47,7 @@
 
 	<ImageButton
 		android:id="@+id/helpButton"
-		style="@style/BriarButtonFlat.Positive"
+		style="@style/AnonomiButtonFlat.Positive"
 		android:layout_width="24dp"
 		android:layout_height="24dp"
 		android:layout_margin="@dimen/margin_medium"

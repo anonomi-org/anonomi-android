@@ -25,6 +25,12 @@ class BlogCommentItem extends BlogPostItem {
 		Collections.sort(comments, COMPARATOR);
 	}
 
+	private BlogCommentItem(BlogCommentItem other) {
+		super(other);
+		this.postHeader = other.postHeader;
+		this.comments.addAll(other.comments);
+	}
+
 	private BlogPostHeader collectComments(BlogPostHeader header) {
 		if (header instanceof BlogCommentHeader) {
 			BlogCommentHeader comment = (BlogCommentHeader) header;
@@ -52,6 +58,11 @@ class BlogCommentItem extends BlogPostItem {
 
 	List<BlogCommentHeader> getComments() {
 		return comments;
+	}
+
+	@Override
+	public BlogPostItem copy() {
+		return new BlogCommentItem(this);
 	}
 
 	private static class BlogCommentComparator

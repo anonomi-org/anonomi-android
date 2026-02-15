@@ -76,7 +76,7 @@
 
 	<Button
 		android:id="@+id/cancelButton"
-		style="@style/BriarButtonFlat.Negative"
+		style="@style/AnonomiButtonFlat.Negative"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:text="@string/cancel"
@@ -88,7 +88,7 @@
 
 	<Button
 		android:id="@+id/tryAgainButton"
-		style="@style/BriarButtonFlat.Positive"
+		style="@style/AnonomiButtonFlat.Positive"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:text="@string/try_again_button"

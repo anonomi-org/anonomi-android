@@ -18,6 +18,8 @@
 
 package org.anonchatsecure.anonchat.api.blog;
 
+import javax.annotation.Nullable;
+
 import static org.anonchatsecure.bramble.api.sync.SyncConstants.MAX_MESSAGE_BODY_LENGTH;
 
 public interface BlogConstants {
@@ -53,5 +55,14 @@ public interface BlogConstants {
 	 * or of a message from the same group that therefore needed no wrapping.
 	 */
 	String KEY_PARENT_MSG_ID = "parentMessageId";
+
+	// Interaction markers
+	String LIKE_MARKER = "::like:";
+	String UNLIKE_MARKER = "::unlike:";
+	String COMMENT_MARKER = "::comment:";
+
+	static boolean isComment(@Nullable String comment) {
+		return comment != null && comment.startsWith(COMMENT_MARKER);
+	}
 
 }

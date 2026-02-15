@@ -79,7 +79,7 @@
 
 			<Button
 				android:id="@+id/buttonLearnMore"
-				style="@style/BriarButtonFlat.Positive"
+				style="@style/AnonomiButtonFlat.Positive"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:padding="16dp"

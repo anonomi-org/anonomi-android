@@ -47,7 +47,26 @@
 		android:persistent="false"
 		android:summary="@string/notify_blog_posts_setting_summary"
 		android:title="@string/notify_blog_posts_setting_title"
-		android:visible="false"
+		app:iconSpaceReserved="false"
+		app:singleLineTitle="false" />
+
+	<SwitchPreferenceCompat
+		android:defaultValue="true"
+		android:enabled="false"
+		android:key="notifyBlogComments"
+		android:persistent="false"
+		android:title="@string/settings_notification_comments_blog_post"
+		android:summary="@string/notify_blog_posts_comments_setting_summary"
+		app:iconSpaceReserved="false"
+		app:singleLineTitle="false" />
+
+	<SwitchPreferenceCompat
+		android:defaultValue="true"
+		android:enabled="false"
+		android:key="notifyBlogLikes"
+		android:persistent="false"
+		android:title="@string/settings_notification_likes_blog_post"
+		android:summary="@string/notify_blog_posts_likes_setting_summary"
 		app:iconSpaceReserved="false"
 		app:singleLineTitle="false" />
 

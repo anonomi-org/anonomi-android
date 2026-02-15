@@ -3,7 +3,7 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/postLayout"
-	style="@style/BriarCard"
+	style="@style/AnonomiCard"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:foreground="?attr/selectableItemBackground">
@@ -23,6 +23,19 @@
 			app:persona="reblogger"
 			tools:visibility="visible" />
 
+		<com.vanniktech.emoji.EmojiTextView
+			android:id="@+id/reblogCommentText"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/listitem_vertical_margin"
+			android:layout_marginEnd="@dimen/listitem_vertical_margin"
+			android:textColor="?android:attr/textColorPrimary"
+			android:textSize="@dimen/text_size_medium"
+			android:visibility="gone"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/rebloggerView" />
+
 		<org.anonomi.android.view.AuthorView
 			android:id="@+id/authorView"
 			android:layout_width="0dp"
@@ -30,7 +43,7 @@
 			android:padding="@dimen/listitem_vertical_margin"
 			app:layout_constraintEnd_toStartOf="@+id/commentView"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/rebloggerView" />
+			app:layout_constraintTop_toBottomOf="@+id/reblogCommentText" />
 
 		<androidx.appcompat.widget.AppCompatImageButton
 			android:id="@+id/commentView"
@@ -43,20 +56,6 @@
 			app:srcCompat="@drawable/ic_repeat"
 			app:tint="?attr/colorControlNormal" />
 
-		<ImageView
-			android:id="@+id/imageContent"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:adjustViewBounds="true"
-			android:maxHeight="300dp"
-			android:padding="@dimen/listitem_vertical_margin"
-			android:scaleType="centerCrop"
-			android:visibility="gone"
-			android:contentDescription="@string/image_sent"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/authorView" />
-
 		<com.vanniktech.emoji.EmojiTextView
 			android:id="@+id/textView"
 			android:layout_width="0dp"
@@ -66,8 +65,92 @@
 			android:textSize="@dimen/text_size_medium"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/imageContent"
+			app:layout_constraintTop_toBottomOf="@+id/authorView"
 			tools:text="This is a body text that shows the content of a blog post.\n\nThis one is not short, but it is also not too long." />
+
+		<com.google.android.material.imageview.ShapeableImageView
+			android:id="@+id/imageContent"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="8dp"
+			android:adjustViewBounds="true"
+			android:maxHeight="300dp"
+			android:paddingStart="@dimen/listitem_vertical_margin"
+			android:paddingEnd="@dimen/listitem_vertical_margin"
+			android:scaleType="centerCrop"
+			android:visibility="gone"
+			android:contentDescription="@string/image_sent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/textView"
+			app:shapeAppearanceOverlay="@style/ShapeAppearance.Anonomi.Rounded" />
+
+		<TextView
+			android:id="@+id/mapContent"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_margin="@dimen/listitem_vertical_margin"
+			android:textColor="?android:attr/textColorSecondary"
+			android:textSize="@dimen/text_size_medium"
+			android:visibility="gone"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/imageContent" />
+
+		<LinearLayout
+			android:id="@+id/actionContainer"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/listitem_vertical_margin"
+			android:layout_marginTop="8dp"
+			android:gravity="center_vertical"
+			android:orientation="horizontal"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/mapContent">
+
+			<androidx.appcompat.widget.AppCompatImageButton
+				android:id="@+id/likeButton"
+				android:layout_width="36dp"
+				android:layout_height="36dp"
+				android:background="?attr/selectableItemBackgroundBorderless"
+				android:contentDescription="@string/like_blog_post"
+				app:srcCompat="@drawable/ic_heart_outline"
+				app:tint="?attr/colorControlNormal" />
+
+			<TextView
+				android:id="@+id/likeCount"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="2dp"
+				android:layout_marginEnd="8dp"
+				android:textColor="?android:attr/textColorSecondary"
+				android:textSize="@dimen/text_size_small"
+				android:visibility="gone"
+				tools:text="3"
+				tools:visibility="visible" />
+
+			<androidx.appcompat.widget.AppCompatImageButton
+				android:id="@+id/commentButton"
+				android:layout_width="36dp"
+				android:layout_height="36dp"
+				android:background="?attr/selectableItemBackgroundBorderless"
+				android:contentDescription="@string/comment_blog_post"
+				app:srcCompat="@drawable/ic_comment_outline"
+				app:tint="?attr/colorControlNormal" />
+
+			<TextView
+				android:id="@+id/commentCount"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="2dp"
+				android:layout_marginEnd="8dp"
+				android:textColor="?android:attr/textColorSecondary"
+				android:textSize="@dimen/text_size_small"
+				android:visibility="gone"
+				tools:text="5"
+				tools:visibility="visible" />
+
+		</LinearLayout>
 
 		<!-- TODO replace with RecyclerView -->
 		<LinearLayout
@@ -76,7 +159,7 @@
 			android:layout_height="wrap_content"
 			android:layout_marginTop="@dimen/listitem_vertical_margin"
 			android:orientation="vertical"
-			app:layout_constraintTop_toBottomOf="@+id/textView">
+			app:layout_constraintTop_toBottomOf="@+id/actionContainer">
 
 			<include
 				layout="@layout/list_item_blog_comment"

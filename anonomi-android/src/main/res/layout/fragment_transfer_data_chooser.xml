@@ -45,7 +45,7 @@
 
 			<Button
 				android:id="@+id/buttonLearnMore"
-				style="@style/BriarButtonFlat.Positive"
+				style="@style/AnonomiButtonFlat.Positive"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_marginBottom="@dimen/margin_large"
@@ -64,7 +64,7 @@
 
 	<Button
 		android:id="@+id/sendButton"
-		style="@style/BriarButton"
+		style="@style/AnonomiButton"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_marginHorizontal="@dimen/margin_large"
@@ -76,7 +76,7 @@
 
 	<Button
 		android:id="@+id/receiveButton"
-		style="@style/BriarButton"
+		style="@style/AnonomiButton"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_marginHorizontal="@dimen/margin_large"

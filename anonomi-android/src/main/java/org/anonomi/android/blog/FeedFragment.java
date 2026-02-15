@@ -16,6 +16,8 @@ import org.anonomi.android.blog.BaseViewModel.ListUpdate;
 import org.anonomi.android.conversation.MapMessageData;
 import org.anonomi.android.fragment.BaseFragment;
 import org.anonomi.android.map.MapViewActivity;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 import org.anonomi.android.util.BriarSnackbarBuilder;
 import org.anonomi.android.view.BriarRecyclerView;
 import org.anonomi.android.widget.LinkDialogFragment;
@@ -170,6 +172,17 @@ public class FeedFragment extends BaseFragment
 		i.putExtra(MapViewActivity.EXTRA_LONGITUDE, data.longitude);
 		i.putExtra(MapViewActivity.EXTRA_ZOOM, data.zoom);
 		startActivity(i);
+	}
+
+	@Override
+	public void onLikeClick(BlogPostItem post) {
+		if (post.isLikedByMe()) viewModel.unlikePost(post);
+		else viewModel.likePost(post);
+	}
+
+	@Override
+	public void onCommentClick(BlogPostItem post) {
+		onBlogPostClick(post);
 	}
 
 	@Override

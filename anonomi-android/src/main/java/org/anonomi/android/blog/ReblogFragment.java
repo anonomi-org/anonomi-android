@@ -115,6 +115,7 @@ public class ReblogFragment extends BaseFragment implements SendListener {
 
 		ui.post.bindItem(this.item);
 		ui.post.hideReblogButton();
+		ui.post.hideActionButtons();
 
 		ui.input.setReady(true);
 		ui.scrollView.post(() -> ui.scrollView.fullScroll(FOCUS_DOWN));
@@ -149,8 +150,9 @@ public class ReblogFragment extends BaseFragment implements SendListener {
 		private ViewHolder(View v) {
 			scrollView = v.findViewById(R.id.scrollView);
 			progressBar = v.findViewById(R.id.progressBar);
+			// Set fullText to false to hide comments in the reblog preview
 			post = new BlogPostViewHolder(v.findViewById(R.id.postLayout),
-					true, this, false);
+					false, this, false);
 			input = v.findViewById(R.id.inputText);
 		}
 
@@ -178,6 +180,16 @@ public class ReblogFragment extends BaseFragment implements SendListener {
 			i.putExtra(MapViewActivity.EXTRA_LONGITUDE, data.longitude);
 			i.putExtra(MapViewActivity.EXTRA_ZOOM, data.zoom);
 			startActivity(i);
+		}
+
+		@Override
+		public void onLikeClick(BlogPostItem post) {
+			// do nothing in reblog view
+		}
+
+		@Override
+		public void onCommentClick(BlogPostItem post) {
+			// do nothing in reblog view
 		}
 	}
 

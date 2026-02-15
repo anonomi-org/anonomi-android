@@ -541,6 +541,13 @@
     <string name="blogs_blog_removed">Blog removed</string>
     <string name="blogs_reblog_comment_hint">Add a comment (optional)</string>
     <string name="blogs_reblog_button">Reblog</string>
+    <string name="like_blog_post">Like</string>
+    <string name="comment_blog_post">Comment</string>
+    <string name="settings_notification_comments_blog_post">Blogs posts - Comments</string>
+    <string name="notify_blog_posts_comments_setting_summary">Configure alerts for Comments on your blog posts</string>
+    <string name="settings_notification_likes_blog_post">Blogs posts - Likes</string>
+    <string name="notify_blog_posts_likes_setting_summary">Configure alerts for Likes on your blog posts</string>
+    <string name="comment_blog_post_hint">Write a comment…</string>
     <!-- Blog Sharing -->
 	<string name="blogs_sharing_share">Share Blog</string>
     <string name="blogs_sharing_error">There was an error sharing this blog.</string>
@@ -1106,6 +1113,8 @@ Anonomi Messenger is an independent project and is not affiliated with, endorsed
     <string name="distortion_failed">Distortion failed</string>
     <string name="voice_sent">Voice sent</string>
     <string name="image_sent">Image sent</string>
+    <string name="action_attach_image">Attach Image</string>
+    <string name="action_attach_location">Attach Location</string>
     <string name="image_compression_failed">Failed to compress image</string>
     <string name="image_too_large">Image is too large to send</string>
     <string name="send_failed">Send failed</string>

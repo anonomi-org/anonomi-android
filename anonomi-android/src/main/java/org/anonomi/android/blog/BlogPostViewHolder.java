@@ -21,6 +21,10 @@ import org.anonchatsecure.anonchat.api.blog.BlogCommentHeader;
 import org.anonchatsecure.anonchat.api.blog.BlogPostHeader;
 import org.briarproject.nullsafety.NotNullByDefault;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import javax.annotation.Nullable;
 
 import androidx.annotation.UiThread;
@@ -48,10 +52,17 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 	private final AuthorView reblogger;
 	private final AuthorView author;
 	private final ImageButton reblogButton;
+	private final ImageButton likeButton;
+	private final TextView likeCountText;
+	@Nullable
+	private final ImageButton commentButton;
+	private final TextView commentCountText;
 	private final TextView text;
+	private final TextView reblogCommentText;
 	private final ViewGroup commentContainer;
 	@Nullable
 	private final ImageView imageContent;
+	private final TextView mapContent;
 	private final boolean fullText, authorClickable;
 	private final int padding;
 
@@ -69,15 +80,28 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 		reblogger = v.findViewById(R.id.rebloggerView);
 		author = v.findViewById(R.id.authorView);
 		reblogButton = v.findViewById(R.id.commentView);
+		likeButton = v.findViewById(R.id.likeButton);
+		likeCountText = v.findViewById(R.id.likeCount);
+		commentButton = v.findViewById(R.id.commentButton);
+		commentCountText = v.findViewById(R.id.commentCount);
 		text = v.findViewById(R.id.textView);
+		reblogCommentText = v.findViewById(R.id.reblogCommentText);
 		commentContainer = v.findViewById(R.id.commentContainer);
 		imageContent = v.findViewById(R.id.imageContent);
+		mapContent = v.findViewById(R.id.mapContent);
 		padding = ctx.getResources()
 				.getDimensionPixelSize(R.dimen.listitem_vertical_margin);
 	}
 
 	void hideReblogButton() {
 		reblogButton.setVisibility(GONE);
+	}
+
+	void hideActionButtons() {
+		if (likeButton != null) likeButton.setVisibility(GONE);
+		if (likeCountText != null) likeCountText.setVisibility(GONE);
+		if (commentButton != null) commentButton.setVisibility(GONE);
+		if (commentCountText != null) commentCountText.setVisibility(GONE);
 	}
 
 	void updateDate(long time) {
@@ -137,29 +161,57 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 			}
 		}
 
-		// post text - check for map message
+		// post text and map message
 		String postTextStr = item.getText();
-		if (postTextStr != null && postTextStr.trim().startsWith("::map:")) {
-			MapMessageData mapData = parseMapMessage(postTextStr.trim());
-			text.setText("\uD83D\uDCCD" + mapData.label +
-					"\n   " + mapData.latitude +
-					"\n   " + mapData.longitude +
-					"\n   " + ctx.getString(R.string.tap_to_view_on_map));
-			text.setOnClickListener(
-					v -> listener.onMapMessageClicked(mapData));
-		} else {
-			text.setOnClickListener(null);
-			Spanned postText = getSpanned(postTextStr);
+		String regularText = null;
+		String mapPart = null;
+
+		if (postTextStr != null) {
+			int mapIndex = postTextStr.indexOf("::map:");
+			if (mapIndex >= 0) {
+				regularText = postTextStr.substring(0, mapIndex).trim();
+				mapPart = postTextStr.substring(mapIndex).trim();
+			} else {
+				regularText = postTextStr;
+			}
+		}
+
+		// render regular text
+		text.setOnClickListener(null);
+		if (regularText != null && !regularText.isEmpty()) {
+			Spanned postText = getSpanned(regularText);
 			if (fullText) {
 				text.setText(postText);
 				text.setTextIsSelectable(true);
+				Linkify.addLinks(text, Linkify.WEB_URLS);
 				makeLinksClickable(text, listener::onLinkClick);
 			} else {
 				text.setTextIsSelectable(false);
 				if (postText.length() > TEASER_LENGTH)
 					postText = getTeaser(ctx, postText);
 				text.setText(postText);
+				text.setOnClickListener(v -> listener.onBlogPostClick(item));
 			}
+			text.setVisibility(VISIBLE);
+		} else {
+			text.setText("");
+			text.setVisibility(GONE);
+		}
+
+		// render map content
+		if (mapPart != null) {
+			MapMessageData mapData = parseMapMessage(mapPart);
+			mapContent.setText("\uD83D\uDCCD" + mapData.label +
+					"\n   " + mapData.latitude +
+					"\n   " + mapData.longitude +
+					"\n   " + ctx.getString(R.string.tap_to_view_on_map));
+			mapContent.setOnClickListener(
+					v -> listener.onMapMessageClicked(mapData));
+			mapContent.setVisibility(VISIBLE);
+		} else {
+			mapContent.setText("");
+			mapContent.setOnClickListener(null);
+			mapContent.setVisibility(GONE);
 		}
 
 		// reblog button
@@ -170,13 +222,139 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 			ctx.startActivity(i);
 		});
 
+		// like button
+		if (likeButton != null) {
+			if (item.isLikedByMe()) {
+				likeButton.setImageResource(R.drawable.ic_heart_filled);
+				likeButton.setImageTintList(null);
+			} else {
+				likeButton.setImageResource(R.drawable.ic_heart_outline);
+				likeButton.setImageTintList(
+						reblogButton.getImageTintList());
+			}
+			likeButton.setOnClickListener(
+					v -> listener.onLikeClick(item));
+		}
+		if (likeCountText != null) {
+			int count = item.getLikeCount();
+			if (count > 0) {
+				likeCountText.setText(String.valueOf(count));
+				likeCountText.setVisibility(VISIBLE);
+			} else {
+				likeCountText.setVisibility(GONE);
+			}
+		}
+
+		// comment button
+		if (commentButton != null) {
+			commentButton.setOnClickListener(
+					v -> listener.onCommentClick(item));
+		}
+		if (commentCountText != null) {
+			int count = item.getBlogComments().size();
+			if (count > 0) {
+				commentCountText.setText(String.valueOf(count));
+				commentCountText.setVisibility(VISIBLE);
+			} else {
+				commentCountText.setVisibility(GONE);
+			}
+		}
+
 		// comments
 		commentContainer.removeAllViews();
+		List<BaseViewModel.BlogComment> unifiedComments = new ArrayList<>();
+
 		if (isReblog) {
-			onBindComment((BlogCommentItem) item, authorClickable);
+			BlogCommentItem reblogItem = (BlogCommentItem) item;
+			setupRebloggerHeader(reblogItem, authorClickable);
+
+			// Collect historical reblog comments
+			BlogCommentHeader rebloggerHeader = reblogItem.getHeader();
+			for (BlogCommentHeader c : reblogItem.getComments()) {
+				if (BaseViewModel.isSpecialComment(c.getComment())) continue;
+				if (c == rebloggerHeader) continue;
+				String comment = c.getComment();
+				if (comment != null) {
+					unifiedComments.add(new BaseViewModel.BlogComment(
+							c.getAuthor(), c.getAuthorInfo(), comment,
+							c.getTimestamp(), c.getTimeReceived(), false));
+				}
+			}
 		} else {
 			reblogger.setVisibility(GONE);
+			reblogCommentText.setVisibility(GONE);
 		}
+
+		if (fullText) {
+			// Collect social interaction comments
+			unifiedComments.addAll(item.getBlogComments());
+
+			// Sort unified list chronologically by reception time (oldest first)
+			Collections.sort(unifiedComments, (a, b) -> {
+				int res = Long.compare(a.timeReceived, b.timeReceived);
+				if (res != 0) return res;
+				return a.text.compareTo(b.text);
+			});
+
+			// Render all comments
+			for (BaseViewModel.BlogComment bc : unifiedComments) {
+				renderComment(bc);
+			}
+		}
+	}
+
+	private void setupRebloggerHeader(BlogCommentItem item,
+			boolean authorClickable) {
+		// reblogger
+		reblogger.setAuthor(item.getAuthor(), item.getAuthorInfo());
+		reblogger.setDate(item.getTimestamp());
+		if (authorClickable) {
+			reblogger.setAuthorClickable(v -> listener.onAuthorClick(item));
+		} else {
+			reblogger.setAuthorNotClickable();
+		}
+		reblogger.setVisibility(VISIBLE);
+		reblogger.setPersona(REBLOGGER);
+
+		// reblogger's own comment text (shown above the reblogged post)
+		String reblogComment = item.getHeader().getComment();
+		reblogCommentText.setOnClickListener(null);
+		if (reblogComment != null && !reblogComment.isEmpty()
+				&& !BaseViewModel.isSpecialComment(reblogComment)) {
+			reblogCommentText.setText(reblogComment);
+			reblogCommentText.setVisibility(VISIBLE);
+			if (fullText) {
+				reblogCommentText.setTextIsSelectable(true);
+				Linkify.addLinks(reblogCommentText, Linkify.WEB_URLS);
+				makeLinksClickable(reblogCommentText, listener::onLinkClick);
+			} else {
+				reblogCommentText.setOnClickListener(
+						v -> listener.onBlogPostClick(item));
+			}
+		} else {
+			reblogCommentText.setVisibility(GONE);
+		}
+
+		author.setPersona(item.getHeader().getRootPost().isRssFeed() ?
+				RSS_FEED_REBLOGGED : COMMENTER);
+	}
+
+	private void renderComment(BaseViewModel.BlogComment bc) {
+		View cv = LayoutInflater.from(ctx).inflate(
+				R.layout.list_item_blog_comment, commentContainer,
+				false);
+		AuthorView commentAuthor = cv.findViewById(R.id.authorView);
+		TextView commentText = cv.findViewById(R.id.textView);
+		commentAuthor.setAuthor(bc.author, bc.authorInfo);
+		commentAuthor.setDate(bc.timestamp);
+		commentText.setText(bc.text);
+		Linkify.addLinks(commentText, Linkify.WEB_URLS);
+		commentText.setMovementMethod(null);
+		if (fullText) {
+			commentText.setTextIsSelectable(true);
+			makeLinksClickable(commentText, listener::onLinkClick);
+		}
+		commentContainer.addView(cv);
 	}
 
 	private MapMessageData parseMapMessage(String text) {
@@ -197,46 +375,6 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 			return new MapMessageData(label, lat, lon, zoom);
 		} catch (Exception e) {
 			return new MapMessageData(label, 0, 0, zoom);
-		}
-	}
-
-	private void onBindComment(BlogCommentItem item, boolean authorClickable) {
-		// reblogger
-		reblogger.setAuthor(item.getAuthor(), item.getAuthorInfo());
-		reblogger.setDate(item.getTimestamp());
-		if (authorClickable) {
-			reblogger.setAuthorClickable(v -> listener.onAuthorClick(item));
-		} else {
-			reblogger.setAuthorNotClickable();
-		}
-		reblogger.setVisibility(VISIBLE);
-		reblogger.setPersona(REBLOGGER);
-
-		author.setPersona(item.getHeader().getRootPost().isRssFeed() ?
-				RSS_FEED_REBLOGGED : COMMENTER);
-
-		// comments
-		// TODO use nested RecyclerView instead like we do for Image Attachments
-		for (BlogCommentHeader c : item.getComments()) {
-			View v = LayoutInflater.from(ctx).inflate(
-					R.layout.list_item_blog_comment, commentContainer, false);
-
-			AuthorView author = v.findViewById(R.id.authorView);
-			TextView text = v.findViewById(R.id.textView);
-
-			author.setAuthor(c.getAuthor(), c.getAuthorInfo());
-			author.setDate(c.getTimestamp());
-			// TODO make author clickable #624
-
-			text.setText(c.getComment());
-			Linkify.addLinks(text, Linkify.WEB_URLS);
-			text.setMovementMethod(null);
-			if (fullText) {
-				text.setTextIsSelectable(true);
-				makeLinksClickable(text, listener::onLinkClick);
-			}
-
-			commentContainer.addView(v);
 		}
 	}
 }

@@ -22,6 +22,7 @@ import org.anonomi.android.map.MapViewActivity;
 import org.anonomi.android.sharing.BlogSharingStatusActivity;
 import org.anonomi.android.sharing.ShareBlogActivity;
 import org.anonomi.android.util.BriarSnackbarBuilder;
+import org.anonomi.android.util.UiUtils;
 import org.anonomi.android.view.BriarRecyclerView;
 import org.anonomi.android.widget.LinkDialogFragment;
 import org.briarproject.nullsafety.MethodsNotNullByDefault;
@@ -222,6 +223,17 @@ public class BlogFragment extends BaseFragment
 		i.putExtra(MapViewActivity.EXTRA_LONGITUDE, data.longitude);
 		i.putExtra(MapViewActivity.EXTRA_ZOOM, data.zoom);
 		startActivity(i);
+	}
+
+	@Override
+	public void onLikeClick(BlogPostItem post) {
+		if (post.isLikedByMe()) viewModel.unlikePost(post);
+		else viewModel.likePost(post);
+	}
+
+	@Override
+	public void onCommentClick(BlogPostItem post) {
+		onBlogPostClick(post);
 	}
 
 	private void displaySnackbar(int stringId, boolean scroll) {

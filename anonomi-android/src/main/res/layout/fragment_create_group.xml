@@ -30,7 +30,7 @@
 
 	<Button
 		android:id="@+id/button"
-		style="@style/BriarButton"
+		style="@style/AnonomiButton"
 		android:enabled="false"
 		android:text="@string/groups_create_group_button"
 		tools:enabled="true" />

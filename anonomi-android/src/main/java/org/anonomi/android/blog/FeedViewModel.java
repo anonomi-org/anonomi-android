@@ -9,6 +9,7 @@ import org.anonchatsecure.bramble.api.db.TransactionManager;
 import org.anonchatsecure.bramble.api.event.Event;
 import org.anonchatsecure.bramble.api.event.EventBus;
 import org.anonchatsecure.bramble.api.identity.Author;
+import org.anonchatsecure.bramble.api.identity.AuthorId;
 import org.anonchatsecure.bramble.api.identity.IdentityManager;
 import org.anonchatsecure.bramble.api.lifecycle.LifecycleManager;
 import org.anonchatsecure.bramble.api.sync.GroupId;
@@ -111,10 +112,9 @@ class FeedViewModel extends BaseViewModel {
 	private ListUpdate loadAllBlogPosts(Transaction txn)
 			throws DbException {
 		long start = now();
-		List<BlogPostItem> posts = new ArrayList<>();
-		for (GroupId g : blogManager.getBlogIds(txn)) {
-			posts.addAll(loadBlogPosts(txn, g));
-		}
+		List<BlogPostItem> posts = loadAllBlogItems(txn);
+		AuthorId localAuthorId = identityManager.getLocalAuthor().getId();
+		filterAndAggregateLikes(posts, localAuthorId);
 		Collections.sort(posts);
 		logDuration(LOG, "Loading all posts", start);
 		return new ListUpdate(null, posts);

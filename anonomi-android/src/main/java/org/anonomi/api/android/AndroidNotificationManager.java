@@ -16,6 +16,8 @@ public interface AndroidNotificationManager {
 	String PREF_NOTIFY_GROUP = "notifyGroupMessages";
 	String PREF_NOTIFY_FORUM = "notifyForumPosts";
 	String PREF_NOTIFY_BLOG = "notifyBlogPosts";
+	String PREF_NOTIFY_BLOG_COMMENTS = "notifyBlogComments";
+	String PREF_NOTIFY_BLOG_LIKES = "notifyBlogLikes";
 
 	String PREF_NOTIFY_SOUND = "notifySound";
 	String PREF_NOTIFY_RINGTONE_NAME = "notifyRingtoneName";
@@ -29,6 +31,8 @@ public interface AndroidNotificationManager {
 	int GROUP_MESSAGE_NOTIFICATION_ID = 5;
 	int FORUM_POST_NOTIFICATION_ID = 6;
 	int BLOG_POST_NOTIFICATION_ID = 7;
+	int BLOG_COMMENT_NOTIFICATION_ID = 11;
+	int BLOG_LIKE_NOTIFICATION_ID = 12;
 	int CONTACT_ADDED_NOTIFICATION_ID = 8;
 	int HOTSPOT_NOTIFICATION_ID = 9;
 	int MAILBOX_PROBLEM_NOTIFICATION_ID = 10;
@@ -38,6 +42,9 @@ public interface AndroidNotificationManager {
 	String GROUP_CHANNEL_ID = "groups";
 	String FORUM_CHANNEL_ID = "forums";
 	String BLOG_CHANNEL_ID = "blogs";
+	String BLOG_COMMENT_CHANNEL_ID = "blog_comments";
+	String BLOG_LIKE_CHANNEL_ID = "blog_likes";
+
 	// Channels are sorted by channel ID in the Settings app, so use IDs
 	// that will sort below the main channels such as contacts
 	String ONGOING_CHANNEL_OLD_ID = "zForegroundService";

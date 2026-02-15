@@ -82,7 +82,7 @@
 
 	<Button
 		android:id="@+id/cancelButton"
-		style="@style/BriarButtonFlat.Positive"
+		style="@style/AnonomiButtonFlat.Positive"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:text="@string/cancel"
@@ -96,7 +96,7 @@
 
 	<Button
 		android:id="@+id/openButton"
-		style="@style/BriarButtonFlat.Negative"
+		style="@style/AnonomiButtonFlat.Negative"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:text="@string/link_warning_open_link"

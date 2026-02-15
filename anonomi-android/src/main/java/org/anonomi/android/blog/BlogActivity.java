@@ -51,7 +51,8 @@ public class BlogActivity extends BriarActivity
 		// Get post info from intent
 		@Nullable byte[] postId = i.getByteArrayExtra(POST_ID);
 
-		viewModel.setGroupId(groupId, postId == null);
+		// Always load all posts to ensure real-time updates via blogPosts LiveData
+		viewModel.setGroupId(groupId, true);
 
 		setContentView(R.layout.activity_fragment_container_toolbar);
 		Toolbar toolbar = setUpCustomToolbar(false);
