@@ -1089,4 +1089,12 @@ copies des messages que vous envoyez.
     <string name="ptt_conflict_message">Ce bouton entre en conflit avec votre séquence de déclenchement d\'alerte.</string>
     <string name="panic_conflict_ptt">En conflit avec le bouton « Appuyer pour parler ». Modifiez-le d\'abord dans les paramètres.</string>
     <string name="walkie_talkie_recording_timer">Enregistrement… %1$d/12s</string>
+    <string name="like_blog_post">Comme</string>
+    <string name="comment_blog_post">Commentaire</string>
+    <string name="settings_notification_comments_blog_post">Articles de blog - Commentaires</string>
+    <string name="notify_blog_posts_comments_setting_summary">Configurez les alertes pour les commentaires sur vos articles de blog</string>
+    <string name="settings_notification_likes_blog_post">Articles de blog - J\'aime</string>
+    <string name="notify_blog_posts_likes_setting_summary">Configurez des alertes pour les mentions « J’aime » sur vos articles de blog.</string>
+    <string name="comment_blog_post_hint">Écrire un commentaire…</string>
+    <string name="action_attach_location">Attacher l\'emplacement</string>
 </resources>
