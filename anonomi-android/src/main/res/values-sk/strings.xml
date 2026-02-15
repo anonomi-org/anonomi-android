@@ -1116,4 +1116,5 @@ Najprv nainštalujte aplikáciu Anonomi Postbox do iného zariadenia z rovnakéh
     <string name="notify_blog_posts_likes_setting_summary">Nakonfigurujte si upozornenia na označenia „Páči sa mi to“ vo svojich blogových príspevkoch</string>
     <string name="comment_blog_post_hint">Napíšte komentár…</string>
     <string name="action_attach_location">Priložiť polohu</string>
+    <string name="action_attach_image">Priložiť obrázok</string>
 </resources>
