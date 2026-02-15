@@ -1062,4 +1062,5 @@
     <string name="notify_blog_posts_likes_setting_summary">Kefluniañ kemennadennoù evit ar blijadur war ho kemennadennoù blog</string>
     <string name="comment_blog_post_hint">Skrivit un evezhiadenn…</string>
     <string name="action_attach_location">Stagañ al lec\'hiadur</string>
+    <string name="action_attach_image">Stagañ ar skeudenn</string>
 </resources>
