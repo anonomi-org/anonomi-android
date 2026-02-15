@@ -1036,4 +1036,12 @@
     <string name="ptt_conflict_message">이 버튼은 패닉 트리거 시퀀스와 충돌합니다.</string>
     <string name="panic_conflict_ptt">푸시 투 토크 버튼과 충돌합니다. 먼저 설정에서 변경하세요.</string>
     <string name="walkie_talkie_recording_timer">녹음 중… %1$d/12초</string>
+    <string name="like_blog_post">좋다</string>
+    <string name="comment_blog_post">논평</string>
+    <string name="settings_notification_comments_blog_post">블로그 게시물 - 댓글</string>
+    <string name="notify_blog_posts_comments_setting_summary">블로그 게시물 댓글에 대한 알림을 설정하세요</string>
+    <string name="settings_notification_likes_blog_post">블로그 게시물 - 좋아요</string>
+    <string name="notify_blog_posts_likes_setting_summary">블로그 게시물에 대한 좋아요 알림을 설정하세요</string>
+    <string name="comment_blog_post_hint">댓글을 남겨주세요…</string>
+    <string name="action_attach_location">부착 위치</string>
 </resources>
