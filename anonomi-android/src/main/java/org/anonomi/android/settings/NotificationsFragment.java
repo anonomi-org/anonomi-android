@@ -44,10 +44,14 @@ import static org.anonomi.android.AppModule.getAndroidComponent;
 import static org.anonomi.android.activity.RequestCodes.REQUEST_RINGTONE;
 import static org.anonomi.android.settings.SettingsActivity.enableAndPersist;
 import static org.anonchatsecure.anonchat.api.android.AndroidNotificationManager.BLOG_CHANNEL_ID;
+import static org.anonchatsecure.anonchat.api.android.AndroidNotificationManager.BLOG_COMMENT_CHANNEL_ID;
+import static org.anonchatsecure.anonchat.api.android.AndroidNotificationManager.BLOG_LIKE_CHANNEL_ID;
 import static org.anonchatsecure.anonchat.api.android.AndroidNotificationManager.CONTACT_CHANNEL_ID;
 import static org.anonchatsecure.anonchat.api.android.AndroidNotificationManager.FORUM_CHANNEL_ID;
 import static org.anonchatsecure.anonchat.api.android.AndroidNotificationManager.GROUP_CHANNEL_ID;
 import static org.anonchatsecure.anonchat.api.android.AndroidNotificationManager.PREF_NOTIFY_BLOG;
+import static org.anonchatsecure.anonchat.api.android.AndroidNotificationManager.PREF_NOTIFY_BLOG_COMMENTS;
+import static org.anonchatsecure.anonchat.api.android.AndroidNotificationManager.PREF_NOTIFY_BLOG_LIKES;
 import static org.anonchatsecure.anonchat.api.android.AndroidNotificationManager.PREF_NOTIFY_FORUM;
 import static org.anonchatsecure.anonchat.api.android.AndroidNotificationManager.PREF_NOTIFY_GROUP;
 import static org.anonchatsecure.anonchat.api.android.AndroidNotificationManager.PREF_NOTIFY_PRIVATE;
@@ -71,6 +75,8 @@ public class NotificationsFragment extends PreferenceFragmentCompat {
 	private SwitchPreferenceCompat notifyGroupMessages;
 	private SwitchPreferenceCompat notifyForumPosts;
 	private SwitchPreferenceCompat notifyBlogPosts;
+	private SwitchPreferenceCompat notifyBlogComments;
+	private SwitchPreferenceCompat notifyBlogLikes;
 	private SwitchPreferenceCompat notifyVibration;
 
 	private Preference notifySound;
@@ -92,6 +98,8 @@ public class NotificationsFragment extends PreferenceFragmentCompat {
 		notifyGroupMessages = findPreference(PREF_NOTIFY_GROUP);
 		notifyForumPosts = findPreference(PREF_NOTIFY_FORUM);
 		notifyBlogPosts = findPreference(PREF_NOTIFY_BLOG);
+		notifyBlogComments = findPreference(PREF_NOTIFY_BLOG_COMMENTS);
+		notifyBlogLikes = findPreference(PREF_NOTIFY_BLOG_LIKES);
 		notifyVibration = findPreference(PREF_NOTIFY_VIBRATION);
 		notifySound = findPreference(PREF_NOTIFY_SOUND);
 
@@ -100,6 +108,8 @@ public class NotificationsFragment extends PreferenceFragmentCompat {
 			notifyGroupMessages.setPreferenceDataStore(viewModel.settingsStore);
 			notifyForumPosts.setPreferenceDataStore(viewModel.settingsStore);
 			notifyBlogPosts.setPreferenceDataStore(viewModel.settingsStore);
+			notifyBlogComments.setPreferenceDataStore(viewModel.settingsStore);
+			notifyBlogLikes.setPreferenceDataStore(viewModel.settingsStore);
 			notifyVibration.setPreferenceDataStore(viewModel.settingsStore);
 
 			notifySound.setOnPreferenceClickListener(pref ->
@@ -118,6 +128,12 @@ public class NotificationsFragment extends PreferenceFragmentCompat {
 			setupNotificationPreference(notifyBlogPosts,
 					BLOG_CHANNEL_ID,
 					R.string.notify_blog_posts_setting_summary_26);
+			setupNotificationPreference(notifyBlogComments,
+					BLOG_COMMENT_CHANNEL_ID,
+					R.string.comment_blog_post);
+			setupNotificationPreference(notifyBlogLikes,
+					BLOG_LIKE_CHANNEL_ID,
+					R.string.like_blog_post);
 
 			notifyVibration.setVisible(false);
 			notifySound.setVisible(false);
@@ -145,6 +161,14 @@ public class NotificationsFragment extends PreferenceFragmentCompat {
 			nm.getNotifyBlogPosts().observe(lifecycleOwner, enabled -> {
 				notifyBlogPosts.setChecked(enabled);
 				enableAndPersist(notifyBlogPosts);
+			});
+			nm.getNotifyBlogComments().observe(lifecycleOwner, enabled -> {
+				notifyBlogComments.setChecked(enabled);
+				enableAndPersist(notifyBlogComments);
+			});
+			nm.getNotifyBlogLikes().observe(lifecycleOwner, enabled -> {
+				notifyBlogLikes.setChecked(enabled);
+				enableAndPersist(notifyBlogLikes);
 			});
 			nm.getNotifyVibration().observe(lifecycleOwner, enabled -> {
 				notifyVibration.setChecked(enabled);

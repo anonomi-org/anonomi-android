@@ -53,6 +53,24 @@
 	<SwitchPreferenceCompat
 		android:defaultValue="true"
 		android:enabled="false"
+		android:key="notifyBlogComments"
+		android:persistent="false"
+		android:title="@string/comment_blog_post"
+		app:iconSpaceReserved="false"
+		app:singleLineTitle="false" />
+
+	<SwitchPreferenceCompat
+		android:defaultValue="true"
+		android:enabled="false"
+		android:key="notifyBlogLikes"
+		android:persistent="false"
+		android:title="@string/like_blog_post"
+		app:iconSpaceReserved="false"
+		app:singleLineTitle="false" />
+
+	<SwitchPreferenceCompat
+		android:defaultValue="true"
+		android:enabled="false"
 		android:key="notifyVibration"
 		android:persistent="false"
 		android:title="@string/notify_vibration_setting"

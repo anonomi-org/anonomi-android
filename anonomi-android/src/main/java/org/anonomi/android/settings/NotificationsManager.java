@@ -29,6 +29,8 @@ import static org.anonchatsecure.bramble.util.LogUtils.logException;
 import static org.anonchatsecure.bramble.util.LogUtils.now;
 import static org.anonomi.android.settings.SettingsFragment.SETTINGS_NAMESPACE;
 import static org.anonchatsecure.anonchat.api.android.AndroidNotificationManager.PREF_NOTIFY_BLOG;
+import static org.anonchatsecure.anonchat.api.android.AndroidNotificationManager.PREF_NOTIFY_BLOG_COMMENTS;
+import static org.anonchatsecure.anonchat.api.android.AndroidNotificationManager.PREF_NOTIFY_BLOG_LIKES;
 import static org.anonchatsecure.anonchat.api.android.AndroidNotificationManager.PREF_NOTIFY_FORUM;
 import static org.anonchatsecure.anonchat.api.android.AndroidNotificationManager.PREF_NOTIFY_GROUP;
 import static org.anonchatsecure.anonchat.api.android.AndroidNotificationManager.PREF_NOTIFY_PRIVATE;
@@ -56,6 +58,10 @@ class NotificationsManager {
 			new MutableLiveData<>();
 	private final MutableLiveData<Boolean> notifyBlogPosts =
 			new MutableLiveData<>();
+	private final MutableLiveData<Boolean> notifyBlogComments =
+			new MutableLiveData<>();
+	private final MutableLiveData<Boolean> notifyBlogLikes =
+			new MutableLiveData<>();
 	private final MutableLiveData<Boolean> notifyVibration =
 			new MutableLiveData<>();
 	private final MutableLiveData<Boolean> notifySound =
@@ -80,6 +86,10 @@ class NotificationsManager {
 				PREF_NOTIFY_FORUM, true));
 		notifyBlogPosts.postValue(settings.getBoolean(
 				PREF_NOTIFY_BLOG, true));
+		notifyBlogComments.postValue(settings.getBoolean(
+				PREF_NOTIFY_BLOG_COMMENTS, true));
+		notifyBlogLikes.postValue(settings.getBoolean(
+				PREF_NOTIFY_BLOG_LIKES, true));
 		notifyVibration.postValue(settings.getBoolean(
 				PREF_NOTIFY_VIBRATION, true));
 		ringtoneName = settings.get(PREF_NOTIFY_RINGTONE_NAME);
@@ -137,6 +147,14 @@ class NotificationsManager {
 
 	LiveData<Boolean> getNotifyBlogPosts() {
 		return notifyBlogPosts;
+	}
+
+	LiveData<Boolean> getNotifyBlogComments() {
+		return notifyBlogComments;
+	}
+
+	LiveData<Boolean> getNotifyBlogLikes() {
+		return notifyBlogLikes;
 	}
 
 	LiveData<Boolean> getNotifyVibration() {
