@@ -1054,4 +1054,12 @@
     <string name="ptt_conflict_message">Ar bouton-mañ a glot gant ho heuliad Panic Trigger.</string>
     <string name="panic_conflict_ptt">Emglevioù gant ar bouton pouezañ evit komz. Cheñchit anezhañ en arventennoù da gentañ.</string>
     <string name="walkie_talkie_recording_timer">Enrollañ... %1$d/12s</string>
+    <string name="like_blog_post">Plijout</string>
+    <string name="comment_blog_post">Evezhiadenn</string>
+    <string name="settings_notification_comments_blog_post">Kemennadennoù blog - Evezhiadennoù</string>
+    <string name="notify_blog_posts_comments_setting_summary">Kefluniañ kemennadennoù evit an evezhiadennoù war ho kemennadennoù blog</string>
+    <string name="settings_notification_likes_blog_post">Kemennadennoù blog - Plijadur</string>
+    <string name="notify_blog_posts_likes_setting_summary">Kefluniañ kemennadennoù evit ar blijadur war ho kemennadennoù blog</string>
+    <string name="comment_blog_post_hint">Skrivit un evezhiadenn…</string>
+    <string name="action_attach_location">Stagañ al lec\'hiadur</string>
 </resources>
