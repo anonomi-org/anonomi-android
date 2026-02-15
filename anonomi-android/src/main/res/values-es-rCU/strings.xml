@@ -1262,4 +1262,5 @@ Si tu contacto creó el archivo hace más de 28 días, Anonomi no podrá reconoc
     <string name="notify_blog_posts_likes_setting_summary">Configura alertas de Me gusta en tus publicaciones de blog</string>
     <string name="comment_blog_post_hint">Escribe un comentario…</string>
     <string name="action_attach_location">Adjuntar ubicación</string>
+    <string name="action_attach_image">Adjuntar imagen</string>
 </resources>
