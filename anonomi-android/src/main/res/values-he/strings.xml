@@ -1086,4 +1086,12 @@
     <string name="ptt_conflict_message">כפתור זה מתנגש עם רצף הפעלת הפאניקה שלך.</string>
     <string name="panic_conflict_ptt">מתנגש עם כפתור ה-Push-to-Talk. שנה אותו תחילה בהגדרות.</string>
     <string name="walkie_talkie_recording_timer">הקלטה... %1$d/12 שניות</string>
+    <string name="like_blog_post">כְּמוֹ</string>
+    <string name="comment_blog_post">הֶעָרָה</string>
+    <string name="settings_notification_comments_blog_post">פוסטים בבלוג - תגובות</string>
+    <string name="notify_blog_posts_comments_setting_summary">הגדר התראות עבור תגובות בפוסטים בבלוג שלך</string>
+    <string name="settings_notification_likes_blog_post">פוסטים בבלוג - לייקים</string>
+    <string name="notify_blog_posts_likes_setting_summary">הגדר התראות עבור לייקים בפוסטים בבלוג שלך</string>
+    <string name="comment_blog_post_hint">כתוב תגובה…</string>
+    <string name="action_attach_location">צרף מיקום</string>
 </resources>
