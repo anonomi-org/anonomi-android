@@ -6,6 +6,7 @@ import org.anonchatsecure.bramble.api.sync.MessageId;
 import org.anonchatsecure.anonchat.api.blog.BlogPostHeader;
 import org.anonchatsecure.anonchat.api.identity.AuthorInfo;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -41,6 +42,17 @@ public class BlogPostItem implements Comparable<BlogPostItem> {
 		this.read = header.isRead();
 		this.imageData = imageData;
 		this.imageContentType = imageContentType;
+	}
+
+	BlogPostItem(BlogPostItem other) {
+		this.header = other.header;
+		this.text = other.text;
+		this.read = other.read;
+		this.imageData = other.imageData;
+		this.imageContentType = other.imageContentType;
+		this.likeCount = other.likeCount;
+		this.likedByMe = other.likedByMe;
+		this.blogComments = new ArrayList<>(other.blogComments);
 	}
 
 	public MessageId getId() {
@@ -137,5 +149,9 @@ public class BlogPostItem implements Comparable<BlogPostItem> {
 	protected static int compare(BlogPostHeader h1, BlogPostHeader h2) {
 		// The newest post comes first
 		return Long.compare(h2.getTimeReceived(), h1.getTimeReceived());
+	}
+
+	public BlogPostItem copy() {
+		return new BlogPostItem(this);
 	}
 }

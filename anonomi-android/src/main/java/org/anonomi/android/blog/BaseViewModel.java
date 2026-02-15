@@ -22,6 +22,7 @@ import org.anonchatsecure.anonchat.api.blog.Blog;
 import org.anonchatsecure.anonchat.api.blog.BlogCommentHeader;
 import org.anonchatsecure.anonchat.api.blog.BlogManager;
 import org.anonchatsecure.anonchat.api.blog.BlogPostHeader;
+import org.anonchatsecure.anonchat.api.identity.AuthorInfo;
 import org.anonchatsecure.anonchat.util.HtmlUtils;
 import org.briarproject.nullsafety.NotNullByDefault;
 
@@ -46,6 +47,7 @@ import static java.util.logging.Logger.getLogger;
 import static org.anonchatsecure.bramble.util.LogUtils.logDuration;
 import static org.anonchatsecure.bramble.util.LogUtils.logException;
 import static org.anonchatsecure.bramble.util.LogUtils.now;
+import static org.anonchatsecure.anonchat.api.identity.AuthorInfo.Status.OURSELVES;
 
 @NotNullByDefault
 abstract class BaseViewModel extends DbViewModel implements EventListener {
@@ -64,6 +66,9 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 	protected final MutableLiveData<LiveResult<ListUpdate>> blogPosts =
 			new MutableLiveData<>();
 
+	@Nullable
+	protected volatile LocalAuthor localAuthor;
+
 	BaseViewModel(Application application,
 			@DatabaseExecutor Executor dbExecutor,
 			LifecycleManager lifecycleManager,
@@ -79,6 +84,17 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 		this.notificationManager = notificationManager;
 		this.blogManager = blogManager;
 		eventBus.addListener(this);
+		loadLocalAuthor();
+	}
+
+	private void loadLocalAuthor() {
+		runOnDbThread(() -> {
+			try {
+				localAuthor = identityManager.getLocalAuthor();
+			} catch (DbException e) {
+				logException(LOG, WARNING, e);
+			}
+		});
 	}
 
 	@Override
@@ -202,13 +218,73 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 	private void onSpecialCommentAdded(BlogPostItem specialItem,
 			AuthorId localAuthorId) {
 		List<BlogPostItem> items = getBlogPostItems();
-		if (items == null) return;
-		// Re-run aggregation on the full list including the new item
-		List<BlogPostItem> updated = new ArrayList<>(items);
-		updated.add(specialItem);
-		filterAndAggregateLikes(updated, localAuthorId);
-		Collections.sort(updated);
-		blogPosts.setValue(new LiveResult<>(new ListUpdate(null, updated)));
+		if (items == null || !(specialItem instanceof BlogCommentItem)) return;
+		BlogCommentItem commentItem = (BlogCommentItem) specialItem;
+		BlogCommentHeader header = commentItem.getHeader();
+		String comment = header.getComment();
+		String targetKey = postKey(header.getParent());
+
+		// Find the target post by matching author+timestamp key
+		int targetIndex = -1;
+		for (int i = 0; i < items.size(); i++) {
+			if (postKey(items.get(i).getHeader()).equals(targetKey)) {
+				targetIndex = i;
+				break;
+			}
+		}
+		if (targetIndex == -1) return;
+
+		BlogPostItem target = items.get(targetIndex).copy();
+
+		// Incrementally update the target post's state
+		if (LIKE_MARKER.equals(comment)) {
+			AuthorId authorId = header.getAuthor().getId();
+			if (authorId.equals(localAuthorId)) {
+				if (target.isLikedByMe()) return; // Already liked
+				target.setLikedByMe(true);
+			}
+			target.setLikeCount(target.getLikeCount() + 1);
+		} else if (UNLIKE_MARKER.equals(comment)) {
+			AuthorId authorId = header.getAuthor().getId();
+			if (authorId.equals(localAuthorId)) {
+				if (!target.isLikedByMe()) return; // Already unliked
+				target.setLikedByMe(false);
+			}
+			target.setLikeCount(Math.max(0, target.getLikeCount() - 1));
+		} else if (isComment(comment)) {
+			String commentText = comment.substring(COMMENT_MARKER.length());
+			List<BlogComment> comments =
+					new ArrayList<>(target.getBlogComments());
+
+			// Remove optimistic version if it exists
+			Iterator<BlogComment> it = comments.iterator();
+			while (it.hasNext()) {
+				BlogComment bc = it.next();
+				if (bc.optimistic &&
+						bc.author.getId().equals(header.getAuthor().getId()) &&
+						bc.text.equals(commentText)) {
+					it.remove();
+				}
+			}
+
+			// Check if we already have this comment (non-optimistic)
+			for (BlogComment c : comments) {
+				if (c.author.getId().equals(header.getAuthor().getId()) &&
+						c.timestamp == header.getTimestamp()) {
+					return;
+				}
+			}
+			comments.add(new BlogComment(header.getAuthor(),
+					header.getAuthorInfo(), commentText,
+					header.getTimestamp()));
+			Collections.sort(comments, (a, b) ->
+					Long.compare(a.timestamp, b.timestamp));
+			target.setBlogComments(comments);
+		}
+
+		List<BlogPostItem> newList = new ArrayList<>(items);
+		newList.set(targetIndex, target);
+		blogPosts.setValue(new LiveResult<>(new ListUpdate(null, newList)));
 	}
 
 	@UiThread
@@ -233,7 +309,9 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 		});
 	}
 
+	@UiThread
 	void likePost(BlogPostItem item) {
+		updateBlogPostItemOptimistically(item, true, null);
 		runOnDbThread(() -> {
 			try {
 				LocalAuthor a = identityManager.getLocalAuthor();
@@ -246,7 +324,9 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 		});
 	}
 
+	@UiThread
 	void unlikePost(BlogPostItem item) {
+		updateBlogPostItemOptimistically(item, false, null);
 		runOnDbThread(() -> {
 			try {
 				LocalAuthor a = identityManager.getLocalAuthor();
@@ -259,7 +339,9 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 		});
 	}
 
+	@UiThread
 	void commentOnPost(BlogPostItem item, String comment) {
+		updateBlogPostItemOptimistically(item, null, comment);
 		runOnDbThread(() -> {
 			try {
 				LocalAuthor a = identityManager.getLocalAuthor();
@@ -270,6 +352,58 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 				handleException(e);
 			}
 		});
+	}
+
+	@UiThread
+	private void updateBlogPostItemOptimistically(BlogPostItem item,
+			@Nullable Boolean liked, @Nullable String comment) {
+		List<BlogPostItem> items = getBlogPostItems();
+		if (items == null) return;
+
+		String targetKey = postKey(item.getHeader());
+		int targetIndex = -1;
+		for (int i = 0; i < items.size(); i++) {
+			if (postKey(items.get(i).getHeader()).equals(targetKey)) {
+				targetIndex = i;
+				break;
+			}
+		}
+
+		if (targetIndex != -1) {
+			BlogPostItem target = items.get(targetIndex).copy();
+			if (liked != null) {
+				if (liked && !target.isLikedByMe()) {
+					target.setLikedByMe(true);
+					target.setLikeCount(target.getLikeCount() + 1);
+				} else if (!liked && target.isLikedByMe()) {
+					target.setLikedByMe(false);
+					target.setLikeCount(Math.max(0, target.getLikeCount() - 1));
+				}
+			}
+			if (comment != null) {
+				if (localAuthor == null) {
+					// Fallback to async if localAuthor not yet loaded
+					runOnDbThread(true, txn -> {
+						localAuthor = identityManager.getLocalAuthor(txn);
+						androidExecutor.runOnUiThread(() ->
+								updateBlogPostItemOptimistically(item, null,
+										comment));
+					}, e -> logException(LOG, WARNING, e));
+					return;
+				}
+				List<BlogComment> comments =
+						new ArrayList<>(target.getBlogComments());
+				comments.add(new BlogComment(localAuthor,
+						new AuthorInfo(OURSELVES), comment,
+						System.currentTimeMillis(), true));
+				Collections.sort(comments, (c1, c2) ->
+						Long.compare(c1.timestamp, c2.timestamp));
+				target.setBlogComments(comments);
+			}
+			List<BlogPostItem> newList = new ArrayList<>(items);
+			newList.set(targetIndex, target);
+			blogPosts.setValue(new LiveResult<>(new ListUpdate(null, newList)));
+		}
 	}
 
 	static boolean isLikeOrUnlike(@Nullable String comment) {
@@ -408,19 +542,30 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 
 	static class BlogComment {
 		final org.anonchatsecure.bramble.api.identity.Author author;
+		@Nullable
 		final org.anonchatsecure.anonchat.api.identity.AuthorInfo authorInfo;
 		final String text;
 		final long timestamp;
+		final boolean optimistic;
 
 		BlogComment(
 				org.anonchatsecure.bramble.api.identity.Author author,
-				org.anonchatsecure.anonchat.api.identity.AuthorInfo
+				@Nullable org.anonchatsecure.anonchat.api.identity.AuthorInfo
 						authorInfo,
 				String text, long timestamp) {
+			this(author, authorInfo, text, timestamp, false);
+		}
+
+		BlogComment(
+				org.anonchatsecure.bramble.api.identity.Author author,
+				@Nullable org.anonchatsecure.anonchat.api.identity.AuthorInfo
+						authorInfo,
+				String text, long timestamp, boolean optimistic) {
 			this.author = author;
 			this.authorInfo = authorInfo;
 			this.text = text;
 			this.timestamp = timestamp;
+			this.optimistic = optimistic;
 		}
 	}
 
@@ -446,7 +591,7 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 		LiveResult<ListUpdate> value = blogPosts.getValue();
 		if (value == null) return;
 		ListUpdate result = value.getResultOrNull();
-		result.postAddedWasLocal = null;
+		if (result != null) result.postAddedWasLocal = null;
 	}
 
 	static class ListUpdate {

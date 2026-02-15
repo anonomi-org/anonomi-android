@@ -22,12 +22,19 @@ class BlogPostAdapter extends ListAdapter<BlogPostItem, BlogPostViewHolder> {
 		super(new DiffUtil.ItemCallback<BlogPostItem>() {
 			@Override
 			public boolean areItemsTheSame(BlogPostItem a, BlogPostItem b) {
-				return a.getId().equals(b.getId());
+				// Use the postKey (author + timestamp) for identity because
+				// reblogs of the same post have different MessageIds but
+				// should be treated as the same item for optimistic updates.
+				return BaseViewModel.postKey(a.getHeader())
+						.equals(BaseViewModel.postKey(b.getHeader()));
 			}
 
 			@Override
 			public boolean areContentsTheSame(BlogPostItem a, BlogPostItem b) {
-				return a.isRead() == b.isRead();
+				return a.isRead() == b.isRead()
+					&& a.getLikeCount() == b.getLikeCount()
+					&& a.isLikedByMe() == b.isLikedByMe()
+					&& a.getBlogComments().equals(b.getBlogComments());
 			}
 		});
 		this.authorClickable = authorClickable;
