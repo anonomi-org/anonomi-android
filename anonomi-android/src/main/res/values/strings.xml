@@ -543,6 +543,10 @@
     <string name="blogs_reblog_button">Reblog</string>
     <string name="like_blog_post">Like</string>
     <string name="comment_blog_post">Comment</string>
+    <string name="settings_notification_comments_blog_post">Blogs posts - Comments</string>
+    <string name="notify_blog_posts_comments_setting_summary">Configure alerts for Comments on your blog posts</string>
+    <string name="settings_notification_likes_blog_post">Blogs posts - Likes</string>
+    <string name="notify_blog_posts_likes_setting_summary">Configure alerts for Likes on your blog posts</string>
     <string name="comment_blog_post_hint">Write a comment…</string>
     <!-- Blog Sharing -->
 	<string name="blogs_sharing_share">Share Blog</string>
