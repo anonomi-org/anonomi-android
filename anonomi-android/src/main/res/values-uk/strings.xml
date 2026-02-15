@@ -1112,4 +1112,12 @@
     <string name="ptt_conflict_message">Ця кнопка конфліктує з вашою послідовністю спрацьовування паніки.</string>
     <string name="panic_conflict_ptt">Конфліктує з кнопкою «Натисни та говори». Спочатку змініть це в налаштуваннях.</string>
     <string name="walkie_talkie_recording_timer">Запис… %1$d/12 с</string>
+    <string name="like_blog_post">Подобається</string>
+    <string name="comment_blog_post">Коментар</string>
+    <string name="settings_notification_comments_blog_post">Дописи в блогах - Коментарі</string>
+    <string name="notify_blog_posts_comments_setting_summary">Налаштуйте сповіщення для коментарів до ваших публікацій у блозі</string>
+    <string name="settings_notification_likes_blog_post">Дописи в блогах - Вподобання</string>
+    <string name="notify_blog_posts_likes_setting_summary">Налаштуйте сповіщення про вподобання у ваших публікаціях у блозі</string>
+    <string name="comment_blog_post_hint">Напишіть коментар…</string>
+    <string name="action_attach_location">Додати місцезнаходження</string>
 </resources>
