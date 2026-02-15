@@ -1087,4 +1087,5 @@
     <string name="notify_blog_posts_likes_setting_summary">დააკონფიგურირეთ შეტყობინებები თქვენს ბლოგ პოსტებზე მოწონებების შესახებ</string>
     <string name="comment_blog_post_hint">დაწერეთ კომენტარი…</string>
     <string name="action_attach_location">მდებარეობის მიმაგრება</string>
+    <string name="action_attach_image">სურათის მიმაგრება</string>
 </resources>
