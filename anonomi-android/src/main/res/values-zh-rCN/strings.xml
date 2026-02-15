@@ -1067,4 +1067,12 @@
     <string name="ptt_conflict_message">此按钮与您的紧急触发序列冲突。</string>
     <string name="panic_conflict_ptt">与一键通按钮冲突。请先在设置中更改。</string>
     <string name="walkie_talkie_recording_timer">正在录制… %1$d/12秒</string>
+    <string name="like_blog_post">喜欢</string>
+    <string name="comment_blog_post">评论</string>
+    <string name="settings_notification_comments_blog_post">博客文章 - 评论</string>
+    <string name="notify_blog_posts_comments_setting_summary">配置博客文章评论提醒</string>
+    <string name="settings_notification_likes_blog_post">博客文章 - 点赞</string>
+    <string name="notify_blog_posts_likes_setting_summary">配置博客文章点赞提醒</string>
+    <string name="comment_blog_post_hint">请留言……</string>
+    <string name="action_attach_location">附加位置</string>
 </resources>
