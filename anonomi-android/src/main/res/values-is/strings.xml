@@ -1073,4 +1073,12 @@
     <string name="ptt_conflict_message">Þessi hnappur stangast á við Panic Trigger-röðina þína.</string>
     <string name="panic_conflict_ptt">Rekast á við ýta-til-að-tala hnappinn. Breyttu því fyrst í stillingum.</string>
     <string name="walkie_talkie_recording_timer">Upptaka… %1$d/12 sekúndur</string>
+    <string name="like_blog_post">Líkar</string>
+    <string name="comment_blog_post">Athugasemd</string>
+    <string name="settings_notification_comments_blog_post">Bloggfærslur - Athugasemdir</string>
+    <string name="notify_blog_posts_comments_setting_summary">Stilltu viðvaranir fyrir athugasemdir við bloggfærslur þínar</string>
+    <string name="settings_notification_likes_blog_post">Bloggfærslur - Líkar</string>
+    <string name="notify_blog_posts_likes_setting_summary">Stilltu tilkynningar fyrir „læk“ á bloggfærslum þínum</string>
+    <string name="comment_blog_post_hint">Skrifaðu athugasemd…</string>
+    <string name="action_attach_location">Hengja staðsetningu við</string>
 </resources>
