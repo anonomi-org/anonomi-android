@@ -183,6 +183,7 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 			if (fullText) {
 				text.setText(postText);
 				text.setTextIsSelectable(true);
+				Linkify.addLinks(text, Linkify.WEB_URLS);
 				makeLinksClickable(text, listener::onLinkClick);
 			} else {
 				text.setTextIsSelectable(false);
@@ -322,7 +323,11 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 				&& !BaseViewModel.isSpecialComment(reblogComment)) {
 			reblogCommentText.setText(reblogComment);
 			reblogCommentText.setVisibility(VISIBLE);
-			if (!fullText) {
+			if (fullText) {
+				reblogCommentText.setTextIsSelectable(true);
+				Linkify.addLinks(reblogCommentText, Linkify.WEB_URLS);
+				makeLinksClickable(reblogCommentText, listener::onLinkClick);
+			} else {
 				reblogCommentText.setOnClickListener(
 						v -> listener.onBlogPostClick(item));
 			}
