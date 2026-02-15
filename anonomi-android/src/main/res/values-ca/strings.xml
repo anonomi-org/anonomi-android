@@ -1069,4 +1069,12 @@ Així que l\'actualitzi li veureu una icona diferent .</string>
     <string name="ptt_conflict_message">Aquest botó entra en conflicte amb la seqüència de desencadenant de pànic.</string>
     <string name="panic_conflict_ptt">Conflictes amb el botó Prem per parlar. Canvia-ho primer a Configuració.</string>
     <string name="walkie_talkie_recording_timer">Enregistrament… %1$d/12s</string>
+    <string name="like_blog_post">M\'agrada</string>
+    <string name="comment_blog_post">Comentari</string>
+    <string name="settings_notification_comments_blog_post">Entrades de blog - Comentaris</string>
+    <string name="notify_blog_posts_comments_setting_summary">Configura alertes per a comentaris a les entrades del teu blog</string>
+    <string name="settings_notification_likes_blog_post">Entrades de blog - M\'agrada</string>
+    <string name="notify_blog_posts_likes_setting_summary">Configura alertes per a M\'agrada a les entrades del teu blog</string>
+    <string name="comment_blog_post_hint">Escriu un comentari…</string>
+    <string name="action_attach_location">Adjunta la ubicació</string>
 </resources>
