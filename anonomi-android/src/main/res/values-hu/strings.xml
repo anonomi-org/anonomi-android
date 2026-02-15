@@ -1077,4 +1077,12 @@ Vigyázat: Ez végleg törli az identitásait, kapcsolatait és üzeneteit</stri
     <string name="ptt_conflict_message">Ez a gomb ütközik a pánikindító szekvenciával.</string>
     <string name="panic_conflict_ptt">Ütközik a Push-to-Talk gombbal. Először módosítsa a beállításokban.</string>
     <string name="walkie_talkie_recording_timer">Felvétel… %1$d/12 mp</string>
+    <string name="like_blog_post">Mint</string>
+    <string name="comment_blog_post">Megjegyzés</string>
+    <string name="settings_notification_comments_blog_post">Blogbejegyzések - Hozzászólások</string>
+    <string name="notify_blog_posts_comments_setting_summary">Értesítések beállítása a blogbejegyzésekhez fűzött megjegyzésekről</string>
+    <string name="settings_notification_likes_blog_post">Blogbejegyzések - Kedvelések</string>
+    <string name="notify_blog_posts_likes_setting_summary">Értesítések beállítása a blogbejegyzések kedveléseiről</string>
+    <string name="comment_blog_post_hint">Írj egy hozzászólást…</string>
+    <string name="action_attach_location">Helyszín csatolása</string>
 </resources>
