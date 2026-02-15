@@ -185,6 +185,7 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 				if (postText.length() > TEASER_LENGTH)
 					postText = getTeaser(ctx, postText);
 				text.setText(postText);
+				text.setOnClickListener(v -> listener.onBlogPostClick(item));
 			}
 			text.setVisibility(VISIBLE);
 		} else {
@@ -320,10 +321,14 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 
 		// reblogger's own comment text (shown above the reblogged post)
 		String reblogComment = item.getHeader().getComment();
+		reblogCommentText.setOnClickListener(null);
 		if (reblogComment != null && !reblogComment.isEmpty()
 				&& !BaseViewModel.isSpecialComment(reblogComment)) {
 			reblogCommentText.setText(reblogComment);
 			reblogCommentText.setVisibility(VISIBLE);
+			if (!fullText) {
+				reblogCommentText.setOnClickListener(v -> listener.onBlogPostClick(item));
+			}
 		} else {
 			reblogCommentText.setVisibility(GONE);
 		}
