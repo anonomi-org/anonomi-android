@@ -1081,4 +1081,5 @@
     <string name="notify_blog_posts_likes_setting_summary">Stilltu tilkynningar fyrir „læk“ á bloggfærslum þínum</string>
     <string name="comment_blog_post_hint">Skrifaðu athugasemd…</string>
     <string name="action_attach_location">Hengja staðsetningu við</string>
+    <string name="action_attach_image">Hengja við mynd</string>
 </resources>
