@@ -1085,4 +1085,5 @@ Vigyázat: Ez végleg törli az identitásait, kapcsolatait és üzeneteit</stri
     <string name="notify_blog_posts_likes_setting_summary">Értesítések beállítása a blogbejegyzések kedveléseiről</string>
     <string name="comment_blog_post_hint">Írj egy hozzászólást…</string>
     <string name="action_attach_location">Helyszín csatolása</string>
+    <string name="action_attach_image">Kép csatolása</string>
 </resources>
