@@ -1086,4 +1086,5 @@
     <string name="notify_blog_posts_likes_setting_summary">আপনার ব্লগ পোস্টে লাইকের জন্য সতর্কতা কনফিগার করুন</string>
     <string name="comment_blog_post_hint">একটি মন্তব্য লিখুন…</string>
     <string name="action_attach_location">অবস্থান সংযুক্ত করুন</string>
+    <string name="action_attach_image">ছবি সংযুক্ত করুন</string>
 </resources>
