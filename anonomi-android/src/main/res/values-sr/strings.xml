@@ -1077,4 +1077,12 @@ Molim vas da uzmete u obzir odobravanja pristupa.</string>
     <string name="ptt_conflict_message">Ово дугме је у супротности са вашом секвенцом за окидање панике.</string>
     <string name="panic_conflict_ptt">Сукобљава се са дугметом „Притисни за разговор“. Прво га промените у подешавањима.</string>
     <string name="walkie_talkie_recording_timer">Снимање… %1$d/12s</string>
+    <string name="like_blog_post">Свиђа ми се</string>
+    <string name="comment_blog_post">Коментар</string>
+    <string name="settings_notification_comments_blog_post">Објаве на блогу - Коментари</string>
+    <string name="notify_blog_posts_comments_setting_summary">Конфигуришите упозорења за коментаре на вашим објавама на блогу</string>
+    <string name="settings_notification_likes_blog_post">Објаве на блогу - Свиђања</string>
+    <string name="notify_blog_posts_likes_setting_summary">Конфигуришите упозорења за свиђања на вашим објавама на блогу</string>
+    <string name="comment_blog_post_hint">Напишите коментар…</string>
+    <string name="action_attach_location">Приложи локацију</string>
 </resources>
