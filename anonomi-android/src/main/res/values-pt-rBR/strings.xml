@@ -1113,4 +1113,5 @@ Primeiro, instale o app Anonomi Postbox em outro dispositivo a partir do mesmo l
     <string name="notify_blog_posts_likes_setting_summary">Configure alertas para curtidas nas suas postagens do blog.</string>
     <string name="comment_blog_post_hint">Escreva um comentário…</string>
     <string name="action_attach_location">Localização do anexo</string>
+    <string name="action_attach_image">Anexar imagem</string>
 </resources>
