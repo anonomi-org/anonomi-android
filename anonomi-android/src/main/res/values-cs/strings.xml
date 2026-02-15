@@ -1107,4 +1107,5 @@
     <string name="notify_blog_posts_likes_setting_summary">Nastavte si upozornění na lajky u příspěvků na blogu</string>
     <string name="comment_blog_post_hint">Napište komentář…</string>
     <string name="action_attach_location">Připojit umístění</string>
+    <string name="action_attach_image">Připojit obrázek</string>
 </resources>
