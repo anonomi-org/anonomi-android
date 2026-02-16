@@ -42,6 +42,7 @@ import org.anonomi.android.splash.SplashScreenActivity;
 import org.anonomi.android.util.BriarNotificationBuilder;
 import org.anonchatsecure.anonchat.api.android.AndroidNotificationManager;
 import org.anonchatsecure.anonchat.api.blog.BlogCommentHeader;
+import org.anonchatsecure.anonchat.api.blog.BlogConstants;
 import org.anonchatsecure.anonchat.api.blog.BlogPostHeader;
 import org.anonchatsecure.anonchat.api.blog.event.BlogPostAddedEvent;
 import org.anonchatsecure.anonchat.api.conversation.ConversationResponse;
@@ -99,9 +100,6 @@ import static org.anonomi.android.navdrawer.NavDrawerActivity.CONTACT_URI;
 import static org.anonomi.android.navdrawer.NavDrawerActivity.FORUM_URI;
 import static org.anonomi.android.navdrawer.NavDrawerActivity.GROUP_URI;
 import static org.anonomi.android.settings.SettingsFragment.SETTINGS_NAMESPACE;
-import static org.anonchatsecure.anonchat.api.blog.BlogConstants.COMMENT_MARKER;
-import static org.anonchatsecure.anonchat.api.blog.BlogConstants.LIKE_MARKER;
-import static org.anonchatsecure.anonchat.api.blog.BlogConstants.UNLIKE_MARKER;
 import static java.util.logging.Level.WARNING;
 
 @ThreadSafe
@@ -300,19 +298,28 @@ class AndroidNotificationManagerImpl implements AndroidNotificationManager,
 		if (h instanceof BlogCommentHeader) {
 			BlogCommentHeader c = (BlogCommentHeader) h;
 			String comment = c.getComment();
-			if (LIKE_MARKER.equals(comment) || UNLIKE_MARKER.equals(comment) ||
-					(comment != null && comment.startsWith(COMMENT_MARKER))) {
-				// This is an interaction (like or comment)
+			if (BlogConstants.LIKE_MARKER.equals(comment)) {
+				// This is a like interaction
 				// Popup only if the interaction targets our own post
 				try {
 					AuthorId localId = identityManager.getLocalAuthor().getId();
 					if (c.getParent().getAuthor().getId().equals(localId)) {
-						if (LIKE_MARKER.equals(comment) ||
-								UNLIKE_MARKER.equals(comment)) {
-							showBlogLikeNotification(b.getGroupId());
-						} else {
-							showBlogCommentNotification(b.getGroupId());
-						}
+						showBlogLikeNotification(b.getGroupId());
+					}
+				} catch (DbException e) {
+					logException(LOG, WARNING, e);
+				}
+				return;
+			} else if (BlogConstants.UNLIKE_MARKER.equals(comment)) {
+				// We ignore unlike notifications completely
+				return;
+			} else if (BlogConstants.isComment(comment)) {
+				// This is a comment interaction
+				// Popup only if the interaction targets our own post
+				try {
+					AuthorId localId = identityManager.getLocalAuthor().getId();
+					if (c.getParent().getAuthor().getId().equals(localId)) {
+						showBlogCommentNotification(b.getGroupId());
 					}
 				} catch (DbException e) {
 					logException(LOG, WARNING, e);
