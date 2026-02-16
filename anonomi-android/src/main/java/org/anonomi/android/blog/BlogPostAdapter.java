@@ -34,7 +34,8 @@ class BlogPostAdapter extends ListAdapter<BlogPostItem, BlogPostViewHolder> {
 				return a.isRead() == b.isRead()
 					&& a.getLikeCount() == b.getLikeCount()
 					&& a.isLikedByMe() == b.isLikedByMe()
-					&& a.getBlogComments().equals(b.getBlogComments());
+					&& a.getBlogComments().equals(b.getBlogComments())
+					&& a.getLikers().size() == b.getLikers().size();
 			}
 		});
 		this.authorClickable = authorClickable;

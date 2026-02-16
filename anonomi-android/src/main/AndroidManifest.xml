@@ -380,6 +380,16 @@
 		</activity>
 
 		<activity
+			android:name="org.anonomi.android.blog.BlogInteractionsActivity"
+			android:exported="false"
+			android:label="@string/blog_interactions_title"
+			android:parentActivityName="org.anonomi.android.blog.BlogActivity">
+			<meta-data
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value="org.anonomi.android.blog.BlogActivity" />
+		</activity>
+
+		<activity
 			android:name="org.anonomi.android.blog.BlogActivity"
 			android:exported="false"
 			android:parentActivityName="org.anonomi.android.navdrawer.NavDrawerActivity"

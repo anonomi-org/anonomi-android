@@ -186,6 +186,15 @@ public class FeedFragment extends BaseFragment
 	}
 
 	@Override
+	public void onInteractionsClick(BlogPostItem post) {
+		Intent i = new Intent(requireContext(),
+				BlogInteractionsActivity.class);
+		i.putExtra(GROUP_ID, post.getGroupId().getBytes());
+		i.putExtra(POST_ID, post.getId().getBytes());
+		startActivity(i);
+	}
+
+	@Override
 	public String getUniqueTag() {
 		return TAG;
 	}

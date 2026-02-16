@@ -15,4 +15,6 @@ interface OnBlogPostClickListener {
 	void onLikeClick(BlogPostItem post);
 
 	void onCommentClick(BlogPostItem post);
+
+	void onInteractionsClick(BlogPostItem post);
 }

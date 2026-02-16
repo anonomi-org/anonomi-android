@@ -185,6 +185,15 @@ public class BlogPostFragment extends BaseFragment
 	}
 
 	@Override
+	public void onInteractionsClick(BlogPostItem post) {
+		Intent i = new Intent(requireContext(),
+				BlogInteractionsActivity.class);
+		i.putExtra(GROUP_ID, post.getGroupId().getBytes());
+		i.putExtra(POST_ID, post.getId().getBytes());
+		startActivity(i);
+	}
+
+	@Override
 	public void onCommentClick(BlogPostItem post) {
 		if (getContext() == null) return;
 		android.widget.EditText input = new android.widget.EditText(getContext());

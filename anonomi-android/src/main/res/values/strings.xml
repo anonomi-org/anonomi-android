@@ -564,6 +564,10 @@
     <string name="blogs_sharing_joined_toast">Subscribed to blog</string>
     <string name="blogs_sharing_declined_toast">Invitation declined</string>
     <string name="sharing_status_blog">Anyone who subscribes to a blog can share it with their contacts. You are sharing this blog with the following contacts. There may also be other subscribers who you can\'t see.</string>
+    <string name="blog_interactions_title">Interactions</string>
+    <string name="blog_interactions_info">The likes and comments on this post are from your contacts.</string>
+    <string name="blog_liked_by">Liked by</string>
+    <string name="blog_commented_by">Commented by</string>
     <!-- RSS Feeds -->
 	<string name="blogs_rss_feeds_import">Import RSS Feed</string>
     <string name="blogs_rss_feeds_import_button">Import</string>

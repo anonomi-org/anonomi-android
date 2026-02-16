@@ -30,6 +30,9 @@ public class BlogPostItem implements Comparable<BlogPostItem> {
 	private boolean likedByMe = false;
 	private List<BaseViewModel.BlogComment> blogComments =
 			Collections.emptyList();
+	private List<BaseViewModel.BlogLiker> likers = Collections.emptyList();
+	private List<BaseViewModel.BlogLiker> commenterAuthors =
+			Collections.emptyList();
 
 	BlogPostItem(BlogPostHeader header, @Nullable String text) {
 		this(header, text, null, null);
@@ -53,6 +56,8 @@ public class BlogPostItem implements Comparable<BlogPostItem> {
 		this.likeCount = other.likeCount;
 		this.likedByMe = other.likedByMe;
 		this.blogComments = new ArrayList<>(other.blogComments);
+		this.likers = new ArrayList<>(other.likers);
+		this.commenterAuthors = new ArrayList<>(other.commenterAuthors);
 	}
 
 	public MessageId getId() {
@@ -138,6 +143,23 @@ public class BlogPostItem implements Comparable<BlogPostItem> {
 
 	public void setBlogComments(List<BaseViewModel.BlogComment> comments) {
 		this.blogComments = comments;
+	}
+
+	public List<BaseViewModel.BlogLiker> getLikers() {
+		return likers;
+	}
+
+	public void setLikers(List<BaseViewModel.BlogLiker> likers) {
+		this.likers = likers;
+	}
+
+	public List<BaseViewModel.BlogLiker> getCommenterAuthors() {
+		return commenterAuthors;
+	}
+
+	public void setCommenterAuthors(
+			List<BaseViewModel.BlogLiker> commenterAuthors) {
+		this.commenterAuthors = commenterAuthors;
 	}
 
 	@Override

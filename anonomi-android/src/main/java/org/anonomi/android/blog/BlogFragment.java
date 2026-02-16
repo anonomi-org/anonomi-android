@@ -236,6 +236,14 @@ public class BlogFragment extends BaseFragment
 		onBlogPostClick(post);
 	}
 
+	@Override
+	public void onInteractionsClick(BlogPostItem post) {
+		Intent i = new Intent(getContext(), BlogInteractionsActivity.class);
+		i.putExtra(GROUP_ID, post.getGroupId().getBytes());
+		i.putExtra(BlogPostFragment.POST_ID, post.getId().getBytes());
+		startActivity(i);
+	}
+
 	private void displaySnackbar(int stringId, boolean scroll) {
 		BriarSnackbarBuilder sb = new BriarSnackbarBuilder();
 		if (scroll) {
