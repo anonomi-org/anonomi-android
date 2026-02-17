@@ -1087,4 +1087,14 @@
     <string name="comment_blog_post_hint">একটি মন্তব্য লিখুন…</string>
     <string name="action_attach_location">অবস্থান সংযুক্ত করুন</string>
     <string name="action_attach_image">ছবি সংযুক্ত করুন</string>
+    <string name="message_retention_title">বার্তা ধরে রাখা</string>
+    <string name="message_retention_info">নির্বাচিত সময়কালের পরে এই ডিভাইস থেকে পুরানো বার্তাগুলি স্বয়ংক্রিয়ভাবে মুছে ফেলা হবে।</string>
+    <string name="retention_90_days">৯০ দিন</string>
+    <string name="retention_180_days">১৮০ দিন</string>
+    <string name="retention_keep_forever">চিরকাল রাখুন</string>
+    <string name="retention_updated_toast">বার্তা ধরে রাখার সুবিধা আপডেট করা হয়েছে</string>
+    <string name="blog_interactions_title">মিথস্ক্রিয়া</string>
+    <string name="blog_interactions_info">এই পোস্টে লাইক এবং মন্তব্যগুলি আপনার পরিচিতিদের কাছ থেকে এসেছে।</string>
+    <string name="blog_liked_by">পছন্দ করেছেন</string>
+    <string name="blog_commented_by">মন্তব্য করেছেন</string>
 </resources>
