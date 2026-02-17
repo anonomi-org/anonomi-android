@@ -1121,4 +1121,14 @@
     <string name="comment_blog_post_hint">Напишіть коментар…</string>
     <string name="action_attach_location">Додати місцезнаходження</string>
     <string name="action_attach_image">Прикріпити зображення</string>
+    <string name="message_retention_title">Збереження повідомлень</string>
+    <string name="message_retention_info">Старі повідомлення будуть автоматично видалені з цього пристрою після вибраного періоду.</string>
+    <string name="retention_90_days">90 днів</string>
+    <string name="retention_180_days">180 днів</string>
+    <string name="retention_keep_forever">Зберігати назавжди</string>
+    <string name="retention_updated_toast">Збереження повідомлень оновлено</string>
+    <string name="blog_interactions_title">Взаємодії</string>
+    <string name="blog_interactions_info">Вподобання та коментарі до цієї публікації надійшли від ваших контактів.</string>
+    <string name="blog_liked_by">Сподобалося користувачу</string>
+    <string name="blog_commented_by">Коментував</string>
 </resources>
