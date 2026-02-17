@@ -1126,4 +1126,6 @@ Pirmiausia, įdiekite „Anonomi Postbox“ programėlę į kitą įrenginį iš
     <string name="blog_interactions_info">Šio įrašo patiktukai ir komentarai yra iš jūsų kontaktų.</string>
     <string name="blog_liked_by">Patinka</string>
     <string name="blog_commented_by">Komentarą pateikė</string>
+    <string name="retention_7_days">7 dienos</string>
+    <string name="retention_30_days">3 dienos</string>
 </resources>
