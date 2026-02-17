@@ -1088,4 +1088,6 @@
     <string name="blog_interactions_info">此貼文的讚和留言均來自您的聯絡人。</string>
     <string name="blog_liked_by">讚</string>
     <string name="blog_commented_by">評論者</string>
+    <string name="retention_7_days">7天</string>
+    <string name="retention_30_days">3天</string>
 </resources>
