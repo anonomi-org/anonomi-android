@@ -205,6 +205,18 @@ public interface ForumManager {
 			throws DbException;
 
 	/**
+	 * Returns the retention duration for the given forum, or -1 if messages
+	 * are kept forever.
+	 */
+	long getRetentionDuration(GroupId g) throws DbException;
+
+	/**
+	 * Sets the retention duration for the given forum. Use -1 to keep
+	 * messages forever.
+	 */
+	void setRetentionDuration(GroupId g, long durationMs) throws DbException;
+
+	/**
 	 * Registers a hook to be called whenever a forum is removed.
 	 */
 	void registerRemoveForumHook(RemoveForumHook hook);

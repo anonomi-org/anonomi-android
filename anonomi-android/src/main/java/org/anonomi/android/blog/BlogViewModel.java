@@ -34,6 +34,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Executor;
+import java.util.function.Consumer;
 import java.util.logging.Logger;
 
 import javax.inject.Inject;
@@ -208,5 +209,26 @@ class BlogViewModel extends BaseViewModel {
 
 	LiveData<SharingInfo> getSharingInfo() {
 		return sharingController.getSharingInfo();
+	}
+
+	void loadRetentionDuration(GroupId g, Consumer<Long> callback) {
+		runOnDbThread(() -> {
+			try {
+				long duration = blogManager.getRetentionDuration(g);
+				androidExecutor.runOnUiThread(() -> callback.accept(duration));
+			} catch (DbException e) {
+				handleException(e);
+			}
+		});
+	}
+
+	void setRetentionDuration(GroupId g, long duration) {
+		runOnDbThread(() -> {
+			try {
+				blogManager.setRetentionDuration(g, duration);
+			} catch (DbException e) {
+				handleException(e);
+			}
+		});
 	}
 }

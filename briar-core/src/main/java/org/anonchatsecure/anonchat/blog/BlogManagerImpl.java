@@ -19,6 +19,7 @@
 package org.anonchatsecure.anonchat.blog;
 
 import org.anonchatsecure.bramble.api.FormatException;
+import org.anonchatsecure.bramble.api.cleanup.CleanupHook;
 import org.anonchatsecure.bramble.api.client.BdfIncomingMessageHook;
 import org.anonchatsecure.bramble.api.client.ClientHelper;
 import org.anonchatsecure.bramble.api.contact.Contact;
@@ -39,6 +40,7 @@ import org.anonchatsecure.bramble.api.sync.Group;
 import org.anonchatsecure.bramble.api.sync.GroupId;
 import org.anonchatsecure.bramble.api.sync.Message;
 import org.anonchatsecure.bramble.api.sync.MessageId;
+import org.anonchatsecure.bramble.api.system.Clock;
 import org.anonchatsecure.anonchat.api.blog.Blog;
 import org.anonchatsecure.anonchat.api.blog.BlogCommentHeader;
 import org.anonchatsecure.anonchat.api.blog.BlogFactory;
@@ -89,24 +91,28 @@ import static org.anonchatsecure.anonchat.api.identity.AuthorInfo.Status.NONE;
 
 @NotNullByDefault
 class BlogManagerImpl extends BdfIncomingMessageHook implements BlogManager,
-		OpenDatabaseHook, ContactHook {
+		OpenDatabaseHook, ContactHook, CleanupHook {
+
+	private static final String KEY_RETENTION_DURATION = "retentionDuration";
 
 	private final IdentityManager identityManager;
 	private final AuthorManager authorManager;
 	private final BlogFactory blogFactory;
 	private final BlogPostFactory blogPostFactory;
+	private final Clock clock;
 	private final List<RemoveBlogHook> removeHooks;
 
 	@Inject
 	BlogManagerImpl(DatabaseComponent db, IdentityManager identityManager,
 			AuthorManager authorManager, ClientHelper clientHelper,
 			MetadataParser metadataParser, BlogFactory blogFactory,
-			BlogPostFactory blogPostFactory) {
+			BlogPostFactory blogPostFactory, Clock clock) {
 		super(db, clientHelper, metadataParser);
 		this.identityManager = identityManager;
 		this.authorManager = authorManager;
 		this.blogFactory = blogFactory;
 		this.blogPostFactory = blogPostFactory;
+		this.clock = clock;
 		removeHooks = new CopyOnWriteArrayList<>();
 	}
 
@@ -153,6 +159,9 @@ class BlogManagerImpl extends BdfIncomingMessageHook implements BlogManager,
 					throw new FormatException();
 				}
 			}
+
+			// apply retention timer if set
+			applyRetentionToMessage(txn, groupId, m);
 
 			// broadcast event about new post or comment
 			BlogPostAddedEvent event =
@@ -761,6 +770,89 @@ class BlogManagerImpl extends BdfIncomingMessageHook implements BlogManager,
 			return new BlogPostHeader(type, groupId, id, null, timestamp,
 					timeReceived, author, authorInfo, isFeedPost, read,
 					hasImage);
+		}
+	}
+
+	private void applyRetentionToMessage(Transaction txn, GroupId groupId,
+			Message m) throws DbException, FormatException {
+		BdfDictionary groupMeta =
+				clientHelper.getGroupMetadataAsDictionary(txn, groupId);
+		long retention = groupMeta.getLong(KEY_RETENTION_DURATION, -1L);
+		if (retention > 0) {
+			long deadline = m.getTimestamp() + retention;
+			long duration = deadline - clock.currentTimeMillis();
+			if (duration <= 0) {
+				db.deleteMessage(txn, m.getId());
+				db.deleteMessageMetadata(txn, m.getId());
+			} else {
+				db.setCleanupTimerDuration(txn, m.getId(), duration);
+				db.startCleanupTimer(txn, m.getId());
+			}
+		}
+	}
+
+	@Override
+	public long getRetentionDuration(GroupId g) throws DbException {
+		try {
+			return db.transactionWithResult(true, txn -> {
+				BdfDictionary meta =
+						clientHelper.getGroupMetadataAsDictionary(txn, g);
+				return meta.getLong(KEY_RETENTION_DURATION, -1L);
+			});
+		} catch (FormatException e) {
+			throw new DbException(e);
+		}
+	}
+
+	@Override
+	public void setRetentionDuration(GroupId g, long durationMs)
+			throws DbException {
+		db.transaction(false, txn -> {
+			try {
+				BdfDictionary meta = BdfDictionary.of(
+						new BdfEntry(KEY_RETENTION_DURATION, durationMs));
+				clientHelper.mergeGroupMetadata(txn, g, meta);
+				applyRetentionToExistingMessages(txn, g, durationMs);
+			} catch (FormatException e) {
+				throw new DbException(e);
+			}
+		});
+	}
+
+	private void applyRetentionToExistingMessages(Transaction txn,
+			GroupId g, long durationMs) throws DbException {
+		Collection<MessageId> messageIds = db.getMessageIds(txn, g);
+		long now = clock.currentTimeMillis();
+		for (MessageId m : messageIds) {
+			if (durationMs == -1) {
+				db.stopCleanupTimer(txn, m);
+			} else {
+				try {
+					BdfDictionary meta = clientHelper
+							.getMessageMetadataAsDictionary(txn, m);
+					long timestamp = meta.getLong(KEY_TIMESTAMP);
+					long deadline = timestamp + durationMs;
+					if (deadline <= now) {
+						db.deleteMessage(txn, m);
+						db.deleteMessageMetadata(txn, m);
+					} else {
+						long remaining = deadline - now;
+						db.setCleanupTimerDuration(txn, m, remaining);
+						db.startCleanupTimer(txn, m);
+					}
+				} catch (FormatException e) {
+					throw new DbException(e);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void deleteMessages(Transaction txn, GroupId g,
+			Collection<MessageId> messageIds) throws DbException {
+		for (MessageId m : messageIds) {
+			db.deleteMessage(txn, m);
+			db.deleteMessageMetadata(txn, m);
 		}
 	}
 

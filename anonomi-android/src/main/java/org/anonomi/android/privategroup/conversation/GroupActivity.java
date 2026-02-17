@@ -34,6 +34,7 @@ import org.anonomi.android.map.MapLocationPickerActivity;
 import org.anonomi.android.threaded.ThreadListActivity;
 import org.anonomi.android.threaded.ThreadListViewModel;
 import org.anonomi.android.util.AudioUtils;
+import org.anonomi.android.util.RetentionHelper;
 import org.anonomi.android.util.WalkieTalkiePlayer;
 import org.anonomi.android.view.CompositeSendButton;
 import org.anonomi.android.widget.LinkDialogFragment;
@@ -358,6 +359,9 @@ public class GroupActivity extends
 			Intent i = new Intent(this, GroupInviteActivity.class);
 			i.putExtra(GROUP_ID, groupId.getBytes());
 			startActivityForResult(i, REQUEST_GROUP_INVITE);
+			return true;
+		} else if (itemId == R.id.action_message_retention) {
+			showRetentionDialog();
 			return true;
 		} else if (itemId == R.id.action_group_leave) {
 			if (requireNonNull(viewModel.isCreator().getValue()))
@@ -714,6 +718,18 @@ public class GroupActivity extends
 	}
 
 	// Dialogs
+
+	private void showRetentionDialog() {
+		viewModel.loadRetentionDuration(duration ->
+				RetentionHelper.showRetentionDialog(this, duration,
+						newDuration -> {
+							viewModel.setRetentionDuration(newDuration);
+							Toast.makeText(this,
+									R.string.retention_updated_toast,
+									Toast.LENGTH_SHORT).show();
+						})
+		);
+	}
 
 	private void showLeaveGroupDialog() {
 		MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(

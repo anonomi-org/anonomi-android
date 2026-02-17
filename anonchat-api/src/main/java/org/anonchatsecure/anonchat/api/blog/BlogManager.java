@@ -209,6 +209,18 @@ public interface BlogManager {
 	void setReadFlag(Transaction txn, MessageId m, boolean read) throws DbException;
 
 	/**
+	 * Returns the retention duration for the given blog, or -1 if messages
+	 * are kept forever.
+	 */
+	long getRetentionDuration(GroupId g) throws DbException;
+
+	/**
+	 * Sets the retention duration for the given blog. Use -1 to keep
+	 * messages forever.
+	 */
+	void setRetentionDuration(GroupId g, long durationMs) throws DbException;
+
+	/**
 	 * Registers a hook to be called whenever a blog is removed.
 	 */
 	void registerRemoveBlogHook(RemoveBlogHook hook);
