@@ -1057,4 +1057,14 @@
     <string name="comment_blog_post_hint">Kirjoita kommentti…</string>
     <string name="action_attach_location">Liitä sijainti</string>
     <string name="action_attach_image">Liitä kuva</string>
+    <string name="message_retention_title">Viestien säilytys</string>
+    <string name="message_retention_info">Vanhat viestit poistetaan tältä laitteelta automaattisesti valitun ajanjakson kuluttua.</string>
+    <string name="retention_90_days">90 päivää</string>
+    <string name="retention_180_days">180 päivää</string>
+    <string name="retention_keep_forever">Säilytä ikuisesti</string>
+    <string name="retention_updated_toast">Viestien säilytys päivitetty</string>
+    <string name="blog_interactions_title">Vuorovaikutukset</string>
+    <string name="blog_interactions_info">Tämän julkaisun tykkäykset ja kommentit ovat yhteystiedoiltasi.</string>
+    <string name="blog_liked_by">Tykätty</string>
+    <string name="blog_commented_by">Kommentoija</string>
 </resources>
