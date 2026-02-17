@@ -1117,4 +1117,14 @@ Brak dostępu do aparatu. Spróbuj ponownie, może po ponownym uruchomieniu urz�
     <string name="comment_blog_post_hint">Napisz komentarz…</string>
     <string name="action_attach_location">Dołącz lokalizację</string>
     <string name="action_attach_image">Załącz obraz</string>
+    <string name="message_retention_title">Przechowywanie wiadomości</string>
+    <string name="message_retention_info">Stare wiadomości zostaną automatycznie usunięte z tego urządzenia po upływie wybranego okresu.</string>
+    <string name="retention_90_days">90 dni</string>
+    <string name="retention_180_days">180 dni</string>
+    <string name="retention_keep_forever">Zachowaj na zawsze</string>
+    <string name="retention_updated_toast">Zaktualizowano przechowywanie wiadomości</string>
+    <string name="blog_interactions_title">Interakcje</string>
+    <string name="blog_interactions_info">Polubienia i komentarze pod tym postem pochodzą od Twoich kontaktów.</string>
+    <string name="blog_liked_by">Polubione przez</string>
+    <string name="blog_commented_by">Skomentowane przez</string>
 </resources>
