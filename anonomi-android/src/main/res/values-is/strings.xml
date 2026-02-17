@@ -1092,4 +1092,6 @@
     <string name="blog_interactions_info">Líkið og athugasemdirnar við þessa færslu eru frá tengiliðum þínum.</string>
     <string name="blog_liked_by">Líkað við af</string>
     <string name="blog_commented_by">Skrifað athugasemd af</string>
+    <string name="retention_7_days">7 dagar</string>
+    <string name="retention_30_days">3 dagar</string>
 </resources>
