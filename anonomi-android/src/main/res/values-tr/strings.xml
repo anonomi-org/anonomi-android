@@ -1088,4 +1088,16 @@
     <string name="comment_blog_post_hint">Yorum yazın…</string>
     <string name="action_attach_location">Konumu Ekle</string>
     <string name="action_attach_image">Görsel ekle</string>
+    <string name="message_retention_title">Mesaj Saklama</string>
+    <string name="message_retention_info">Seçilen süre sonunda eski mesajlar bu cihazdan otomatik olarak silinecektir.</string>
+    <string name="retention_90_days">90 gün</string>
+    <string name="retention_180_days">180 gün</string>
+    <string name="retention_keep_forever">Sonsuza dek sakla</string>
+    <string name="retention_updated_toast">Mesaj saklama süresi güncellendi.</string>
+    <string name="blog_interactions_title">Etkileşimler</string>
+    <string name="blog_interactions_info">Bu gönderiye gelen beğeniler ve yorumlar, kişilerinizden geliyor.</string>
+    <string name="blog_liked_by">Beğenenler</string>
+    <string name="blog_commented_by">Yorum yapan:</string>
+    <string name="retention_7_days">7 gün</string>
+    <string name="retention_30_days">3 gün</string>
 </resources>

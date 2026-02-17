@@ -1075,4 +1075,16 @@
     <string name="comment_blog_post_hint">မှတ်ချက်ရေးပါ…</string>
     <string name="action_attach_location">တည်နေရာကို ပူးတွဲပါ</string>
     <string name="action_attach_image">ရုပ်ပုံတွဲမည်</string>
+    <string name="message_retention_title">မက်ဆေ့ချ် သိမ်းဆည်းထားခြင်း</string>
+    <string name="message_retention_info">ရွေးချယ်ထားသောကာလအပြီးတွင် မက်ဆေ့ချ်ဟောင်းများကို ဤစက်ပစ္စည်းမှ အလိုအလျောက်ဖျက်ပစ်ပါမည်။</string>
+    <string name="retention_90_days">ရက်ပေါင်း ၉၀</string>
+    <string name="retention_180_days">၁၈၀ ရက်</string>
+    <string name="retention_keep_forever">ထာဝရသိမ်းဆည်းထားပါ</string>
+    <string name="retention_updated_toast">မက်ဆေ့ချ်ထိန်းသိမ်းမှုကို အပ်ဒိတ်လုပ်ထားသည်</string>
+    <string name="blog_interactions_title">အပြန်အလှန် ဆက်သွယ်မှု</string>
+    <string name="blog_interactions_info">ဤပို့စ်ရှိ လိုက်ခ်များနှင့် မှတ်ချက်များသည် သင့်အဆက်အသွယ်များထံမှ ဖြစ်သည်။</string>
+    <string name="blog_liked_by">ကြိုက်နှစ်သက်သူ</string>
+    <string name="blog_commented_by">မှတ်ချက်ပေးသူ</string>
+    <string name="retention_7_days">7 ရက်</string>
+    <string name="retention_30_days">3 ရက်</string>
 </resources>

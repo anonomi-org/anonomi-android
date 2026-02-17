@@ -1132,4 +1132,16 @@ Anonomi (برایر) موقعیت شما را ذخیره نمی‌کند و آن
     <string name="comment_blog_post_hint">نظر خود را بنویسید…</string>
     <string name="action_attach_location">محل اتصال</string>
     <string name="action_attach_image">پیوست کردن تصویر</string>
+    <string name="message_retention_title">نگهداری پیام</string>
+    <string name="message_retention_info">پیام‌های قدیمی پس از دوره انتخاب‌شده به‌طور خودکار از این دستگاه حذف خواهند شد.</string>
+    <string name="retention_90_days">۹۰ روز</string>
+    <string name="retention_180_days">۱۸۰ روز</string>
+    <string name="retention_keep_forever">برای همیشه نگه دارید</string>
+    <string name="retention_updated_toast">به‌روزرسانی نگهداری پیام‌ها</string>
+    <string name="blog_interactions_title">تعاملات</string>
+    <string name="blog_interactions_info">لایک‌ها و کامنت‌های این پست از مخاطبین شما هستند.</string>
+    <string name="blog_liked_by">پسندیده شده توسط</string>
+    <string name="blog_commented_by">نظر داده شده توسط</string>
+    <string name="retention_7_days">۷ روز</string>
+    <string name="retention_30_days">۳ روز</string>
 </resources>

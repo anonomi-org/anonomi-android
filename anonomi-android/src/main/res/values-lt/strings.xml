@@ -1116,4 +1116,16 @@ Pirmiausia, įdiekite „Anonomi Postbox“ programėlę į kitą įrenginį iš
     <string name="comment_blog_post_hint">Parašykite komentarą…</string>
     <string name="action_attach_location">Pridėti vietą</string>
     <string name="action_attach_image">Pridėti atvaizdą</string>
+    <string name="message_retention_title">Pranešimų išsaugojimas</string>
+    <string name="message_retention_info">Seni pranešimai bus automatiškai ištrinti iš šio įrenginio po pasirinkto laikotarpio.</string>
+    <string name="retention_90_days">90 dienų</string>
+    <string name="retention_180_days">180 dienų</string>
+    <string name="retention_keep_forever">Laikyti amžinai</string>
+    <string name="retention_updated_toast">Pranešimų išsaugojimas atnaujintas</string>
+    <string name="blog_interactions_title">Sąveika</string>
+    <string name="blog_interactions_info">Šio įrašo patiktukai ir komentarai yra iš jūsų kontaktų.</string>
+    <string name="blog_liked_by">Patinka</string>
+    <string name="blog_commented_by">Komentarą pateikė</string>
+    <string name="retention_7_days">7 dienos</string>
+    <string name="retention_30_days">3 dienos</string>
 </resources>

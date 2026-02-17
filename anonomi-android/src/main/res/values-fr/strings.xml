@@ -1098,4 +1098,16 @@ copies des messages que vous envoyez.
     <string name="comment_blog_post_hint">Écrire un commentaire…</string>
     <string name="action_attach_location">Attacher l\'emplacement</string>
     <string name="action_attach_image">Joindre une image</string>
+    <string name="message_retention_title">Rétention des messages</string>
+    <string name="message_retention_info">Les anciens messages seront automatiquement supprimés de cet appareil après la période sélectionnée.</string>
+    <string name="retention_90_days">90 jours</string>
+    <string name="retention_180_days">180 jours</string>
+    <string name="retention_keep_forever">À garder pour toujours</string>
+    <string name="retention_updated_toast">Mise à jour de la conservation des messages</string>
+    <string name="blog_interactions_title">Interactions</string>
+    <string name="blog_interactions_info">Les mentions « J’aime » et les commentaires sur cette publication proviennent de vos contacts.</string>
+    <string name="blog_liked_by">Aimé par</string>
+    <string name="blog_commented_by">Commenté par</string>
+    <string name="retention_7_days">7 jours</string>
+    <string name="retention_30_days">3 jours</string>
 </resources>

@@ -1086,4 +1086,16 @@ Molim vas da uzmete u obzir odobravanja pristupa.</string>
     <string name="comment_blog_post_hint">Напишите коментар…</string>
     <string name="action_attach_location">Приложи локацију</string>
     <string name="action_attach_image">Zakaci sliku</string>
+    <string name="message_retention_title">Задржавање порука</string>
+    <string name="message_retention_info">Старе поруке ће бити аутоматски обрисане са овог уређаја након изабраног периода.</string>
+    <string name="retention_90_days">90 дана</string>
+    <string name="retention_180_days">180 дана</string>
+    <string name="retention_keep_forever">Задржи заувек</string>
+    <string name="retention_updated_toast">Задржавање порука је ажурирано</string>
+    <string name="blog_interactions_title">Интеракције</string>
+    <string name="blog_interactions_info">Лајкови и коментари на ову објаву су од ваших контаката.</string>
+    <string name="blog_liked_by">Свиђа се кориснику</string>
+    <string name="blog_commented_by">Коментарисао/ла</string>
+    <string name="retention_7_days">7 дана</string>
+    <string name="retention_30_days">3 дана</string>
 </resources>

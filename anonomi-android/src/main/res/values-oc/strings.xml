@@ -1066,4 +1066,16 @@ parteja pas amb degun.</string>
     <string name="comment_blog_post_hint">Escrivètz un comentari…</string>
     <string name="action_attach_location">Adjuntar l\'emplaçament</string>
     <string name="action_attach_image">Juntar un imatge</string>
+    <string name="message_retention_title">Retencion de messatges</string>
+    <string name="message_retention_info">Los messatges ancians seràn automaticament suprimits d\'aqueste periferic après lo periòde seleccionat.</string>
+    <string name="retention_90_days">90 jorns</string>
+    <string name="retention_180_days">180 jorns</string>
+    <string name="retention_keep_forever">Gardar per totjorn</string>
+    <string name="retention_updated_toast">La retencion dels messatges mesa a jorn</string>
+    <string name="blog_interactions_title">Interaccions</string>
+    <string name="blog_interactions_info">Los m\'agrada e los comentaris sus aqueste messatge son de vòstres contactes.</string>
+    <string name="blog_liked_by">Agradat per</string>
+    <string name="blog_commented_by">Comentat per</string>
+    <string name="retention_7_days">7 jorns</string>
+    <string name="retention_30_days">3 jorns</string>
 </resources>

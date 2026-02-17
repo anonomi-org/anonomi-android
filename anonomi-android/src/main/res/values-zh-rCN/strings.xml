@@ -1076,4 +1076,16 @@
     <string name="comment_blog_post_hint">请留言……</string>
     <string name="action_attach_location">附加位置</string>
     <string name="action_attach_image">附加图片</string>
+    <string name="message_retention_title">信息保留</string>
+    <string name="message_retention_info">选定期限过后，旧消息将自动从此设备中删除。</string>
+    <string name="retention_90_days">90天</string>
+    <string name="retention_180_days">180天</string>
+    <string name="retention_keep_forever">永远珍藏</string>
+    <string name="retention_updated_toast">消息保留已更新</string>
+    <string name="blog_interactions_title">互动</string>
+    <string name="blog_interactions_info">此帖子的点赞和评论均来自您的联系人。</string>
+    <string name="blog_liked_by">点赞</string>
+    <string name="blog_commented_by">评论者</string>
+    <string name="retention_7_days">7天</string>
+    <string name="retention_30_days">3天</string>
 </resources>

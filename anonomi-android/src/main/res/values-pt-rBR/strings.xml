@@ -1114,4 +1114,16 @@ Primeiro, instale o app Anonomi Postbox em outro dispositivo a partir do mesmo l
     <string name="comment_blog_post_hint">Escreva um comentário…</string>
     <string name="action_attach_location">Localização do anexo</string>
     <string name="action_attach_image">Anexar imagem</string>
+    <string name="message_retention_title">Retenção de mensagens</string>
+    <string name="message_retention_info">As mensagens antigas serão apagadas automaticamente deste dispositivo após o período selecionado.</string>
+    <string name="retention_90_days">90 dias</string>
+    <string name="retention_180_days">180 dias</string>
+    <string name="retention_keep_forever">Guarde para sempre</string>
+    <string name="retention_updated_toast">Retenção de mensagens atualizada</string>
+    <string name="blog_interactions_title">Interações</string>
+    <string name="blog_interactions_info">As curtidas e os comentários desta publicação são de seus contatos.</string>
+    <string name="blog_liked_by">Curtido por</string>
+    <string name="blog_commented_by">Comentado por</string>
+    <string name="retention_7_days">7 dias</string>
+    <string name="retention_30_days">3 dias</string>
 </resources>

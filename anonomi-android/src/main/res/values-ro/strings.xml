@@ -1102,4 +1102,16 @@
     <string name="comment_blog_post_hint">Scrie un comentariu…</string>
     <string name="action_attach_location">Atașați locația</string>
     <string name="action_attach_image">Atașați imagine</string>
+    <string name="message_retention_title">Păstrarea mesajelor</string>
+    <string name="message_retention_info">Mesajele vechi vor fi șterse automat de pe acest dispozitiv după perioada selectată.</string>
+    <string name="retention_90_days">90 de zile</string>
+    <string name="retention_180_days">180 de zile</string>
+    <string name="retention_keep_forever">Păstrați pentru totdeauna</string>
+    <string name="retention_updated_toast">Păstrarea mesajelor a fost actualizată</string>
+    <string name="blog_interactions_title">Interacțiuni</string>
+    <string name="blog_interactions_info">Aprecierile și comentariile la această postare provin de la contactele tale.</string>
+    <string name="blog_liked_by">Apreciat de</string>
+    <string name="blog_commented_by">Comentat de</string>
+    <string name="retention_7_days">7 zile</string>
+    <string name="retention_30_days">3 zile</string>
 </resources>

@@ -1067,4 +1067,16 @@
     <string name="comment_blog_post_hint">Schrijf een reactie…</string>
     <string name="action_attach_location">Bevestigingslocatie</string>
     <string name="action_attach_image">Voeg een afbeelding toe</string>
+    <string name="message_retention_title">Berichtbehoud</string>
+    <string name="message_retention_info">Oude berichten worden na de geselecteerde periode automatisch van dit apparaat verwijderd.</string>
+    <string name="retention_90_days">90 dagen</string>
+    <string name="retention_180_days">180 dagen</string>
+    <string name="retention_keep_forever">Bewaar voor altijd</string>
+    <string name="retention_updated_toast">Berichtretentie bijgewerkt</string>
+    <string name="blog_interactions_title">Interacties</string>
+    <string name="blog_interactions_info">De likes en reacties op dit bericht zijn afkomstig van uw contacten.</string>
+    <string name="blog_liked_by">Vind ik leuk</string>
+    <string name="blog_commented_by">Commentaar van</string>
+    <string name="retention_7_days">7 dagen</string>
+    <string name="retention_30_days">3 dagen</string>
 </resources>

@@ -1045,4 +1045,16 @@
     <string name="comment_blog_post_hint">댓글을 남겨주세요…</string>
     <string name="action_attach_location">부착 위치</string>
     <string name="action_attach_image">이미지 첨부하기</string>
+    <string name="message_retention_title">메시지 보존</string>
+    <string name="message_retention_info">선택한 기간이 지나면 이전 메시지가 이 기기에서 자동으로 삭제됩니다.</string>
+    <string name="retention_90_days">90일</string>
+    <string name="retention_180_days">180일</string>
+    <string name="retention_keep_forever">영원히 간직하세요</string>
+    <string name="retention_updated_toast">메시지 보존 기간이 업데이트되었습니다.</string>
+    <string name="blog_interactions_title">상호작용</string>
+    <string name="blog_interactions_info">이 게시물에 달린 좋아요와 댓글은 여러분의 지인들이 남긴 것입니다.</string>
+    <string name="blog_liked_by">좋아요를 누른 사람</string>
+    <string name="blog_commented_by">댓글 작성자:</string>
+    <string name="retention_7_days">7일</string>
+    <string name="retention_30_days">3일</string>
 </resources>

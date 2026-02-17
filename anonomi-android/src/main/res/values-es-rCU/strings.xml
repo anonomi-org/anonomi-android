@@ -1263,4 +1263,16 @@ Si tu contacto creó el archivo hace más de 28 días, Anonomi no podrá reconoc
     <string name="comment_blog_post_hint">Escribe un comentario…</string>
     <string name="action_attach_location">Adjuntar ubicación</string>
     <string name="action_attach_image">Adjuntar imagen</string>
+    <string name="message_retention_title">Retención de mensajes</string>
+    <string name="message_retention_info">Los mensajes antiguos se eliminarán automáticamente de este dispositivo después del período seleccionado.</string>
+    <string name="retention_90_days">90 días</string>
+    <string name="retention_180_days">180 días</string>
+    <string name="retention_keep_forever">Conservar para siempre</string>
+    <string name="retention_updated_toast">Retención de mensajes actualizada</string>
+    <string name="blog_interactions_title">Interacciones</string>
+    <string name="blog_interactions_info">Los me gusta y comentarios de esta publicación son de tus contactos.</string>
+    <string name="blog_liked_by">Me gustó</string>
+    <string name="blog_commented_by">Comentado por</string>
+    <string name="retention_7_days">7 días</string>
+    <string name="retention_30_days">3 días</string>
 </resources>

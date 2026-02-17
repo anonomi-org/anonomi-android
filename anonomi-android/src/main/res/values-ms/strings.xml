@@ -1002,4 +1002,16 @@
     <string name="comment_blog_post_hint">Tulis komen…</string>
     <string name="action_attach_location">Lampirkan Lokasi</string>
     <string name="action_attach_image">Lampirkan imej</string>
+    <string name="message_retention_title">Pengekalan Mesej</string>
+    <string name="message_retention_info">Mesej lama akan dipadamkan secara automatik daripada peranti ini selepas tempoh yang dipilih.</string>
+    <string name="retention_90_days">90 hari</string>
+    <string name="retention_180_days">180 hari</string>
+    <string name="retention_keep_forever">Kekalkan selama-lamanya</string>
+    <string name="retention_updated_toast">Pengekalan mesej dikemas kini</string>
+    <string name="blog_interactions_title">Interaksi</string>
+    <string name="blog_interactions_info">Suka dan komen pada siaran ini adalah daripada kenalan anda.</string>
+    <string name="blog_liked_by">Disukai oleh</string>
+    <string name="blog_commented_by">Diulas oleh</string>
+    <string name="retention_7_days">7 hari</string>
+    <string name="retention_30_days">3 hari</string>
 </resources>

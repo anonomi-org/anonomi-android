@@ -1086,4 +1086,16 @@ Vigyázat: Ez végleg törli az identitásait, kapcsolatait és üzeneteit</stri
     <string name="comment_blog_post_hint">Írj egy hozzászólást…</string>
     <string name="action_attach_location">Helyszín csatolása</string>
     <string name="action_attach_image">Kép csatolása</string>
+    <string name="message_retention_title">Üzenetmegőrzés</string>
+    <string name="message_retention_info">A régi üzenetek a kiválasztott időszak lejárta után automatikusan törlődnek az eszközről.</string>
+    <string name="retention_90_days">90 nap</string>
+    <string name="retention_180_days">180 nap</string>
+    <string name="retention_keep_forever">Örökké tart</string>
+    <string name="retention_updated_toast">Üzenetmegőrzés frissítve</string>
+    <string name="blog_interactions_title">Interakciók</string>
+    <string name="blog_interactions_info">A bejegyzéshez tartozó kedvelések és hozzászólások a kapcsolataidtól származnak.</string>
+    <string name="blog_liked_by">Tetszett neki</string>
+    <string name="blog_commented_by">Hozzászólta:</string>
+    <string name="retention_7_days">7 nap</string>
+    <string name="retention_30_days">3 nap</string>
 </resources>

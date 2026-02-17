@@ -1069,4 +1069,16 @@
     <string name="comment_blog_post_hint">Napišite komentar…</string>
     <string name="action_attach_location">Priloži lokaciju</string>
     <string name="action_attach_image">Priloži fotografiju</string>
+    <string name="message_retention_title">Zadržavanje poruka</string>
+    <string name="message_retention_info">Stare poruke će biti automatski izbrisane sa ovog uređaja nakon odabranog perioda.</string>
+    <string name="retention_90_days">90 dana</string>
+    <string name="retention_180_days">180 dana</string>
+    <string name="retention_keep_forever">Zadrži zauvijek</string>
+    <string name="retention_updated_toast">Zadržavanje poruka ažurirano</string>
+    <string name="blog_interactions_title">Interakcije</string>
+    <string name="blog_interactions_info">Lajkovi i komentari na ovu objavu su od vaših kontakata.</string>
+    <string name="blog_liked_by">Sviđa se korisniku</string>
+    <string name="blog_commented_by">Komentirao/la</string>
+    <string name="retention_7_days">7 dana</string>
+    <string name="retention_30_days">3 dana</string>
 </resources>

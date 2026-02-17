@@ -1059,4 +1059,16 @@
     <string name="comment_blog_post_hint">Idatzi iruzkin bat…</string>
     <string name="action_attach_location">Erantsi kokapena</string>
     <string name="action_attach_image">Erantsi irudia</string>
+    <string name="message_retention_title">Mezua atxikitzea</string>
+    <string name="message_retention_info">Hautatutako denbora-tartea igaro ondoren, mezu zaharrak automatikoki ezabatuko dira gailu honetatik.</string>
+    <string name="retention_90_days">90 egun</string>
+    <string name="retention_180_days">180 egun</string>
+    <string name="retention_keep_forever">Gorde betiko</string>
+    <string name="retention_updated_toast">Mezuen atxikipena eguneratu da</string>
+    <string name="blog_interactions_title">Elkarrekintzak</string>
+    <string name="blog_interactions_info">Mezu honen atsegin dut-ak eta iruzkinak zure kontaktuenak dira.</string>
+    <string name="blog_liked_by">Gustatu zaio</string>
+    <string name="blog_commented_by">Iruzkina egin du</string>
+    <string name="retention_7_days">7 egun</string>
+    <string name="retention_30_days">3 egun</string>
 </resources>

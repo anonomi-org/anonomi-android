@@ -1101,4 +1101,16 @@ Per prima cosa, installa l\'app Anonomi Postbox su un altro dispositivo da dove 
     <string name="comment_blog_post_hint">Scrivi un commento…</string>
     <string name="action_attach_location">Allega posizione</string>
     <string name="action_attach_image">Allega immagine</string>
+    <string name="message_retention_title">Conservazione dei messaggi</string>
+    <string name="message_retention_info">I vecchi messaggi verranno eliminati automaticamente da questo dispositivo dopo il periodo selezionato.</string>
+    <string name="retention_90_days">90 giorni</string>
+    <string name="retention_180_days">180 giorni</string>
+    <string name="retention_keep_forever">Conservare per sempre</string>
+    <string name="retention_updated_toast">Conservazione dei messaggi aggiornata</string>
+    <string name="blog_interactions_title">Interazioni</string>
+    <string name="blog_interactions_info">I Mi piace e i commenti su questo post provengono dai tuoi contatti.</string>
+    <string name="blog_liked_by">Mi piace</string>
+    <string name="blog_commented_by">Commentato da</string>
+    <string name="retention_7_days">7 giorni</string>
+    <string name="retention_30_days">3 giorni</string>
 </resources>

@@ -1108,4 +1108,16 @@
     <string name="comment_blog_post_hint">Napište komentář…</string>
     <string name="action_attach_location">Připojit umístění</string>
     <string name="action_attach_image">Připojit obrázek</string>
+    <string name="message_retention_title">Uchovávání zpráv</string>
+    <string name="message_retention_info">Staré zprávy budou z tohoto zařízení po uplynutí vybrané doby automaticky smazány.</string>
+    <string name="retention_90_days">90 dní</string>
+    <string name="retention_180_days">180 dní</string>
+    <string name="retention_keep_forever">Uchovat navždy</string>
+    <string name="retention_updated_toast">Uchovávání zpráv aktualizováno</string>
+    <string name="blog_interactions_title">Interakce</string>
+    <string name="blog_interactions_info">Lajky a komentáře k tomuto příspěvku pocházejí od vašich kontaktů.</string>
+    <string name="blog_liked_by">Líbilo se uživateli</string>
+    <string name="blog_commented_by">Komentoval(a)</string>
+    <string name="retention_7_days">7 dní</string>
+    <string name="retention_30_days">3 dny</string>
 </resources>
