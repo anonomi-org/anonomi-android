@@ -1099,4 +1099,6 @@ Installera först Anonomi Postbox-appen på en annan enhet genom att hämta den 
     <string name="blog_interactions_info">Gilla-markeringarna och kommentarerna på det här inlägget kommer från dina kontakter.</string>
     <string name="blog_liked_by">Gillad av</string>
     <string name="blog_commented_by">Kommenterad av</string>
+    <string name="retention_7_days">7 dagar</string>
+    <string name="retention_30_days">3 dagar</string>
 </resources>
