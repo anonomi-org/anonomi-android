@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Executor;
+import java.util.function.Consumer;
 import java.util.logging.Logger;
 
 import javax.annotation.Nullable;
@@ -367,6 +368,27 @@ class ForumViewModel extends ThreadListViewModel<ForumPostItem> {
 
 	void clearReplyId() {
 		setReplyId(null);
+	}
+
+	void loadRetentionDuration(Consumer<Long> callback) {
+		runOnDbThread(() -> {
+			try {
+				long duration = forumManager.getRetentionDuration(groupId);
+				androidExecutor.runOnUiThread(() -> callback.accept(duration));
+			} catch (DbException e) {
+				handleException(e);
+			}
+		});
+	}
+
+	void setRetentionDuration(long duration) {
+		runOnDbThread(() -> {
+			try {
+				forumManager.setRetentionDuration(groupId, duration);
+			} catch (DbException e) {
+				handleException(e);
+			}
+		});
 	}
 
 }

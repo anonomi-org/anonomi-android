@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Executor;
+import java.util.function.Consumer;
 import java.util.logging.Logger;
 
 import javax.annotation.Nullable;
@@ -444,6 +445,28 @@ class GroupViewModel extends ThreadListViewModel<GroupMessageItem> {
 
 	void clearReplyId() {
 		setReplyId(null);
+	}
+
+	void loadRetentionDuration(Consumer<Long> callback) {
+		runOnDbThread(() -> {
+			try {
+				long duration =
+						privateGroupManager.getRetentionDuration(groupId);
+				androidExecutor.runOnUiThread(() -> callback.accept(duration));
+			} catch (DbException e) {
+				handleException(e);
+			}
+		});
+	}
+
+	void setRetentionDuration(long duration) {
+		runOnDbThread(() -> {
+			try {
+				privateGroupManager.setRetentionDuration(groupId, duration);
+			} catch (DbException e) {
+				handleException(e);
+			}
+		});
 	}
 
 }

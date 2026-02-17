@@ -19,14 +19,17 @@
 package org.anonchatsecure.anonchat.forum;
 
 import org.anonchatsecure.bramble.api.FormatException;
+import org.anonchatsecure.bramble.api.cleanup.CleanupHook;
 import org.anonchatsecure.bramble.api.client.BdfIncomingMessageHook;
 import org.anonchatsecure.bramble.api.client.ClientHelper;
 import org.anonchatsecure.bramble.api.data.BdfDictionary;
+import org.anonchatsecure.bramble.api.data.BdfEntry;
 import org.anonchatsecure.bramble.api.data.BdfList;
 import org.anonchatsecure.bramble.api.data.MetadataParser;
 import org.anonchatsecure.bramble.api.db.DatabaseComponent;
 import org.anonchatsecure.bramble.api.db.DbException;
 import org.anonchatsecure.bramble.api.db.Transaction;
+import org.anonchatsecure.bramble.api.system.Clock;
 import org.anonchatsecure.bramble.api.identity.Author;
 import org.anonchatsecure.bramble.api.identity.AuthorId;
 import org.anonchatsecure.bramble.api.identity.LocalAuthor;
@@ -74,24 +77,29 @@ import static org.anonchatsecure.anonchat.client.MessageTrackerConstants.MSG_KEY
 
 @ThreadSafe
 @NotNullByDefault
-class ForumManagerImpl extends BdfIncomingMessageHook implements ForumManager {
+class ForumManagerImpl extends BdfIncomingMessageHook
+		implements ForumManager, CleanupHook {
+
+	private static final String KEY_RETENTION_DURATION = "retentionDuration";
 
 	private final AuthorManager authorManager;
 	private final ForumFactory forumFactory;
 	private final ForumPostFactory forumPostFactory;
 	private final MessageTracker messageTracker;
+	private final Clock clock;
 	private final List<RemoveForumHook> removeHooks;
 
 	@Inject
 	ForumManagerImpl(DatabaseComponent db, ClientHelper clientHelper,
 			MetadataParser metadataParser, AuthorManager authorManager,
 			ForumFactory forumFactory, ForumPostFactory forumPostFactory,
-			MessageTracker messageTracker) {
+			MessageTracker messageTracker, Clock clock) {
 		super(db, clientHelper, metadataParser);
 		this.authorManager = authorManager;
 		this.forumFactory = forumFactory;
 		this.forumPostFactory = forumPostFactory;
 		this.messageTracker = messageTracker;
+		this.clock = clock;
 		removeHooks = new CopyOnWriteArrayList<>();
 	}
 
@@ -101,6 +109,9 @@ class ForumManagerImpl extends BdfIncomingMessageHook implements ForumManager {
 			throws DbException, FormatException {
 
 		messageTracker.trackIncomingMessage(txn, m);
+
+		// apply retention timer if set
+		applyRetentionToMessage(txn, m, meta);
 
 		ForumPostHeader header = getForumPostHeader(txn, m.getId(), meta);
 		String text = getPostText(body);
@@ -460,6 +471,150 @@ class ForumManagerImpl extends BdfIncomingMessageHook implements ForumManager {
 		// Name, salt
 		BdfList forum = clientHelper.toList(descriptor);
 		return new Forum(g, forum.getString(0), forum.getRaw(1));
+	}
+
+	@Override
+	public long getRetentionDuration(GroupId g) throws DbException {
+		try {
+			return db.transactionWithResult(true, txn -> {
+				BdfDictionary meta =
+						clientHelper.getGroupMetadataAsDictionary(txn, g);
+				return meta.getLong(KEY_RETENTION_DURATION, -1L);
+			});
+		} catch (FormatException e) {
+			throw new DbException(e);
+		}
+	}
+
+	@Override
+	public void setRetentionDuration(GroupId g, long durationMs)
+			throws DbException {
+		db.transaction(false, txn -> {
+			try {
+				BdfDictionary meta = BdfDictionary.of(
+						new BdfEntry(KEY_RETENTION_DURATION, durationMs));
+				clientHelper.mergeGroupMetadata(txn, g, meta);
+				applyRetentionToExistingMessages(txn, g, durationMs);
+			} catch (FormatException e) {
+				throw new DbException(e);
+			}
+		});
+	}
+
+	private void applyRetentionToExistingMessages(Transaction txn,
+			GroupId g, long durationMs) throws DbException {
+		try {
+			Map<MessageId, BdfDictionary> metadata =
+					clientHelper.getMessageMetadataAsDictionary(txn, g);
+			long now = clock.currentTimeMillis();
+
+			// Build parent->children map for thread coherence
+			Map<MessageId, Long> deadlines = new HashMap<>();
+			Map<MessageId, List<MessageId>> children = new HashMap<>();
+			List<MessageId> roots = new ArrayList<>();
+
+			for (Entry<MessageId, BdfDictionary> entry : metadata.entrySet()) {
+				MessageId id = entry.getKey();
+				BdfDictionary meta = entry.getValue();
+				long timestamp = meta.getLong(KEY_TIMESTAMP);
+				if (durationMs == -1) {
+					deadlines.put(id, -1L);
+				} else {
+					deadlines.put(id, timestamp + durationMs);
+				}
+				if (meta.containsKey(KEY_PARENT)) {
+					MessageId parentId =
+							new MessageId(meta.getRaw(KEY_PARENT));
+					children.computeIfAbsent(parentId,
+							k -> new ArrayList<>()).add(id);
+				} else {
+					roots.add(id);
+				}
+			}
+
+			// Walk tree root-first: replies never outlive their parent
+			if (durationMs > 0) {
+				propagateDeadlines(roots, children, deadlines);
+			}
+
+			// Apply deadlines
+			for (Entry<MessageId, Long> entry : deadlines.entrySet()) {
+				MessageId id = entry.getKey();
+				long deadline = entry.getValue();
+				if (deadline == -1) {
+					db.stopCleanupTimer(txn, id);
+				} else if (deadline <= now) {
+					db.deleteMessage(txn, id);
+					db.deleteMessageMetadata(txn, id);
+				} else {
+					long remaining = deadline - now;
+					db.setCleanupTimerDuration(txn, id, remaining);
+					db.startCleanupTimer(txn, id);
+				}
+			}
+		} catch (FormatException e) {
+			throw new DbException(e);
+		}
+	}
+
+	private void propagateDeadlines(List<MessageId> nodes,
+			Map<MessageId, List<MessageId>> children,
+			Map<MessageId, Long> deadlines) {
+		for (MessageId id : nodes) {
+			List<MessageId> kids = children.get(id);
+			if (kids != null) {
+				long parentDeadline = deadlines.getOrDefault(id, -1L);
+				for (MessageId kid : kids) {
+					long kidDeadline = deadlines.getOrDefault(kid, -1L);
+					if (parentDeadline > 0 && parentDeadline > kidDeadline) {
+						deadlines.put(kid, parentDeadline);
+					}
+				}
+				propagateDeadlines(kids, children, deadlines);
+			}
+		}
+	}
+
+	private void applyRetentionToMessage(Transaction txn, Message m,
+			BdfDictionary meta) throws DbException, FormatException {
+		BdfDictionary groupMeta = clientHelper
+				.getGroupMetadataAsDictionary(txn, m.getGroupId());
+		long retention = groupMeta.getLong(KEY_RETENTION_DURATION, -1L);
+		if (retention > 0) {
+			long deadline = m.getTimestamp() + retention;
+			// For replies: inherit parent's deadline if later
+			if (meta.containsKey(KEY_PARENT)) {
+				MessageId parentId = new MessageId(meta.getRaw(KEY_PARENT));
+				try {
+					BdfDictionary parentMeta = clientHelper
+							.getMessageMetadataAsDictionary(txn, parentId);
+					long parentTimestamp = parentMeta.getLong(KEY_TIMESTAMP);
+					long parentDeadline = parentTimestamp + retention;
+					if (parentDeadline > deadline) {
+						deadline = parentDeadline;
+					}
+				} catch (FormatException e) {
+					// parent not found, use own deadline
+				}
+			}
+			long duration = deadline - clock.currentTimeMillis();
+			if (duration <= 0) {
+				db.deleteMessage(txn, m.getId());
+				db.deleteMessageMetadata(txn, m.getId());
+			} else {
+				db.setCleanupTimerDuration(txn, m.getId(), duration);
+				db.startCleanupTimer(txn, m.getId());
+			}
+		}
+	}
+
+	@Override
+	public void deleteMessages(Transaction txn, GroupId g,
+			Collection<MessageId> messageIds) throws DbException {
+		for (MessageId m : messageIds) {
+			db.deleteMessage(txn, m);
+			db.deleteMessageMetadata(txn, m);
+		}
 	}
 
 	private ForumPostHeader getForumPostHeader(Transaction txn, MessageId id,

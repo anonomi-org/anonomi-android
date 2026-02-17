@@ -274,6 +274,18 @@ public interface PrivateGroupManager {
 			boolean byContact) throws FormatException, DbException;
 
 	/**
+	 * Returns the retention duration for the given private group, or -1 if
+	 * messages are kept forever.
+	 */
+	long getRetentionDuration(GroupId g) throws DbException;
+
+	/**
+	 * Sets the retention duration for the given private group. Use -1 to
+	 * keep messages forever.
+	 */
+	void setRetentionDuration(GroupId g, long durationMs) throws DbException;
+
+	/**
 	 * Registers a hook to be called when members are added or private groups
 	 * are removed.
 	 */

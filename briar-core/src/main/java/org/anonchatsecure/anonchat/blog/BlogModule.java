@@ -19,6 +19,7 @@
 package org.anonchatsecure.anonchat.blog;
 
 import org.anonchatsecure.bramble.api.FeatureFlags;
+import org.anonchatsecure.bramble.api.cleanup.CleanupManager;
 import org.anonchatsecure.bramble.api.client.ClientHelper;
 import org.anonchatsecure.bramble.api.contact.ContactManager;
 import org.anonchatsecure.bramble.api.data.MetadataEncoder;
@@ -54,13 +55,16 @@ public class BlogModule {
 	@Singleton
 	BlogManager provideBlogManager(BlogManagerImpl blogManager,
 			LifecycleManager lifecycleManager, ContactManager contactManager,
-			ValidationManager validationManager, FeatureFlags featureFlags) {
+			ValidationManager validationManager, CleanupManager cleanupManager,
+			FeatureFlags featureFlags) {
 		if (!featureFlags.shouldEnableBlogsInCore()) {
 			return blogManager;
 		}
 		lifecycleManager.registerOpenDatabaseHook(blogManager);
 		contactManager.registerContactHook(blogManager);
 		validationManager.registerIncomingMessageHook(CLIENT_ID, MAJOR_VERSION,
+				blogManager);
+		cleanupManager.registerCleanupHook(CLIENT_ID, MAJOR_VERSION,
 				blogManager);
 		return blogManager;
 	}

@@ -34,6 +34,7 @@ import org.anonomi.android.sharing.ShareForumActivity;
 import org.anonomi.android.threaded.ThreadListActivity;
 import org.anonomi.android.threaded.ThreadListViewModel;
 import org.anonomi.android.util.AudioUtils;
+import org.anonomi.android.util.RetentionHelper;
 import org.anonomi.android.util.WalkieTalkiePlayer;
 import org.anonomi.android.view.CompositeSendButton;
 import org.anonchatsecure.bramble.api.sync.MessageId;
@@ -362,6 +363,9 @@ public class ForumActivity extends
 			i.putExtra(GROUP_ID, groupId.getBytes());
 			startActivity(i);
 			return true;
+		} else if (itemId == R.id.action_message_retention) {
+			showRetentionDialog();
+			return true;
 		} else if (itemId == R.id.action_forum_delete) {
 			showUnsubscribeDialog();
 			return true;
@@ -381,6 +385,18 @@ public class ForumActivity extends
 	@Override
 	protected int getMaxTextLength() {
 		return MAX_FORUM_POST_TEXT_LENGTH;
+	}
+
+	private void showRetentionDialog() {
+		viewModel.loadRetentionDuration(duration ->
+				RetentionHelper.showRetentionDialog(this, duration,
+						newDuration -> {
+							viewModel.setRetentionDuration(newDuration);
+							Toast.makeText(this,
+									R.string.retention_updated_toast,
+									Toast.LENGTH_SHORT).show();
+						})
+		);
 	}
 
 	private void showUnsubscribeDialog() {

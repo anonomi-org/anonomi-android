@@ -22,6 +22,7 @@ import org.anonomi.android.map.MapViewActivity;
 import org.anonomi.android.sharing.BlogSharingStatusActivity;
 import org.anonomi.android.sharing.ShareBlogActivity;
 import org.anonomi.android.util.BriarSnackbarBuilder;
+import org.anonomi.android.util.RetentionHelper;
 import org.anonomi.android.util.UiUtils;
 import org.anonomi.android.view.BriarRecyclerView;
 import org.anonomi.android.widget.LinkDialogFragment;
@@ -152,6 +153,9 @@ public class BlogFragment extends BaseFragment
 			i.putExtra(GROUP_ID, groupId.getBytes());
 			startActivity(i);
 			return true;
+		} else if (itemId == R.id.action_message_retention) {
+			showRetentionDialog();
+			return true;
 		} else if (itemId == R.id.action_blog_delete) {
 			showDeleteDialog();
 			return true;
@@ -251,6 +255,19 @@ public class BlogFragment extends BaseFragment
 					v -> list.smoothScrollToPosition(0));
 		}
 		sb.make(list, stringId, LENGTH_LONG).show();
+	}
+
+	private void showRetentionDialog() {
+		viewModel.loadRetentionDuration(groupId, duration ->
+				RetentionHelper.showRetentionDialog(requireContext(), duration,
+						newDuration -> {
+							viewModel.setRetentionDuration(groupId,
+									newDuration);
+							Toast.makeText(getActivity(),
+									R.string.retention_updated_toast,
+									LENGTH_SHORT).show();
+						})
+		);
 	}
 
 	private void showDeleteDialog() {

@@ -19,6 +19,7 @@
 package org.anonchatsecure.anonchat.forum;
 
 import org.anonchatsecure.bramble.api.FeatureFlags;
+import org.anonchatsecure.bramble.api.cleanup.CleanupManager;
 import org.anonchatsecure.bramble.api.client.ClientHelper;
 import org.anonchatsecure.bramble.api.data.MetadataEncoder;
 import org.anonchatsecure.bramble.api.sync.validation.ValidationManager;
@@ -50,11 +51,14 @@ public class ForumModule {
 	@Singleton
 	ForumManager provideForumManager(ForumManagerImpl forumManager,
 			ValidationManager validationManager,
+			CleanupManager cleanupManager,
 			FeatureFlags featureFlags) {
 		if (!featureFlags.shouldEnableForumsInCore()) {
 			return forumManager;
 		}
 		validationManager.registerIncomingMessageHook(CLIENT_ID, MAJOR_VERSION,
+				forumManager);
+		cleanupManager.registerCleanupHook(CLIENT_ID, MAJOR_VERSION,
 				forumManager);
 		return forumManager;
 	}

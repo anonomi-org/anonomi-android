@@ -11,6 +11,16 @@
     <string name="auto_delete_1_day">1 day</string>
     <string name="auto_delete_3_days">3 days</string>
     <string name="auto_delete_7_days">7 days</string>
+
+    <!-- Message Retention -->
+    <string name="message_retention_title">Message Retention</string>
+    <string name="message_retention_info">Old messages will be automatically deleted from this device after the selected period.</string>
+    <string name="retention_7_days">7 days</string>
+    <string name="retention_30_days">30 days</string>
+    <string name="retention_90_days">90 days</string>
+    <string name="retention_180_days">180 days</string>
+    <string name="retention_keep_forever">Keep forever</string>
+    <string name="retention_updated_toast">Message retention updated</string>
     <string name="action_request_xmr">Request XMR</string>
     <string name="invalid_monero_address">Invalid Monero address format.</string>
     <string name="invalid_monero_private_view_key">Invalid Monero private view key format.</string>

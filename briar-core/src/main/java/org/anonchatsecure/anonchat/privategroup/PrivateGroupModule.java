@@ -19,6 +19,7 @@
 package org.anonchatsecure.anonchat.privategroup;
 
 import org.anonchatsecure.bramble.api.FeatureFlags;
+import org.anonchatsecure.bramble.api.cleanup.CleanupManager;
 import org.anonchatsecure.bramble.api.client.ClientHelper;
 import org.anonchatsecure.bramble.api.data.MetadataEncoder;
 import org.anonchatsecure.bramble.api.sync.validation.ValidationManager;
@@ -52,11 +53,14 @@ public class PrivateGroupModule {
 	PrivateGroupManager provideGroupManager(
 			PrivateGroupManagerImpl groupManager,
 			ValidationManager validationManager,
+			CleanupManager cleanupManager,
 			FeatureFlags featureFlags) {
 		if (!featureFlags.shouldEnablePrivateGroupsInCore()) {
 			return groupManager;
 		}
 		validationManager.registerIncomingMessageHook(CLIENT_ID, MAJOR_VERSION,
+				groupManager);
+		cleanupManager.registerCleanupHook(CLIENT_ID, MAJOR_VERSION,
 				groupManager);
 		return groupManager;
 	}
