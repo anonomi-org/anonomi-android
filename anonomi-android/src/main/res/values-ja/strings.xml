@@ -1072,4 +1072,14 @@
     <string name="comment_blog_post_hint">コメントを書く…</string>
     <string name="action_attach_location">場所を添付</string>
     <string name="action_attach_image">画像を添付</string>
+    <string name="message_retention_title">メッセージの保持</string>
+    <string name="message_retention_info">選択した期間が経過すると、古いメッセージはこのデバイスから自動的に削除されます。</string>
+    <string name="retention_90_days">90日間</string>
+    <string name="retention_180_days">180日間</string>
+    <string name="retention_keep_forever">永遠に保存</string>
+    <string name="retention_updated_toast">メッセージの保持が更新されました</string>
+    <string name="blog_interactions_title">相互作用</string>
+    <string name="blog_interactions_info">この投稿への「いいね！」とコメントはあなたの連絡先からのものです。</string>
+    <string name="blog_liked_by">いいねした人</string>
+    <string name="blog_commented_by">コメントした人</string>
 </resources>
