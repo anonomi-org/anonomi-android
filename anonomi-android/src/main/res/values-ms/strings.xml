@@ -1012,4 +1012,6 @@
     <string name="blog_interactions_info">Suka dan komen pada siaran ini adalah daripada kenalan anda.</string>
     <string name="blog_liked_by">Disukai oleh</string>
     <string name="blog_commented_by">Diulas oleh</string>
+    <string name="retention_7_days">7 hari</string>
+    <string name="retention_30_days">3 hari</string>
 </resources>
