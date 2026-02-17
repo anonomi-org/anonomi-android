@@ -1076,4 +1076,6 @@ parteja pas amb degun.</string>
     <string name="blog_interactions_info">Los m\'agrada e los comentaris sus aqueste messatge son de vòstres contactes.</string>
     <string name="blog_liked_by">Agradat per</string>
     <string name="blog_commented_by">Comentat per</string>
+    <string name="retention_7_days">7 jorns</string>
+    <string name="retention_30_days">3 jorns</string>
 </resources>
