@@ -1127,4 +1127,6 @@ Brak dostępu do aparatu. Spróbuj ponownie, może po ponownym uruchomieniu urz�
     <string name="blog_interactions_info">Polubienia i komentarze pod tym postem pochodzą od Twoich kontaktów.</string>
     <string name="blog_liked_by">Polubione przez</string>
     <string name="blog_commented_by">Skomentowane przez</string>
+    <string name="retention_7_days">7 dni</string>
+    <string name="retention_30_days">3 dni</string>
 </resources>
