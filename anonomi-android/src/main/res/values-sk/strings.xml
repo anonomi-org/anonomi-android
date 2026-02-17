@@ -1117,4 +1117,14 @@ Najprv nainštalujte aplikáciu Anonomi Postbox do iného zariadenia z rovnakéh
     <string name="comment_blog_post_hint">Napíšte komentár…</string>
     <string name="action_attach_location">Priložiť polohu</string>
     <string name="action_attach_image">Priložiť obrázok</string>
+    <string name="message_retention_title">Uchovávanie správ</string>
+    <string name="message_retention_info">Staré správy sa z tohto zariadenia po uplynutí zvoleného obdobia automaticky vymažú.</string>
+    <string name="retention_90_days">90 dní</string>
+    <string name="retention_180_days">180 dní</string>
+    <string name="retention_keep_forever">Uchovať navždy</string>
+    <string name="retention_updated_toast">Uchovávanie správ bolo aktualizované</string>
+    <string name="blog_interactions_title">Interakcie</string>
+    <string name="blog_interactions_info">Páči sa mi to a komentáre k tomuto príspevku pochádzajú od vašich kontaktov.</string>
+    <string name="blog_liked_by">Páčilo sa používateľovi</string>
+    <string name="blog_commented_by">Komentoval(a)</string>
 </resources>
