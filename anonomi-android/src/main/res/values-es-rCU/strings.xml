@@ -1273,4 +1273,6 @@ Si tu contacto creó el archivo hace más de 28 días, Anonomi no podrá reconoc
     <string name="blog_interactions_info">Los me gusta y comentarios de esta publicación son de tus contactos.</string>
     <string name="blog_liked_by">Me gustó</string>
     <string name="blog_commented_by">Comentado por</string>
+    <string name="retention_7_days">7 días</string>
+    <string name="retention_30_days">3 días</string>
 </resources>
