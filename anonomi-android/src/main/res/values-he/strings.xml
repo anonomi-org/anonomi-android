@@ -1105,4 +1105,6 @@
     <string name="blog_interactions_info">הלייקים והתגובות לפוסט הזה הם מאנשי הקשר שלך.</string>
     <string name="blog_liked_by">אהוב על ידי</string>
     <string name="blog_commented_by">הגיב על ידי</string>
+    <string name="retention_7_days">7 ימים</string>
+    <string name="retention_30_days">3 ימים</string>
 </resources>
