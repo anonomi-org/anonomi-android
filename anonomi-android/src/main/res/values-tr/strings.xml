@@ -1098,4 +1098,6 @@
     <string name="blog_interactions_info">Bu gönderiye gelen beğeniler ve yorumlar, kişilerinizden geliyor.</string>
     <string name="blog_liked_by">Beğenenler</string>
     <string name="blog_commented_by">Yorum yapan:</string>
+    <string name="retention_7_days">7 gün</string>
+    <string name="retention_30_days">3 gün</string>
 </resources>
