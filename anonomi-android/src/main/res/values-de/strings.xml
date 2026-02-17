@@ -1086,4 +1086,14 @@
     <string name="comment_blog_post_hint">Schreiben Sie einen Kommentar…</string>
     <string name="action_attach_location">Befestigungsort</string>
     <string name="action_attach_image">Bild anhängen</string>
+    <string name="message_retention_title">Nachrichtenaufbewahrung</string>
+    <string name="message_retention_info">Alte Nachrichten werden nach Ablauf des ausgewählten Zeitraums automatisch von diesem Gerät gelöscht.</string>
+    <string name="retention_90_days">90 Tage</string>
+    <string name="retention_180_days">180 Tage</string>
+    <string name="retention_keep_forever">Für immer behalten</string>
+    <string name="retention_updated_toast">Nachrichtenaufbewahrung aktualisiert</string>
+    <string name="blog_interactions_title">Wechselwirkungen</string>
+    <string name="blog_interactions_info">Die Likes und Kommentare zu diesem Beitrag stammen von Ihren Kontakten.</string>
+    <string name="blog_liked_by">Gefällt mir von</string>
+    <string name="blog_commented_by">Kommentar von</string>
 </resources>
