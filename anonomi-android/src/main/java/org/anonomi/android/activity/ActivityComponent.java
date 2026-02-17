@@ -9,6 +9,7 @@ import org.anonomi.android.account.SetupFragment;
 import org.anonomi.android.account.UnlockActivity;
 import org.anonomi.android.blog.BlogActivity;
 import org.anonomi.android.blog.BlogFragment;
+import org.anonomi.android.blog.BlogInteractionsActivity;
 import org.anonomi.android.blog.BlogPostFragment;
 import org.anonomi.android.blog.FeedFragment;
 import org.anonomi.android.blog.ReblogActivity;
@@ -148,6 +149,8 @@ public interface ActivityComponent {
 	void inject(ForumSharingStatusActivity activity);
 
 	void inject(BlogSharingStatusActivity activity);
+
+	void inject(BlogInteractionsActivity activity);
 
 	void inject(ForumActivity activity);
 

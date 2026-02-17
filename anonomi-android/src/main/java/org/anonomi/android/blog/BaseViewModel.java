@@ -486,7 +486,9 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 				LikeAction existing = authorMap.get(authorId);
 				if (existing == null || timestamp > existing.timestamp) {
 					authorMap.put(authorId,
-							new LikeAction(isLike, timestamp));
+							new LikeAction(isLike, timestamp,
+									header.getAuthor(),
+									header.getAuthorInfo()));
 				}
 				toRemove.add(item);
 			} else if (isComment(comment)) {
@@ -535,6 +537,7 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 			if (authorMap != null) {
 				int count = 0;
 				boolean likedByMe = false;
+				List<BlogLiker> likers = new ArrayList<>();
 				for (Map.Entry<AuthorId, LikeAction> entry :
 						authorMap.entrySet()) {
 					if (entry.getValue().isLike) {
@@ -542,10 +545,16 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 						if (entry.getKey().equals(localAuthorId)) {
 							likedByMe = true;
 						}
+						LikeAction la = entry.getValue();
+						if (la.authorInfo != null) {
+							likers.add(new BlogLiker(la.author,
+									la.authorInfo));
+						}
 					}
 				}
 				item.setLikeCount(count);
 				item.setLikedByMe(likedByMe);
+				item.setLikers(likers);
 			}
 
 			// Comments
@@ -553,6 +562,19 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 			if (comments != null) {
 				sortComments(comments);
 				item.setBlogComments(comments);
+				// Deduplicated commenter authors
+				Map<AuthorId, BlogLiker> commenterMap =
+						new LinkedHashMap<>();
+				for (BlogComment c : comments) {
+					AuthorId cId = c.author.getId();
+					if (!commenterMap.containsKey(cId)
+							&& c.authorInfo != null) {
+						commenterMap.put(cId,
+								new BlogLiker(c.author, c.authorInfo));
+					}
+				}
+				item.setCommenterAuthors(
+						new ArrayList<>(commenterMap.values()));
 			}
 		}
 	}
@@ -563,6 +585,29 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 			if (res != 0) return res;
 			return a.text.compareTo(b.text);
 		});
+	}
+
+	static List<BlogPostItem> buildAndAggregatePosts(
+			List<BlogPostHeader> headers, BlogManager blogManager,
+			AuthorId localAuthorId) throws DbException {
+		List<BlogPostItem> items = new ArrayList<>(headers.size());
+		for (BlogPostHeader h : headers) {
+			if (h instanceof BlogCommentHeader) {
+				BlogCommentHeader c = (BlogCommentHeader) h;
+				BlogCommentItem item = new BlogCommentItem(c);
+				BlogPostHeader postHeader = item.getPostHeader();
+				String text = HtmlUtils.cleanArticle(
+						blogManager.getPostText(postHeader.getId()));
+				item.setText(text);
+				items.add(item);
+			} else {
+				String text = HtmlUtils.cleanArticle(
+						blogManager.getPostText(h.getId()));
+				items.add(new BlogPostItem(h, text));
+			}
+		}
+		filterAndAggregateLikes(items, localAuthorId);
+		return deduplicate(items);
 	}
 
 	protected static List<BlogPostItem> deduplicate(List<BlogPostItem> items) {
@@ -585,10 +630,28 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 	private static class LikeAction {
 		final boolean isLike;
 		final long timestamp;
+		final org.anonchatsecure.bramble.api.identity.Author author;
+		@Nullable
+		final AuthorInfo authorInfo;
 
-		LikeAction(boolean isLike, long timestamp) {
+		LikeAction(boolean isLike, long timestamp,
+				org.anonchatsecure.bramble.api.identity.Author author,
+				@Nullable AuthorInfo authorInfo) {
 			this.isLike = isLike;
 			this.timestamp = timestamp;
+			this.author = author;
+			this.authorInfo = authorInfo;
+		}
+	}
+
+	static class BlogLiker {
+		final org.anonchatsecure.bramble.api.identity.Author author;
+		final AuthorInfo authorInfo;
+
+		BlogLiker(org.anonchatsecure.bramble.api.identity.Author author,
+				AuthorInfo authorInfo) {
+			this.author = author;
+			this.authorInfo = authorInfo;
 		}
 	}
 

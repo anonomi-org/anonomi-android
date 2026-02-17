@@ -99,13 +99,15 @@
 
 		<LinearLayout
 			android:id="@+id/actionContainer"
-			android:layout_width="wrap_content"
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_marginStart="@dimen/listitem_vertical_margin"
+			android:layout_marginEnd="@dimen/listitem_vertical_margin"
 			android:layout_marginTop="8dp"
 			android:gravity="center_vertical"
 			android:orientation="horizontal"
 			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintTop_toBottomOf="@+id/mapContent">
 
 			<androidx.appcompat.widget.AppCompatImageButton
@@ -149,6 +151,21 @@
 				android:visibility="gone"
 				tools:text="5"
 				tools:visibility="visible" />
+
+			<View
+				android:layout_width="0dp"
+				android:layout_height="0dp"
+				android:layout_weight="1" />
+
+			<TextView
+				android:id="@+id/interactionsButton"
+				android:layout_width="wrap_content"
+				android:layout_height="36dp"
+				android:background="?attr/selectableItemBackgroundBorderless"
+				android:gravity="center_vertical"
+				android:text="@string/blog_interactions_title"
+				android:textColor="?attr/colorControlNormal"
+				android:textSize="@dimen/text_size_small" />
 
 		</LinearLayout>
 

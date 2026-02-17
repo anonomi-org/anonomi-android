@@ -63,6 +63,8 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 	@Nullable
 	private final ImageView imageContent;
 	private final TextView mapContent;
+	@Nullable
+	private final TextView interactionsButton;
 	private final boolean fullText, authorClickable;
 	private final int padding;
 
@@ -89,6 +91,7 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 		commentContainer = v.findViewById(R.id.commentContainer);
 		imageContent = v.findViewById(R.id.imageContent);
 		mapContent = v.findViewById(R.id.mapContent);
+		interactionsButton = v.findViewById(R.id.interactionsButton);
 		padding = ctx.getResources()
 				.getDimensionPixelSize(R.dimen.listitem_vertical_margin);
 	}
@@ -102,6 +105,7 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 		if (likeCountText != null) likeCountText.setVisibility(GONE);
 		if (commentButton != null) commentButton.setVisibility(GONE);
 		if (commentCountText != null) commentCountText.setVisibility(GONE);
+		if (interactionsButton != null) interactionsButton.setVisibility(GONE);
 	}
 
 	void updateDate(long time) {
@@ -258,6 +262,12 @@ class BlogPostViewHolder extends RecyclerView.ViewHolder {
 			} else {
 				commentCountText.setVisibility(GONE);
 			}
+		}
+
+		// interactions button
+		if (interactionsButton != null) {
+			interactionsButton.setOnClickListener(
+					v -> listener.onInteractionsClick(item));
 		}
 
 		// comments

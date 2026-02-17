@@ -191,6 +191,11 @@ public class ReblogFragment extends BaseFragment implements SendListener {
 		public void onCommentClick(BlogPostItem post) {
 			// do nothing in reblog view
 		}
+
+		@Override
+		public void onInteractionsClick(BlogPostItem post) {
+			// do nothing in reblog view
+		}
 	}
 
 }
