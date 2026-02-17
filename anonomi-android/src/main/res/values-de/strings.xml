@@ -1096,4 +1096,6 @@
     <string name="blog_interactions_info">Die Likes und Kommentare zu diesem Beitrag stammen von Ihren Kontakten.</string>
     <string name="blog_liked_by">Gefällt mir von</string>
     <string name="blog_commented_by">Kommentar von</string>
+    <string name="retention_7_days">7 Tage</string>
+    <string name="retention_30_days">3 Tage</string>
 </resources>
