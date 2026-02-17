@@ -268,4 +268,6 @@
     <string name="lock_is_locked">Protexer Anonomi</string>
     <string name="website_download_title_1">Protexer Anonomi</string>
     <string name="mailbox_status_app_too_old_title">Protexer Anonomi</string>
+    <string name="retention_7_days">7 díes</string>
+    <string name="retention_30_days">3 díes</string>
 </resources>
