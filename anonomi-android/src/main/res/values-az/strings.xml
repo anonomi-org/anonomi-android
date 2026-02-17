@@ -1063,4 +1063,6 @@
     <string name="blog_interactions_info">Bu paylaşımdakı bəyənmələr və şərhlər sizin əlaqələrinizdəndir.</string>
     <string name="blog_liked_by">Bəyənən</string>
     <string name="blog_commented_by">Şərh edən</string>
+    <string name="retention_7_days">7 gün</string>
+    <string name="retention_30_days">3 gün</string>
 </resources>
