@@ -1158,4 +1158,6 @@
     <string name="blog_interactions_info">الإعجابات والتعليقات على هذا المنشور هي من جهات اتصالك.</string>
     <string name="blog_liked_by">أعجب به</string>
     <string name="blog_commented_by">تعليق من</string>
+    <string name="retention_7_days">7 أيام</string>
+    <string name="retention_30_days">3 أيام</string>
 </resources>
