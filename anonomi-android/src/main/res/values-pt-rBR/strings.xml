@@ -1124,4 +1124,6 @@ Primeiro, instale o app Anonomi Postbox em outro dispositivo a partir do mesmo l
     <string name="blog_interactions_info">As curtidas e os comentários desta publicação são de seus contatos.</string>
     <string name="blog_liked_by">Curtido por</string>
     <string name="blog_commented_by">Comentado por</string>
+    <string name="retention_7_days">7 dias</string>
+    <string name="retention_30_days">3 dias</string>
 </resources>
