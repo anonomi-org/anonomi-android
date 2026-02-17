@@ -1073,4 +1073,6 @@
     <string name="blog_interactions_info">Dont a ra ar likeoù hag an evezhiadennoù war ar postel-mañ eus ho darempredoù.</string>
     <string name="blog_liked_by">Plijet gant</string>
     <string name="blog_commented_by">Evezhiet gant</string>
+    <string name="retention_7_days">7 devezh</string>
+    <string name="retention_30_days">3 devezh</string>
 </resources>
