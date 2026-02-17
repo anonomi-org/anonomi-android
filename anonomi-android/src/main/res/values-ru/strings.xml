@@ -1126,4 +1126,6 @@
     <string name="blog_interactions_info">Лайки и комментарии к этому посту поступили от ваших контактов.</string>
     <string name="blog_liked_by">Понравилось</string>
     <string name="blog_commented_by">Комментарий от</string>
+    <string name="retention_7_days">7 дней</string>
+    <string name="retention_30_days">3 дня</string>
 </resources>
