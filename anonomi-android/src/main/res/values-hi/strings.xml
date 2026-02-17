@@ -1069,4 +1069,6 @@
     <string name="blog_interactions_info">इस पोस्ट पर मिले लाइक और कमेंट आपके संपर्कों के हैं।</string>
     <string name="blog_liked_by">पसंद किया गया</string>
     <string name="blog_commented_by">द्वारा टिप्पणी की गई</string>
+    <string name="retention_7_days">7 दिन</string>
+    <string name="retention_30_days">3 दिन</string>
 </resources>
