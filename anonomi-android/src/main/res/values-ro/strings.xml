@@ -1112,4 +1112,6 @@
     <string name="blog_interactions_info">Aprecierile și comentariile la această postare provin de la contactele tale.</string>
     <string name="blog_liked_by">Apreciat de</string>
     <string name="blog_commented_by">Comentat de</string>
+    <string name="retention_7_days">7 zile</string>
+    <string name="retention_30_days">3 zile</string>
 </resources>
