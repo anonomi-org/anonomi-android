@@ -1079,4 +1079,6 @@ Umepoteza nenosiri.</string>
     <string name="blog_interactions_info">Vipendwa na maoni kwenye chapisho hili yanatoka kwa anwani zako.</string>
     <string name="blog_liked_by">Imependwa na</string>
     <string name="blog_commented_by">Imetolewa maoni na</string>
+    <string name="retention_7_days">Siku 7</string>
+    <string name="retention_30_days">Siku 3</string>
 </resources>
