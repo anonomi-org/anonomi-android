@@ -1088,4 +1088,14 @@
     <string name="comment_blog_post_hint">დაწერეთ კომენტარი…</string>
     <string name="action_attach_location">მდებარეობის მიმაგრება</string>
     <string name="action_attach_image">სურათის მიმაგრება</string>
+    <string name="message_retention_title">შეტყობინების შენახვა</string>
+    <string name="message_retention_info">არჩეული პერიოდის შემდეგ ძველი შეტყობინებები ავტომატურად წაიშლება ამ მოწყობილობიდან.</string>
+    <string name="retention_90_days">90 დღე</string>
+    <string name="retention_180_days">180 დღე</string>
+    <string name="retention_keep_forever">სამუდამოდ შეინახეთ</string>
+    <string name="retention_updated_toast">შეტყობინების შენახვა განახლდა</string>
+    <string name="blog_interactions_title">ურთიერთქმედებები</string>
+    <string name="blog_interactions_info">ამ პოსტზე მოწონებები და კომენტარები თქვენი კონტაქტებისგანაა.</string>
+    <string name="blog_liked_by">მოწონებულია</string>
+    <string name="blog_commented_by">კომენტარი გააკეთა</string>
 </resources>
