@@ -1069,4 +1069,6 @@
     <string name="blog_interactions_info">Лајковите и коментарите на оваа објава се од вашите контакти.</string>
     <string name="blog_liked_by">Допаѓа ми се на</string>
     <string name="blog_commented_by">Коментирано од</string>
+    <string name="retention_7_days">7 дена</string>
+    <string name="retention_30_days">3 дена</string>
 </resources>
