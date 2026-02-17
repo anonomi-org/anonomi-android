@@ -1080,4 +1080,14 @@
     <string name="comment_blog_post_hint">Напишете коментар…</string>
     <string name="action_attach_location">Прикачи местоположение</string>
     <string name="action_attach_image">Прикачване на изображение</string>
+    <string name="message_retention_title">Запазване на съобщения</string>
+    <string name="message_retention_info">Старите съобщения ще бъдат автоматично изтрити от това устройство след избрания период.</string>
+    <string name="retention_90_days">90 дни</string>
+    <string name="retention_180_days">180 дни</string>
+    <string name="retention_keep_forever">Запази завинаги</string>
+    <string name="retention_updated_toast">Запазването на съобщенията е актуализирано</string>
+    <string name="blog_interactions_title">Взаимодействия</string>
+    <string name="blog_interactions_info">Харесванията и коментарите под тази публикация са от вашите контакти.</string>
+    <string name="blog_liked_by">Харесано от</string>
+    <string name="blog_commented_by">Коментирано от</string>
 </resources>
