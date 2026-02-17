@@ -1055,4 +1055,6 @@
     <string name="blog_interactions_info">이 게시물에 달린 좋아요와 댓글은 여러분의 지인들이 남긴 것입니다.</string>
     <string name="blog_liked_by">좋아요를 누른 사람</string>
     <string name="blog_commented_by">댓글 작성자:</string>
+    <string name="retention_7_days">7일</string>
+    <string name="retention_30_days">3일</string>
 </resources>
