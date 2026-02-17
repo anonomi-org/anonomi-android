@@ -1076,4 +1076,14 @@
     <string name="comment_blog_post_hint">Escribe un comentario…</string>
     <string name="action_attach_location">Adxuntar localización</string>
     <string name="action_attach_image">Anexar imaxe</string>
+    <string name="message_retention_title">Retención de mensaxes</string>
+    <string name="message_retention_info">As mensaxes antigas eliminaranse automaticamente deste dispositivo despois do período seleccionado.</string>
+    <string name="retention_90_days">90 días</string>
+    <string name="retention_180_days">180 días</string>
+    <string name="retention_keep_forever">Gardar para sempre</string>
+    <string name="retention_updated_toast">Actualizouse a retención de mensaxes</string>
+    <string name="blog_interactions_title">Interaccións</string>
+    <string name="blog_interactions_info">Os gústames e os comentarios desta publicación proceden dos teus contactos.</string>
+    <string name="blog_liked_by">Gustoulle</string>
+    <string name="blog_commented_by">Comentado por</string>
 </resources>
