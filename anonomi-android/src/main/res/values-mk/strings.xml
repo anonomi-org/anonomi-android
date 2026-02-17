@@ -1059,4 +1059,14 @@
     <string name="comment_blog_post_hint">Напишете коментар…</string>
     <string name="action_attach_location">Прикачи локација</string>
     <string name="action_attach_image">Прикачи слика</string>
+    <string name="message_retention_title">Задржување на пораки</string>
+    <string name="message_retention_info">Старите пораки автоматски ќе бидат избришани од овој уред по избраниот период.</string>
+    <string name="retention_90_days">90 дена</string>
+    <string name="retention_180_days">180 дена</string>
+    <string name="retention_keep_forever">Задржи засекогаш</string>
+    <string name="retention_updated_toast">Задржувањето на пораките е ажурирано</string>
+    <string name="blog_interactions_title">Интеракции</string>
+    <string name="blog_interactions_info">Лајковите и коментарите на оваа објава се од вашите контакти.</string>
+    <string name="blog_liked_by">Допаѓа ми се на</string>
+    <string name="blog_commented_by">Коментирано од</string>
 </resources>
