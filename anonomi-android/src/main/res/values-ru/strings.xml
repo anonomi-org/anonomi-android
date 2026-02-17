@@ -1116,4 +1116,14 @@
     <string name="comment_blog_post_hint">Напишите комментарий…</string>
     <string name="action_attach_location">Прикрепить местоположение</string>
     <string name="action_attach_image">Прикрепить изображение</string>
+    <string name="message_retention_title">Сохранение сообщений</string>
+    <string name="message_retention_info">Старые сообщения будут автоматически удалены с этого устройства по истечении выбранного периода времени.</string>
+    <string name="retention_90_days">90 дней</string>
+    <string name="retention_180_days">180 дней</string>
+    <string name="retention_keep_forever">Хранить вечно</string>
+    <string name="retention_updated_toast">Обновлена информация о сроке хранения сообщений.</string>
+    <string name="blog_interactions_title">Взаимодействия</string>
+    <string name="blog_interactions_info">Лайки и комментарии к этому посту поступили от ваших контактов.</string>
+    <string name="blog_liked_by">Понравилось</string>
+    <string name="blog_commented_by">Комментарий от</string>
 </resources>
