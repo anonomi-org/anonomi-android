@@ -1142,4 +1142,6 @@ Anonomi (برایر) موقعیت شما را ذخیره نمی‌کند و آن
     <string name="blog_interactions_info">لایک‌ها و کامنت‌های این پست از مخاطبین شما هستند.</string>
     <string name="blog_liked_by">پسندیده شده توسط</string>
     <string name="blog_commented_by">نظر داده شده توسط</string>
+    <string name="retention_7_days">۷ روز</string>
+    <string name="retention_30_days">۳ روز</string>
 </resources>
