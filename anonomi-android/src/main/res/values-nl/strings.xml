@@ -1077,4 +1077,6 @@
     <string name="blog_interactions_info">De likes en reacties op dit bericht zijn afkomstig van uw contacten.</string>
     <string name="blog_liked_by">Vind ik leuk</string>
     <string name="blog_commented_by">Commentaar van</string>
+    <string name="retention_7_days">7 dagen</string>
+    <string name="retention_30_days">3 dagen</string>
 </resources>
