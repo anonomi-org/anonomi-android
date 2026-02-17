@@ -1086,4 +1086,6 @@
     <string name="blog_interactions_info">Os gústames e os comentarios desta publicación proceden dos teus contactos.</string>
     <string name="blog_liked_by">Gustoulle</string>
     <string name="blog_commented_by">Comentado por</string>
+    <string name="retention_7_days">7 días</string>
+    <string name="retention_30_days">3 días</string>
 </resources>
