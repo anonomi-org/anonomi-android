@@ -1108,4 +1108,6 @@ copies des messages que vous envoyez.
     <string name="blog_interactions_info">Les mentions « J’aime » et les commentaires sur cette publication proviennent de vos contacts.</string>
     <string name="blog_liked_by">Aimé par</string>
     <string name="blog_commented_by">Commenté par</string>
+    <string name="retention_7_days">7 jours</string>
+    <string name="retention_30_days">3 jours</string>
 </resources>
