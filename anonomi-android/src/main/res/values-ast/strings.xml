@@ -270,4 +270,6 @@
     <string name="mailbox_status_app_too_old_title">Protexer Anonomi</string>
     <string name="retention_7_days">7 díes</string>
     <string name="retention_30_days">3 díes</string>
+    <string name="retention_90_days">3 díes</string>
+    <string name="retention_180_days">3 díes</string>
 </resources>
