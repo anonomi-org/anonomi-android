@@ -1115,7 +1115,7 @@
     <string name="retention_keep_forever">Uchovat navždy</string>
     <string name="retention_updated_toast">Uchovávání zpráv aktualizováno</string>
     <string name="blog_interactions_title">Interakce</string>
-    <string name="blog_interactions_info">Lajky a komentáře k tomuto příspěvku pocházejí od vašich kontaktů.</string>
+    <string name="blog_interactions_info">Lajky a komentáře k tomuto příspěvku pocházejí od vašich kontaktů a od kontaktů, se kterými byl váš blog sdílen.</string>
     <string name="blog_liked_by">Líbilo se uživateli</string>
     <string name="blog_commented_by">Komentoval(a)</string>
     <string name="retention_7_days">7 dní</string>
