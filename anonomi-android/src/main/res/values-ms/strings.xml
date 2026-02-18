@@ -1009,7 +1009,7 @@
     <string name="retention_keep_forever">Kekalkan selama-lamanya</string>
     <string name="retention_updated_toast">Pengekalan mesej dikemas kini</string>
     <string name="blog_interactions_title">Interaksi</string>
-    <string name="blog_interactions_info">Suka dan komen pada siaran ini adalah daripada kenalan anda.</string>
+    <string name="blog_interactions_info">Suka dan komen pada siaran ini adalah daripada kenalan anda dan daripada kenalan yang telah dikongsikan blog anda.</string>
     <string name="blog_liked_by">Disukai oleh</string>
     <string name="blog_commented_by">Diulas oleh</string>
     <string name="retention_7_days">7 hari</string>
