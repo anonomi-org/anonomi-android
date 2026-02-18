@@ -1124,7 +1124,7 @@ Najprv nainštalujte aplikáciu Anonomi Postbox do iného zariadenia z rovnakéh
     <string name="retention_keep_forever">Uchovať navždy</string>
     <string name="retention_updated_toast">Uchovávanie správ bolo aktualizované</string>
     <string name="blog_interactions_title">Interakcie</string>
-    <string name="blog_interactions_info">Páči sa mi to a komentáre k tomuto príspevku pochádzajú od vašich kontaktov.</string>
+    <string name="blog_interactions_info">Označenia „páči sa mi to“ a komentáre k tomuto príspevku pochádzajú od vašich kontaktov a od kontaktov, s ktorými bol váš blog zdieľaný.</string>
     <string name="blog_liked_by">Páčilo sa používateľovi</string>
     <string name="blog_commented_by">Komentoval(a)</string>
     <string name="retention_7_days">7 dní</string>
