@@ -1083,7 +1083,7 @@
     <string name="retention_keep_forever">Gardar para sempre</string>
     <string name="retention_updated_toast">Actualizouse a retención de mensaxes</string>
     <string name="blog_interactions_title">Interaccións</string>
-    <string name="blog_interactions_info">Os gústames e os comentarios desta publicación proceden dos teus contactos.</string>
+    <string name="blog_interactions_info">Os gústames e os comentarios desta publicación proceden dos teus contactos e dos contactos cos que se compartiu o teu blog.</string>
     <string name="blog_liked_by">Gustoulle</string>
     <string name="blog_commented_by">Comentado por</string>
     <string name="retention_7_days">7 días</string>
