@@ -1123,7 +1123,7 @@ Pirmiausia, įdiekite „Anonomi Postbox“ programėlę į kitą įrenginį iš
     <string name="retention_keep_forever">Laikyti amžinai</string>
     <string name="retention_updated_toast">Pranešimų išsaugojimas atnaujintas</string>
     <string name="blog_interactions_title">Sąveika</string>
-    <string name="blog_interactions_info">Šio įrašo patiktukai ir komentarai yra iš jūsų kontaktų.</string>
+    <string name="blog_interactions_info">Šio įrašo patiktukai ir komentarai yra iš jūsų kontaktų ir kontaktų, su kuriais buvo bendrinamas jūsų tinklaraštis.</string>
     <string name="blog_liked_by">Patinka</string>
     <string name="blog_commented_by">Komentarą pateikė</string>
     <string name="retention_7_days">7 dienos</string>
