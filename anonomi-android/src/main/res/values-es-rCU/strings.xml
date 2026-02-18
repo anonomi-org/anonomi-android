@@ -1270,7 +1270,7 @@ Si tu contacto creó el archivo hace más de 28 días, Anonomi no podrá reconoc
     <string name="retention_keep_forever">Conservar para siempre</string>
     <string name="retention_updated_toast">Retención de mensajes actualizada</string>
     <string name="blog_interactions_title">Interacciones</string>
-    <string name="blog_interactions_info">Los me gusta y comentarios de esta publicación son de tus contactos.</string>
+    <string name="blog_interactions_info">Los “Me gusta” y comentarios de esta publicación provienen de tus contactos y de los contactos con quienes se compartió tu blog.</string>
     <string name="blog_liked_by">Me gustó</string>
     <string name="blog_commented_by">Comentado por</string>
     <string name="retention_7_days">7 días</string>
