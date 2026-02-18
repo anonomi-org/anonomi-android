@@ -1099,7 +1099,7 @@ Anonomi-i i përdor ato paralelisht.</string>
     <string name="retention_keep_forever">Mbaj përgjithmonë</string>
     <string name="retention_updated_toast">Ruajtja e mesazhit u përditësua</string>
     <string name="blog_interactions_title">Ndërveprimet</string>
-    <string name="blog_interactions_info">Pëlqimet dhe komentet në këtë postim janë nga kontaktet tuaja.</string>
+    <string name="blog_interactions_info">Pëlqimet dhe komentet në këtë postim janë nga kontaktet tuaja dhe nga kontaktet me të cilët është ndarë blogu juaj.</string>
     <string name="blog_liked_by">Pëlqyer nga</string>
     <string name="blog_commented_by">Komentuar nga</string>
     <string name="retention_7_days">7 ditë</string>
