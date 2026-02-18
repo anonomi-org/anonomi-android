@@ -1079,7 +1079,7 @@
     <string name="retention_keep_forever">永遠に保存</string>
     <string name="retention_updated_toast">メッセージの保持が更新されました</string>
     <string name="blog_interactions_title">相互作用</string>
-    <string name="blog_interactions_info">この投稿への「いいね！」とコメントはあなたの連絡先からのものです。</string>
+    <string name="blog_interactions_info">この投稿への「いいね！」やコメントは、あなたの連絡先と、あなたのブログを共有した連絡先からのものです。</string>
     <string name="blog_liked_by">いいねした人</string>
     <string name="blog_commented_by">コメントした人</string>
     <string name="retention_7_days">7日</string>

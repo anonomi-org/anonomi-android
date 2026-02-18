@@ -1085,7 +1085,7 @@ Així que l\'actualitzi li veureu una icona diferent .</string>
     <string name="retention_keep_forever">Conserva per sempre</string>
     <string name="retention_updated_toast">Retenció de missatges actualitzada</string>
     <string name="blog_interactions_title">Interaccions</string>
-    <string name="blog_interactions_info">Els \"m\'agrada\" i els comentaris d\'aquesta publicació provenen dels teus contactes.</string>
+    <string name="blog_interactions_info">Els \"m\'agrada\" i els comentaris d\'aquesta publicació provenen dels teus contactes i dels contactes amb qui s\'ha compartit el teu blog.</string>
     <string name="blog_liked_by">Agradat per</string>
     <string name="blog_commented_by">Comentat per</string>
     <string name="retention_7_days">7 dies</string>

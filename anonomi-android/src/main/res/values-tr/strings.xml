@@ -1095,7 +1095,7 @@
     <string name="retention_keep_forever">Sonsuza dek sakla</string>
     <string name="retention_updated_toast">Mesaj saklama süresi güncellendi.</string>
     <string name="blog_interactions_title">Etkileşimler</string>
-    <string name="blog_interactions_info">Bu gönderiye gelen beğeniler ve yorumlar, kişilerinizden geliyor.</string>
+    <string name="blog_interactions_info">Bu gönderiye gelen beğeniler ve yorumlar, sizin kişilerinizden ve blogunuzun paylaşıldığı kişilerden gelmektedir.</string>
     <string name="blog_liked_by">Beğenenler</string>
     <string name="blog_commented_by">Yorum yapan:</string>
     <string name="retention_7_days">7 gün</string>

@@ -1105,7 +1105,7 @@ copies des messages que vous envoyez.
     <string name="retention_keep_forever">À garder pour toujours</string>
     <string name="retention_updated_toast">Mise à jour de la conservation des messages</string>
     <string name="blog_interactions_title">Interactions</string>
-    <string name="blog_interactions_info">Les mentions « J’aime » et les commentaires sur cette publication proviennent de vos contacts.</string>
+    <string name="blog_interactions_info">Les mentions « J’aime » et les commentaires sur cette publication proviennent de vos contacts et des contacts avec lesquels votre blog a été partagé.</string>
     <string name="blog_liked_by">Aimé par</string>
     <string name="blog_commented_by">Commenté par</string>
     <string name="retention_7_days">7 jours</string>

@@ -1096,7 +1096,7 @@ Installera först Anonomi Postbox-appen på en annan enhet genom att hämta den 
     <string name="retention_keep_forever">Behåll för alltid</string>
     <string name="retention_updated_toast">Meddelandelagring uppdaterad</string>
     <string name="blog_interactions_title">Interaktioner</string>
-    <string name="blog_interactions_info">Gilla-markeringarna och kommentarerna på det här inlägget kommer från dina kontakter.</string>
+    <string name="blog_interactions_info">Gilla-markeringarna och kommentarerna på det här inlägget kommer från dina kontakter och från kontakter som din blogg delades med.</string>
     <string name="blog_liked_by">Gillad av</string>
     <string name="blog_commented_by">Kommenterad av</string>
     <string name="retention_7_days">7 dagar</string>

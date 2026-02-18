@@ -1094,7 +1094,7 @@
     <string name="retention_keep_forever">চিরকাল রাখুন</string>
     <string name="retention_updated_toast">বার্তা ধরে রাখার সুবিধা আপডেট করা হয়েছে</string>
     <string name="blog_interactions_title">মিথস্ক্রিয়া</string>
-    <string name="blog_interactions_info">এই পোস্টে লাইক এবং মন্তব্যগুলি আপনার পরিচিতিদের কাছ থেকে এসেছে।</string>
+    <string name="blog_interactions_info">এই পোস্টে লাইক এবং মন্তব্যগুলি আপনার পরিচিতি এবং আপনার ব্লগটি যাদের সাথে শেয়ার করা হয়েছে তাদের কাছ থেকে এসেছে।</string>
     <string name="blog_liked_by">পছন্দ করেছেন</string>
     <string name="blog_commented_by">মন্তব্য করেছেন</string>
     <string name="retention_7_days">৭ দিন</string>

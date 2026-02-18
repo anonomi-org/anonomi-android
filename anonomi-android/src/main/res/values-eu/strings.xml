@@ -1066,7 +1066,7 @@
     <string name="retention_keep_forever">Gorde betiko</string>
     <string name="retention_updated_toast">Mezuen atxikipena eguneratu da</string>
     <string name="blog_interactions_title">Elkarrekintzak</string>
-    <string name="blog_interactions_info">Mezu honen atsegin dut-ak eta iruzkinak zure kontaktuenak dira.</string>
+    <string name="blog_interactions_info">Mezu honen atsegin dut-ak eta iruzkinak zure kontaktuenak eta zure bloga partekatu zen kontaktuenak dira.</string>
     <string name="blog_liked_by">Gustatu zaio</string>
     <string name="blog_commented_by">Iruzkina egin du</string>
     <string name="retention_7_days">7 egun</string>

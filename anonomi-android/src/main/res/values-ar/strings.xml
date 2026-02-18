@@ -1155,7 +1155,7 @@
     <string name="retention_keep_forever">احتفظ بها للأبد</string>
     <string name="retention_updated_toast">تم تحديث الاحتفاظ بالرسائل</string>
     <string name="blog_interactions_title">التفاعلات</string>
-    <string name="blog_interactions_info">الإعجابات والتعليقات على هذا المنشور هي من جهات اتصالك.</string>
+    <string name="blog_interactions_info">الإعجابات والتعليقات على هذا المنشور هي من جهات اتصالك ومن جهات الاتصال التي تمت مشاركة مدونتك معها.</string>
     <string name="blog_liked_by">أعجب به</string>
     <string name="blog_commented_by">تعليق من</string>
     <string name="retention_7_days">7 أيام</string>

@@ -1121,7 +1121,7 @@ Primeiro, instale o app Anonomi Postbox em outro dispositivo a partir do mesmo l
     <string name="retention_keep_forever">Guarde para sempre</string>
     <string name="retention_updated_toast">Retenção de mensagens atualizada</string>
     <string name="blog_interactions_title">Interações</string>
-    <string name="blog_interactions_info">As curtidas e os comentários desta publicação são de seus contatos.</string>
+    <string name="blog_interactions_info">As curtidas e os comentários desta publicação são de seus contatos e de contatos com os quais seu blog foi compartilhado.</string>
     <string name="blog_liked_by">Curtido por</string>
     <string name="blog_commented_by">Comentado por</string>
     <string name="retention_7_days">7 dias</string>

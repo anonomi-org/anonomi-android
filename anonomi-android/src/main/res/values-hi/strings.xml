@@ -1066,7 +1066,7 @@
     <string name="retention_keep_forever">हमेशा के लिए रखें</string>
     <string name="retention_updated_toast">संदेश प्रतिधारण अपडेट किया गया</string>
     <string name="blog_interactions_title">अंतःक्रियाएँ</string>
-    <string name="blog_interactions_info">इस पोस्ट पर मिले लाइक और कमेंट आपके संपर्कों के हैं।</string>
+    <string name="blog_interactions_info">इस पोस्ट पर मिले लाइक और कमेंट आपके संपर्कों और उन संपर्कों से हैं जिनके साथ आपका ब्लॉग साझा किया गया था।</string>
     <string name="blog_liked_by">पसंद किया गया</string>
     <string name="blog_commented_by">द्वारा टिप्पणी की गई</string>
     <string name="retention_7_days">7 दिन</string>

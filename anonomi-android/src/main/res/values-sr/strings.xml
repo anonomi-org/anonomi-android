@@ -1093,7 +1093,7 @@ Molim vas da uzmete u obzir odobravanja pristupa.</string>
     <string name="retention_keep_forever">Задржи заувек</string>
     <string name="retention_updated_toast">Задржавање порука је ажурирано</string>
     <string name="blog_interactions_title">Интеракције</string>
-    <string name="blog_interactions_info">Лајкови и коментари на ову објаву су од ваших контаката.</string>
+    <string name="blog_interactions_info">Лајкови и коментари на ову објаву су од ваших контаката и од контаката са којима је ваш блог дељен.</string>
     <string name="blog_liked_by">Свиђа се кориснику</string>
     <string name="blog_commented_by">Коментарисао/ла</string>
     <string name="retention_7_days">7 дана</string>
