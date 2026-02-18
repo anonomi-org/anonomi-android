@@ -1085,7 +1085,7 @@
     <string name="retention_keep_forever">永遠珍藏</string>
     <string name="retention_updated_toast">訊息保留更新</string>
     <string name="blog_interactions_title">互動</string>
-    <string name="blog_interactions_info">此貼文的讚和留言均來自您的聯絡人。</string>
+    <string name="blog_interactions_info">此貼文的按讚和留言來自您的聯絡人以及您的部落格被分享給的聯絡人。</string>
     <string name="blog_liked_by">讚</string>
     <string name="blog_commented_by">評論者</string>
     <string name="retention_7_days">7天</string>
