@@ -1066,7 +1066,7 @@
     <string name="retention_keep_forever">Задржи засекогаш</string>
     <string name="retention_updated_toast">Задржувањето на пораките е ажурирано</string>
     <string name="blog_interactions_title">Интеракции</string>
-    <string name="blog_interactions_info">Лајковите и коментарите на оваа објава се од вашите контакти.</string>
+    <string name="blog_interactions_info">Лајковите и коментарите на оваа објава се од вашите контакти и од контактите со кои е споделен вашиот блог.</string>
     <string name="blog_liked_by">Допаѓа ми се на</string>
     <string name="blog_commented_by">Коментирано од</string>
     <string name="retention_7_days">7 дена</string>
