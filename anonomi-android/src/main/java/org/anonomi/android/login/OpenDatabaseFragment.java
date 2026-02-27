@@ -35,6 +35,7 @@ public class OpenDatabaseFragment extends BaseFragment {
 	private StartupViewModel viewModel;
 
 	private TextView textView;
+	private TextView subtitleView;
 	private ImageView imageView;
 
 	@Override
@@ -52,6 +53,7 @@ public class OpenDatabaseFragment extends BaseFragment {
 				false);
 
 		textView = v.findViewById(R.id.textView);
+		subtitleView = v.findViewById(R.id.subtitleView);
 		imageView = v.findViewById(R.id.imageView);
 
 		LifecycleOwner owner = getViewLifecycleOwner();
@@ -73,6 +75,8 @@ public class OpenDatabaseFragment extends BaseFragment {
 	private void showCompaction() {
 		textView.setText(R.string.startup_compact_database);
 		imageView.setImageResource(R.drawable.startup_migration);
+		subtitleView.setText(R.string.startup_compact_database_subtitle);
+		subtitleView.setVisibility(View.VISIBLE);
 	}
 
 	@Override

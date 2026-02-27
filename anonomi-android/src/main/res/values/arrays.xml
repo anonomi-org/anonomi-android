@@ -34,6 +34,7 @@
 		<item>he</item>
 		<item>hi</item>
 		<item>hu</item>
+		<item>in</item>
 		<item>is</item>
 		<item>it</item>
 		<item>ja</item>
@@ -56,8 +57,11 @@
 		<item>sr</item>
 		<item>sv</item>
 		<item>sw</item>
+		<item>sw-TZ</item>
+		<item>th</item>
 		<item>tr</item>
 		<item>uk</item>
+		<item>vi</item>
 		<item>zh-CN</item>
 		<item>zh-TW</item>
 	</string-array>

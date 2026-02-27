@@ -136,6 +136,7 @@
     <string name="startup_open_database">Decrypting Database…</string>
     <string name="startup_migrate_database">Upgrading Database…</string>
     <string name="startup_compact_database">Compacting Database…</string>
+    <string name="startup_compact_database_subtitle">This may take a moment. Please keep the app open.</string>
     <!-- Navigation Drawer -->
 	<string name="nav_drawer_open_description">Open the navigation drawer</string>
     <string name="nav_drawer_close_description">Close the navigation drawer</string>
