@@ -91,7 +91,8 @@ public class GroupActivity extends
 
 	private AudioRecord audioRecord;
 	private Thread recordingThread;
-	private boolean isRecording = false;
+	private volatile boolean isRecording = false;
+	private volatile boolean sendCancelled = false;
 	private volatile byte[] recordedPcmData;
 	private TextView slideToCancelText;
 	private CompositeSendButton compositeSendButton;
@@ -526,13 +527,15 @@ public class GroupActivity extends
 
 		audioRecord.startRecording();
 		isRecording = true;
+		sendCancelled = false;
 
+		final AudioRecord ar = audioRecord;
 		recordingThread = new Thread(() -> {
 			try {
 				ByteArrayOutputStream pcmOut = new ByteArrayOutputStream();
 				byte[] buffer = new byte[bufferSize];
 				while (isRecording) {
-					int read = audioRecord.read(buffer, 0, buffer.length);
+					int read = ar.read(buffer, 0, buffer.length);
 					if (read > 0) {
 						pcmOut.write(buffer, 0, read);
 					}
@@ -540,6 +543,8 @@ public class GroupActivity extends
 				recordedPcmData = pcmOut.toByteArray();
 			} catch (Exception e) {
 				Log.e("GroupActivity", "Error recording audio", e);
+			} finally {
+				ar.release();
 			}
 		}, "GroupAudioRecorder");
 
@@ -547,44 +552,41 @@ public class GroupActivity extends
 	}
 
 	private void stopAndSendRecording() {
-		try {
-			isRecording = false;
-			if (audioRecord != null &&
-					audioRecord.getRecordingState() ==
-							AudioRecord.RECORDSTATE_RECORDING) {
-				audioRecord.stop();
-			}
-			if (audioRecord != null) {
-				audioRecord.release();
-				audioRecord = null;
-			}
+		if (!isRecording) return;
 
-			recordingTimerHandler.removeCallbacks(recordingTimerRunnable);
+		isRecording = false;
+		recordingTimerHandler.removeCallbacks(recordingTimerRunnable);
 
+		if (audioRecord != null &&
+				audioRecord.getRecordingState() ==
+						AudioRecord.RECORDSTATE_RECORDING) {
+			audioRecord.stop();
+		}
+		audioRecord = null;
+
+		final Thread rt = recordingThread;
+		recordingThread = null;
+
+		new Thread(() -> {
 			try {
-				Thread.sleep(100);
-				if (recordingThread != null) {
-					recordingThread.join();
-					recordingThread = null;
-				}
-			} catch (InterruptedException e) {
-				Log.e("GroupActivity",
-						"Recording thread interrupted", e);
-				Toast.makeText(this,
+				if (rt != null) rt.join(2000);
+			} catch (InterruptedException ignored) {}
+
+			if (sendCancelled) return;
+
+			byte[] pcm = recordedPcmData;
+
+			if (pcm == null || pcm.length == 0) {
+				runOnUiThread(() -> Toast.makeText(this,
 						getString(R.string.recording_error),
-						Toast.LENGTH_SHORT).show();
+						Toast.LENGTH_SHORT).show());
 				return;
 			}
 
-			if (recordedPcmData == null || recordedPcmData.length == 0) {
-				Toast.makeText(this, getString(R.string.recording_error),
-						Toast.LENGTH_SHORT).show();
-				return;
-			}
-
-			if (recordedPcmData.length < 1024) {
-				Toast.makeText(this, getString(R.string.recording_too_short),
-						Toast.LENGTH_SHORT).show();
+			if (pcm.length < 1024) {
+				runOnUiThread(() -> Toast.makeText(this,
+						getString(R.string.recording_too_short),
+						Toast.LENGTH_SHORT).show());
 				return;
 			}
 
@@ -592,84 +594,78 @@ public class GroupActivity extends
 			MessageId replyId = viewModel.getCurrentReplyId();
 
 			File wavFile = new File(getCacheDir(),
-					isDistorted ? "group_distorted.wav"
-							: "group_recording.wav");
+					isDistorted ? "group_distorted.wav" : "group_recording.wav");
 			File oggFile = new File(getCacheDir(), "group_audio.ogg");
 
-			new Thread(() -> {
-				try {
-					byte[] pcmToWrite = recordedPcmData;
+			try {
+				byte[] pcmToWrite = pcm;
+				if (isDistorted) {
+					pcmToWrite = AudioUtils.distortPcm(pcm);
+					if (pcmToWrite == null) {
+						runOnUiThread(() -> Toast.makeText(this,
+								getString(R.string.distortion_failed),
+								Toast.LENGTH_SHORT).show());
+						return;
+					}
+				}
 
-					if (isDistorted) {
-						pcmToWrite = AudioUtils.distortPcm(recordedPcmData);
-						if (pcmToWrite == null) {
-							runOnUiThread(() -> Toast.makeText(this,
-									getString(R.string.distortion_failed),
-									Toast.LENGTH_SHORT).show());
-							return;
-						}
+				AudioUtils.writeWavFile(wavFile, pcmToWrite, 16000, 1);
+
+				String ffmpegCommand = String.format(
+						"-y -i \"%s\" -c:a opus -strict -2 -b:a 16k \"%s\"",
+						wavFile.getAbsolutePath(),
+						oggFile.getAbsolutePath());
+
+				FFmpegKit.executeAsync(ffmpegCommand, session -> {
+					ReturnCode returnCode = session.getReturnCode();
+
+					if (sendCancelled) {
+						wavFile.delete();
+						oggFile.delete();
+						return;
 					}
 
-					AudioUtils.writeWavFile(wavFile, pcmToWrite, 16000, 1);
-
-					String ffmpegCommand = String.format(
-							"-y -i \"%s\" -c:a opus -strict -2 -b:a 16k \"%s\"",
-							wavFile.getAbsolutePath(),
-							oggFile.getAbsolutePath());
-
-					FFmpegKit.executeAsync(ffmpegCommand, session -> {
-						ReturnCode returnCode = session.getReturnCode();
-
-						if (ReturnCode.isSuccess(returnCode)
-								&& oggFile.exists()) {
-							try {
-								byte[] oggData = readFileBytes(oggFile);
-								runOnUiThread(() -> {
-									viewModel.createAndStoreAudioMessage(
-											oggData, "audio/ogg", replyId);
-									// clear reply state
-									viewModel.clearReplyId();
-									Toast.makeText(this,
-											getString(R.string.voice_sent),
-											Toast.LENGTH_SHORT).show();
-								});
-							} catch (IOException e) {
-								runOnUiThread(() -> Toast.makeText(this,
-										getString(R.string.conversion_failed),
-										Toast.LENGTH_SHORT).show());
-							}
-						} else {
+					if (ReturnCode.isSuccess(returnCode) && oggFile.exists()) {
+						try {
+							byte[] oggData = readFileBytes(oggFile);
+							runOnUiThread(() -> {
+								viewModel.createAndStoreAudioMessage(
+										oggData, "audio/ogg", replyId);
+								viewModel.clearReplyId();
+								Toast.makeText(this,
+										getString(R.string.voice_sent),
+										Toast.LENGTH_SHORT).show();
+							});
+						} catch (IOException e) {
 							runOnUiThread(() -> Toast.makeText(this,
 									getString(R.string.conversion_failed),
 									Toast.LENGTH_SHORT).show());
 						}
+					} else {
+						runOnUiThread(() -> Toast.makeText(this,
+								getString(R.string.conversion_failed),
+								Toast.LENGTH_SHORT).show());
+					}
 
-						wavFile.delete();
-						oggFile.delete();
-					});
-				} catch (Exception e) {
-					runOnUiThread(() -> Toast.makeText(this,
-							getString(R.string.processing_error),
-							Toast.LENGTH_SHORT).show());
-					e.printStackTrace();
-				}
-			}).start();
-
-		} catch (Exception e) {
-			Toast.makeText(this,
-					getString(R.string.general_sendaudio_failure),
-					Toast.LENGTH_SHORT).show();
-			Log.e("GroupActivity", "Catch all error", e);
-		}
+					wavFile.delete();
+					oggFile.delete();
+				});
+			} catch (Exception e) {
+				runOnUiThread(() -> Toast.makeText(this,
+						getString(R.string.processing_error),
+						Toast.LENGTH_SHORT).show());
+				Log.e("GroupActivity", "Send error", e);
+			}
+		}, "AudioSendThread").start();
 	}
 
 	private void cancelRecording() {
 		try {
+			sendCancelled = true;
 			isRecording = false;
 			recordingTimerHandler.removeCallbacks(recordingTimerRunnable);
 			if (audioRecord != null) {
 				audioRecord.stop();
-				audioRecord.release();
 				audioRecord = null;
 			}
 			Toast.makeText(this, getString(R.string.recording_cancelled),

@@ -48,6 +48,7 @@ import org.anonomi.android.activity.BriarActivity;
 import org.anonomi.android.attachment.AttachmentItem;
 import org.anonomi.android.attachment.AttachmentRetriever;
 import org.anonomi.android.blog.BlogActivity;
+import org.anonomi.android.contact.ContactItem;
 import org.anonomi.android.contact.connect.ConnectViaBluetoothActivity;
 import org.anonomi.android.conversation.ConversationVisitor.AttachmentCache;
 import org.anonomi.android.conversation.ConversationVisitor.TextCache;
@@ -273,7 +274,7 @@ public class ConversationActivity extends BriarActivity
 
 	private AudioRecord audioRecord;
 	private Thread recordingThread;
-	private boolean isRecording = false;
+	private volatile boolean isRecording = false;
 
 	// Walkie-Talkie
 	private static final String PREF_WALKIE_TALKIE = "walkie_talkie_";
@@ -524,23 +525,25 @@ public class ConversationActivity extends BriarActivity
 
 		audioRecord.startRecording();
 		isRecording = true;
+		sendCancelled = false;
 
+		final AudioRecord ar = audioRecord;
 		recordingThread = new Thread(() -> {
 			try {
 				ByteArrayOutputStream pcmOut = new ByteArrayOutputStream();
 				byte[] buffer = new byte[bufferSize];
 				while (isRecording) {
-					int read = audioRecord.read(buffer, 0, buffer.length);
+					int read = ar.read(buffer, 0, buffer.length);
 					if (read > 0) {
 						pcmOut.write(buffer, 0, read);
 					}
 				}
-
 				recordedPcmData = pcmOut.toByteArray();
 				AudioUtils.writeWavFile(audioFile, recordedPcmData, sampleRate, 1);
-
 			} catch (IOException e) {
 				Log.e("ConversationActivity", "Error writing WAV file", e);
+			} finally {
+				ar.release();
 			}
 		}, "AudioRecorder Thread");
 
@@ -548,6 +551,7 @@ public class ConversationActivity extends BriarActivity
 	}
 
 	private long recordingStartTime;
+	private volatile boolean sendCancelled = false;
 	private final Handler recordingTimerHandler = new Handler(Looper.getMainLooper());
 	private final Runnable recordingTimerRunnable = new Runnable() {
 		@Override
@@ -576,108 +580,107 @@ public class ConversationActivity extends BriarActivity
 	};
 
 	private void stopAndSendRecording() {
-		try {
-			isRecording = false;
-			if (audioRecord != null && audioRecord.getRecordingState() == AudioRecord.RECORDSTATE_RECORDING) {
-				audioRecord.stop();
-			}
-			audioRecord.release();
-			audioRecord = null;
+		if (!isRecording) return;
 
-			recordingTimerHandler.removeCallbacks(recordingTimerRunnable);
+		isRecording = false;
+		recordingTimerHandler.removeCallbacks(recordingTimerRunnable);
+
+		if (audioRecord != null && audioRecord.getRecordingState() == AudioRecord.RECORDSTATE_RECORDING) {
+			audioRecord.stop();
+		}
+		audioRecord = null;
+
+		final Thread rt = recordingThread;
+		recordingThread = null;
+
+		new Thread(() -> {
+			try {
+				if (rt != null) rt.join(2000);
+			} catch (InterruptedException ignored) {}
+
+			if (sendCancelled) return;
+
+			byte[] pcm = recordedPcmData;
+
+			if (pcm == null || pcm.length == 0) {
+				runOnUiThread(() -> Toast.makeText(this, getString(R.string.recording_error), Toast.LENGTH_SHORT).show());
+				return;
+			}
+
+			if (pcm.length < 1024) {
+				runOnUiThread(() -> Toast.makeText(this, getString(R.string.recording_too_short), Toast.LENGTH_SHORT).show());
+				return;
+			}
+
+			ContactItem contactItem = viewModel.getContactItem().getValue();
+			if (contactItem == null) {
+				runOnUiThread(() -> Toast.makeText(this, getString(R.string.recording_error), Toast.LENGTH_SHORT).show());
+				return;
+			}
+			boolean isDistorted = contactItem.getContact().isDistortedVoiceEnabled();
 
 			try {
-				Thread.sleep(100); // 100ms
-				recordingThread.join();  // ✅ Ensure PCM recording has ended
-				recordingThread = null;
-			} catch (InterruptedException e) {
-				Log.e("ConversationActivity", "Recording thread interrupted", e);
-				Toast.makeText(this, getString(R.string.recording_error), Toast.LENGTH_SHORT).show();
-				return;
-			}
+				byte[] pcmToWrite = pcm;
+				if (isDistorted) {
+					pcmToWrite = AudioUtils.distortPcm(pcm);
+					if (pcmToWrite == null) {
+						runOnUiThread(() -> Toast.makeText(this, getString(R.string.distortion_failed), Toast.LENGTH_SHORT).show());
+						return;
+					}
+				}
 
-			if (recordedPcmData == null || recordedPcmData.length == 0) {
-				Toast.makeText(this, getString(R.string.recording_error), Toast.LENGTH_SHORT).show();
-				return;
-			}
+				File wavFile = new File(getCacheDir(), isDistorted ? "distorted.wav" : "recording.wav");
+				File oggFile = new File(getCacheDir(), "distorted.ogg");
 
-			if (recordedPcmData.length < 1024) { // Less than 0.06 seconds of audio at 16kHz
-				Toast.makeText(this, getString(R.string.recording_too_short), Toast.LENGTH_SHORT).show();
-				return;
-			}
+				AudioUtils.writeWavFile(wavFile, pcmToWrite, 16000, 1);
 
-			boolean isDistorted = viewModel.getContactItem().getValue()
-					.getContact().isDistortedVoiceEnabled();
+				String ffmpegCommand = String.format(
+						"-y -i \"%s\" -c:a opus -strict -2 -b:a 16k \"%s\"",
+						wavFile.getAbsolutePath(), oggFile.getAbsolutePath()
+				);
 
-			File wavFile = new File(getCacheDir(), isDistorted ? "distorted.wav" : "recording.wav");
-			File oggFile = new File(getCacheDir(), "distorted.ogg");
-
-			new Thread(() -> {
-				try {
-					byte[] pcmToWrite = recordedPcmData;
-
-					if (isDistorted) {
-						pcmToWrite = AudioUtils.distortPcm(recordedPcmData);
-						if (pcmToWrite == null) {
-							runOnUiThread(() -> Toast.makeText(this, getString(R.string.distortion_failed), Toast.LENGTH_SHORT).show());
+				FFmpegKit.executeAsync(ffmpegCommand, session -> {
+					ReturnCode returnCode = session.getReturnCode();
+					runOnUiThread(() -> {
+						if (sendCancelled) {
+							wavFile.delete();
+							oggFile.delete();
 							return;
 						}
-					}
-
-					AudioUtils.writeWavFile(wavFile, pcmToWrite, 16000, 1);  // mono, 16kHz
-
-					String ffmpegCommand = String.format(
-							"-y -i \"%s\" -c:a opus -strict -2 -b:a 16k \"%s\"",
-							wavFile.getAbsolutePath(), oggFile.getAbsolutePath()
-					);
-
-					FFmpegKit.executeAsync(ffmpegCommand, session -> {
-						ReturnCode returnCode = session.getReturnCode();
-
-						runOnUiThread(() -> {
-							if (ReturnCode.isSuccess(returnCode)) {
-								if (oggFile.exists()) {
-									viewModel.sendAudioAttachment(Uri.fromFile(oggFile))
-											.observe(this, sendState -> {
-												if (sendState == SendState.SENT) {
-													Toast.makeText(this, getString(R.string.voice_sent), Toast.LENGTH_SHORT).show();
-												} else {
-													Toast.makeText(this, getString(R.string.general_sendaudio_failure), Toast.LENGTH_SHORT).show();
-												}
-
-												// ✅ Only delete after LiveData observer finishes
-												wavFile.delete();
-												oggFile.delete();
-											});
-								} else {
-									Toast.makeText(this, getString(R.string.conversion_failed), Toast.LENGTH_SHORT).show();
-								}
+						if (ReturnCode.isSuccess(returnCode)) {
+							if (oggFile.exists()) {
+								viewModel.sendAudioAttachment(Uri.fromFile(oggFile))
+										.observe(this, sendState -> {
+											if (sendState == SendState.SENT) {
+												Toast.makeText(this, getString(R.string.voice_sent), Toast.LENGTH_SHORT).show();
+											} else {
+												Toast.makeText(this, getString(R.string.general_sendaudio_failure), Toast.LENGTH_SHORT).show();
+											}
+											wavFile.delete();
+											oggFile.delete();
+										});
 							} else {
 								Toast.makeText(this, getString(R.string.conversion_failed), Toast.LENGTH_SHORT).show();
 							}
-
-						});
+						} else {
+							Toast.makeText(this, getString(R.string.conversion_failed), Toast.LENGTH_SHORT).show();
+						}
 					});
-				} catch (Exception e) {
-					runOnUiThread(() -> Toast.makeText(this, getString(R.string.processing_error), Toast.LENGTH_SHORT).show());
-					e.printStackTrace();
-				}
-			}).start();
-
-		} catch (Exception e) {
-			Toast.makeText(this, getString(R.string.general_sendaudio_failure), Toast.LENGTH_SHORT).show();
-			Log.e("ConversationActivity", "Catch all error", e);
-			e.printStackTrace();
-		}
+				});
+			} catch (Exception e) {
+				runOnUiThread(() -> Toast.makeText(this, getString(R.string.processing_error), Toast.LENGTH_SHORT).show());
+				Log.e("ConversationActivity", "Send error", e);
+			}
+		}, "AudioSendThread").start();
 	}
 
 	private void cancelRecording() {
 		try {
+			sendCancelled = true;
 			isRecording = false;
 			recordingTimerHandler.removeCallbacks(recordingTimerRunnable);
 			if (audioRecord != null) {
 				audioRecord.stop();
-				audioRecord.release();
 				audioRecord = null;
 			}
 			if (audioFile != null && audioFile.exists()) {
