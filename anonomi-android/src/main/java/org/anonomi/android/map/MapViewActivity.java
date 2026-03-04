@@ -1,12 +1,17 @@
 package org.anonomi.android.map;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.preference.PreferenceManager;
 import org.anonomi.R;
+import org.anonomi.android.map.MapTileConfig;
+import org.anonchatsecure.bramble.api.WeakSingletonProvider;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.MapTileProviderArray;
 import org.osmdroid.tileprovider.modules.MapTileModuleProviderBase;
@@ -31,9 +36,12 @@ import com.google.zxing.WriterException;
 import androidx.appcompat.app.AlertDialog;
 import android.widget.Toast;
 
-
-
 import java.io.File;
+import java.util.List;
+
+import javax.inject.Inject;
+
+import okhttp3.OkHttpClient;
 
 public class MapViewActivity extends BriarActivity {
 
@@ -42,23 +50,29 @@ public class MapViewActivity extends BriarActivity {
 	public static final String EXTRA_LONGITUDE = "longitude";
 	public static final String EXTRA_ZOOM = "zoom";
 
+	@Inject
+	WeakSingletonProvider<OkHttpClient> httpClientProvider;
+
 	private MapView map;
+	private XYTileSource tileSource;
+	private File importsDir;
+	private File fetchedDir;
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// Set osmdroid config FIRST
 		File basePath = new File(getExternalFilesDir(null), "tiles");
-		File tileCache = new File(basePath, "AnonMapsCache");
+		importsDir = new File(basePath, "AnonMapsCache");
+		fetchedDir = new File(basePath, "fetched");
 
 		Configuration.getInstance().setOsmdroidBasePath(basePath);
-		Configuration.getInstance().setOsmdroidTileCache(tileCache);
+		Configuration.getInstance().setOsmdroidTileCache(importsDir);
 		Configuration.getInstance().setUserAgentValue(getPackageName());
 
 		setContentView(R.layout.activity_map_view);
 
-		android.util.Log.d("MAP_VIEW", "Tiles path: " + tileCache.getAbsolutePath());
+		android.util.Log.d("MAP_VIEW", "Tiles path: " + importsDir.getAbsolutePath());
 
 		String label = getIntent().getStringExtra(EXTRA_LABEL);
 		double latitude = getIntent().getDoubleExtra(EXTRA_LATITUDE, 0);
@@ -78,30 +92,22 @@ public class MapViewActivity extends BriarActivity {
 		TextView mapInfo = findViewById(R.id.map_info);
 		mapInfo.setText("📍 " + label + "\nLat: " + latitude + "\nLon: " + longitude + "\nZoom: " + zoom);
 
-		// Set up the plain XYTileSource (just meta info)
-		XYTileSource tileSource = new XYTileSource(
-				"LooseFiles", 0, 18, 256, ".png", new String[]{}
+		tileSource = new XYTileSource(
+				"AnonomiTiles", 0, 18, 256, ".png", new String[]{}
 		);
 
-		// Set up the MapView
 		ConstraintLayout rootLayout = findViewById(R.id.root_layout);
 		map = new MapView(this);
 
-		// Set up the custom LooseFilesTileProvider
-		LooseFilesTileProvider looseFilesModule = new LooseFilesTileProvider(tileCache);
-		looseFilesModule.setTileSource(tileSource);
-
-		// Wrap the module in a provider array
-		MapTileProviderArray provider = new MapTileProviderArray(
-				tileSource,
-				null,
-				new MapTileModuleProviderBase[]{looseFilesModule}
+		MapTileProviderArray provider = MapTileConfig.buildProvider(
+				tileSource, importsDir, fetchedDir,
+				PreferenceManager.getDefaultSharedPreferences(this),
+				httpClientProvider,
+				this
 		);
 
 		map.setTileProvider(provider);
 		map.setTileSource(tileSource);
-
-		android.util.Log.d("MAP_VIEW", "Tile provider and source set: " + tileSource.name());
 
 		map.setId(View.generateViewId());
 		map.setLayoutParams(new ConstraintLayout.LayoutParams(
@@ -119,7 +125,11 @@ public class MapViewActivity extends BriarActivity {
 		set.applyTo(rootLayout);
 
 		map.setMultiTouchControls(true);
-		map.setUseDataConnection(false);  // offline only
+
+		// Bring the layers button above the map in z-order and wire it up
+		ImageButton btnLayers = findViewById(R.id.btn_map_layers);
+		btnLayers.bringToFront();
+		btnLayers.setOnClickListener(v -> showLayerSwitcherDialog());
 
 		GeoPoint point = new GeoPoint(latitude, longitude);
 		map.getController().setZoom(zoom);
@@ -203,6 +213,54 @@ public class MapViewActivity extends BriarActivity {
 			}
 		}
 		return bmp;
+	}
+
+	private void rebuildTileProvider() {
+		MapTileProviderArray provider = MapTileConfig.buildProvider(
+				tileSource, importsDir, fetchedDir,
+				PreferenceManager.getDefaultSharedPreferences(this),
+				httpClientProvider,
+				this
+		);
+		map.setTileProvider(provider);
+		map.invalidate();
+	}
+
+	private void showLayerSwitcherDialog() {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		List<OnlineMapEntry> maps = OnlineMapStore.loadAll(prefs);
+		if (maps.isEmpty()) {
+			Toast.makeText(this, getString(R.string.no_maps_for_layers), Toast.LENGTH_SHORT).show();
+			return;
+		}
+		String defaultId = OnlineMapStore.getDefaultId(prefs);
+		// "Default (offline)" entry at top + one entry per map
+		CharSequence[] names = new CharSequence[maps.size() + 1];
+		names[0] = defaultId == null
+				? getString(R.string.layer_option_offline_only) + " \u2605"
+				: getString(R.string.layer_option_offline_only);
+		for (int i = 0; i < maps.size(); i++) {
+			OnlineMapEntry e = maps.get(i);
+			names[i + 1] = e.id.equals(defaultId) ? e.name + " \u2605" : e.name;
+		}
+		new AlertDialog.Builder(this)
+				.setTitle(getString(R.string.layer_switcher_title))
+				.setItems(names, (d, which) -> {
+					if (which == 0) {
+						if (defaultId != null) {
+							OnlineMapStore.setDefaultId(prefs, null);
+							rebuildTileProvider();
+						}
+					} else {
+						OnlineMapEntry selected = maps.get(which - 1);
+						if (!selected.id.equals(defaultId)) {
+							OnlineMapStore.setDefaultId(prefs, selected.id);
+							rebuildTileProvider();
+						}
+					}
+				})
+				.setNegativeButton(android.R.string.cancel, null)
+				.show();
 	}
 
 	@Override

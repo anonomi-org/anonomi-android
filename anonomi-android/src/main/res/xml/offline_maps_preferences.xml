@@ -3,29 +3,68 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto">
 
-	<Preference
-		android:key="pref_key_offline_maps_help"
-		android:title="@string/offline_maps_help_title"
-		android:summary="@string/offline_maps_help_summary"
-		app:fragment="org.anonomi.android.settings.OfflineMapsInfoFragment"
-		android:icon="@drawable/ic_help_outline_white" />
-
 	<PreferenceCategory
-		android:title="@string/pref_category_offline_maps"
-		app:allowDividerAbove="true">
+		android:title="@string/pref_category_offline">
 
 		<Preference
-			android:key="@string/pref_key_import_offline_maps"
-			android:title="@string/pref_title_import_offline_maps"
-			android:summary="@string/pref_summary_import_offline_maps" />
+			android:key="pref_key_offline_maps_help"
+			android:title="@string/offline_maps_help_title"
+			android:summary="@string/offline_maps_help_summary"
+			app:fragment="org.anonomi.android.settings.OfflineMapsInfoFragment"
+			android:icon="@drawable/ic_help_outline_white" />
+
+		<Preference
+			android:key="pref_key_offline_map_data"
+			android:title="@string/pref_title_offline_map_data"
+			android:summary="@string/pref_summary_offline_map_data"
+			app:fragment="org.anonomi.android.settings.OfflineMapDataFragment"
+			android:icon="@drawable/ic_import_white" />
+
 	</PreferenceCategory>
 
 	<PreferenceCategory
-		android:key="pref_key_offline_maps_list"
-		android:title="@string/pref_category_offline_maps_list"
+		android:title="@string/pref_category_online_maps"
 		app:allowDividerAbove="true">
 
-		<!-- We'll dynamically add imported regions here in the code -->
+		<androidx.preference.SwitchPreferenceCompat
+			android:key="pref_map_online_enabled"
+			android:title="@string/pref_title_map_online_enabled"
+			android:summary="@string/pref_summary_map_online_enabled"
+			android:defaultValue="true" />
+
+		<Preference
+			android:key="pref_key_add_online_map"
+			android:title="@string/pref_title_add_online_map"
+			android:summary="@string/pref_summary_add_online_map"
+			android:icon="@drawable/ic_add_white" />
+
+	</PreferenceCategory>
+
+	<PreferenceCategory
+		android:key="pref_key_online_maps_list">
+
+		<!-- Dynamically populated with stored online maps -->
+	</PreferenceCategory>
+
+	<PreferenceCategory
+		android:title="@string/pref_category_online_maps_management"
+		app:allowDividerAbove="true">
+
+		<Preference
+			android:key="pref_clear_tile_cache"
+			android:title="@string/pref_title_clear_tile_cache"
+			android:summary="@string/pref_summary_clear_tile_cache"
+			android:dependency="pref_map_online_enabled"
+			android:icon="@drawable/ic_delete_white" />
+
+		<EditTextPreference
+			android:key="pref_map_default_server_url"
+			android:title="@string/pref_title_default_map_server"
+			android:defaultValue="@string/default_map_server_url"
+			android:inputType="textUri"
+			android:dependency="pref_map_online_enabled"
+			app:useSimpleSummaryProvider="true" />
+
 	</PreferenceCategory>
 
 </PreferenceScreen>

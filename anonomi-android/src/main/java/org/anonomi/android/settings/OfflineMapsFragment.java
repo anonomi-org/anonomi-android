@@ -1,244 +1,411 @@
 package org.anonomi.android.settings;
 
+import androidx.appcompat.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+
+import androidx.core.content.ContextCompat;
+
+import androidx.annotation.NonNull;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceFragmentCompat;
 
-import android.app.ProgressDialog;
-
 import org.anonomi.R;
-import org.anonomi.android.util.MapImporter;
+import org.anonomi.android.map.MapServerClient;
+import org.anonomi.android.map.OnlineMapEntry;
+import org.anonomi.android.map.OnlineMapStore;
+import org.anonomi.android.qrcode.ScanMapUrlActivity;
+import org.anonchatsecure.bramble.api.WeakSingletonProvider;
+import org.anonchatsecure.bramble.api.lifecycle.IoExecutor;
+
 import java.io.File;
-import android.util.Log;
+import java.util.List;
+import java.util.concurrent.Executor;
 
-import android.content.Context;
+import javax.inject.Inject;
 
-import org.json.JSONObject;  // ✅ ADD THIS LINE
-import org.json.JSONException;  // ✅ ADD THIS to handle exceptions
+import okhttp3.OkHttpClient;
 
-
-
-import java.util.Map;
+import static org.anonomi.android.AppModule.getAndroidComponent;
 
 public class OfflineMapsFragment extends PreferenceFragmentCompat {
 
-	private static final int REQUEST_CODE_IMPORT = 1002;
-	private PreferenceCategory importedMapsCategory;
-	private ProgressDialog progressDialog;
+	private static final String TAG = "OfflineMapsFragment";
+	private static final int REQUEST_CODE_SCAN_MAP_QR = 1003;
 
+	@Inject
+	WeakSingletonProvider<OkHttpClient> httpClientProvider;
+	@Inject
+	@IoExecutor
+	Executor ioExecutor;
+
+	private PreferenceCategory onlineMapsCategory;
+	private final Handler mainHandler = new Handler(Looper.getMainLooper());
+
+	@Override
+	public void onAttach(@NonNull Context context) {
+		super.onAttach(context);
+		getAndroidComponent(context).inject(this);
+	}
 
 	@Override
 	public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
 		setPreferencesFromResource(R.xml.offline_maps_preferences, rootKey);
 
-		// Hook the Import button
-		Preference importMaps = findPreference("pref_key_import_offline_maps");
-		if (importMaps != null) {
-			importMaps.setOnPreferenceClickListener(preference -> {
-				Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-				intent.setType("application/zip");
-				intent.addCategory(Intent.CATEGORY_OPENABLE);
-				startActivityForResult(intent, REQUEST_CODE_IMPORT);
+		setupClearCachePreference();
+		setupAddMapPreference();
+
+		onlineMapsCategory = findPreference("pref_key_online_maps_list");
+		if (onlineMapsCategory == null) {
+			onlineMapsCategory = new PreferenceCategory(requireContext());
+			onlineMapsCategory.setTitle(getString(R.string.pref_category_online_maps_list));
+			getPreferenceScreen().addPreference(onlineMapsCategory);
+		}
+
+		loadOnlineMaps();
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+		requireActivity().setTitle(R.string.pref_key_offline_maps_title);
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		loadOnlineMaps();
+	}
+
+	// ── Preference setup ──────────────────────────────────────────────────
+
+	private void setupClearCachePreference() {
+		Preference clearCache = findPreference("pref_clear_tile_cache");
+		if (clearCache != null) {
+			clearCache.setOnPreferenceClickListener(pref -> {
+				File fetchedDir = new File(
+						requireContext().getExternalFilesDir(null), "tiles/fetched");
+				if (fetchedDir.exists()) deleteRecursive(fetchedDir);
+				Toast.makeText(requireContext(),
+						getString(R.string.tile_cache_cleared), Toast.LENGTH_SHORT).show();
 				return true;
 			});
 		}
+	}
 
-		// Find the category where we'll add the imported regions
-		importedMapsCategory = findPreference("pref_key_offline_maps_list");
+	private void setupAddMapPreference() {
+		Preference addMap = findPreference("pref_key_add_online_map");
+		if (addMap != null) {
+			addMap.setOnPreferenceClickListener(pref -> {
+				showAddMapDialog(null);
+				return true;
+			});
+		}
+	}
 
-		if (importedMapsCategory == null) {
-			// If it's not in XML, create it dynamically
-			importedMapsCategory = new PreferenceCategory(requireContext());
-			importedMapsCategory.setTitle("Offline Maps Data");
-			getPreferenceScreen().addPreference(importedMapsCategory);
+	// ── Online maps list ──────────────────────────────────────────────────
+
+	private void loadOnlineMaps() {
+		if (onlineMapsCategory == null) return;
+		onlineMapsCategory.removeAll();
+
+		SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
+		List<OnlineMapEntry> maps = OnlineMapStore.loadAll(prefs);
+		String defaultId = OnlineMapStore.getDefaultId(prefs);
+
+		if (maps.isEmpty()) {
+			Preference empty = new Preference(requireContext());
+			empty.setTitle(getString(R.string.no_online_maps));
+			empty.setEnabled(false);
+			onlineMapsCategory.addPreference(empty);
+			return;
 		}
 
-		// Load existing imported maps (from prefs or dummy for now)
-		loadImportedMaps();
+		for (OnlineMapEntry entry : maps) {
+			Preference pref = new Preference(requireContext());
+			String title = entry.id.equals(defaultId)
+					? entry.name + " \u2605"
+					: entry.name;
+			pref.setTitle(title);
+			pref.setSummary(getString(R.string.online_map_summary, entry.zoomMin, entry.zoomMax));
+			pref.setIcon(mapIcon());
+			pref.setOnPreferenceClickListener(p -> {
+				navigateToMapDetail(entry.id);
+				return true;
+			});
+			onlineMapsCategory.addPreference(pref);
+		}
 	}
+
+	private void navigateToMapDetail(String mapId) {
+		OnlineMapDetailFragment detailFragment = new OnlineMapDetailFragment();
+		Bundle args = new Bundle();
+		args.putString(OnlineMapDetailFragment.ARG_MAP_ID, mapId);
+		detailFragment.setArguments(args);
+		getParentFragmentManager().beginTransaction()
+				.setCustomAnimations(
+						R.anim.step_next_in, R.anim.step_previous_out,
+						R.anim.step_previous_in, R.anim.step_next_out)
+				.replace(R.id.fragmentContainer, detailFragment)
+				.addToBackStack(null)
+				.commit();
+	}
+
+	// ── Add map dialog ────────────────────────────────────────────────────
+
+	private void showAddMapDialog(String prefillUrl) {
+		Context context = requireContext();
+		int padPx = (int) (16 * getResources().getDisplayMetrics().density);
+
+		SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
+		String defaultServerUrl = prefs.getString("pref_map_default_server_url",
+				getString(R.string.default_map_server_url)).trim();
+		boolean hasDefaultServer = !defaultServerUrl.isEmpty();
+
+		LinearLayout layout = new LinearLayout(context);
+		layout.setOrientation(LinearLayout.VERTICAL);
+		layout.setPadding(padPx, padPx / 2, padPx, 0);
+
+		// ── Radio buttons ─────────────────────────────────────────────────
+		RadioGroup radioGroup = new RadioGroup(context);
+		radioGroup.setOrientation(RadioGroup.VERTICAL);
+
+		RadioButton radioDefault = new RadioButton(context);
+		radioDefault.setId(View.generateViewId());
+		radioDefault.setText(hasDefaultServer
+				? getString(R.string.dialog_radio_default_server)
+				: getString(R.string.dialog_radio_default_server) + "\n("
+						+ getString(R.string.dialog_no_default_server) + ")");
+		radioDefault.setEnabled(hasDefaultServer);
+		radioGroup.addView(radioDefault);
+
+		RadioButton radioCustom = new RadioButton(context);
+		radioCustom.setId(View.generateViewId());
+		radioCustom.setText(getString(R.string.dialog_radio_custom_url));
+		radioGroup.addView(radioCustom);
+
+		layout.addView(radioGroup);
+
+		// ── URL input ─────────────────────────────────────────────────────
+		EditText urlInput = new EditText(context);
+		urlInput.setHint(getString(R.string.add_map_url_hint));
+		urlInput.setPadding(0, padPx, 0, padPx);
+		if (prefillUrl != null) urlInput.setText(prefillUrl);
+		layout.addView(urlInput);
+
+		// ── Scan QR button ────────────────────────────────────────────────
+		Button scanButton = new Button(context);
+		scanButton.setText(getString(R.string.scan_qr_button));
+		scanButton.setAllCaps(false);
+		scanButton.setBackgroundColor(Color.TRANSPARENT);
+		scanButton.setTextColor(ContextCompat.getColor(context, R.color.briar_button_text_neutral));
+		layout.addView(scanButton, new LinearLayout.LayoutParams(
+				LinearLayout.LayoutParams.WRAP_CONTENT,
+				LinearLayout.LayoutParams.WRAP_CONTENT));
+
+		// ── Initial selection ─────────────────────────────────────────────
+		// Default server pre-selected when available and no QR/prefill URL incoming
+		boolean startOnDefault = hasDefaultServer && prefillUrl == null;
+		radioGroup.check(startOnDefault ? radioDefault.getId() : radioCustom.getId());
+		urlInput.setVisibility(startOnDefault ? View.GONE : View.VISIBLE);
+		scanButton.setVisibility(startOnDefault ? View.GONE : View.VISIBLE);
+
+		radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+			boolean isCustom = checkedId == radioCustom.getId();
+			urlInput.setVisibility(isCustom ? View.VISIBLE : View.GONE);
+			scanButton.setVisibility(isCustom ? View.VISIBLE : View.GONE);
+		});
+
+		// ── Build dialog ──────────────────────────────────────────────────
+		AlertDialog dialog = new AlertDialog.Builder(context, R.style.AnonDialogTheme)
+				.setTitle(getString(R.string.add_map_dialog_title))
+				.setView(layout)
+				.setPositiveButton(android.R.string.ok, (d, which) -> {
+					String url = radioGroup.getCheckedRadioButtonId() == radioDefault.getId()
+							? defaultServerUrl
+							: urlInput.getText().toString().trim();
+					if (!url.isEmpty()) handleMapUrl(url);
+				})
+				.setNegativeButton(android.R.string.cancel, null)
+				.create();
+
+		scanButton.setOnClickListener(v -> {
+			dialog.dismiss();
+			Intent intent = new Intent(context, ScanMapUrlActivity.class);
+			startActivityForResult(intent, REQUEST_CODE_SCAN_MAP_QR);
+		});
+
+		dialog.show();
+	}
+
+	private void handleMapUrl(String url) {
+		ProgressDialog progress = new ProgressDialog(requireContext());
+		progress.setMessage(getString(R.string.fetching_map_info));
+		progress.setCancelable(false);
+		progress.show();
+
+		ioExecutor.execute(() -> {
+			try {
+				OkHttpClient client = httpClientProvider.get();
+				if (MapServerClient.isServerUrl(url)) {
+					List<OnlineMapEntry> maps = MapServerClient.fetchDisco(client, url);
+					mainHandler.post(() -> {
+						dismissSafely(progress);
+						if (isAdded()) showSelectMapsDialog(maps);
+					});
+				} else {
+					OnlineMapEntry entry = MapServerClient.fetchMap(client, url);
+					mainHandler.post(() -> {
+						dismissSafely(progress);
+						if (isAdded()) showConfirmAddMapDialog(entry);
+					});
+				}
+			} catch (Exception e) {
+				Log.e(TAG, "Error fetching map info", e);
+				boolean isServer = MapServerClient.isServerUrl(url);
+				mainHandler.post(() -> {
+					dismissSafely(progress);
+					if (!isAdded()) return;
+					String msg = isServer
+							? getString(R.string.error_fetching_disco)
+							: getString(R.string.error_fetching_map);
+					Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show();
+				});
+			}
+		});
+	}
+
+	private static void dismissSafely(ProgressDialog dialog) {
+		try {
+			if (dialog != null && dialog.isShowing()) dialog.dismiss();
+		} catch (Exception ignored) {
+		}
+	}
+
+	private void showSelectMapsDialog(List<OnlineMapEntry> maps) {
+		if (maps.isEmpty()) {
+			Toast.makeText(requireContext(), getString(R.string.no_online_maps),
+					Toast.LENGTH_SHORT).show();
+			return;
+		}
+		String[] names = new String[maps.size()];
+		boolean[] checked = new boolean[maps.size()];
+		for (int i = 0; i < maps.size(); i++) {
+			names[i] = maps.get(i).name;
+			checked[i] = true;
+		}
+		new AlertDialog.Builder(requireContext())
+				.setTitle(getString(R.string.select_maps_to_add))
+				.setMultiChoiceItems(names, checked,
+						(d, which, isChecked) -> checked[which] = isChecked)
+				.setPositiveButton(android.R.string.ok, (d, which) -> {
+					SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
+					int added = 0, skipped = 0;
+					for (int i = 0; i < maps.size(); i++) {
+						if (checked[i]) {
+							if (OnlineMapStore.exists(prefs, maps.get(i).id)) {
+								skipped++;
+							} else {
+								OnlineMapStore.save(prefs, maps.get(i));
+								added++;
+							}
+						}
+					}
+					if (added > 0) loadOnlineMaps();
+					if (added > 0 && skipped == 0) {
+						Toast.makeText(requireContext(),
+								getString(R.string.online_map_added, added + " map(s)"),
+								Toast.LENGTH_SHORT).show();
+					} else if (added > 0) {
+						Toast.makeText(requireContext(),
+								getString(R.string.online_maps_added_some_skipped, added, skipped),
+								Toast.LENGTH_LONG).show();
+					} else if (skipped > 0) {
+						Toast.makeText(requireContext(),
+								getString(R.string.online_map_already_added,
+										skipped == 1 ? maps.get(0).name : skipped + " maps"),
+								Toast.LENGTH_SHORT).show();
+					}
+				})
+				.setNegativeButton(android.R.string.cancel, null)
+				.show();
+	}
+
+	private void showConfirmAddMapDialog(OnlineMapEntry entry) {
+		SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
+		if (OnlineMapStore.exists(prefs, entry.id)) {
+			Toast.makeText(requireContext(),
+					getString(R.string.online_map_already_added, entry.name),
+					Toast.LENGTH_SHORT).show();
+			return;
+		}
+		new AlertDialog.Builder(requireContext())
+				.setTitle(getString(R.string.add_map_dialog_title))
+				.setMessage(entry.name + "\n" +
+						getString(R.string.online_map_summary, entry.zoomMin, entry.zoomMax))
+				.setPositiveButton(android.R.string.ok, (d, which) -> {
+					OnlineMapStore.save(prefs, entry);
+					loadOnlineMaps();
+					Toast.makeText(requireContext(),
+							getString(R.string.online_map_added, entry.name),
+							Toast.LENGTH_SHORT).show();
+				})
+				.setNegativeButton(android.R.string.cancel, null)
+				.show();
+	}
+
+	// ── QR scan result ────────────────────────────────────────────────────
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if (requestCode == REQUEST_CODE_SCAN_MAP_QR
+				&& resultCode == requireActivity().RESULT_OK
+				&& data != null) {
+			String url = data.getStringExtra(ScanMapUrlActivity.EXTRA_URL);
+			if (url != null && !url.isEmpty()) {
+				handleMapUrl(url);
+			}
+		}
+	}
+
+	// ── Utilities ─────────────────────────────────────────────────────────
 
 	private void deleteRecursive(File fileOrDir) {
 		if (fileOrDir.isDirectory()) {
 			File[] children = fileOrDir.listFiles();
 			if (children != null) {
-				for (File child : children) {
-					deleteRecursive(child);
-				}
+				for (File child : children) deleteRecursive(child);
 			}
 		}
 		fileOrDir.delete();
 	}
 
-	private void loadImportedMaps() {
-		importedMapsCategory.removeAll();  // Clear existing list
-
-		// Load from SharedPreferences
-		Map<String, ?> allPrefs = getPreferenceManager().getSharedPreferences().getAll();
-		boolean hasMaps = false;
-
-		for (Map.Entry<String, ?> entry : allPrefs.entrySet()) {
-			if (entry.getKey().startsWith("offline_map_")) {
-				hasMaps = true;
-				String regionName = entry.getKey().replace("offline_map_", "");
-				String jsonString = entry.getValue().toString();
-
-				String summaryText = "";
-				try {
-					JSONObject meta = new JSONObject(jsonString);
-
-					// Extract zooms array nicely
-					String zoomsText = "";
-					if (meta.has("zooms")) {
-						// Could be a JSONArray or String, handle both
-						Object zoomsObj = meta.get("zooms");
-						if (zoomsObj instanceof org.json.JSONArray) {
-							org.json.JSONArray zoomsArray = meta.getJSONArray("zooms");
-							if (zoomsArray.length() > 0) {
-								int first = zoomsArray.getInt(0);
-								int last = zoomsArray.getInt(zoomsArray.length() - 1);
-								zoomsText = first + "–" + last;
-							}
-						} else {
-							zoomsText = zoomsObj.toString();
-						}
-					}
-
-					String sizeStatus = meta.optString("status", getString(R.string.status_imported));
-
-					summaryText = getString(R.string.offline_map_summary, zoomsText, sizeStatus);
-
-				} catch (Exception e) {
-					summaryText = getString(R.string.failed_to_load_map_info);
-					Log.e("OfflineMapsFragment", "Failed to parse metadata JSON for: " + regionName, e);
-				}
-
-				Preference pref = new Preference(requireContext());
-				pref.setTitle(regionName);
-				pref.setSummary(summaryText);  // ✅ cleaner summary
-
-				pref.setOnPreferenceClickListener(p -> {
-					showDeleteDialog(regionName, entry.getKey(), pref);
-					return true;
-				});
-
-				importedMapsCategory.addPreference(pref);
-			}
+	private Drawable mapIcon() {
+		Drawable icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_offline_maps);
+		if (icon != null) {
+			icon = icon.mutate();
+			icon.setTint(Color.WHITE);
 		}
-
-		if (!hasMaps) {
-			// Show a placeholder if no maps
-			Preference emptyPref = new Preference(requireContext());
-			emptyPref.setTitle(getString(R.string.no_offline_maps));
-			emptyPref.setEnabled(false);
-			importedMapsCategory.addPreference(emptyPref);
-		}
+		return icon;
 	}
-	private void deleteOfflineMap(String regionName, String prefKey, Preference pref) {
-		// 1️⃣ Delete tiles (based on metadata in SharedPreferences)
-		File mapBaseDir = new File(requireContext().getExternalFilesDir(null), "tiles/AnonMapsCache");
-
-		// Load metadata from SharedPreferences (we assume it contains Zooms: [..])
-		String meta = getPreferenceManager().getSharedPreferences()
-				.getString(prefKey, null);
-
-		if (meta != null) {
-			int start = meta.indexOf("[");
-			int end = meta.indexOf("]");
-			if (start != -1 && end != -1 && end > start) {
-				String zoomsStr = meta.substring(start + 1, end);
-				String[] zooms = zoomsStr.split(",");
-				for (String zoom : zooms) {
-					zoom = zoom.trim();
-					if (!zoom.isEmpty()) {
-						File zoomDir = new File(mapBaseDir, zoom);
-						if (zoomDir.exists() && zoomDir.isDirectory()) {
-							deleteRecursive(zoomDir);
-							Log.d("OfflineMapsFragment", "Deleted zoom folder: " + zoomDir.getAbsolutePath());
-						}
-					}
-				}
-			} else {
-				Log.w("OfflineMapsFragment", "No zoom info found in metadata for: " + regionName);
-			}
-		} else {
-			Log.w("OfflineMapsFragment", "No metadata found for: " + regionName);
-		}
-
-		// 2️⃣ Remove from SharedPreferences
-		getPreferenceManager().getSharedPreferences()
-				.edit()
-				.remove(prefKey)
-				.apply();
-
-		// 3️⃣ Remove from UI
-		importedMapsCategory.removePreference(pref);
-
-		// ✅ Optionally show feedback
-		android.widget.Toast.makeText(requireContext(),
-				getString(R.string.offline_map_deleted, regionName),
-				android.widget.Toast.LENGTH_SHORT).show();
-	}
-
-	private void showDeleteDialog(String regionName, String prefKey, Preference pref) {
-		new androidx.appcompat.app.AlertDialog.Builder(requireContext())
-				.setTitle(getString(R.string.delete_offline_map_title))
-				.setMessage(getString(R.string.delete_offline_map_message, regionName))
-				.setPositiveButton(getString(R.string.button_delete), (dialog, which) -> {
-					deleteOfflineMap(regionName, prefKey, pref);
-				})
-				.setNegativeButton(getString(R.string.button_cancel), null)
-				.show();
-	}
-
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		if (requestCode == REQUEST_CODE_IMPORT && resultCode == getActivity().RESULT_OK) {
-			Uri zipUri = data.getData();
-			if (zipUri != null) {
-				// Show progress dialog
-				progressDialog = new ProgressDialog(requireContext());
-				progressDialog.setMessage(getString(R.string.importing_map_message));
-				progressDialog.setCancelable(false);
-				progressDialog.show();
-
-				// Start the import process
-				MapImporter.importOfflineMaps(getContext(), zipUri,
-						(regionName, statusText, metadataJson) -> {
-							onImportComplete(regionName, statusText, metadataJson);
-						});
-			}
-		}
-	}
-
-	// Callback after import is done
-	private void onImportComplete(String regionName, String statusText, String metadataJsonText) {
-		if (progressDialog != null && progressDialog.isShowing()) {
-			progressDialog.dismiss();
-		}
-
-		try {
-			JSONObject meta = new JSONObject(metadataJsonText);
-			meta.put("status", statusText);  // Add status field into the JSON
-
-			getPreferenceManager().getSharedPreferences().edit()
-					.putString("offline_map_" + regionName, meta.toString())
-					.apply();
-
-			// Refresh the list
-			loadImportedMaps();
-
-			Toast.makeText(requireContext(), getString(R.string.import_completed_for, regionName), Toast.LENGTH_SHORT).show();
-
-		} catch (JSONException e) {
-			Toast.makeText(requireContext(), getString(R.string.failed_to_parse_metadata, regionName), Toast.LENGTH_LONG).show();
-			Log.e("OfflineMapsFragment", "Error parsing metadata JSON", e);
-		}
-	}
-
 }

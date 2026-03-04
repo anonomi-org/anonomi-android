@@ -1,17 +1,23 @@
 package org.anonomi.android.map;
 
+import android.content.SharedPreferences;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.preference.PreferenceManager;
 
 import org.anonomi.R;
+import org.anonomi.android.map.MapTileConfig;
+import org.anonchatsecure.bramble.api.WeakSingletonProvider;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.MapTileProviderArray;
 import org.osmdroid.tileprovider.modules.MapTileModuleProviderBase;
@@ -29,12 +35,23 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 
 import java.io.File;
+import java.util.List;
+
+import javax.inject.Inject;
+
+import okhttp3.OkHttpClient;
 
 public class MapLocationPickerActivity extends BriarActivity {
 
 	public static final String RESULT_MAP_MESSAGE = "map_message";
 
+	@Inject
+	WeakSingletonProvider<OkHttpClient> httpClientProvider;
+
 	private MapView map;
+	private XYTileSource tileSource;
+	private File importsDir;
+	private File fetchedDir;
 	private Button sendButton;
 	private EditText labelInput;
 
@@ -48,10 +65,11 @@ public class MapLocationPickerActivity extends BriarActivity {
 		}
 
 		File basePath = new File(getExternalFilesDir(null), "tiles");
-		File tileCache = new File(basePath, "AnonMapsCache");
+		importsDir = new File(basePath, "AnonMapsCache");
+		fetchedDir = new File(basePath, "fetched");
 
 		Configuration.getInstance().setOsmdroidBasePath(basePath);
-		Configuration.getInstance().setOsmdroidTileCache(tileCache);
+		Configuration.getInstance().setOsmdroidTileCache(importsDir);
 		Configuration.getInstance().setUserAgentValue(getPackageName());
 
 		setContentView(R.layout.activity_map_picker);
@@ -88,23 +106,24 @@ public class MapLocationPickerActivity extends BriarActivity {
 		set.connect(labelInput.getId(), ConstraintSet.BOTTOM, R.id.send_button, ConstraintSet.TOP, 16);
 		set.applyTo(rootLayout);
 
-		XYTileSource tileSource = new XYTileSource(
-				"LooseFiles", 0, 18, 256, ".png", new String[]{}
+		tileSource = new XYTileSource(
+				"AnonomiTiles", 0, 18, 256, ".png", new String[]{}
 		);
 
-		LooseFilesTileProvider looseFilesModule = new LooseFilesTileProvider(tileCache);
-		looseFilesModule.setTileSource(tileSource);
-
-		MapTileProviderArray provider = new MapTileProviderArray(
-				tileSource,
-				null,
-				new MapTileModuleProviderBase[]{looseFilesModule}
+		MapTileProviderArray provider = MapTileConfig.buildProvider(
+				tileSource, importsDir, fetchedDir,
+				PreferenceManager.getDefaultSharedPreferences(this),
+				httpClientProvider,
+				this
 		);
 
 		map.setTileProvider(provider);
 		map.setTileSource(tileSource);
 		map.setMultiTouchControls(true);
-		map.setUseDataConnection(false);
+
+		ImageButton btnLayers = findViewById(R.id.btn_map_layers);
+		btnLayers.bringToFront();
+		btnLayers.setOnClickListener(v -> showLayerSwitcherDialog());
 
 		GeoPoint defaultPoint = new GeoPoint(0, 0);
 		map.getController().setZoom(3);
@@ -177,6 +196,54 @@ public class MapLocationPickerActivity extends BriarActivity {
 			setResult(RESULT_OK, result);
 			finish();
 		});
+	}
+
+	private void rebuildTileProvider() {
+		MapTileProviderArray provider = MapTileConfig.buildProvider(
+				tileSource, importsDir, fetchedDir,
+				PreferenceManager.getDefaultSharedPreferences(this),
+				httpClientProvider,
+				this
+		);
+		map.setTileProvider(provider);
+		map.invalidate();
+	}
+
+	private void showLayerSwitcherDialog() {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		List<OnlineMapEntry> maps = OnlineMapStore.loadAll(prefs);
+		if (maps.isEmpty()) {
+			Toast.makeText(this, getString(R.string.no_maps_for_layers), Toast.LENGTH_SHORT).show();
+			return;
+		}
+		String defaultId = OnlineMapStore.getDefaultId(prefs);
+		// "Default (offline)" entry at top + one entry per map
+		CharSequence[] names = new CharSequence[maps.size() + 1];
+		names[0] = defaultId == null
+				? getString(R.string.layer_option_offline_only) + " \u2605"
+				: getString(R.string.layer_option_offline_only);
+		for (int i = 0; i < maps.size(); i++) {
+			OnlineMapEntry e = maps.get(i);
+			names[i + 1] = e.id.equals(defaultId) ? e.name + " \u2605" : e.name;
+		}
+		new androidx.appcompat.app.AlertDialog.Builder(this)
+				.setTitle(getString(R.string.layer_switcher_title))
+				.setItems(names, (d, which) -> {
+					if (which == 0) {
+						if (defaultId != null) {
+							OnlineMapStore.setDefaultId(prefs, null);
+							rebuildTileProvider();
+						}
+					} else {
+						OnlineMapEntry selected = maps.get(which - 1);
+						if (!selected.id.equals(defaultId)) {
+							OnlineMapStore.setDefaultId(prefs, selected.id);
+							rebuildTileProvider();
+						}
+					}
+				})
+				.setNegativeButton(android.R.string.cancel, null)
+				.show();
 	}
 
 	private void hideKeyboard() {

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
+
+	<Preference
+		android:key="@string/pref_key_import_offline_maps"
+		android:title="@string/pref_title_import_offline_maps"
+		android:summary="@string/pref_summary_import_offline_maps"
+		android:icon="@drawable/ic_add_white" />
+
+	<PreferenceCategory
+		android:key="pref_key_offline_maps_list"
+		android:title="@string/pref_category_offline_maps_list"
+		app:allowDividerAbove="true">
+
+		<!-- Dynamically populated with imported offline maps -->
+	</PreferenceCategory>
+
+</PreferenceScreen>

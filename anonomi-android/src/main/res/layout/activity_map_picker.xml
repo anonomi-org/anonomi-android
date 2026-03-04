@@ -20,6 +20,19 @@
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintEnd_toEndOf="parent" />
 
+	<!-- Layer switcher button — floats above the map, above the input row -->
+	<ImageButton
+		android:id="@+id/btn_map_layers"
+		android:layout_width="48dp"
+		android:layout_height="48dp"
+		android:layout_margin="16dp"
+		android:src="@drawable/ic_offline_maps"
+		android:background="@drawable/qr_background"
+		android:padding="10dp"
+		android:contentDescription="@string/layers_button_description"
+		app:layout_constraintBottom_toTopOf="@id/input_row"
+		app:layout_constraintEnd_toEndOf="parent" />
+
 	<!-- Input row at the bottom -->
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:id="@+id/input_row"

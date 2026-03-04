@@ -56,6 +56,7 @@ import org.anonomi.android.removabledrive.ReceiveFragment;
 import org.anonomi.android.removabledrive.SendFragment;
 import org.anonomi.android.settings.ConnectionsFragment;
 import org.anonomi.android.settings.NotificationsFragment;
+import org.anonomi.android.settings.OfflineMapsFragment;
 import org.anonomi.android.settings.SecurityFragment;
 import org.anonomi.android.settings.SettingsFragment;
 import org.anonomi.android.view.EmojiTextInputView;
@@ -85,8 +86,11 @@ import org.anonchatsecure.anonchat.api.privategroup.invitation.GroupInvitationMa
 import org.anonchatsecure.anonchat.api.test.TestDataCreator;
 import org.briarproject.onionwrapper.CircumventionProvider;
 import org.briarproject.onionwrapper.LocationUtils;
+import org.anonchatsecure.bramble.api.WeakSingletonProvider;
 
 import java.util.concurrent.Executor;
+
+import okhttp3.OkHttpClient;
 
 import javax.inject.Singleton;
 
@@ -187,6 +191,8 @@ public interface AndroidComponent
 
 	FeedManager feedManager();
 
+	WeakSingletonProvider<OkHttpClient> httpClientProvider();
+
 	Clock clock();
 
 	TestDataCreator testDataCreator();
@@ -227,6 +233,8 @@ public interface AndroidComponent
 	void inject(BriarModelLoader briarModelLoader);
 
 	void inject(SettingsFragment settingsFragment);
+
+	void inject(OfflineMapsFragment offlineMapsFragment);
 
 	void inject(ConnectionsFragment connectionsFragment);
 

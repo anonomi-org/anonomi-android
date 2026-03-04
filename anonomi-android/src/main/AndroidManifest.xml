@@ -214,6 +214,11 @@
 			android:label="@string/scan_qr_code"
 			android:theme="@style/AnonTheme" />
 
+		<activity
+			android:name="org.anonomi.android.qrcode.ScanMapUrlActivity"
+			android:exported="false"
+			android:label="@string/scan_qr_button"
+			android:theme="@style/AnonTheme" />
 
 		<activity
 			android:name="org.anonomi.android.privategroup.creation.CreateGroupActivity"

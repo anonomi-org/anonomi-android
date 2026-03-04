@@ -47,9 +47,9 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback,
 
 	// Heuristic for the ideal preview size - small previews don't have enough
 	// detail, large previews are slow to decode
-	private static final int IDEAL_PIXELS = 500 * 1000;
+	private static final int IDEAL_PIXELS = 1000 * 1000;
 
-	private static final int AUTO_FOCUS_RETRY_DELAY = 5000; // Milliseconds
+	private static final int AUTO_FOCUS_RETRY_DELAY = 2000; // Milliseconds
 
 	private static final Logger LOG =
 			Logger.getLogger(CameraView.class.getName());
@@ -335,6 +335,9 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback,
 		setFocusMode(params);
 		params.setFlashMode(FLASH_MODE_OFF);
 		setPreviewSize(params);
+		// Force NV21 — guaranteed supported on all Android devices and required
+		// by QrCodeDecoder which assumes NV21 byte layout.
+		params.setPreviewFormat(android.graphics.ImageFormat.NV21);
 		try {
 			camera.setParameters(params);
 			return camera.getParameters();

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
+
+	<androidx.preference.SwitchPreferenceCompat
+		android:key="pref_map_detail_fetch_online"
+		android:title="@string/pref_title_map_fetch_online"
+		android:summary="@string/pref_summary_map_fetch_online"
+		android:persistent="false" />
+
+	<androidx.preference.SwitchPreferenceCompat
+		android:key="pref_map_detail_cache"
+		android:title="@string/pref_title_map_cache"
+		android:summary="@string/pref_summary_map_cache"
+		android:persistent="false" />
+
+	<androidx.preference.SwitchPreferenceCompat
+		android:key="pref_map_detail_offline_imports"
+		android:title="@string/pref_title_map_use_offline_imports"
+		android:summary="@string/pref_summary_map_use_offline_imports"
+		android:persistent="false" />
+
+	<PreferenceCategory
+		android:title="@string/pref_category_map_cache"
+		app:allowDividerAbove="true">
+
+		<Preference
+			android:key="pref_map_detail_cache_size"
+			android:title="@string/pref_title_map_cache_size"
+			android:selectable="false" />
+
+		<Preference
+			android:key="pref_map_detail_clear_cache"
+			android:title="@string/pref_title_map_clear_cache"
+			android:summary="@string/pref_summary_map_clear_cache" />
+
+	</PreferenceCategory>
+
+	<PreferenceCategory
+		android:title="@string/pref_category_map_management"
+		app:allowDividerAbove="true">
+
+		<Preference
+			android:key="pref_map_detail_set_default"
+			android:title="@string/set_as_default"
+			android:icon="@drawable/ic_check_circle_outline" />
+
+		<Preference
+			android:key="pref_map_detail_remove"
+			android:title="@string/pref_title_map_remove"
+			android:icon="@drawable/ic_close" />
+
+	</PreferenceCategory>
+
+</PreferenceScreen>

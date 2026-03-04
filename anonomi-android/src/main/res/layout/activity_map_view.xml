@@ -32,4 +32,17 @@
 
 	<!-- The MapView is no longer here; it's added programmatically -->
 
+	<!-- Layer switcher button — bringToFront() in code ensures it floats above the map -->
+	<ImageButton
+		android:id="@+id/btn_map_layers"
+		android:layout_width="48dp"
+		android:layout_height="48dp"
+		android:layout_margin="16dp"
+		android:src="@drawable/ic_offline_maps"
+		android:background="@drawable/qr_background"
+		android:padding="10dp"
+		android:contentDescription="@string/layers_button_description"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
