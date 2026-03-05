@@ -7,9 +7,11 @@
 		android:key="@string/pref_key_import_offline_maps"
 		android:title="@string/pref_title_import_offline_maps"
 		android:summary="@string/pref_summary_import_offline_maps"
-		android:icon="@drawable/ic_add_white" />
+		app:iconSpaceReserved="false"
+		app:singleLineTitle="false" />
 
 	<PreferenceCategory
+		android:layout="@layout/preferences_category"
 		android:key="pref_key_offline_maps_list"
 		android:title="@string/pref_category_offline_maps_list"
 		app:allowDividerAbove="true">

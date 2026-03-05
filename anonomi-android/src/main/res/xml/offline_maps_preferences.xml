@@ -4,6 +4,7 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto">
 
 	<PreferenceCategory
+		android:layout="@layout/preferences_category"
 		android:title="@string/pref_category_offline">
 
 		<Preference
@@ -11,18 +12,21 @@
 			android:title="@string/offline_maps_help_title"
 			android:summary="@string/offline_maps_help_summary"
 			app:fragment="org.anonomi.android.settings.OfflineMapsInfoFragment"
-			android:icon="@drawable/ic_help_outline_white" />
+			android:icon="@drawable/ic_help_outline_white"
+			app:singleLineTitle="false" />
 
 		<Preference
 			android:key="pref_key_offline_map_data"
 			android:title="@string/pref_title_offline_map_data"
 			android:summary="@string/pref_summary_offline_map_data"
 			app:fragment="org.anonomi.android.settings.OfflineMapDataFragment"
-			android:icon="@drawable/ic_import_white" />
+			android:icon="@drawable/ic_import_white"
+			app:singleLineTitle="false" />
 
 	</PreferenceCategory>
 
 	<PreferenceCategory
+		android:layout="@layout/preferences_category"
 		android:title="@string/pref_category_online_maps"
 		app:allowDividerAbove="true">
 
@@ -30,23 +34,29 @@
 			android:key="pref_map_online_enabled"
 			android:title="@string/pref_title_map_online_enabled"
 			android:summary="@string/pref_summary_map_online_enabled"
-			android:defaultValue="true" />
+			android:defaultValue="true"
+			app:iconSpaceReserved="false"
+			app:singleLineTitle="false" />
 
 		<Preference
 			android:key="pref_key_add_online_map"
 			android:title="@string/pref_title_add_online_map"
 			android:summary="@string/pref_summary_add_online_map"
-			android:icon="@drawable/ic_add_white" />
+			android:icon="@drawable/ic_add_white"
+			app:singleLineTitle="false" />
 
 	</PreferenceCategory>
 
 	<PreferenceCategory
-		android:key="pref_key_online_maps_list">
+		android:layout="@layout/preferences_category"
+		android:key="pref_key_online_maps_list"
+		android:title="@string/pref_category_online_maps_list">
 
 		<!-- Dynamically populated with stored online maps -->
 	</PreferenceCategory>
 
 	<PreferenceCategory
+		android:layout="@layout/preferences_category"
 		android:title="@string/pref_category_online_maps_management"
 		app:allowDividerAbove="true">
 
@@ -55,15 +65,15 @@
 			android:title="@string/pref_title_clear_tile_cache"
 			android:summary="@string/pref_summary_clear_tile_cache"
 			android:dependency="pref_map_online_enabled"
-			android:icon="@drawable/ic_delete_white" />
+			android:icon="@drawable/ic_delete_white"
+			app:singleLineTitle="false" />
 
-		<EditTextPreference
+		<Preference
 			android:key="pref_map_default_server_url"
 			android:title="@string/pref_title_default_map_server"
-			android:defaultValue="@string/default_map_server_url"
-			android:inputType="textUri"
 			android:dependency="pref_map_online_enabled"
-			app:useSimpleSummaryProvider="true" />
+			app:iconSpaceReserved="false"
+			app:singleLineTitle="false" />
 
 	</PreferenceCategory>
 
