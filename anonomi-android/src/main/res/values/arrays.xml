@@ -70,19 +70,22 @@
 		<item>@string/pref_theme_light</item>
 		<item>@string/pref_theme_dark</item>
 		<item>@string/pref_theme_system</item>
+		<item>@string/pref_theme_pink_dark</item>
+		<item>@string/pref_theme_pink_light</item>
 		<item>@string/pref_theme_anon_green_dark</item> <!-- NEW -->
 		<item>@string/pref_theme_anon_green_light</item> <!-- NEW -->
 		<item>@string/pref_theme_discrete_blue_dark</item> <!-- ✅ New -->
 		<item>@string/pref_theme_discrete_blue_light</item> <!-- ✅ New -->
-		<item>@string/pref_theme_discord_dark</item>
-		<item>@string/pref_theme_discord_light</item>
-
 
 	</string-array>
 
 	<string name="pref_theme_light_value" translatable="false">light</string>
 	<string name="pref_theme_dark_value" translatable="false">dark</string>
 	<string name="pref_theme_system_value" translatable="false">system</string>
+	<string name="pref_theme_pink_dark" translatable="false">Pink – Dark</string>
+	<string name="pref_theme_pink_dark_value" translatable="false">pink_dark</string>
+	<string name="pref_theme_pink_light" translatable="false">Pink – Light</string>
+	<string name="pref_theme_pink_light_value" translatable="false">pink_light</string>
 	<string name="pref_theme_anon_green_dark" translatable="false">Lime – Dark</string>
 	<string name="pref_theme_anon_green_dark_value" translatable="false">anon_green_dark</string>
 	<string name="pref_theme_anon_green_light" translatable="false">Lime – Light</string>
@@ -91,21 +94,16 @@
 	<string name="pref_theme_discrete_blue_dark_value" translatable="false">discrete_blue_dark</string> <!-- ✅ New -->
 	<string name="pref_theme_discrete_blue_light" translatable="false">Discrete Blue – Light</string> <!-- ✅ New -->
 	<string name="pref_theme_discrete_blue_light_value" translatable="false">discrete_blue_light</string> <!-- ✅ New -->
-	<string name="pref_theme_discord_dark" translatable="false">Discord – Dark</string>
-	<string name="pref_theme_discord_dark_value" translatable="false">discord_dark</string>
-	<string name="pref_theme_discord_light" translatable="false">Discord – Light</string>
-	<string name="pref_theme_discord_light_value" translatable="false">discord_light</string>
-
 	<string-array name="pref_theme_values">
 		<item>@string/pref_theme_light_value</item>
 		<item>@string/pref_theme_dark_value</item>
 		<item>@string/pref_theme_system_value</item>
+		<item>@string/pref_theme_pink_dark_value</item>
+		<item>@string/pref_theme_pink_light_value</item>
 		<item>@string/pref_theme_anon_green_dark_value</item> <!-- NEW -->
 		<item>@string/pref_theme_anon_green_light_value</item> <!-- NEW -->
 		<item>@string/pref_theme_discrete_blue_dark_value</item> <!-- ✅ New -->
 		<item>@string/pref_theme_discrete_blue_light_value</item> <!-- ✅ New -->
-		<item>@string/pref_theme_discord_dark_value</item>
-		<item>@string/pref_theme_discord_light_value</item>
 
 	</string-array>
 

@@ -340,10 +340,10 @@ public abstract class BaseActivity extends AppCompatActivity
 			setTheme(noActionBar ? R.style.AnonThemeDiscreteBlue_NoActionBar : R.style.AnonThemeDiscreteBlue);
 		} else if (theme.equals(getString(R.string.pref_theme_discrete_blue_light_value))) {
 			setTheme(noActionBar ? R.style.AnonThemeDiscreteBlue_NoActionBar : R.style.AnonThemeDiscreteBlue);
-		} else if (theme.equals(getString(R.string.pref_theme_discord_dark_value))) {
-			setTheme(noActionBar ? R.style.AnonThemeDiscord_NoActionBar : R.style.AnonThemeDiscord);
-		} else if (theme.equals(getString(R.string.pref_theme_discord_light_value))) {
-			setTheme(noActionBar ? R.style.AnonThemeDiscord_NoActionBar : R.style.AnonThemeDiscord);
+		} else if (theme.equals(getString(R.string.pref_theme_pink_dark_value))) {
+			setTheme(noActionBar ? R.style.AnonPinkTheme_NoActionBar : R.style.AnonPinkTheme);
+		} else if (theme.equals(getString(R.string.pref_theme_pink_light_value))) {
+			setTheme(noActionBar ? R.style.AnonPinkTheme_NoActionBar : R.style.AnonPinkTheme);
 		} else {
 			setTheme(noActionBar ? R.style.AnonTheme_Base_NoActionBar : R.style.AnonTheme_Base);
 		}
