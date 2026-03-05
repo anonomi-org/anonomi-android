@@ -27,7 +27,7 @@
 	     AnonTheme (DEFAULT) — updated to Anonomi palette
 	     ========================================================= -->
 	<color name="anontheme_accent">@color/anon_purple_500</color>
-	<color name="anontheme_anon_accent_dark_color">@color/anon_night_950</color>
+	<color name="anontheme_anon_accent_dark_color">@color/anon_purple_900</color>
 	<color name="anontheme_anon_accent_color">@color/anon_purple_500</color>
 	<color name="anontheme_accent2_color">@color/anon_purple_700</color>
 
