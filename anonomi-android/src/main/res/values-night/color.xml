@@ -30,11 +30,51 @@
 
 
 
+	<!-- Accent2 night overrides (lighter shades for dark backgrounds) -->
+	<color name="anontheme_accent2_color">@color/anon_purple_300</color>
+	<color name="pinktheme_accent2_color">@color/anon_brand_pink_300</color>
+	<color name="discreteblue_accent2_color">@color/anon_blue_300</color>
+	<color name="anongreentheme_accent2_color">@color/anon_lime_300</color>
+
+	<!-- AnonPinkTheme -->
+	<!-- Message Out -->
+	<color name="pinktheme_msg_out_bubble_background">@color/anon_brand_pink_950</color>
+	<color name="pinktheme_msg_out_text_color">@color/white</color>
+	<color name="pinktheme_msg_out_linktext_color">@color/anon_gray_100</color>
+	<color name="pinktheme_msg_out_metatext_color">@color/anon_gray_300</color>
+
+	<!-- Message In -->
+	<color name="pinktheme_msg_in_bubble_background">@color/anon_night_700</color>
+	<color name="pinktheme_msg_in_text_color">@color/white</color>
+	<color name="pinktheme_msg_in_linktext_color">@color/anon_brand_pink_300</color>
+	<color name="pinktheme_msg_in_stroke_color">@color/anon_night_600</color>
+	<color name="pinktheme_msg_in_metatext_color">@color/anon_gray_300</color>
+
+	<!-- Message Notice In -->
+	<color name="pinktheme_msg_notice_in_bubble_background">@color/anon_brand_pink_950</color>
+	<color name="pinktheme_msg_notice_in_stroke_color">@color/anon_brand_pink_950</color>
+	<color name="pinktheme_msg_notice_in_linktext_color">@color/anon_brand_pink_300</color>
+	<color name="pinktheme_msg_notice_in_metatext_color">@color/anon_brand_pink_100</color>
+	<color name="pinktheme_msg_notice_in_text_color">@color/white</color>
+
+	<!-- Message Notice Out -->
+	<color name="pinktheme_msg_notice_out_bubble_background">@color/anon_brand_pink_900</color>
+	<color name="pinktheme_msg_notice_out_stroke_color">@color/anon_brand_pink_950</color>
+	<color name="pinktheme_msg_notice_out_text_color">@color/white</color>
+	<color name="pinktheme_msg_notice_out_metatext_color">@color/anon_gray_100</color>
+
+	<!-- Request -->
+	<color name="pinktheme_request_bubble_background">@color/anon_green_700</color>
+	<color name="pinktheme_request_stroke_color">@color/anon_night_950</color>
+	<color name="pinktheme_request_text_color">@color/white</color>
+	<color name="pinktheme_request_link_text_color">@color/anon_brand_pink_300</color>
+	<color name="pinktheme_request_meta_text_color">@color/anon_brand_pink_100</color>
+
 	<!-- AnonThemeDiscreteBlue -->
 	<color name="discreteblue_anon_accent_color">@color/anon_blue_700</color>
 
 	<!-- Message Out -->
-	<color name="discreteblue_msg_out_bubble_background">@color/anon_blue_700</color>
+	<color name="discreteblue_msg_out_bubble_background">@color/anon_blue_950</color>
 	<color name="discreteblue_msg_out_text_color">@color/white</color>
 	<color name="discreteblue_msg_out_linktext_color">@color/anon_gray_200</color>
 	<color name="discreteblue_msg_out_metatext_color">@color/anon_gray_100</color>
@@ -65,48 +105,6 @@
 	<color name="discreteblue_request_text_color">@color/white</color>
 	<color name="discreteblue_request_link_text_color">@color/anon_blue_300</color>
 	<color name="discreteblue_request_meta_text_color">@color/anon_blue_100</color>
-
-
-
-	<!-- AnonThemeDiscord -->
-	<color name="discord_anon_accent_color">@color/anon_purple_500</color> <!-- Discord blurple -->
-
-	<!-- Message Out -->
-	<color name="discord_msg_out_bubble_background">@color/anon_purple_500</color>
-	<color name="discord_msg_out_text_color">@color/white</color>
-	<color name="discord_msg_out_linktext_color">@color/anon_gray_100</color>
-	<color name="discord_msg_out_metatext_color">@color/anon_gray_300</color>
-
-
-	<!-- Message In -->
-	<color name="discord_msg_in_bubble_background">@color/anon_night_700</color>
-	<color name="discord_msg_in_text_color">@color/white</color>
-	<color name="discord_msg_in_linktext_color">@color/anon_purple_300</color>
-	<color name="discord_msg_in_stroke_color">@color/anon_night_600</color>
-	<color name="discord_msg_in_metatext_color">@color/anon_gray_300</color>
-
-
-	<!-- Message Notice In -->
-	<color name="discord_msg_notice_in_bubble_background">@color/anon_purple_950</color>
-	<color name="discord_msg_notice_in_stroke_color">@color/anon_purple_950</color>
-	<color name="discord_msg_notice_in_linktext_color">@color/anon_purple_300</color>
-	<color name="discord_msg_notice_in_metatext_color">@color/anon_purple_100</color>
-	<color name="discord_msg_notice_in_text_color">@color/white</color>
-
-
-	<!-- Message Notice Out -->
-	<color name="discord_msg_notice_out_bubble_background">@color/anon_purple_700</color>
-	<color name="discord_msg_notice_out_stroke_color">@color/anon_purple_950</color>
-	<color name="discord_msg_notice_out_text_color">@color/white</color>
-	<color name="discord_msg_notice_out_metatext_color">@color/anon_gray_100</color>
-
-
-	<!-- Request -->
-	<color name="discord_request_bubble_background">@color/anon_green_700</color>
-	<color name="discord_request_stroke_color">@color/anon_night_950</color>
-	<color name="discord_request_text_color">@color/white</color>
-	<color name="discord_request_link_text_color">@color/anon_purple_300</color>
-	<color name="discord_request_meta_text_color">@color/anon_purple_100</color>
 
 
 

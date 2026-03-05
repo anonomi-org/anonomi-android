@@ -349,6 +349,12 @@ public class UiUtils {
 		} else if (theme.equals(ctx.getString(R.string.pref_theme_dark_value))) {
 			setDefaultNightMode(MODE_NIGHT_YES);
 			ctx.setTheme(R.style.AnonTheme_Base);
+		} else if (theme.equals(ctx.getString(R.string.pref_theme_pink_dark_value))) {
+			setDefaultNightMode(MODE_NIGHT_YES);
+			ctx.setTheme(R.style.AnonPinkTheme);
+		} else if (theme.equals(ctx.getString(R.string.pref_theme_pink_light_value))) {
+			setDefaultNightMode(MODE_NIGHT_NO);
+			ctx.setTheme(R.style.AnonPinkTheme);
 		} else if (theme.equals(ctx.getString(R.string.pref_theme_anon_green_dark_value))) {
 			setDefaultNightMode(MODE_NIGHT_YES);
 			ctx.setTheme(R.style.AnonGreenTheme);
@@ -361,12 +367,6 @@ public class UiUtils {
 		} else if (theme.equals(ctx.getString(R.string.pref_theme_discrete_blue_light_value))) {
 			setDefaultNightMode(MODE_NIGHT_NO);
 			ctx.setTheme(R.style.AnonThemeDiscreteBlue);
-		} else if (theme.equals(ctx.getString(R.string.pref_theme_discord_dark_value))) {
-			setDefaultNightMode(MODE_NIGHT_YES);
-			ctx.setTheme(R.style.AnonThemeDiscord);
-		} else if (theme.equals(ctx.getString(R.string.pref_theme_discord_light_value))) {
-			setDefaultNightMode(MODE_NIGHT_NO);
-			ctx.setTheme(R.style.AnonThemeDiscord);
 		} else {
 			setDefaultNightMode(MODE_NIGHT_FOLLOW_SYSTEM);
 			ctx.setTheme(R.style.AnonTheme);
