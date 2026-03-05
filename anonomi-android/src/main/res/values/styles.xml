@@ -36,8 +36,8 @@
 	</style>
 
 	<style name="AnonomiButtonFlat.Positive" parent="AnonomiButtonFlat">
-		<item name="android:textColor">@color/briar_button_text_positive</item>
-		<item name="iconTint">@color/briar_button_text_positive</item>
+		<item name="android:textColor">?attr/anonAccent2Color</item>
+		<item name="iconTint">?attr/anonAccent2Color</item>
 	</style>
 
 	<style name="AnonomiButtonFlat.Neutral" parent="AnonomiButtonFlat">
@@ -46,6 +46,17 @@
 	</style>
 
 	<style name="AnonomiButtonFlat.Positive.Tiny" parent="AnonomiButtonFlat.Positive">
+		<item name="android:textSize">@dimen/text_size_tiny</item>
+		<item name="android:padding">@dimen/margin_medium</item>
+		<item name="android:minWidth">@dimen/button_size</item>
+	</style>
+
+	<style name="AnonomiButtonFlat.Accent2" parent="AnonomiButtonFlat">
+		<item name="android:textColor">?attr/anonAccent2Color</item>
+		<item name="iconTint">?attr/anonAccent2Color</item>
+	</style>
+
+	<style name="AnonomiButtonFlat.Accent2.Tiny" parent="AnonomiButtonFlat.Accent2">
 		<item name="android:textSize">@dimen/text_size_tiny</item>
 		<item name="android:padding">@dimen/margin_medium</item>
 		<item name="android:minWidth">@dimen/button_size</item>
@@ -66,7 +77,7 @@
 	</style>
 
 	<style name="AnonomiButtonOutline.Positive" parent="AnonomiButtonOutline">
-		<item name="android:textColor">@color/briar_button_text_positive</item>
+		<item name="android:textColor">?attr/anonAccent2Color</item>
 	</style>
 
 	<style name="AnonomiButtonOutline.Neutral" parent="AnonomiButtonOutline">

@@ -38,6 +38,7 @@
 		<!-- General -->
 		<item name="anonAccentColor">@color/anontheme_anon_accent_color</item>
 		<item name="anonAccentDarkColor">@color/anontheme_anon_accent_dark_color</item>
+		<item name="anonAccent2Color">@color/anontheme_accent2_color</item>
 
 
 
@@ -80,52 +81,51 @@
 		<item name="requestMetaTextColor">@color/anontheme_request_meta_text_color</item>
 	</style>
 
-	<style name="AnonThemeDiscord" parent="AnonTheme.Base">
+	<style name="AnonPinkTheme" parent="AnonTheme.Base">
 		<!-- General -->
-		<item name="anonAccentColor">@color/discord_anon_accent_color</item>
-		<item name="colorPrimary">@color/discord_anon_accent_color</item>
-		<item name="colorSecondary">@color/discord_anon_accent_dark_color</item>
-		<item name="anonAccentDarkColor">@color/discord_anon_accent_dark_color</item>
+		<item name="anonAccentColor">@color/pinktheme_anon_accent_color</item>
+		<item name="colorPrimary">@color/pinktheme_anon_accent_color</item>
+		<item name="colorSecondary">@color/pinktheme_anon_accent_dark_color</item>
+		<item name="anonAccentDarkColor">@color/pinktheme_anon_accent_dark_color</item>
+		<item name="anonAccent2Color">@color/pinktheme_accent2_color</item>
 
 		<!-- Message Out -->
-		<item name="msgOutBubbleBackground">@color/discord_msg_out_bubble_background</item>
-		<item name="msgOutTextColor">@color/discord_msg_out_text_color</item>
-		<item name="msgOutLinkTextColor">@color/discord_msg_out_linktext_color</item>
-		<item name="msgOutMetaTextColor">@color/discord_msg_out_metatext_color</item>
-		<item name="msgOutStrokeColor">@color/discord_msg_out_stroke_color</item>
-
+		<item name="msgOutBubbleBackground">@color/pinktheme_msg_out_bubble_background</item>
+		<item name="msgOutTextColor">@color/pinktheme_msg_out_text_color</item>
+		<item name="msgOutLinkTextColor">@color/pinktheme_msg_out_linktext_color</item>
+		<item name="msgOutMetaTextColor">@color/pinktheme_msg_out_metatext_color</item>
+		<item name="msgOutStrokeColor">@color/pinktheme_msg_out_stroke_color</item>
 
 		<!-- Message In -->
-		<item name="msgInBubbleBackground">@color/discord_msg_in_bubble_background</item>
-		<item name="msgInTextColor">@color/discord_msg_in_text_color</item>
-		<item name="msgInLinkTextColor">@color/discord_msg_in_linktext_color</item>
-		<item name="msgInStrokeColor">@color/discord_msg_in_stroke_color</item>
-		<item name="msgInMetaTextColor">@color/discord_msg_in_metatext_color</item>
+		<item name="msgInBubbleBackground">@color/pinktheme_msg_in_bubble_background</item>
+		<item name="msgInTextColor">@color/pinktheme_msg_in_text_color</item>
+		<item name="msgInLinkTextColor">@color/pinktheme_msg_in_linktext_color</item>
+		<item name="msgInStrokeColor">@color/pinktheme_msg_in_stroke_color</item>
+		<item name="msgInMetaTextColor">@color/pinktheme_msg_in_metatext_color</item>
 
 		<!-- Message Notice In -->
-		<item name="msgNoticeInBubbleBackground">@color/discord_msg_notice_in_bubble_background</item>
-		<item name="msgNoticeInStrokeColor">@color/discord_msg_notice_in_stroke_color</item>
-		<item name="msgNoticeInLinkTextColor">@color/discord_msg_notice_in_linktext_color</item>
-		<item name="msgNoticeInMetaTextColor">@color/discord_msg_notice_in_metatext_color</item>
-		<item name="msgNoticeInTextColor">@color/discord_msg_notice_in_text_color</item>
-
+		<item name="msgNoticeInBubbleBackground">@color/pinktheme_msg_notice_in_bubble_background</item>
+		<item name="msgNoticeInStrokeColor">@color/pinktheme_msg_notice_in_stroke_color</item>
+		<item name="msgNoticeInLinkTextColor">@color/pinktheme_msg_notice_in_linktext_color</item>
+		<item name="msgNoticeInMetaTextColor">@color/pinktheme_msg_notice_in_metatext_color</item>
+		<item name="msgNoticeInTextColor">@color/pinktheme_msg_notice_in_text_color</item>
 
 		<!-- Message Notice Out -->
-		<item name="msgNoticeOutBubbleBackground">@color/discord_msg_notice_out_bubble_background</item>
-		<item name="msgNoticeOutStrokeColor">@color/discord_msg_notice_out_stroke_color</item>
-		<item name="msgNoticeOutTextColor">@color/discord_msg_notice_out_text_color</item>
-		<item name="msgNoticeOutTopTextColor">@color/discord_msg_notice_out_top_text_color</item>
-		<item name="msgNoticeOutMetaTextColor">@color/discord_msg_notice_out_metatext_color</item>
+		<item name="msgNoticeOutBubbleBackground">@color/pinktheme_msg_notice_out_bubble_background</item>
+		<item name="msgNoticeOutStrokeColor">@color/pinktheme_msg_notice_out_stroke_color</item>
+		<item name="msgNoticeOutTextColor">@color/pinktheme_msg_notice_out_text_color</item>
+		<item name="msgNoticeOutTopTextColor">@color/pinktheme_msg_notice_out_top_text_color</item>
+		<item name="msgNoticeOutMetaTextColor">@color/pinktheme_msg_notice_out_metatext_color</item>
 
 		<!-- Request -->
-		<item name="requestBubbleBackground">@color/discord_request_bubble_background</item>
-		<item name="requestTextColor">@color/discord_request_text_color</item>
-		<item name="requestLinkTextColor">@color/discord_request_link_text_color</item>
-		<item name="requestStrokeColor">@color/discord_request_stroke_color</item>
-		<item name="requestMetaTextColor">@color/discord_request_meta_text_color</item>
+		<item name="requestBubbleBackground">@color/pinktheme_request_bubble_background</item>
+		<item name="requestTextColor">@color/pinktheme_request_text_color</item>
+		<item name="requestLinkTextColor">@color/pinktheme_request_link_text_color</item>
+		<item name="requestStrokeColor">@color/pinktheme_request_stroke_color</item>
+		<item name="requestMetaTextColor">@color/pinktheme_request_meta_text_color</item>
 	</style>
 
-	<style name="AnonThemeDiscord.NoActionBar" parent="AnonThemeDiscord">
+	<style name="AnonPinkTheme.NoActionBar" parent="AnonPinkTheme">
 		<item name="windowActionBar">false</item>
 		<item name="windowNoTitle">true</item>
 		<item name="toolbarStyle">@style/AnonToolbar</item>
@@ -137,6 +137,7 @@
 		<item name="colorPrimary">@color/discreteblue_anon_accent_color</item>
 		<item name="colorSecondary">@color/discreteblue_anon_accent_dark_color</item>
 		<item name="anonAccentDarkColor">@color/discreteblue_anon_accent_dark_color</item>
+		<item name="anonAccent2Color">@color/discreteblue_accent2_color</item>
 
 		<!-- Message Out -->
 		<item name="msgOutBubbleBackground">@color/discreteblue_msg_out_bubble_background</item>
@@ -188,6 +189,7 @@
 		<item name="colorPrimary">@color/anongreentheme_anon_accent_color</item>
 		<item name="colorSecondary">@color/anongreentheme_anon_accent_dark_color</item>
 		<item name="anonAccentDarkColor">@color/anongreentheme_anon_accent_dark_color</item>
+		<item name="anonAccent2Color">@color/anongreentheme_accent2_color</item>
 
 		<!-- Message Out -->
 		<item name="msgOutBubbleBackground">@color/anongreentheme_msg_out_bubble_background</item>
