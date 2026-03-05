@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -13,6 +14,23 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 public class MapServerClient {
+
+	/**
+	 * Matches a valid v3 onion URL: http(s)://[56 base32 chars].onion[/optional path]
+	 * The 56-char pattern is the same used in TorPlugin for v3 onion address validation.
+	 */
+	private static final Pattern ONION_URL =
+			Pattern.compile("https?://[a-z2-7]{56}\\.onion(/.*)?",
+					Pattern.CASE_INSENSITIVE);
+
+	/**
+	 * Returns true if the given string is a valid v3 .onion URL.
+	 */
+	public static boolean isValidOnionUrl(String url) {
+		if (url == null || url.isEmpty()) return false;
+		return ONION_URL.matcher(url.trim()).matches();
+	}
+
 
 	/**
 	 * Fetches {serverUrl}/disco.json and returns the list of available maps.

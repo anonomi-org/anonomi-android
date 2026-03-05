@@ -740,12 +740,13 @@
     <string name="pref_category_offline_maps_list">Imported Offline Maps</string>
     <string name="default_map_server_url" translatable="false">http://khpmg7zqfpnybbvvdv6ycj6zvcx5kzkjf5scdb5cfz4fqfmn6z4quiyd.onion</string>
     <string name="pref_title_default_map_server">Default Map Server</string>
+    <string name="reset_to_default">Default</string>
     <string name="pref_title_add_online_map">Add online map</string>
     <string name="pref_summary_add_online_map">Add a map server or direct map URL</string>
     <string name="dialog_radio_default_server">Fetch maps from default map server</string>
     <string name="dialog_radio_custom_url">Custom server or map URL</string>
     <string name="dialog_no_default_server">No default server configured</string>
-    <string name="pref_category_online_maps_list">Online Maps</string>
+    <string name="pref_category_online_maps_list">Your Maps</string>
     <string name="no_online_maps">No online maps added yet.</string>
     <string name="online_map_summary">Zoom %1$d–%2$d</string>
     <string name="add_map_dialog_title">Add map server or map</string>
@@ -756,6 +757,7 @@
     <string name="online_map_added">Map \'%1$s\' added.</string>
     <string name="online_map_already_added">\'%1$s\' is already in your maps.</string>
     <string name="online_maps_added_some_skipped">%1$d map(s) added, %2$d already present.</string>
+    <string name="error_invalid_onion_url">Only .onion URLs are supported (e.g. http://…56chars….onion)</string>
     <string name="error_fetching_disco">Could not fetch server map list.</string>
     <string name="error_fetching_map">Could not fetch map info.</string>
     <string name="select_maps_to_add">Select maps to add</string>
@@ -858,6 +860,8 @@
     <string name="pref_monero_rate_hint">Enter the XMR rate (e.g., 120.50)</string>
     <string name="pref_minor_index_title">SubAddress Index</string>
     <string name="pref_minor_index_hint">Enter the current index</string>
+    <string name="pref_category_monero_wallet">Wallet</string>
+    <string name="pref_category_monero_config">Configuration</string>
     <!-- Postbox -->
 	<string name="mailbox_settings_title">Anonomi Postbox</string>
     <string name="mailbox_setup_title">Postbox setup</string>

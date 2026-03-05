@@ -72,6 +72,7 @@ public class OfflineMapsFragment extends PreferenceFragmentCompat {
 
 		setupClearCachePreference();
 		setupAddMapPreference();
+		setupServerUrlPreference();
 
 		onlineMapsCategory = findPreference("pref_key_online_maps_list");
 		if (onlineMapsCategory == null) {
@@ -119,6 +120,60 @@ public class OfflineMapsFragment extends PreferenceFragmentCompat {
 				return true;
 			});
 		}
+	}
+
+	private void setupServerUrlPreference() {
+		Preference serverUrlPref = findPreference("pref_map_default_server_url");
+		if (serverUrlPref == null) return;
+		String defaultUrl = getString(R.string.default_map_server_url);
+		SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
+		serverUrlPref.setSummary(prefs.getString("pref_map_default_server_url", defaultUrl));
+		serverUrlPref.setOnPreferenceClickListener(pref -> {
+			showServerUrlDialog(serverUrlPref);
+			return true;
+		});
+	}
+
+	private void showServerUrlDialog(Preference serverUrlPref) {
+		Context context = requireContext();
+		int padPx = (int) (16 * getResources().getDisplayMetrics().density);
+		String defaultUrl = getString(R.string.default_map_server_url);
+		SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
+		String currentUrl = prefs.getString("pref_map_default_server_url", defaultUrl);
+
+		EditText urlInput = new EditText(context);
+		urlInput.setText(currentUrl);
+		urlInput.setInputType(android.text.InputType.TYPE_CLASS_TEXT
+				| android.text.InputType.TYPE_TEXT_VARIATION_URI);
+		urlInput.setPadding(padPx, padPx / 2, padPx, padPx / 2);
+
+		AlertDialog dialog = new AlertDialog.Builder(context, R.style.AnonDialogTheme)
+				.setTitle(getString(R.string.pref_title_default_map_server))
+				.setView(urlInput)
+				.setPositiveButton(android.R.string.ok, null)
+				.setNegativeButton(android.R.string.cancel, null)
+				.setNeutralButton(R.string.reset_to_default, null)
+				.create();
+
+		dialog.setOnShowListener(d -> {
+			dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
+				String newUrl = urlInput.getText().toString().trim();
+				if (!MapServerClient.isValidOnionUrl(newUrl)) {
+					urlInput.setError(getString(R.string.error_invalid_onion_url));
+					return;
+				}
+				prefs.edit().putString("pref_map_default_server_url", newUrl).apply();
+				serverUrlPref.setSummary(newUrl);
+				dialog.dismiss();
+			});
+			dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener(v -> {
+				prefs.edit().putString("pref_map_default_server_url", defaultUrl).apply();
+				serverUrlPref.setSummary(defaultUrl);
+				dialog.dismiss();
+			});
+		});
+
+		dialog.show();
 	}
 
 	// ── Online maps list ──────────────────────────────────────────────────
@@ -238,14 +293,22 @@ public class OfflineMapsFragment extends PreferenceFragmentCompat {
 		AlertDialog dialog = new AlertDialog.Builder(context, R.style.AnonDialogTheme)
 				.setTitle(getString(R.string.add_map_dialog_title))
 				.setView(layout)
-				.setPositiveButton(android.R.string.ok, (d, which) -> {
+				.setPositiveButton(android.R.string.ok, null)
+				.setNegativeButton(android.R.string.cancel, null)
+				.create();
+
+		dialog.setOnShowListener(d ->
+				dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
 					String url = radioGroup.getCheckedRadioButtonId() == radioDefault.getId()
 							? defaultServerUrl
 							: urlInput.getText().toString().trim();
-					if (!url.isEmpty()) handleMapUrl(url);
-				})
-				.setNegativeButton(android.R.string.cancel, null)
-				.create();
+					if (!MapServerClient.isValidOnionUrl(url)) {
+						urlInput.setError(getString(R.string.error_invalid_onion_url));
+						return;
+					}
+					dialog.dismiss();
+					handleMapUrl(url);
+				}));
 
 		scanButton.setOnClickListener(v -> {
 			dialog.dismiss();
@@ -312,7 +375,7 @@ public class OfflineMapsFragment extends PreferenceFragmentCompat {
 			names[i] = maps.get(i).name;
 			checked[i] = true;
 		}
-		new AlertDialog.Builder(requireContext())
+		new AlertDialog.Builder(requireContext(), R.style.AnonDialogTheme)
 				.setTitle(getString(R.string.select_maps_to_add))
 				.setMultiChoiceItems(names, checked,
 						(d, which, isChecked) -> checked[which] = isChecked)
@@ -357,7 +420,7 @@ public class OfflineMapsFragment extends PreferenceFragmentCompat {
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
-		new AlertDialog.Builder(requireContext())
+		new AlertDialog.Builder(requireContext(), R.style.AnonDialogTheme)
 				.setTitle(getString(R.string.add_map_dialog_title))
 				.setMessage(entry.name + "\n" +
 						getString(R.string.online_map_summary, entry.zoomMin, entry.zoomMax))
