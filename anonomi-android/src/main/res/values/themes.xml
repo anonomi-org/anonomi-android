@@ -7,7 +7,7 @@
 		<item name="colorOnPrimary">@color/md_theme_onPrimary</item>
 		<item name="colorPrimaryContainer">@color/md_theme_primary</item>
 		<item name="colorOnPrimaryContainer">@color/md_theme_onPrimary</item>
-		<item name="colorSecondary">@color/anontheme_anon_accent_dark_color</item>
+		<item name="colorSecondary">@color/anontheme_accent2_color</item>
 		<item name="colorOnSecondary">@color/md_theme_onSecondary</item>
 		<item name="colorTertiary">@color/md_theme_tertiary</item>
 		<item name="colorOnTertiary">@color/md_theme_onTertiary</item>
@@ -38,6 +38,7 @@
 		<!-- General -->
 		<item name="anonAccentColor">@color/anontheme_anon_accent_color</item>
 		<item name="anonAccentDarkColor">@color/anontheme_anon_accent_dark_color</item>
+		<item name="colorSecondaryDarker">@color/anontheme_anon_accent_dark_color</item>
 		<item name="anonAccent2Color">@color/anontheme_accent2_color</item>
 
 
@@ -85,8 +86,9 @@
 		<!-- General -->
 		<item name="anonAccentColor">@color/pinktheme_anon_accent_color</item>
 		<item name="colorPrimary">@color/pinktheme_anon_accent_color</item>
-		<item name="colorSecondary">@color/pinktheme_anon_accent_dark_color</item>
+		<item name="colorSecondary">@color/pinktheme_accent2_color</item>
 		<item name="anonAccentDarkColor">@color/pinktheme_anon_accent_dark_color</item>
+		<item name="colorSecondaryDarker">@color/pinktheme_anon_accent_dark_color</item>
 		<item name="anonAccent2Color">@color/pinktheme_accent2_color</item>
 
 		<!-- Message Out -->
@@ -135,8 +137,9 @@
 		<!-- General -->
 		<item name="anonAccentColor">@color/discreteblue_anon_accent_color</item>
 		<item name="colorPrimary">@color/discreteblue_anon_accent_color</item>
-		<item name="colorSecondary">@color/discreteblue_anon_accent_dark_color</item>
+		<item name="colorSecondary">@color/discreteblue_accent2_color</item>
 		<item name="anonAccentDarkColor">@color/discreteblue_anon_accent_dark_color</item>
+		<item name="colorSecondaryDarker">@color/discreteblue_anon_accent_dark_color</item>
 		<item name="anonAccent2Color">@color/discreteblue_accent2_color</item>
 
 		<!-- Message Out -->
@@ -187,8 +190,9 @@
 		<!-- General -->
 		<item name="anonAccentColor">@color/anongreentheme_anon_accent_color</item>
 		<item name="colorPrimary">@color/anongreentheme_anon_accent_color</item>
-		<item name="colorSecondary">@color/anongreentheme_anon_accent_dark_color</item>
+		<item name="colorSecondary">@color/anongreentheme_accent2_color</item>
 		<item name="anonAccentDarkColor">@color/anongreentheme_anon_accent_dark_color</item>
+		<item name="colorSecondaryDarker">@color/anongreentheme_anon_accent_dark_color</item>
 		<item name="anonAccent2Color">@color/anongreentheme_accent2_color</item>
 
 		<!-- Message Out -->

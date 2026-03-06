@@ -1,7 +1,6 @@
 package org.anonomi.android.settings;
 
 import androidx.appcompat.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,15 +10,17 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
-
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
@@ -326,10 +327,33 @@ public class OfflineMapsFragment extends PreferenceFragmentCompat {
 		dialog.show();
 	}
 
+	private AlertDialog buildFetchingDialog(Context context) {
+		int padPx = (int) (16 * getResources().getDisplayMetrics().density);
+		LinearLayout layout = new LinearLayout(context);
+		layout.setOrientation(LinearLayout.HORIZONTAL);
+		layout.setGravity(Gravity.CENTER_VERTICAL);
+		layout.setPadding(padPx, padPx, padPx, padPx);
+
+		ProgressBar spinner = new ProgressBar(context);
+		layout.addView(spinner, new LinearLayout.LayoutParams(
+				LinearLayout.LayoutParams.WRAP_CONTENT,
+				LinearLayout.LayoutParams.WRAP_CONTENT));
+
+		TextView message = new TextView(context);
+		message.setText(getString(R.string.fetching_map_info));
+		message.setPadding(padPx, 0, 0, 0);
+		layout.addView(message, new LinearLayout.LayoutParams(
+				LinearLayout.LayoutParams.WRAP_CONTENT,
+				LinearLayout.LayoutParams.WRAP_CONTENT));
+
+		return new AlertDialog.Builder(context, R.style.AnonDialogTheme)
+				.setView(layout)
+				.setCancelable(false)
+				.create();
+	}
+
 	private void handleMapUrl(String url) {
-		ProgressDialog progress = new ProgressDialog(requireContext());
-		progress.setMessage(getString(R.string.fetching_map_info));
-		progress.setCancelable(false);
+		AlertDialog progress = buildFetchingDialog(requireContext());
 		progress.show();
 
 		ioExecutor.execute(() -> {
@@ -363,7 +387,7 @@ public class OfflineMapsFragment extends PreferenceFragmentCompat {
 		});
 	}
 
-	private static void dismissSafely(ProgressDialog dialog) {
+	private static void dismissSafely(AlertDialog dialog) {
 		try {
 			if (dialog != null && dialog.isShowing()) dialog.dismiss();
 		} catch (Exception ignored) {

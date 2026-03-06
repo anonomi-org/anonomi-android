@@ -58,6 +58,7 @@
 	<attr name="anonAccentColor" format="color" />
 	<attr name="anonAccentDarkColor" format="color" />
 	<attr name="anonAccent2Color" format="color" />
+	<attr name="colorSecondaryDarker" format="color" />
 
 
 	<!-- Message Out -->

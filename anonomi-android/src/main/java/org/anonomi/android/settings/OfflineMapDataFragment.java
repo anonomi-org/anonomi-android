@@ -1,6 +1,7 @@
 package org.anonomi.android.settings;
 
 import android.app.ProgressDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -126,12 +127,12 @@ public class OfflineMapDataFragment extends PreferenceFragmentCompat {
 	}
 
 	private void showDeleteDialog(String regionName, String prefKey, Preference pref) {
-		new android.app.AlertDialog.Builder(requireContext())
+		new AlertDialog.Builder(requireContext(), R.style.AnonDialogTheme)
 				.setTitle(getString(R.string.delete_offline_map_title))
 				.setMessage(getString(R.string.delete_offline_map_message, regionName))
-				.setPositiveButton(getString(R.string.button_delete),
+				.setPositiveButton(R.string.button_delete,
 						(dialog, which) -> deleteOfflineMap(regionName, prefKey, pref))
-				.setNegativeButton(getString(R.string.button_cancel), null)
+				.setNegativeButton(R.string.button_cancel, null)
 				.show();
 	}
 
