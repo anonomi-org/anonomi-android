@@ -736,6 +736,7 @@
     <string name="pref_title_clear_tile_cache">Clear tile cache</string>
     <string name="pref_summary_clear_tile_cache">Delete previously fetched online tiles</string>
     <string name="tile_cache_cleared">Tile cache cleared</string>
+    <string name="tile_cache_clear_confirm">All downloaded map tiles will be deleted. Continue?</string>
     <string name="pref_category_offline_maps">Offline Maps Management</string>
     <string name="pref_category_offline_maps_list">Imported Offline Maps</string>
     <string name="default_map_server_url" translatable="false">http://khpmg7zqfpnybbvvdv6ycj6zvcx5kzkjf5scdb5cfz4fqfmn6z4quiyd.onion</string>

@@ -1,6 +1,6 @@
 package org.anonomi.android.settings;
 
-import android.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -79,11 +79,18 @@ public class OnlineMapDetailFragment extends PreferenceFragmentCompat {
 		Preference clearCachePref =
 				requireNonNull(findPreference("pref_map_detail_clear_cache"));
 		clearCachePref.setOnPreferenceClickListener(pref -> {
-			File mapCacheDir = mapCacheDir(currentEntry.id);
-			if (mapCacheDir.exists()) deleteRecursive(mapCacheDir);
-			cacheSizePref.setSummary(getString(R.string.pref_summary_map_no_cache));
-			Toast.makeText(requireContext(),
-					getString(R.string.map_cache_cleared), Toast.LENGTH_SHORT).show();
+			new AlertDialog.Builder(requireContext(), R.style.AnonDialogTheme)
+					.setTitle(getString(R.string.pref_title_map_clear_cache))
+					.setMessage(getString(R.string.tile_cache_clear_confirm))
+					.setPositiveButton(R.string.button_delete, (d, which) -> {
+						File mapCacheDir = mapCacheDir(currentEntry.id);
+						if (mapCacheDir.exists()) deleteRecursive(mapCacheDir);
+						cacheSizePref.setSummary(getString(R.string.pref_summary_map_no_cache));
+						Toast.makeText(requireContext(),
+								getString(R.string.map_cache_cleared), Toast.LENGTH_SHORT).show();
+					})
+					.setNegativeButton(R.string.button_cancel, null)
+					.show();
 			return true;
 		});
 
@@ -180,10 +187,10 @@ public class OnlineMapDetailFragment extends PreferenceFragmentCompat {
 
 	private void showRemoveDialog(SharedPreferences prefs) {
 		if (currentEntry == null) return;
-		new AlertDialog.Builder(requireContext())
+		new AlertDialog.Builder(requireContext(), R.style.AnonDialogTheme)
 				.setTitle(getString(R.string.map_remove_confirm_title))
 				.setMessage(getString(R.string.map_remove_confirm_message, currentEntry.name))
-				.setPositiveButton(getString(R.string.button_delete), (d, which) -> {
+				.setPositiveButton(R.string.button_delete, (d, which) -> {
 					if (currentEntry.id.equals(OnlineMapStore.getDefaultId(prefs))) {
 						OnlineMapStore.setDefaultId(prefs, null);
 					}
@@ -192,7 +199,7 @@ public class OnlineMapDetailFragment extends PreferenceFragmentCompat {
 							getString(R.string.map_removed), Toast.LENGTH_SHORT).show();
 					getParentFragmentManager().popBackStack();
 				})
-				.setNegativeButton(getString(R.string.button_cancel), null)
+				.setNegativeButton(R.string.button_cancel, null)
 				.show();
 	}
 

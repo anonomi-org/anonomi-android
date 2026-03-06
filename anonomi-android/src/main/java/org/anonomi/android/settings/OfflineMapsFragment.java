@@ -102,11 +102,18 @@ public class OfflineMapsFragment extends PreferenceFragmentCompat {
 		Preference clearCache = findPreference("pref_clear_tile_cache");
 		if (clearCache != null) {
 			clearCache.setOnPreferenceClickListener(pref -> {
-				File fetchedDir = new File(
-						requireContext().getExternalFilesDir(null), "tiles/fetched");
-				if (fetchedDir.exists()) deleteRecursive(fetchedDir);
-				Toast.makeText(requireContext(),
-						getString(R.string.tile_cache_cleared), Toast.LENGTH_SHORT).show();
+				new AlertDialog.Builder(requireContext(), R.style.AnonDialogTheme)
+						.setTitle(getString(R.string.pref_title_clear_tile_cache))
+						.setMessage(getString(R.string.tile_cache_clear_confirm))
+						.setPositiveButton(R.string.button_delete, (d, which) -> {
+							File fetchedDir = new File(
+									requireContext().getExternalFilesDir(null), "tiles/fetched");
+							if (fetchedDir.exists()) deleteRecursive(fetchedDir);
+							Toast.makeText(requireContext(),
+									getString(R.string.tile_cache_cleared), Toast.LENGTH_SHORT).show();
+						})
+						.setNegativeButton(R.string.button_cancel, null)
+						.show();
 				return true;
 			});
 		}
