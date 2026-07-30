@@ -3,7 +3,6 @@ package org.anonomi.android.settings;
 import android.app.ProgressDialog;
 import androidx.appcompat.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,6 +21,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+
+import static org.anonomi.android.util.UiUtils.resolveColorAttribute;
 
 public class OfflineMapDataFragment extends PreferenceFragmentCompat {
 
@@ -171,7 +172,10 @@ public class OfflineMapDataFragment extends PreferenceFragmentCompat {
 		Drawable icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_offline_maps);
 		if (icon != null) {
 			icon = icon.mutate();
-			icon.setTint(Color.WHITE);
+			// Follow the active theme so the icon stays legible on the light
+			// themes as well as the dark ones
+			icon.setTint(resolveColorAttribute(requireContext(),
+					R.attr.anonAccentColor));
 		}
 		return icon;
 	}

@@ -46,6 +46,7 @@ import javax.inject.Inject;
 import okhttp3.OkHttpClient;
 
 import static org.anonomi.android.AppModule.getAndroidComponent;
+import static org.anonomi.android.util.UiUtils.resolveColorAttribute;
 
 public class OfflineMapsFragment extends PreferenceFragmentCompat {
 
@@ -498,7 +499,10 @@ public class OfflineMapsFragment extends PreferenceFragmentCompat {
 		Drawable icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_offline_maps);
 		if (icon != null) {
 			icon = icon.mutate();
-			icon.setTint(Color.WHITE);
+			// Follow the active theme so the icon stays legible on the light
+			// themes as well as the dark ones
+			icon.setTint(resolveColorAttribute(requireContext(),
+					R.attr.anonAccentColor));
 		}
 		return icon;
 	}
