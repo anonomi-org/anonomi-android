@@ -128,7 +128,18 @@ android {
 			applicationIdSuffix ".screenshot"
 			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt', 'proguard-test.txt'
 		}
+		// Direct-download build. Bundles the companion apps in
+		// src/official/assets so the hotspot can hand them to devices with no
+		// internet at all.
 		official {
+			dimension "version"
+		}
+		// F-Droid build. Identical code, but ships no third-party APKs:
+		// F-Droid builds everything from source and rejects prebuilt
+		// binaries in the repository. The hotspot still shares Anonomi
+		// itself, which WebServer serves from the installed APK rather than
+		// from an asset.
+		fdroid {
 			dimension "version"
 		}
 	}
@@ -157,7 +168,8 @@ android {
 
 	// 🔽 APK name override
 	applicationVariants.all { variant ->
-		if (variant.buildType.name == "release" && variant.productFlavors[0].name == "official") {
+		if (variant.buildType.name == "release" &&
+				variant.productFlavors[0].name in ["official", "fdroid"]) {
 			variant.outputs.all { output ->
 				def newName = "anonomi-${variant.flavorName}-${variant.buildType.name}.apk"
 				output.outputFileName = newName
