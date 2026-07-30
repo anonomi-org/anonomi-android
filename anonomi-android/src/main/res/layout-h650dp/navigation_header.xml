@@ -17,7 +17,7 @@
 		android:layout_marginRight="@dimen/margin_medium"
 		android:layout_marginBottom="@dimen/margin_medium"
 		android:contentDescription="@string/app_name"
-		android:tint="?attr/anonAccentColor"
+		app:tint="?attr/anonAccentColor"
 		app:srcCompat="@drawable/navigation_drawer_header" />
 
 </FrameLayout>

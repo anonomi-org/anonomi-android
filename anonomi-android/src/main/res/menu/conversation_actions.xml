@@ -59,13 +59,13 @@
 		android:id="@+id/action_send_xmr"
 		android:title="@string/action_request_xmr"
 		android:icon="@drawable/ic_brands_monero"
-	android:showAsAction="never" />
+	app:showAsAction="never" />
 
 	<item
 		android:id="@+id/action_send_location"
 		android:title="@string/action_send_location"
 		android:icon="@drawable/ic_menu_mylocation"
-		android:showAsAction="never" />
+		app:showAsAction="never" />
 
 	<item
 		android:id="@+id/action_walkie_talkie"
