@@ -8,8 +8,10 @@ import android.util.Log;
 import org.json.JSONObject;
 
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.zip.ZipEntry;
@@ -22,6 +24,20 @@ public class MapImporter {
 	@FunctionalInterface
 	public interface TriConsumer<A, B, C> {
 		void accept(A a, B b, C c);
+	}
+
+	/**
+	 * Reads the current zip entry fully. InputStream#readAllBytes needs API 33,
+	 * well above our minSdkVersion, so read in chunks instead.
+	 */
+	private static byte[] readEntry(ZipInputStream zis) throws IOException {
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		byte[] buffer = new byte[8192];
+		int read;
+		while ((read = zis.read(buffer)) != -1) {
+			out.write(buffer, 0, read);
+		}
+		return out.toByteArray();
 	}
 
 	public static void importOfflineMaps(Context context, Uri zipUri, TriConsumer<String, String, String> callback) {
@@ -52,7 +68,7 @@ public class MapImporter {
 					if (entry.getName().endsWith(".amd")) {
 						Log.d("MapImporter", "Found metadata: " + entry.getName());
 						// Read metadata
-						byte[] metaBytes = zis.readAllBytes();
+						byte[] metaBytes = readEntry(zis);
 						String jsonText = new String(metaBytes, StandardCharsets.UTF_8);
 
 						metadataJsonText = jsonText;

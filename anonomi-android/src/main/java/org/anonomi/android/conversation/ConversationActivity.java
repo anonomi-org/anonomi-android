@@ -58,6 +58,7 @@ import org.anonomi.android.introduction.IntroductionActivity;
 import org.anonomi.android.privategroup.conversation.GroupActivity;
 import org.anonomi.android.removabledrive.RemovableDriveActivity;
 import org.anonomi.android.util.BriarSnackbarBuilder;
+import org.anonomi.android.util.UiUtils;
 import org.anonomi.android.view.BriarRecyclerView;
 import org.anonomi.android.view.ImagePreview;
 import org.anonomi.android.view.TextAttachmentController;
@@ -95,8 +96,6 @@ import android.content.SharedPreferences;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
-import android.os.VibrationEffect;
-import android.os.Vibrator;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
@@ -1758,11 +1757,7 @@ public class ConversationActivity extends BriarActivity
 	}
 
 	private void vibrateShort() {
-		Vibrator v = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-		if (v != null) {
-			v.vibrate(VibrationEffect.createOneShot(50,
-					VibrationEffect.DEFAULT_AMPLITUDE));
-		}
+		UiUtils.vibrateShort(this);
 	}
 
 	private void loadAndPlayAttachment(AttachmentHeader ah,

@@ -10,8 +10,6 @@ import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.os.VibrationEffect;
-import android.os.Vibrator;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -35,6 +33,7 @@ import org.anonomi.android.threaded.ThreadListActivity;
 import org.anonomi.android.threaded.ThreadListViewModel;
 import org.anonomi.android.util.AudioUtils;
 import org.anonomi.android.util.RetentionHelper;
+import org.anonomi.android.util.UiUtils;
 import org.anonomi.android.util.WalkieTalkiePlayer;
 import org.anonomi.android.view.CompositeSendButton;
 import org.anonchatsecure.bramble.api.sync.MessageId;
@@ -796,11 +795,7 @@ public class ForumActivity extends
 	}
 
 	private void vibrateShort() {
-		Vibrator v = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-		if (v != null) {
-			v.vibrate(VibrationEffect.createOneShot(50,
-					VibrationEffect.DEFAULT_AMPLITUDE));
-		}
+		UiUtils.vibrateShort(this);
 	}
 
 	@Override
