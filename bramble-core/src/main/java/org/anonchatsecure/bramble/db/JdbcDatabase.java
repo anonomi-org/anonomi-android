@@ -144,7 +144,7 @@ abstract class JdbcDatabase implements Database<Connection> {
 					+ " localAuthorId _HASH NOT NULL,"
 					+ " verified BOOLEAN NOT NULL,"
 					+ " panic BOOLEAN NOT NULL,"
-					+ " distorted_voice BOOLEAN NOT NULL DEFAULT FALSE," // 👈 NEW
+					+ " distorted_voice BOOLEAN DEFAULT FALSE NOT NULL,"
 					+ " syncVersions _BINARY DEFAULT '00' NOT NULL,"
 					+ " PRIMARY KEY (contactId),"
 					+ " FOREIGN KEY (localAuthorId)"
