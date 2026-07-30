@@ -28,8 +28,6 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import org.anonomi.R;
 import org.anonomi.android.activity.ActivityComponent;
 import org.anonomi.android.activity.BriarActivity;
-import org.anonomi.android.xmr.CryptoUtils;
-import org.anonomi.android.xmr.SubaddressGenerator;
 import org.anonchatsecure.bramble.api.contact.ContactId;
 import org.anonchatsecure.bramble.api.sync.GroupId;
 import org.anonchatsecure.anonchat.api.messaging.MessagingManager;
@@ -48,13 +46,15 @@ import javax.inject.Inject;
 import android.util.Log;
 
 import org.anonomi.android.xmr.AnonMoneroUtils;
-import org.anonomi.android.xmr.MoneroBase58;
 import org.anonomi.android.xmr.MoneroDecodedAddress;
 
 import org.anonchatsecure.anonchat.api.autodelete.AutoDeleteManager;
 import org.anonchatsecure.bramble.api.db.TransactionManager;
 
 public class RequestXmrActivity extends BriarActivity {
+
+	private static final int MIN_MINOR_INDEX = 1;
+	private static final int MAX_MINOR_INDEX = 1_000_000;
 
 	@Inject MessagingManager messagingManager;
 	@Inject PrivateMessageFactory privateMessageFactory;
@@ -137,7 +137,8 @@ public class RequestXmrActivity extends BriarActivity {
 
 		int id = getIntent().getIntExtra("CONTACT_ID", -1);
 		if (id == -1) {
-			Toast.makeText(this, "Missing contact ID", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, R.string.missing_contact_id,
+					Toast.LENGTH_SHORT).show();
 			finish();
 			return;
 		}
@@ -254,16 +255,6 @@ public class RequestXmrActivity extends BriarActivity {
 		}
 	}
 
-	private byte[] hexStringToByteArray(String s) {
-		int len = s.length();
-		byte[] data = new byte[len / 2];
-		for (int i = 0; i < len; i += 2) {
-			data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
-					+ Character.digit(s.charAt(i+1), 16));
-		}
-		return data;
-	}
-
 	private void updateConversion() {
 		String amountStr = amountEditText.getText().toString();
 		String rateStr = rateEditText.getText().toString();
@@ -316,21 +307,26 @@ public class RequestXmrActivity extends BriarActivity {
 		if (radioManual.isChecked()) {
 			String manualStr = manualIndexEditText.getText().toString().trim();
 			if (manualStr.isEmpty()) {
-				Toast.makeText(this, "Please enter a minor index.", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, R.string.minor_index_required,
+						Toast.LENGTH_SHORT).show();
 				progressSpinner.setVisibility(View.GONE);
 				generateButton.setEnabled(true);
 				return;
 			}
 			try {
 				minor = Integer.parseInt(manualStr);
-				if (minor < 1 || minor > 1000000) {
-					Toast.makeText(this, "Minor index must be between 1 and 1,000,000.", Toast.LENGTH_SHORT).show();
+				if (minor < MIN_MINOR_INDEX || minor > MAX_MINOR_INDEX) {
+					Toast.makeText(this, getString(
+									R.string.minor_index_out_of_range,
+									MIN_MINOR_INDEX, MAX_MINOR_INDEX),
+							Toast.LENGTH_SHORT).show();
 					progressSpinner.setVisibility(View.GONE);
 					generateButton.setEnabled(true);
 					return;
 				}
 			} catch (NumberFormatException e) {
-				Toast.makeText(this, "Invalid minor index.", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, R.string.minor_index_invalid,
+						Toast.LENGTH_SHORT).show();
 				progressSpinner.setVisibility(View.GONE);
 				generateButton.setEnabled(true);
 				return;
@@ -353,36 +349,17 @@ public class RequestXmrActivity extends BriarActivity {
 		updateMinorIndexTextView();
 
 		try {
-			// ✅ 4️⃣ Decode primary address
+			// ✅ 4️⃣ Decode primary address and derive the subaddress
 			MoneroDecodedAddress decoded = AnonMoneroUtils.decodeAddress(primaryAddress);
-			byte[] publicSpendKey = decoded.getPublicSpendKey(); // 32 bytes
-			byte[] publicViewKey = decoded.getPublicViewKey();   // 32 bytes
+			byte[] privateViewKey = AnonMoneroUtils.hexToBytes(privateViewKeyHex);
 
-			// ✅ 5️⃣ Convert private view key
-			byte[] privateViewKey = hexStringToByteArray(privateViewKeyHex);
+			String subaddress = AnonMoneroUtils.buildSubaddress(
+					decoded.getPublicSpendKey(), privateViewKey, 0,
+					currentMinorIndex);
 
-			// ✅ 6️⃣ Generate subaddress keys
-			byte[] subPubSpendKey = SubaddressGenerator.generateSubaddressPublicSpendKey(
-					publicSpendKey, privateViewKey, 0, currentMinorIndex
-			);
-
-			byte[] subPubViewKey = SubaddressGenerator.generateSubaddressPublicViewKey(subPubSpendKey, privateViewKey);
-
-			// ✅ 7️⃣ Build subaddress data (hex string)
-			String hex = "2a" +
-					CryptoUtils.bytesToHex(subPubSpendKey) +
-					CryptoUtils.bytesToHex(subPubViewKey);
-
-			// ✅ 8️⃣ Hash for checksum (matches Node.js behavior)
-			byte[] hexBytes = hexStringToByteArray(hex);
-			byte[] checksum = CryptoUtils.keccak256(hexBytes, 0, hexBytes.length);
-			String checksumHex = CryptoUtils.bytesToHex(checksum).substring(0, 8);  // 4 bytes = 8 hex chars
-
-			// ✅ 9️⃣ Combine into full hex string
-			String fullHex = hex + checksumHex;
-
-			// ✅ 🔟 Encode Base58
-			String subaddress = MoneroBase58.encode(hexStringToByteArray(fullHex));
+			// The index is consumed as soon as it produces a subaddress, so
+			// abandoning this screen cannot hand the same one out twice.
+			persistMinorIndex();
 
 			lastGeneratedSubaddress = subaddress;
 
@@ -461,9 +438,24 @@ public class RequestXmrActivity extends BriarActivity {
 
 	private void updateMinorIndexTextView() {
 		if (minorIndexTextView != null) {
-			minorIndexTextView.setText("# " + currentMinorIndex);
+			minorIndexTextView.setText(
+					getString(R.string.minor_index_label, currentMinorIndex));
 			minorIndexTextView.setVisibility(View.VISIBLE);
 		}
+	}
+
+	/**
+	 * Records the highest minor index handed out, so the next sequential
+	 * request starts after it. Called when a subaddress is generated rather
+	 * than when it is sent: a subaddress the user saw but did not send must
+	 * still not be reissued, or two contacts could receive the same one and
+	 * link their payments to the same wallet.
+	 */
+	private void persistMinorIndex() {
+		if (!radioSequential.isChecked()) return;
+		SecurePrefsManager securePrefs = new SecurePrefsManager(this);
+		securePrefs.putEncrypted("pref_key_minor_index_key",
+				String.valueOf(currentMinorIndex));
 	}
 
 
@@ -485,7 +477,8 @@ public class RequestXmrActivity extends BriarActivity {
 	private void sendRequestMessage() {
 		try {
 			if (qrBitmap == null) {
-				Toast.makeText(this, "No QR code generated!", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, R.string.no_qr_code_generated,
+						Toast.LENGTH_SHORT).show();
 				return;
 			}
 
@@ -552,10 +545,7 @@ public class RequestXmrActivity extends BriarActivity {
 
 			messagingManager.addLocalMessage(pm);
 
-			if (radioSequential.isChecked()) {
-				SecurePrefsManager securePrefs = new SecurePrefsManager(this);
-				securePrefs.putEncrypted("pref_key_minor_index_key", String.valueOf(currentMinorIndex));
-			}
+			// The index was already persisted when the subaddress was generated
 
 			Toast.makeText(this, R.string.request_sent, Toast.LENGTH_SHORT).show();
 			finish();

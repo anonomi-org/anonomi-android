@@ -52,6 +52,12 @@
     <string name="share_qr_code">Share QR Code</string>
     <string name="error_creating_message">Error creating message</string>
     <string name="request_sent">Request sent</string>
+    <string name="missing_contact_id">Missing contact ID</string>
+    <string name="minor_index_required">Please enter a minor index</string>
+    <string name="minor_index_out_of_range">Minor index must be between %1$d and %2$d</string>
+    <string name="minor_index_invalid">Invalid minor index</string>
+    <string name="minor_index_label"># %1$d</string>
+    <string name="no_qr_code_generated">No QR code generated</string>
     <string name="converted_amount">Converted Amount: %1$s</string>
     <string name="update_rate_title">Update Rate</string>
     <string name="update_rate_message">Do you want to save the new rate for future requests?</string>
