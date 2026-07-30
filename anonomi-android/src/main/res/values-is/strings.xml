@@ -820,8 +820,6 @@
     <string name="qr_code_too_old_1">Þessi tengill kemur frá nýrri útgáfu af Anonomi.\n\nUppfærðu í nýjustu útgáfuna og prófaðu síðan aftur.</string>
     <string name="mailbox_qr_code_too_old">Þessi tengill kemur frá nýrri útgáfu af Anonomi.\n\nUppfærðu í nýjustu útgáfuna og prófaðu síðan aftur.</string>
     <string name="mailbox_qr_code_too_new">Þessi tengill kemur frá nýrri útgáfu af Anonomi.\n\nUppfærðu í nýjustu útgáfuna og prófaðu síðan aftur.</string>
-    <string name="share_app_link_text">Aflæsa Anonomi</string>
-    <string name="website_download_title_1">Aflæsa Anonomi</string>
     <string name="action_request_xmr">Beiðni um XMR</string>
     <string name="invalid_monero_address">Ógilt snið fyrir Monero-vistfang.</string>
     <string name="invalid_monero_private_view_key">Ógilt snið einkalykils fyrir Monero.</string>
@@ -1093,5 +1091,4 @@
     <string name="blog_liked_by">Líkað við af</string>
     <string name="blog_commented_by">Skrifað athugasemd af</string>
     <string name="retention_7_days">7 dagar</string>
-    <string name="retention_30_days">3 dagar</string>
 </resources>

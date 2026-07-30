@@ -1006,7 +1006,6 @@
     <string name="delete_offline_map_message">是否要删除离线地图：%1$s？这将删除其所有数据。</string>
     <string name="offline_map_deleted">离线地图“%1$s”已删除。</string>
     <string name="no_offline_maps">尚未导入离线地图。</string>
-    <string name="offline_map_summary">缩放级别：[13倍]\n\n[18倍]</string>
     <string name="import_completed_for">导入完成：%1$s</string>
     <string name="failed_to_parse_metadata">解析%1$s的元数据失败</string>
     <string name="failed_to_load_map_info">地图信息加载失败</string>
@@ -1087,5 +1086,4 @@
     <string name="blog_liked_by">点赞</string>
     <string name="blog_commented_by">评论者</string>
     <string name="retention_7_days">7天</string>
-    <string name="retention_30_days">3天</string>
 </resources>

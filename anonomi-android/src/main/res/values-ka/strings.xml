@@ -1099,5 +1099,4 @@
     <string name="blog_liked_by">მოწონებულია</string>
     <string name="blog_commented_by">კომენტარი გააკეთა</string>
     <string name="retention_7_days">7 დღე</string>
-    <string name="retention_30_days">3 დღე</string>
 </resources>

@@ -581,8 +581,6 @@
     <string name="qr_code_too_old_1">यह लिंक Anonomi के नए संस्करण से आया है। कृपया नवीनतम संस्करण में अद्यतन करें और पुनः प्रयास करें।</string>
     <string name="mailbox_qr_code_too_old">यह लिंक Anonomi के नए संस्करण से आया है। कृपया नवीनतम संस्करण में अद्यतन करें और पुनः प्रयास करें।</string>
     <string name="mailbox_qr_code_too_new">यह लिंक Anonomi के नए संस्करण से आया है। कृपया नवीनतम संस्करण में अद्यतन करें और पुनः प्रयास करें।</string>
-    <string name="share_app_link_text">Anonomi अनलॉक करें</string>
-    <string name="website_download_title_1">Anonomi अनलॉक करें</string>
     <string name="action_request_xmr">XMR का अनुरोध करें</string>
     <string name="invalid_monero_address">मोनेरो पते का प्रारूप अमान्य है।</string>
     <string name="invalid_monero_private_view_key">मोनेरो प्राइवेट व्यू कुंजी का प्रारूप अमान्य है।</string>
@@ -673,7 +671,6 @@
     <string name="message_error">संदेश भेजने में त्रुटि</string>
     <string name="menu_item_disappearing_messages">गायब होते संदेश</string>
     <string name="auto_delete_msg_you_enabled">आपके संदेश %1$s के बाद गायब हो जाएंगे। %2$s</string>
-    <string name="auto_delete_msg_you_disabled">आपके संदेश गायब नहीं होंगे।</string>
     <string name="auto_delete_msg_contact_enabled">%1$s के संदेश %2$s के बाद गायब हो जाएंगे। %3$s</string>
     <string name="auto_delete_msg_contact_disabled">%1$s के संदेश गायब नहीं होंगे। %2$s</string>
     <string name="tap_to_learn_more">अधिक जानने के लिए टैप करें।</string>
@@ -1070,5 +1067,4 @@
     <string name="blog_liked_by">पसंद किया गया</string>
     <string name="blog_commented_by">द्वारा टिप्पणी की गई</string>
     <string name="retention_7_days">7 दिन</string>
-    <string name="retention_30_days">3 दिन</string>
 </resources>

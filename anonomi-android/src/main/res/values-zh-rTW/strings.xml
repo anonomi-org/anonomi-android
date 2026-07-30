@@ -991,7 +991,6 @@
     <string name="delete_offline_map_message">是否要刪除離線地圖：%1$s？這將刪除其所有數據。</string>
     <string name="offline_map_deleted">離線地圖“%1$s”已刪除。</string>
     <string name="no_offline_maps">尚未導入離線地圖。</string>
-    <string name="offline_map_summary">縮放等級：[13倍]\n\n[18倍]</string>
     <string name="import_completed_for">導入完成：%1$s</string>
     <string name="failed_to_parse_metadata">解析%1$s的元資料失敗</string>
     <string name="failed_to_load_map_info">地圖資訊加載失敗</string>
@@ -1089,5 +1088,4 @@
     <string name="blog_liked_by">讚</string>
     <string name="blog_commented_by">評論者</string>
     <string name="retention_7_days">7天</string>
-    <string name="retention_30_days">3天</string>
 </resources>

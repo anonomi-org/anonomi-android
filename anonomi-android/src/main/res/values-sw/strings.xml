@@ -250,7 +250,6 @@ Umepoteza nenosiri.</string>
     <string name="duplicate_link_dialog_text_1_contact">Tayari una mawasiliano na kiunga hiki: 1%s
  </string>
     <!--This is a question asking whether two nicknames refer to the same person-->
-  <string name="duplicate_link_dialog_text_2">yani%sna%sni mtu mmoja?</string>
     <!--This is a button for answering that two nicknames do indeed refer to the same person. This
 	string will be used in a dialog button, so if the translation of this string is longer than 20
 	characters, please use "Yes" instead, and use "No" for the "Different Person" button-->
@@ -259,7 +258,6 @@ Umepoteza nenosiri.</string>
 	will be used in a dialog button, so if the translation of this string longer than 20 characters,
 	please use "No" instead, and use "Yes" for the "Same Person" button-->
   <string name="different_person_button">Mtu Tofauti</string>
-    <string name="duplicate_link_dialog_text_3">%sna%swamekutumia kiunga sawa.\n\nMmoja wapo anajaribu kujuha ninani umewasiliana nae.\n\nUsi waambie umepokea kiunga hicho kwa mtu mwengine .</string>
     <string name="pending_contact_updated_toast">mawasilano yalio subirishwa yamesasishwa </string>
     <!--Introductions-->
   <string name="introduction_onboarding_title">Tambulisha mawasiliano yako </string>
@@ -621,8 +619,6 @@ Umepoteza nenosiri.</string>
     <string name="qr_code_too_old_1">Hichi kiunga kimetoka kwenye tolea jipya Bria. Tafathali boresha kuwa kwenye Tolea jipya na ujaribu tena .</string>
     <string name="mailbox_qr_code_too_old">Hichi kiunga kimetoka kwenye tolea jipya Bria. Tafathali boresha kuwa kwenye Tolea jipya na ujaribu tena .</string>
     <string name="mailbox_qr_code_too_new">Hichi kiunga kimetoka kwenye tolea jipya Bria. Tafathali boresha kuwa kwenye Tolea jipya na ujaribu tena .</string>
-    <string name="share_app_link_text">Fungua Anonomi</string>
-    <string name="website_download_title_1">Fungua Anonomi</string>
     <string name="open_clearnet_warning">Fungua URL ya clearnet (isiyo ya faragha sana)</string>
     <string name="install_tor_browser">Sakinisha Kivinjari cha Tor</string>
     <string name="offline_maps_help_intro">Ramani za Anonomi Messenger nje ya mtandao hufanya kazi bila intaneti (hakuna maombi ya seva au kumbukumbu kama programu nyingi za uchoraji ramani), na kuzifanya kuwa njia salama na ya faragha zaidi ya kushiriki eneo.</string>
@@ -1080,5 +1076,4 @@ Umepoteza nenosiri.</string>
     <string name="blog_liked_by">Imependwa na</string>
     <string name="blog_commented_by">Imetolewa maoni na</string>
     <string name="retention_7_days">Siku 7</string>
-    <string name="retention_30_days">Siku 3</string>
 </resources>

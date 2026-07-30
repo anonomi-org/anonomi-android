@@ -507,9 +507,6 @@
     <string name="menu_contact">Kontaktlar</string>
     <string name="contact_already_exists_general">Kontakt %s artıq mövcuddur</string>
     <string name="qr_code_too_new_1">Bu link Anonomi-ın daha yeni versiyasından gəlir. Ən son versiyaya keçin və yenidən cəhd edin.</string>
-    <string name="introduction_response_accepted_received">%1$s-ə qəbul olundunuz</string>
-    <string name="introduction_response_declined_received">%1$s-ə girişdən imtina etdiniz</string>
-    <string name="groups_reveal_visible_revealed_by_contact">Kontakt əlaqəsi qrupda görür (sizin üçün görsənir)</string>
     <string name="choose_forum_name">Forum üçün ad seçin</string>
     <string name="sharing_status_blog">Bir forumun hər hansı bir üzvü onu əlaqə ilə paylaşa bilər. Bu forumu aşağıdakı əlaqələrlə bölüşürsünüz. Görməyən digər üzvlər də ola bilər.</string>
     <string name="blogs_rss_feeds_import_progress">RSS Feed idxalı</string>
@@ -542,8 +539,6 @@
     <string name="qr_code_too_old_1">Bu link Anonomi-ın daha yeni versiyasından gəlir. Ən son versiyaya keçin və yenidən cəhd edin.</string>
     <string name="mailbox_qr_code_too_old">Bu link Anonomi-ın daha yeni versiyasından gəlir. Ən son versiyaya keçin və yenidən cəhd edin.</string>
     <string name="mailbox_qr_code_too_new">Bu link Anonomi-ın daha yeni versiyasından gəlir. Ən son versiyaya keçin və yenidən cəhd edin.</string>
-    <string name="share_app_link_text">Anonomi kilidini aç</string>
-    <string name="website_download_title_1">Anonomi kilidini aç</string>
     <string name="action_request_xmr">XMR tələb edin</string>
     <string name="invalid_monero_address">Yanlış Monero ünvan formatı.</string>
     <string name="invalid_monero_private_view_key">Yanlış Monero şəxsi görünüş açarı formatı.</string>
@@ -1064,5 +1059,4 @@
     <string name="blog_liked_by">Bəyənən</string>
     <string name="blog_commented_by">Şərh edən</string>
     <string name="retention_7_days">7 gün</string>
-    <string name="retention_30_days">3 gün</string>
 </resources>

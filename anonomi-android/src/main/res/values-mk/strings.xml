@@ -257,7 +257,6 @@
     <string name="duplicate_link_dialog_text_1">Веќе имате контакт на чекање со овој линк: %s</string>
     <string name="duplicate_link_dialog_text_1_contact">Веќе имате контакт со овој линк: %s</string>
     <!--This is a question asking whether two nicknames refer to the same person-->
-  <string name="duplicate_link_dialog_text_2">Дали %s и %s е истата личност?</string>
     <!--This is a button for answering that two nicknames do indeed refer to the same person. This
 	string will be used in a dialog button, so if the translation of this string is longer than 20
 	characters, please use "Yes" instead, and use "No" for the "Different Person" button-->
@@ -266,7 +265,6 @@
 	will be used in a dialog button, so if the translation of this string longer than 20 characters,
 	please use "No" instead, and use "Yes" for the "Same Person" button-->
   <string name="different_person_button">Различна личност</string>
-    <string name="duplicate_link_dialog_text_3">%sи %s ти го испратија истиот линк.\n\nЕден од нив можеби се обидува да открие кои се твоите контакти.\n\nНе им кажувајте дека сте добиле ист линк од некој друг.</string>
     <string name="pending_contact_updated_toast">Контактот на чекање е ажуриран</string>
     <!--Introductions-->
   <string name="introduction_onboarding_title">Запознај ги твоите контакти</string>
@@ -636,8 +634,6 @@
     <string name="qr_code_too_old_1">Овој линк доаѓа од понова верзија на Anonomi. Ве молиме надградете во последна верзија и обидете се повторно.</string>
     <string name="mailbox_qr_code_too_old">Овој линк доаѓа од понова верзија на Anonomi. Ве молиме надградете во последна верзија и обидете се повторно.</string>
     <string name="mailbox_qr_code_too_new">Овој линк доаѓа од понова верзија на Anonomi. Ве молиме надградете во последна верзија и обидете се повторно.</string>
-    <string name="share_app_link_text">Отклучи го Anonomi</string>
-    <string name="website_download_title_1">Отклучи го Anonomi</string>
     <string name="action_request_xmr">Барање XMR</string>
     <string name="invalid_monero_address">Неважечки формат на адреса на Monero.</string>
     <string name="invalid_monero_private_view_key">Неважечки формат на клуч за приватен приказ на Monero.</string>
@@ -1070,5 +1066,4 @@
     <string name="blog_liked_by">Допаѓа ми се на</string>
     <string name="blog_commented_by">Коментирано од</string>
     <string name="retention_7_days">7 дена</string>
-    <string name="retention_30_days">3 дена</string>
 </resources>

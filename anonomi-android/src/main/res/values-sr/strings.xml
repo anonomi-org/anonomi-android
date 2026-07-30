@@ -531,8 +531,6 @@ Molim vas da uzmete u obzir odobravanja pristupa.</string>
     <string name="delete_account_button">Izbriši račun</string>
     <string name="panic_option_delete_account">Izbriši račun</string>
     <string name="dnkm_huawei_app_launch_help">Ako Anonomi nije dodat u listi zasticenih aplikacija - protected apps, nece moci da radi u pozadini.</string>
-    <string name="share_app_link_text">Otključaj Anonomi</string>
-    <string name="website_download_title_1">Otključaj Anonomi</string>
     <string name="pref_key_import_offline_maps">преф_кључ_импорт_офлајн_мапе</string>
     <string name="pref_title_import_offline_maps">Увези податке офлајн мапе</string>
     <string name="pref_summary_import_offline_maps">Изаберите и увезите плочице мапе ван мреже из ZIP датотеке.</string>
@@ -1097,5 +1095,4 @@ Molim vas da uzmete u obzir odobravanja pristupa.</string>
     <string name="blog_liked_by">Свиђа се кориснику</string>
     <string name="blog_commented_by">Коментарисао/ла</string>
     <string name="retention_7_days">7 дана</string>
-    <string name="retention_30_days">3 дана</string>
 </resources>
