@@ -110,6 +110,12 @@ public class MapServerClient {
 			if (tileUrl == null || tileUrl.isEmpty()) {
 				tileUrl = serverBase + "/" + id + "/{z}/{x}/{y}.png";
 			}
+			// The UI only accepts onion server URLs, but tileUrl arrives from
+			// the server and would otherwise escape that rule. A clearnet
+			// tileUrl still goes through Tor, so it leaks no IP, but it would
+			// expose which map is being viewed to an exit node and to whoever
+			// runs that host. Drop the entry instead.
+			if (!isValidOnionUrl(tileUrl)) return null;
 			int zoomMin = json.optInt("zoomMin", 0);
 			int zoomMax = json.optInt("zoomMax", 18);
 			double bboxNorth = 0, bboxSouth = 0, bboxEast = 0, bboxWest = 0;

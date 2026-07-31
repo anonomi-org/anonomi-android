@@ -763,7 +763,18 @@
     <string name="online_map_deleted">Map \'%1$s\' removed.</string>
     <string name="online_map_added">Map \'%1$s\' added.</string>
     <string name="online_map_already_added">\'%1$s\' is already in your maps.</string>
-    <string name="online_maps_added_some_skipped">%1$d map(s) added, %2$d already present.</string>
+    <plurals name="online_maps_added">
+        <item quantity="one">%1$d map added.</item>
+        <item quantity="other">%1$d maps added.</item>
+    </plurals>
+    <plurals name="online_maps_already_added">
+        <item quantity="one">%1$d map is already in your maps.</item>
+        <item quantity="other">%1$d maps are already in your maps.</item>
+    </plurals>
+    <plurals name="online_maps_added_some_skipped">
+        <item quantity="one">%1$d map added, %2$d already present.</item>
+        <item quantity="other">%1$d maps added, %2$d already present.</item>
+    </plurals>
     <string name="error_invalid_onion_url">Only .onion URLs are supported (e.g. http://…56chars….onion)</string>
     <string name="error_fetching_disco">Could not fetch server map list.</string>
     <string name="error_fetching_map">Could not fetch map info.</string>

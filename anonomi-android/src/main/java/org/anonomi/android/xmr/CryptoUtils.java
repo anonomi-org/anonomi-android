@@ -4,8 +4,6 @@ import org.bouncycastle.crypto.digests.KeccakDigest;
 import java.math.BigInteger;
 import java.util.Arrays;
 
-import android.util.Log;
-
 public class CryptoUtils {
 
 	public static final BigInteger L = new BigInteger(
@@ -49,27 +47,15 @@ public class CryptoUtils {
 		return le;
 	}
 
+	/**
+	 * Returns the compressed form of scalarLE * G. Failures propagate: a null
+	 * return here would be carried into a spend key and produce an address
+	 * nobody can spend from.
+	 */
 	public static byte[] scalarMultBase(byte[] scalarLE) {
-
-		try {
-			// Convert scalarLE to BigInteger (little-endian to big-endian)
-			BigInteger scalar = new BigInteger(1, reverseBytes(scalarLE));
-
-			// Get Ed25519 base point (standard Monero/Ed25519 base point)
-			Point base = getEd25519BasePoint();
-
-			// Do scalar multiplication manually
-			Point result = scalarMultManual(base, scalar);
-
-			// Compress point (to match Monero format)
-			byte[] compressed = compressPoint(result);
-
-
-			return compressed;
-		} catch (Exception e) {
-			Log.e("CryptoUtils", "Exception in scalarMultBasePureJava", e);
-			return null;
-		}
+		// BigInteger takes big-endian, Monero scalars are little-endian
+		BigInteger scalar = new BigInteger(1, reverseBytes(scalarLE));
+		return compressPoint(scalarMultManual(getEd25519BasePoint(), scalar));
 	}
 
 	private static Point getEd25519BasePoint() {
@@ -106,28 +92,6 @@ public class CryptoUtils {
 			return new Point(BigInteger.ZERO, BigInteger.ONE);
 		}
 		return result;
-	}
-
-	public static byte[] scalarMultKey(byte[] scalarLE, byte[] publicKey) {
-
-		try {
-			// Decompress the publicKey into a Point (manual decompress)
-			Point pubPoint = decompressPoint(publicKey);
-
-			// Convert scalarLE to BigInteger (little-endian to big-endian)
-			BigInteger scalar = new BigInteger(1, reverseBytes(scalarLE));
-
-			// Perform scalar multiplication manually
-			Point resultPoint = scalarMultManual(pubPoint, scalar);
-
-			// Compress result back to 32 bytes
-			byte[] compressed = compressPoint(resultPoint);
-
-			return compressed;
-		} catch (Exception e) {
-			Log.e("CryptoUtils", "Exception in scalarMultKey", e);
-			return null;
-		}
 	}
 
 	public static String bytesToHex(byte[] bytes) {
@@ -181,19 +145,7 @@ public class CryptoUtils {
 			x = P_MODULUS.subtract(x);
 		}
 
-		// ✅ NEW: recompress as LittleEndian before returning (for full round-trip check)
-		byte[] recompressed = compressPoint(new Point(x, y));
-
 		return new Point(x, y);
-	}
-
-	public static byte[] recompressPoint(BigInteger x, BigInteger y) {
-		byte[] yBytes = to32Bytes(y);
-		byte[] yLE = reverseBytes(yBytes);  // ✅ Monero format is little-endian
-		if (x.testBit(0)) {
-			yLE[31] |= 0x80;
-		}
-		return yLE;
 	}
 
 	public static byte[] to32Bytes(BigInteger num) {
