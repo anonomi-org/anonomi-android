@@ -30,14 +30,14 @@ buildscript {
 		dagger_version = "2.51.1"
 		okhttp_version = "4.12.0"
 		jackson_version = "2.13.4"
-		tor_version = "0.4.8.22"
+		tor_version = "0.4.9.11"
 		lyrebird_version = "0.6.2"
 		jsoup_version = '1.15.3'
 		bouncy_castle_version = '1.82'
 		junit_version = "4.13.2"
 		jmock_version = '2.12.0'
 		mockwebserver_version = '4.10.0'
-		onionwrapper_version = '0.1.4'
+		onionwrapper_version = '0.1.6'
 	}
 	dependencies {
 		// upgrading this let's us run into https://github.com/gradle/gradle/issues/20330
