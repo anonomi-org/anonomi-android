@@ -1,0 +1,10 @@
+Version 1.4.0:
+* Online maps: add a map server over Tor and fetch tiles on demand
+* Added the Pink theme and a new accent colour system
+* Upgraded Tor to 0.4.9.11
+* Fixed the message retention picker showing "3 days" for the 30 day option in most languages
+* Fixed Monero payment requests reusing a subaddress when a request was generated but not sent
+* Fixed a crash on Android 7 to 12 when importing offline maps
+* Monero addresses are now checksum verified before use
+* Voice recording and modulation stability fixes
+* Updated translations
