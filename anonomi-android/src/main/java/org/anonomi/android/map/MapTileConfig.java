@@ -85,7 +85,8 @@ public class MapTileConfig {
 			File fetchedDir, OnlineMapEntry entry) {
 		File mapCacheDir = new File(fetchedDir, entry.id);
 		OnlineTileProvider provider = new OnlineTileProvider(
-				httpClient, entry.tileUrl, mapCacheDir, entry.cacheEnabled);
+				httpClient, entry.tileUrl, mapCacheDir, entry.cacheEnabled,
+				entry.zoomMin, entry.zoomMax);
 		provider.setTileSource(tileSource);
 		providers.add(provider);
 	}

@@ -177,7 +177,8 @@ class GroupMessageValidator extends BdfMessageValidator {
 		byte[] previousMessageId = body.getRaw(3);
 		checkLength(previousMessageId, MessageId.LENGTH);
 		String text = body.getString(4);
-		checkLength(text, 0, MAX_GROUP_POST_TEXT_LENGTH);
+		// A media post may have no caption, but a text-only post must have text
+		checkLength(text, hasMedia ? 0 : 1, MAX_GROUP_POST_TEXT_LENGTH);
 		byte[] signature = body.getRaw(5);
 		checkLength(signature, 1, MAX_SIGNATURE_LENGTH);
 

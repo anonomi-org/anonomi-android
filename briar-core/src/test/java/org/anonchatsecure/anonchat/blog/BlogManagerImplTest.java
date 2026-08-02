@@ -37,6 +37,7 @@ import org.anonchatsecure.bramble.api.identity.LocalAuthor;
 import org.anonchatsecure.bramble.api.sync.Group;
 import org.anonchatsecure.bramble.api.sync.Message;
 import org.anonchatsecure.bramble.api.sync.MessageId;
+import org.anonchatsecure.bramble.api.system.Clock;
 import org.anonchatsecure.bramble.test.BrambleMockTestCase;
 import org.anonchatsecure.bramble.test.DbExpectations;
 import org.anonchatsecure.anonchat.api.blog.Blog;
@@ -95,6 +96,7 @@ public class BlogManagerImplTest extends BrambleMockTestCase {
 	private final BlogFactory blogFactory = context.mock(BlogFactory.class);
 	private final BlogPostFactory blogPostFactory =
 			context.mock(BlogPostFactory.class);
+	private final Clock clock = context.mock(Clock.class);
 
 	private final LocalAuthor localAuthor1, localAuthor2, rssLocalAuthor;
 	private final AuthorInfo ourselvesInfo = new AuthorInfo(OURSELVES);
@@ -109,7 +111,8 @@ public class BlogManagerImplTest extends BrambleMockTestCase {
 	public BlogManagerImplTest() {
 		MetadataParser metadataParser = context.mock(MetadataParser.class);
 		blogManager = new BlogManagerImpl(db, identityManager, authorManager,
-				clientHelper, metadataParser, blogFactory, blogPostFactory);
+				clientHelper, metadataParser, blogFactory, blogPostFactory,
+				clock);
 
 		localAuthor1 = getLocalAuthor();
 		localAuthor2 = getLocalAuthor();
@@ -200,6 +203,10 @@ public class BlogManagerImplTest extends BrambleMockTestCase {
 			will(returnValue(localAuthor1));
 			oneOf(authorManager).getAuthorInfo(txn, localAuthor1.getId());
 			will(returnValue(verifiedInfo));
+			// No retention timer set for this group
+			oneOf(clientHelper).getGroupMetadataAsDictionary(txn,
+					message.getGroupId());
+			will(returnValue(new BdfDictionary()));
 		}});
 
 		assertEquals(ACCEPT_SHARE,
@@ -242,6 +249,10 @@ public class BlogManagerImplTest extends BrambleMockTestCase {
 		context.checking(new Expectations() {{
 			oneOf(clientHelper).parseAndValidateAuthor(rssAuthorList);
 			will(returnValue(rssLocalAuthor));
+			// No retention timer set for this group
+			oneOf(clientHelper).getGroupMetadataAsDictionary(txn,
+					rssMessage.getGroupId());
+			will(returnValue(new BdfDictionary()));
 		}});
 
 		assertEquals(ACCEPT_SHARE,

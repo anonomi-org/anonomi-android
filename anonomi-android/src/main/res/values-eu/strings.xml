@@ -233,7 +233,6 @@
     <string name="duplicate_link_dialog_text_1">Baduzu kontaktu bat aztertzeke esteka honekin: %s</string>
     <string name="duplicate_link_dialog_text_1_contact">Baduzu esteka hau duen kontaktu bat: %s</string>
     <!--This is a question asking whether two nicknames refer to the same person-->
-  <string name="duplicate_link_dialog_text_2">Ziur %s eta %s pertsona bera direla?</string>
     <!--This is a button for answering that two nicknames do indeed refer to the same person. This
 	string will be used in a dialog button, so if the translation of this string is longer than 20
 	characters, please use "Yes" instead, and use "No" for the "Different Person" button-->
@@ -242,7 +241,6 @@
 	will be used in a dialog button, so if the translation of this string longer than 20 characters,
 	please use "No" instead, and use "Yes" for the "Same Person" button-->
   <string name="different_person_button">Beste pertsona bat</string>
-    <string name="duplicate_link_dialog_text_3">%s eta %s erabiltzaileek esteka bera bidali dizute.\n\nBietako batek agian zure kontaktuak zeintzuk diren asmatu nahi du.\n\nEz esan esteka bera jaso duzula beste norbaitengandik.</string>
     <string name="pending_contact_updated_toast">Aztertzeke zegoen kontaktua eguneratu da</string>
     <!--Introductions-->
   <string name="introduction_onboarding_title">Aurkeztu zure kontaktuak</string>
@@ -597,8 +595,6 @@
     <string name="dnkm_huawei_app_launch_help">Anonomi ez bada babestutako aplikazioen zerrendara gehitzen, ezin izango du bigarren planoan ibili.</string>
     <string name="qr_code_too_old_1">Esteka hau Anonomi-en bertsio berriago batetik dator. Eguneratu azken bertsiora eta saiatu berriro.</string>
     <string name="mailbox_qr_code_too_old">Esteka hau Anonomi-en bertsio berriago batetik dator. Eguneratu azken bertsiora eta saiatu berriro.</string>
-    <string name="share_app_link_text">Desblokeatu Anonomi</string>
-    <string name="website_download_title_1">Desblokeatu Anonomi</string>
     <string name="blogs_sharing_response_declined_auto">%s-en blog gonbidapena automatikoki ukatu zen.</string>
     <string name="blogs_rss_feeds_import_title">Fitxategitik elikadura inportatu.</string>
     <string name="change_profile_picture">Zure profilaren argazkia aldatzeko sakatu.</string>
@@ -1070,5 +1066,4 @@
     <string name="blog_liked_by">Gustatu zaio</string>
     <string name="blog_commented_by">Iruzkina egin du</string>
     <string name="retention_7_days">7 egun</string>
-    <string name="retention_30_days">3 egun</string>
 </resources>

@@ -1086,7 +1086,6 @@ Anonomi (برایر) موقعیت شما را ذخیره نمی‌کند و آن
     <string name="unsupported_file_type">نوع فایل پشتیبانی نشده</string>
     <string name="recording_too_short">صدا خیلی کوتاه است، ارسال نادیده گرفته می‌شود</string>
     <string name="slide_to_cancel_with_timer">در حال ضبط... برای لغو اسلاید کنید – %1$d/12s</string>
-    <string name="recording_timer">ثانیه</string>
     <string name="recording_max_reached">حداکثر: ۱۲ ثانیه</string>
     <string name="scan_qr_code">اسکن کد QR</string>
     <string name="load_qr_code">بارگذاری کد QR</string>
@@ -1143,5 +1142,4 @@ Anonomi (برایر) موقعیت شما را ذخیره نمی‌کند و آن
     <string name="blog_liked_by">پسندیده شده توسط</string>
     <string name="blog_commented_by">نظر داده شده توسط</string>
     <string name="retention_7_days">۷ روز</string>
-    <string name="retention_30_days">۳ روز</string>
 </resources>

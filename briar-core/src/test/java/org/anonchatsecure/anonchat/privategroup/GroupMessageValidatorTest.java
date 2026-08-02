@@ -459,6 +459,9 @@ public class GroupMessageValidatorTest extends ValidatorTestCase {
 	public void testRejectsTooLongPost() throws Exception {
 		BdfList body = BdfList.of(POST.getInt(), memberList, parentId,
 				previousMsgId, text, memberSignature, "");
+		// A 7-element body passes the outer checkSize(body, 4, 8), so the
+		// author is parsed before validatePost() rejects the size
+		expectParseAuthor(memberList, member);
 		validator.validateMessage(message, group, body);
 	}
 

@@ -1112,5 +1112,4 @@ Per prima cosa, installa l\'app Anonomi Postbox su un altro dispositivo da dove 
     <string name="blog_liked_by">Mi piace</string>
     <string name="blog_commented_by">Commentato da</string>
     <string name="retention_7_days">7 giorni</string>
-    <string name="retention_30_days">3 giorni</string>
 </resources>

@@ -26,6 +26,7 @@ import androidx.preference.ListPreference;
 import androidx.preference.SwitchPreferenceCompat;
 import androidx.preference.PreferenceFragmentCompat;
 
+import static android.os.Build.VERSION.SDK_INT;
 import static java.util.Objects.requireNonNull;
 import static org.anonomi.android.AppModule.getAndroidComponent;
 import static org.anonomi.android.settings.SettingsActivity.enableAndPersist;
@@ -223,8 +224,12 @@ public class SecurityFragment extends PreferenceFragmentCompat {
 			androidx.appcompat.widget.AppCompatEditText input) {
 		input.setInputType(InputType.TYPE_CLASS_TEXT |
 				InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-		input.setAutofillHints((String) null);
-		input.setImportantForAutofill(View.IMPORTANT_FOR_AUTOFILL_NO);
+		// Autofill was introduced in API 26; there is nothing to opt out of
+		// on older versions, where these calls would throw.
+		if (SDK_INT >= 26) {
+			input.setAutofillHints((String) null);
+			input.setImportantForAutofill(View.IMPORTANT_FOR_AUTOFILL_NO);
+		}
 		input.setLongClickable(false);
 		input.setTextIsSelectable(false);
 	}

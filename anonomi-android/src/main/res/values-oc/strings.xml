@@ -230,7 +230,6 @@ Volètz suprimir vòstre compte e ne crear un nòu ?\n
     <string name="duplicate_link_dialog_text_1">Avètz ja una demanda en espèra amb aqueste ligam : %s</string>
     <string name="duplicate_link_dialog_text_1_contact">Avètz ja un contacte amb aqueste ligam : %s</string>
     <!--This is a question asking whether two nicknames refer to the same person-->
-  <string name="duplicate_link_dialog_text_2">Son %s e %s la meteissa persona ?</string>
     <!--This is a button for answering that two nicknames do indeed refer to the same person. This
 	string will be used in a dialog button, so if the translation of this string is longer than 20
 	characters, please use "Yes" instead, and use "No" for the "Different Person" button-->
@@ -239,7 +238,6 @@ Volètz suprimir vòstre compte e ne crear un nòu ?\n
 	will be used in a dialog button, so if the translation of this string longer than 20 characters,
 	please use "No" instead, and use "Yes" for the "Same Person" button-->
   <string name="different_person_button">Persona diferenta</string>
-    <string name="duplicate_link_dialog_text_3">%s e %s vos envia lo meteis ligam.\n\nUn d’eles poiriá ensajar de descobrir quines son vòstres contactes.\n\n Digatz-los pas qu’avètz recebut lo meteis ligam de qualqu’un mai.</string>
     <string name="pending_contact_updated_toast">Contact en espèra actualizat</string>
     <!--Introductions-->
   <string name="introduction_onboarding_title">Presentatz vòstres contactes</string>
@@ -598,8 +596,6 @@ parteja pas amb degun.</string>
     <string name="qr_code_too_old_1">Aqueste ligam ven d’una version de Anonomi mai recenta. Passatz a la darrièra version e tornatz ensajar.</string>
     <string name="mailbox_qr_code_too_old">Aqueste ligam ven d’una version de Anonomi mai recenta. Passatz a la darrièra version e tornatz ensajar.</string>
     <string name="mailbox_qr_code_too_new">Aqueste ligam ven d’una version de Anonomi mai recenta. Passatz a la darrièra version e tornatz ensajar.</string>
-    <string name="share_app_link_text">Desverrolhar Anonomi</string>
-    <string name="website_download_title_1">Desverrolhar Anonomi</string>
     <string name="stealth_mode_switch_title">Mòde de furtivitat</string>
     <string name="dev_report_stacktrace">Stacktrace</string>
     <string name="dev_report_time_info">Informacion orari</string>
@@ -1077,5 +1073,4 @@ parteja pas amb degun.</string>
     <string name="blog_liked_by">Agradat per</string>
     <string name="blog_commented_by">Comentat per</string>
     <string name="retention_7_days">7 jorns</string>
-    <string name="retention_30_days">3 jorns</string>
 </resources>

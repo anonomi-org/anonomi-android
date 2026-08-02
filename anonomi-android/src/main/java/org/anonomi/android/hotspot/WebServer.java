@@ -155,7 +155,8 @@ class WebServer extends NanoHTTPD {
 		requireNonNull(doc.selectFirst("#download_button"))
 				.text(ctx.getString(R.string.website_download_button));
 
-		// Optional buttons (only if present in HTML)
+		// Companion app buttons. Only the official flavour bundles these, so
+		// each one is removed unless its asset is actually present.
 		setButton(doc, "#mailbox_button", "anonomi-postbox.apk",
 				R.string.website_download_mailbox_button);
 		setButton(doc, "#monerujo_button", "monerujo.apk",
@@ -178,15 +179,36 @@ class WebServer extends NanoHTTPD {
 		return doc.outerHtml();
 	}
 
-	private void setButton(Document doc, String selector, String href, int textRes) {
+	private void setButton(Document doc, String selector, String assetName,
+			int textRes) {
 		Element btn = doc.selectFirst(selector);
 		if (btn == null) return;
-		btn.attr("href", href);
+		if (!assetExists(assetName)) {
+			// Offering a download we cannot serve would only produce a 404
+			btn.remove();
+			return;
+		}
+		btn.attr("href", assetName);
 		Element span = btn.selectFirst("span");
 		if (span != null) {
 			span.text(ctx.getString(textRes));
 		} else {
 			btn.text(ctx.getString(textRes));
+		}
+	}
+
+	/**
+	 * True if the asset is present and really is an APK. The check matters
+	 * because tor-browser.apk is stored in Git LFS: without the object pulled,
+	 * the build packages the ~130 byte text pointer under the same name, which
+	 * would otherwise be offered as a download.
+	 */
+	private boolean assetExists(String assetName) {
+		try (InputStream is = ctx.getAssets().open(assetName)) {
+			// APKs are zip archives, so they start with the local file header
+			return is.read() == 'P' && is.read() == 'K';
+		} catch (IOException e) {
+			return false;
 		}
 	}
 

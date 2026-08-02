@@ -52,6 +52,12 @@
     <string name="share_qr_code">Share QR Code</string>
     <string name="error_creating_message">Error creating message</string>
     <string name="request_sent">Request sent</string>
+    <string name="missing_contact_id">Missing contact ID</string>
+    <string name="minor_index_required">Please enter a minor index</string>
+    <string name="minor_index_out_of_range">Minor index must be between %1$d and %2$d</string>
+    <string name="minor_index_invalid">Invalid minor index</string>
+    <string name="minor_index_label"># %1$d</string>
+    <string name="no_qr_code_generated">No QR code generated</string>
     <string name="converted_amount">Converted Amount: %1$s</string>
     <string name="update_rate_title">Update Rate</string>
     <string name="update_rate_message">Do you want to save the new rate for future requests?</string>
@@ -757,7 +763,18 @@
     <string name="online_map_deleted">Map \'%1$s\' removed.</string>
     <string name="online_map_added">Map \'%1$s\' added.</string>
     <string name="online_map_already_added">\'%1$s\' is already in your maps.</string>
-    <string name="online_maps_added_some_skipped">%1$d map(s) added, %2$d already present.</string>
+    <plurals name="online_maps_added">
+        <item quantity="one">%1$d map added.</item>
+        <item quantity="other">%1$d maps added.</item>
+    </plurals>
+    <plurals name="online_maps_already_added">
+        <item quantity="one">%1$d map is already in your maps.</item>
+        <item quantity="other">%1$d maps are already in your maps.</item>
+    </plurals>
+    <plurals name="online_maps_added_some_skipped">
+        <item quantity="one">%1$d map added, %2$d already present.</item>
+        <item quantity="other">%1$d maps added, %2$d already present.</item>
+    </plurals>
     <string name="error_invalid_onion_url">Only .onion URLs are supported (e.g. http://…56chars….onion)</string>
     <string name="error_fetching_disco">Could not fetch server map list.</string>
     <string name="error_fetching_map">Could not fetch map info.</string>

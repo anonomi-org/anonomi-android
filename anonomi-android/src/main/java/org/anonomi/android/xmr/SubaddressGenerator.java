@@ -1,87 +1,66 @@
 package org.anonomi.android.xmr;
 
+import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import android.util.Log;
-import java.math.BigInteger;
-import java.io.ByteArrayOutputStream;
 
-
-
+/**
+ * Monero subaddress key derivation.
+ * <p>
+ * Failures propagate rather than returning null: a caller that silently got a
+ * null key here would go on to build an address the recipient cannot spend.
+ */
 public class SubaddressGenerator {
 
-	public static byte[] generateSubaddressPublicSpendKey(byte[] publicSpendKey, byte[] privateViewKey, int major, int minor) {
+	private static final byte[] SUBADDRESS_PREFIX =
+			{'S', 'u', 'b', 'A', 'd', 'd', 'r', 0x00};
 
-		byte[] prefix = new byte[] { 'S', 'u', 'b', 'A', 'd', 'd', 'r', 0x00 };
-		byte[] leMajor = ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putInt(major).array();
-		byte[] leMinor = ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putInt(minor).array();
-
-		byte[] data = new byte[prefix.length + privateViewKey.length + 4 + 4];
-		System.arraycopy(prefix, 0, data, 0, prefix.length);
-		System.arraycopy(privateViewKey, 0, data, prefix.length, privateViewKey.length);
-		System.arraycopy(leMajor, 0, data, prefix.length + privateViewKey.length, 4);
-		System.arraycopy(leMinor, 0, data, prefix.length + privateViewKey.length + 4, 4);
+	/**
+	 * D = B + m*G, where m = Hs("SubAddr" || 0 || a || major || minor).
+	 *
+	 * @param publicSpendKey the wallet's public spend key B, 32 bytes
+	 * @param privateViewKey the wallet's private view key a, 32 bytes
+	 *                       little-endian
+	 */
+	public static byte[] generateSubaddressPublicSpendKey(byte[] publicSpendKey,
+			byte[] privateViewKey, int major, int minor) {
+		byte[] data = new byte[SUBADDRESS_PREFIX.length + privateViewKey.length
+				+ 8];
+		int offset = 0;
+		System.arraycopy(SUBADDRESS_PREFIX, 0, data, offset,
+				SUBADDRESS_PREFIX.length);
+		offset += SUBADDRESS_PREFIX.length;
+		System.arraycopy(privateViewKey, 0, data, offset,
+				privateViewKey.length);
+		offset += privateViewKey.length;
+		System.arraycopy(toLittleEndian(major), 0, data, offset, 4);
+		offset += 4;
+		System.arraycopy(toLittleEndian(minor), 0, data, offset, 4);
 
 		byte[] m = CryptoUtils.hashToScalar(data);
-
-		// 🚀 Compute m * G
-		byte[] mGCompressed = CryptoUtils.scalarMultBase(m);
-
-		byte[] D = null;
-		try {
-			// ✅ Decompress with YOUR OWN decompressPoint
-			CryptoUtils.Point mGPointCustom = CryptoUtils.decompressPoint(mGCompressed);
-			CryptoUtils.Point BPointCustom = CryptoUtils.decompressPoint(publicSpendKey);
-
-			// ✅ Add points manually using YOUR pointAdd()
-			CryptoUtils.Point DPointCustom = CryptoUtils.pointAdd(mGPointCustom, BPointCustom);
-
-			// ✅ Compress the result using YOUR compressPoint()
-			D = CryptoUtils.compressPoint(DPointCustom);
-
-		} catch (Exception e) {
-			Log.e("SubAddrGen", "pointAdd failed!", e);
-		}
-
-		return D;
+		CryptoUtils.Point mG =
+				CryptoUtils.decompressPoint(CryptoUtils.scalarMultBase(m));
+		CryptoUtils.Point b = CryptoUtils.decompressPoint(publicSpendKey);
+		return CryptoUtils.compressPoint(CryptoUtils.pointAdd(mG, b));
 	}
 
-	public static byte[] encodeVarint(int value) {
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		while (true) {
-			if ((value & ~0x7F) == 0) {
-				baos.write(value);
-				break;
-			} else {
-				baos.write((value & 0x7F) | 0x80);
-				value >>>= 7;
-			}
-		}
-		return baos.toByteArray();
+	/**
+	 * C = a*D, the subaddress public view key.
+	 *
+	 * @param subPubSpendKey the subaddress public spend key D, 32 bytes
+	 * @param privateViewKey the wallet's private view key a, 32 bytes
+	 *                       little-endian
+	 */
+	public static byte[] generateSubaddressPublicViewKey(byte[] subPubSpendKey,
+			byte[] privateViewKey) {
+		CryptoUtils.Point d = CryptoUtils.decompressPoint(subPubSpendKey);
+		BigInteger a =
+				new BigInteger(1, CryptoUtils.reverseBytes(privateViewKey));
+		return CryptoUtils.compressPoint(CryptoUtils.scalarMultManual(d, a));
 	}
 
-	public static byte[] generateSubaddressPublicViewKey(
-			byte[] subPubSpendKey,
-			byte[] privateViewKey
-	) {
-		byte[] C = null;
-		try {
-			// ✅ Decompress D using your own decompressPoint
-			CryptoUtils.Point DPointCustom = CryptoUtils.decompressPoint(subPubSpendKey);
-
-			// ✅ Parse scalar b (privateViewKey) into BigInteger
-			BigInteger bScalar = new BigInteger(1, CryptoUtils.reverseBytes(privateViewKey));
-
-			// ✅ Manually scalar multiply (use your own scalarMultManual)
-			CryptoUtils.Point CPointCustom = CryptoUtils.scalarMultManual(DPointCustom, bScalar);
-
-			// ✅ Compress the result using your own compressPoint
-			C = CryptoUtils.compressPoint(CPointCustom);
-
-		} catch (Exception e) {
-			Log.e("SubAddrGen", "scalarMultKey failed!", e);
-		}
-
-		return C;
+	private static byte[] toLittleEndian(int value) {
+		return ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN)
+				.putInt(value).array();
 	}
 }

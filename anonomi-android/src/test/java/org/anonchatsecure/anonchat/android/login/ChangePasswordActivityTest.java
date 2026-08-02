@@ -37,7 +37,7 @@ import static org.mockito.Mockito.when;
 import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = 21)
+@Config(sdk = 24) // Must be >= minSdkVersion or the manifest fails to parse
 public class ChangePasswordActivityTest {
 
 	private ChangePasswordActivity changePasswordActivity;

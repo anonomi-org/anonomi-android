@@ -21,19 +21,34 @@ public class OnlineTileProvider extends MapTileModuleProviderBase {
 
 	private static final String TAG = "OnlineTileProvider";
 
+	/** Thread pool size and pending queue depth for tile downloads. */
+	private static final int THREAD_POOL_SIZE = 2;
+	private static final int PENDING_QUEUE_SIZE = 18;
+	/** Widest range osmdroid will ask for; a server may declare less. */
+	private static final int ZOOM_FLOOR = 0;
+	private static final int ZOOM_CEILING = 22;
+
 	private final OkHttpClient httpClient;
 	private final String tileUrlTemplate;
 	private final File cacheDir;
 	private final boolean cacheEnabled;
+	private final int zoomMin;
+	private final int zoomMax;
 	private ITileSource tileSource;
 
 	public OnlineTileProvider(OkHttpClient httpClient, String tileUrlTemplate,
-			File cacheDir, boolean cacheEnabled) {
-		super(2, 18);
+			File cacheDir, boolean cacheEnabled, int zoomMin, int zoomMax) {
+		super(THREAD_POOL_SIZE, PENDING_QUEUE_SIZE);
 		this.httpClient = httpClient;
 		this.tileUrlTemplate = tileUrlTemplate;
 		this.cacheDir = cacheDir;
 		this.cacheEnabled = cacheEnabled;
+		// Honour the range the map declares, but keep it inside what osmdroid
+		// can address and ordered, since the values come from a remote server.
+		int min = Math.max(ZOOM_FLOOR, Math.min(zoomMin, ZOOM_CEILING));
+		int max = Math.max(ZOOM_FLOOR, Math.min(zoomMax, ZOOM_CEILING));
+		this.zoomMin = Math.min(min, max);
+		this.zoomMax = Math.max(min, max);
 	}
 
 	@Override
@@ -43,12 +58,12 @@ public class OnlineTileProvider extends MapTileModuleProviderBase {
 
 	@Override
 	public int getMinimumZoomLevel() {
-		return 2;
+		return zoomMin;
 	}
 
 	@Override
 	public int getMaximumZoomLevel() {
-		return 18;
+		return zoomMax;
 	}
 
 	@Override

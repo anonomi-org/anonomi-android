@@ -543,8 +543,6 @@
     <string name="qr_code_too_old_1">Ovaj link dolazi sa nove verzije Anonomi-a. Molim vas ažurirajte aplikaciju na posljednju verziju, a zatim pokušajte ponovo.</string>
     <string name="mailbox_qr_code_too_old">Ovaj link dolazi sa nove verzije Anonomi-a. Molim vas ažurirajte aplikaciju na posljednju verziju, a zatim pokušajte ponovo.</string>
     <string name="mailbox_qr_code_too_new">Ovaj link dolazi sa nove verzije Anonomi-a. Molim vas ažurirajte aplikaciju na posljednju verziju, a zatim pokušajte ponovo.</string>
-    <string name="share_app_link_text">Otključaj Anonomi</string>
-    <string name="website_download_title_1">Otključaj Anonomi</string>
     <string name="action_request_xmr">Zahtjev za XMR</string>
     <string name="invalid_monero_address">Nevažeći format Monero adrese.</string>
     <string name="invalid_monero_private_view_key">Nevažeći format privatnog ključa za pregled Monera.</string>
@@ -1080,5 +1078,4 @@
     <string name="blog_liked_by">Sviđa se korisniku</string>
     <string name="blog_commented_by">Komentirao/la</string>
     <string name="retention_7_days">7 dana</string>
-    <string name="retention_30_days">3 dana</string>
 </resources>

@@ -664,8 +664,6 @@
     <string name="qr_code_too_old_1">Deze link komt van een nieuwe versie van Anonomi. Upgrade alsjeblieft naar de laatste versie en probeer het nog eens.</string>
     <string name="mailbox_qr_code_too_old">Deze link komt van een nieuwe versie van Anonomi. Upgrade alsjeblieft naar de laatste versie en probeer het nog eens.</string>
     <string name="mailbox_qr_code_too_new">Deze link komt van een nieuwe versie van Anonomi. Upgrade alsjeblieft naar de laatste versie en probeer het nog eens.</string>
-    <string name="share_app_link_text">Ontgrendel Anonomi</string>
-    <string name="website_download_title_1">Ontgrendel Anonomi</string>
     <string name="groups_toggle_voice_distortion">Stemvervorming in-/uitschakelen</string>
     <string name="groups_invitations_response_declined_auto">De groepsuitnodiging van %s werd automatisch afgewezen.</string>
     <string name="action_request_xmr">XMR-verzoek</string>
@@ -818,7 +816,6 @@
     <string name="delete_offline_map_message">Wil je de offline kaart %1$s verwijderen? Hiermee worden alle bijbehorende gegevens verwijderd.</string>
     <string name="offline_map_deleted">Offline kaart \'%1$s\' verwijderd.</string>
     <string name="no_offline_maps">Er zijn nog geen offline kaarten geïmporteerd.</string>
-    <string name="offline_map_summary">Zoomniveaus: [13x]\n[18x]</string>
     <string name="import_completed_for">Import voltooid voor: %1$s</string>
     <string name="failed_to_parse_metadata">Het parseren van de metadata voor %1$s is mislukt.</string>
     <string name="failed_to_load_map_info">Kaartinformatie kon niet worden geladen.</string>
@@ -1078,5 +1075,4 @@
     <string name="blog_liked_by">Vind ik leuk</string>
     <string name="blog_commented_by">Commentaar van</string>
     <string name="retention_7_days">7 dagen</string>
-    <string name="retention_30_days">3 dagen</string>
 </resources>

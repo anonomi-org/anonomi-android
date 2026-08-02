@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ import org.anonchatsecure.bramble.api.WeakSingletonProvider;
 import org.anonchatsecure.bramble.api.lifecycle.IoExecutor;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 
@@ -46,6 +48,7 @@ import javax.inject.Inject;
 import okhttp3.OkHttpClient;
 
 import static org.anonomi.android.AppModule.getAndroidComponent;
+import static org.anonomi.android.util.UiUtils.resolveColorAttribute;
 
 public class OfflineMapsFragment extends PreferenceFragmentCompat {
 
@@ -412,35 +415,49 @@ public class OfflineMapsFragment extends PreferenceFragmentCompat {
 						(d, which, isChecked) -> checked[which] = isChecked)
 				.setPositiveButton(android.R.string.ok, (d, which) -> {
 					SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
-					int added = 0, skipped = 0;
+					// Remember which maps were skipped: reporting by index
+					// would name the wrong one when the user selects a map
+					// that is not first in the list.
+					List<String> skippedNames = new ArrayList<>();
+					int added = 0;
 					for (int i = 0; i < maps.size(); i++) {
-						if (checked[i]) {
-							if (OnlineMapStore.exists(prefs, maps.get(i).id)) {
-								skipped++;
-							} else {
-								OnlineMapStore.save(prefs, maps.get(i));
-								added++;
-							}
+						if (!checked[i]) continue;
+						OnlineMapEntry entry = maps.get(i);
+						if (OnlineMapStore.exists(prefs, entry.id)) {
+							skippedNames.add(entry.name);
+						} else {
+							OnlineMapStore.save(prefs, entry);
+							added++;
 						}
 					}
+					int skipped = skippedNames.size();
 					if (added > 0) loadOnlineMaps();
-					if (added > 0 && skipped == 0) {
-						Toast.makeText(requireContext(),
-								getString(R.string.online_map_added, added + " map(s)"),
-								Toast.LENGTH_SHORT).show();
-					} else if (added > 0) {
-						Toast.makeText(requireContext(),
-								getString(R.string.online_maps_added_some_skipped, added, skipped),
-								Toast.LENGTH_LONG).show();
-					} else if (skipped > 0) {
-						Toast.makeText(requireContext(),
-								getString(R.string.online_map_already_added,
-										skipped == 1 ? maps.get(0).name : skipped + " maps"),
-								Toast.LENGTH_SHORT).show();
-					}
+					showAddMapsResult(added, skippedNames, skipped);
 				})
 				.setNegativeButton(android.R.string.cancel, null)
 				.show();
+	}
+
+	private void showAddMapsResult(int added, List<String> skippedNames,
+			int skipped) {
+		if (added == 0 && skipped == 0) return; // Nothing was selected
+		Resources res = getResources();
+		String message;
+		if (skipped == 0) {
+			message = res.getQuantityString(R.plurals.online_maps_added,
+					added, added);
+		} else if (added > 0) {
+			message = res.getQuantityString(
+					R.plurals.online_maps_added_some_skipped, added, added,
+					skipped);
+		} else if (skipped == 1) {
+			message = getString(R.string.online_map_already_added,
+					skippedNames.get(0));
+		} else {
+			message = res.getQuantityString(
+					R.plurals.online_maps_already_added, skipped, skipped);
+		}
+		Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
 	}
 
 	private void showConfirmAddMapDialog(OnlineMapEntry entry) {
@@ -498,7 +515,10 @@ public class OfflineMapsFragment extends PreferenceFragmentCompat {
 		Drawable icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_offline_maps);
 		if (icon != null) {
 			icon = icon.mutate();
-			icon.setTint(Color.WHITE);
+			// Follow the active theme so the icon stays legible on the light
+			// themes as well as the dark ones
+			icon.setTint(resolveColorAttribute(requireContext(),
+					R.attr.anonAccentColor));
 		}
 		return icon;
 	}

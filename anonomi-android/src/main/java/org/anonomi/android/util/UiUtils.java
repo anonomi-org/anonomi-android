@@ -11,6 +11,8 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Debug;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -67,6 +69,7 @@ import androidx.lifecycle.Observer;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 import static android.content.Context.KEYGUARD_SERVICE;
+import static android.content.Context.VIBRATOR_SERVICE;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static android.os.Build.MANUFACTURER;
 import static android.os.Build.VERSION.SDK_INT;
@@ -121,6 +124,7 @@ public class UiUtils {
 	public static final long MIN_DATE_RESOLUTION = MINUTE_IN_MILLIS;
 	public static final int TEASER_LENGTH = 320;
 	public static final float GREY_OUT = 0.5f;
+	private static final long VIBRATE_SHORT_MS = 50;
 
 	public static void showSoftKeyboard(View view) {
 		if (view.requestFocus()) {
@@ -517,6 +521,21 @@ public class UiUtils {
 	public static void hideViewOnSmallScreen(View view) {
 		boolean small = isSmallScreenRelativeToFontSize(view.getContext());
 		view.setVisibility(small ? GONE : VISIBLE);
+	}
+
+	/**
+	 * Emits a short haptic tick. VibrationEffect is only available from API 26,
+	 * so older versions fall back to the deprecated untimed vibrate() call.
+	 */
+	public static void vibrateShort(Context ctx) {
+		Vibrator v = (Vibrator) ctx.getSystemService(VIBRATOR_SERVICE);
+		if (v == null) return;
+		if (SDK_INT >= 26) {
+			v.vibrate(VibrationEffect.createOneShot(VIBRATE_SHORT_MS,
+					VibrationEffect.DEFAULT_AMPLITUDE));
+		} else {
+			v.vibrate(VIBRATE_SHORT_MS);
+		}
 	}
 
 	private static boolean isSmallScreenRelativeToFontSize(Context ctx) {
