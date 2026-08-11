@@ -9,7 +9,11 @@ It is built for people who cannot afford to be naive about surveillance,
 centralization, or metadata.
 
 ####
-⬇️ **Download the latest release (APK):**  
+📲 **Get it on F-Droid:**
+
+[<img src="docs/assets/get-it-on-fdroid.png" alt="Get it on F-Droid" height="70">](https://f-droid.org/packages/org.anonomi.android/)
+
+⬇️ **Or download the latest release (APK) directly:**  
 https://github.com/anonomi-org/anonomi-android/releases/latest
 
 🔐 **Verify checksums & signatures:**  
@@ -103,7 +107,30 @@ Anonomi Messenger is distributed **outside centralized app stores**.
 - Published checksums
 - Verifiable releases
 
-Official releases are published via GitHub.
+There are two ways to install it.
+
+### F-Droid
+
+Anonomi Messenger is available in the main F-Droid repository:
+
+➡️ **https://f-droid.org/packages/org.anonomi.android/**
+
+F-Droid builds the app from this source tree and checks the result against the
+APK we publish before serving it. So you do not have to trust us: the binary on
+your phone is confirmed to come from the code you can read here. It keeps our
+signing key, so the same check holds for later updates.
+
+Updates come through the F-Droid client. No Google account, no Play Services.
+
+### Direct APK download
+
+Signed APKs and checksums are published with each release:
+
+➡️ **https://github.com/anonomi-org/anonomi-android/releases/latest**
+
+This build also carries companion apps inside it, so they can be handed to
+nearby devices with no internet at all. That makes it a much larger download
+than the F-Droid build, which carries none of them.
 
 ➡️ See releases and verification instructions in the documentation.
 
@@ -130,7 +157,7 @@ Centralized app stores, including Google Play, introduce risks such as:
   Applications that include strong encryption, Tor integration, or mechanisms
   designed to bypass network blocking may face additional scrutiny or removal.
 
-### For these reasons, Anonomi Messenger prioritizes direct APK distribution and F-Droid (soon), where users can independently verify builds and minimize reliance on centralized infrastructure.
+### For these reasons, Anonomi Messenger prioritizes direct APK distribution and F-Droid, where users can independently verify builds and minimize reliance on centralized infrastructure.
 
 ---
 
@@ -142,6 +169,11 @@ Security relies on:
 - Public, auditable source code
 - Independent review
 - The ability to fork, reproduce, and verify builds
+
+That last point is testable. The F-Droid build is a **reproducible build**:
+F-Droid compiles the `fdroid` flavour from the tagged commit in this repository
+and compares the result against the APK we publish. A new version only reaches
+users when the two match.
 
 ---
 

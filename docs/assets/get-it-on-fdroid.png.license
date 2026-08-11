@@ -1,0 +1,6 @@
+SPDX-FileCopyrightText: 2016 Andrew Nayenko <relan@airpost.net>
+SPDX-License-Identifier: GPL-3.0-or-later
+
+"Get it on F-Droid" badge, from https://gitlab.com/fdroid/artwork (badge/).
+Kept in the repository rather than hot-linked, so that rendering the README
+does not fetch anything from a third party.
