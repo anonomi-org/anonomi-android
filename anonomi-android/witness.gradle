@@ -238,7 +238,6 @@ dependencyVerification {
 		'net.sf.kxml:kxml2:2.3.0:kxml2-2.3.0.jar:f264dd9f79a1fde10ce5ecc53221eff24be4c9331c830b7d52f2f08a7b633de2',
 		'org.apache-extras.beanshell:bsh:2.0b6:bsh-2.0b6.jar:a17955976070c0573235ee662f2794a78082758b61accffce8d3f8aedcd91047',
 		'org.bouncycastle:bcprov-jdk15on:1.68:bcprov-jdk15on-1.68.jar:f732a46c8de7e2232f2007c682a21d1f4cc8a8a0149b6b7bd6aa1afdc65a0f8d',
-		'org.bouncycastle:bcprov-jdk15to18:1.71:bcprov-jdk15to18-1.71.jar:143aaa4a40edd5fc2a18db7900059f6c16f4d931b94b94b20f7e2238e6662886',
 		'org.bouncycastle:bcprov-jdk15to18:1.82:bcprov-jdk15to18-1.82.jar:9c9ccecb08a0b00bd2a74afa6567d81d61a02bba1364f24e33fa0c4c1e929821',
 		'org.checkerframework:checker-compat-qual:2.5.5:checker-compat-qual-2.5.5.jar:11d134b245e9cacc474514d2d66b5b8618f8039a1465cdc55bbc0b34e0008b7a',
 		'org.checkerframework:checker-qual:2.5.2:checker-qual-2.5.2.jar:64b02691c8b9d4e7700f8ee2e742dce7ea2c6e81e662b7522c9ee3bf568c040a',
