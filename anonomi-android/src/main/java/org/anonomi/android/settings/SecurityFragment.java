@@ -10,6 +10,11 @@ import android.text.InputType;
 import android.view.View;
 
 import org.anonomi.R;
+import org.anonomi.android.util.AndroidPasscodeClock;
+import org.anonomi.android.util.PasscodeAttemptStore;
+import org.anonomi.android.util.PasscodeHasher;
+import org.anonomi.android.util.PasscodePolicy;
+import org.anonomi.android.util.PasscodeThrottle;
 import org.anonomi.android.util.SecurePrefsManager;
 import org.briarproject.nullsafety.MethodsNotNullByDefault;
 import org.briarproject.nullsafety.ParametersNotNullByDefault;
@@ -43,6 +48,14 @@ public class SecurityFragment extends PreferenceFragmentCompat {
 
 	public static final String PREF_KEY_CALCULATOR_PASSCODE =
 			"pref_key_set_calculator_passcode";
+
+	/**
+	 * How many wrong passcodes have been entered in a row, and until when the
+	 * next one will be ignored. Kept here rather than in memory so that killing
+	 * the calculator does not clear it.
+	 */
+	public static final String PREF_KEY_CALCULATOR_ATTEMPTS =
+			"pref_key_calculator_attempts";
 
 	@Inject
 	ViewModelProvider.Factory viewModelFactory;
@@ -94,7 +107,8 @@ public class SecurityFragment extends PreferenceFragmentCompat {
 												requireContext());
 								securePrefs.putEncrypted(
 										PREF_KEY_CALCULATOR_PASSCODE,
-										newPasscode);
+										PasscodeHasher.hash(newPasscode));
+								clearFailedAttempts(securePrefs);
 
 								SharedPreferences prefs =
 										PreferenceManager.getDefaultSharedPreferences(
@@ -117,6 +131,7 @@ public class SecurityFragment extends PreferenceFragmentCompat {
 									new SecurePrefsManager(requireContext());
 							securePrefs.putEncrypted(
 									PREF_KEY_CALCULATOR_PASSCODE, "");
+							clearFailedAttempts(securePrefs);
 
 							disableStealthMode();
 							SharedPreferences prefs =
@@ -140,7 +155,7 @@ public class SecurityFragment extends PreferenceFragmentCompat {
 
 		final androidx.appcompat.widget.AppCompatEditText input1 =
 				new androidx.appcompat.widget.AppCompatEditText(context);
-		input1.setHint(R.string.set_passcode_hint_1);
+		input1.setHint(R.string.set_passcode_hint_expression);
 		input1.setSingleLine(true);
 
 		final androidx.appcompat.widget.AppCompatEditText input2 =
@@ -201,12 +216,15 @@ public class SecurityFragment extends PreferenceFragmentCompat {
 				String p2 = input2.getText() == null ? "" :
 						input2.getText().toString().trim();
 
-				if (!isValidExpression(p1)) {
-					Toast.makeText(context, R.string.passcode_invalid,
-							Toast.LENGTH_SHORT).show();
+				if (!PasscodePolicy.isAcceptable(p1)) {
+					Toast.makeText(context, R.string.passcode_requirements,
+							Toast.LENGTH_LONG).show();
 					return;
 				}
-				if (!p1.equals(p2)) {
+				// Compared as they will be stored, so that spacing typed one
+				// way and not the other is not reported as a mismatch.
+				if (!PasscodePolicy.normalise(p1)
+						.equals(PasscodePolicy.normalise(p2))) {
 					Toast.makeText(context, R.string.passcode_confirm_failed,
 							Toast.LENGTH_SHORT).show();
 					return;
@@ -234,32 +252,14 @@ public class SecurityFragment extends PreferenceFragmentCompat {
 		input.setTextIsSelectable(false);
 	}
 
-	private boolean isValidExpression(String expr) {
-		if (expr == null) return false;
-
-		String cleaned = expr.replaceAll("\\s+", "");
-
-		// Must contain at least one operator
-		if (!cleaned.matches(".*[+\\-*/%].*")) {
-			return false;
-		}
-
-		// Must only contain valid characters (digits, operators, parentheses, dot)
-		if (!cleaned.matches("[0-9+\\-*/%().]+")) {
-			return false;
-		}
-
-		// Optionally: require at least two numbers (basic check)
-		String[] numbers = cleaned.split("[+\\-*/%]");
-		int numberCount = 0;
-		for (String part : numbers) {
-			if (!part.isEmpty()) numberCount++;
-		}
-		if (numberCount < 2) {
-			return false;  // e.g., rejects just "2+" or "2"
-		}
-
-		return true;
+	/**
+	 * Forgets any run of wrong passcodes, so that setting a new one is a way
+	 * back in for someone who has locked themselves out.
+	 */
+	private static void clearFailedAttempts(SecurePrefsManager securePrefs) {
+		new PasscodeThrottle(new PasscodeAttemptStore(securePrefs,
+				PREF_KEY_CALCULATOR_ATTEMPTS), new AndroidPasscodeClock())
+				.recordSuccess();
 	}
 
 	@Override

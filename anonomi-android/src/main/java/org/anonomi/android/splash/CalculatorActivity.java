@@ -1,11 +1,11 @@
 package org.anonomi.android.splash;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,8 +14,19 @@ import org.anonomi.android.panic.PanicDialogHelper;
 import org.anonomi.android.panic.PanicResponderActivity;
 import org.anonomi.android.panic.PanicSequenceDetector;
 import org.anonomi.android.settings.SecurityFragment;
+import org.anonomi.android.util.AndroidPasscodeClock;
+import org.anonomi.android.util.PasscodeAttemptStore;
+import org.anonomi.android.util.PasscodeHasher;
+import org.anonomi.android.util.PasscodeThrottle;
 import org.anonomi.android.util.SecurePrefsManager;
 import org.anonomi.android.util.SecureValue;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import static android.os.Build.VERSION.SDK_INT;
+import static android.view.WindowManager.LayoutParams.FLAG_SECURE;
+import static org.anonomi.android.TestingConstants.PREVENT_SCREENSHOTS;
 
 public class CalculatorActivity extends AppCompatActivity {
 
@@ -25,6 +36,12 @@ public class CalculatorActivity extends AppCompatActivity {
 	private double val1 = Double.NaN;
 	private double val2;
 	private char ACTION;
+
+	/**
+	 * Checking a passcode is deliberately slow, and one at a time is fast
+	 * enough for someone pressing keys.
+	 */
+	private ExecutorService passcodeExecutor;
 
 	private final char ADDITION = '+';
 	private final char SUBTRACTION = '-';
@@ -37,8 +54,15 @@ public class CalculatorActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		// The one screen that does not inherit these from BaseActivity, and
+		// the one where a passcode is typed.
+		if (PREVENT_SCREENSHOTS) getWindow().addFlags(FLAG_SECURE);
+		if (SDK_INT >= 31) getWindow().setHideOverlayWindows(true);
+
 		setContentView(R.layout.activity_calculator);
 
+		passcodeExecutor = Executors.newSingleThreadExecutor();
 		display = findViewById(R.id.input);
 
 		int[] numberIds = {
@@ -68,14 +92,7 @@ public class CalculatorActivity extends AppCompatActivity {
 			display.setText(currentDisplay);
 		});
 
-		findViewById(R.id.button_clear).setOnClickListener(v -> {
-			currentDisplay = "";
-			rawExpression.setLength(0);
-			val1 = Double.NaN;
-			val2 = Double.NaN;
-			ACTION = ' ';
-			display.setText("0");
-		});
+		findViewById(R.id.button_clear).setOnClickListener(v -> clearEntry());
 
 		Button equalButton = findViewById(R.id.button_equal);
 
@@ -101,6 +118,15 @@ public class CalculatorActivity extends AppCompatActivity {
 			}
 			return true;
 		});
+	}
+
+	private void clearEntry() {
+		currentDisplay = "";
+		rawExpression.setLength(0);
+		val1 = Double.NaN;
+		val2 = Double.NaN;
+		ACTION = ' ';
+		display.setText("0");
 	}
 
 	private void onOperator(char op) {
@@ -153,26 +179,52 @@ public class CalculatorActivity extends AppCompatActivity {
 		}
 	}
 
+	/**
+	 * A wrong passcode, an unreadable one and one ignored after too many
+	 * attempts all have to look the same from the outside, so nothing here
+	 * reports anything.
+	 */
 	private void checkPasscode(String userExpression) {
-		SecurePrefsManager securePrefs = new SecurePrefsManager(this);
+		Context appContext = getApplicationContext();
+		passcodeExecutor.execute(() -> {
+			if (!accepts(appContext, userExpression)) return;
+			runOnUiThread(() -> {
+				if (!isFinishing() && !isDestroyed()) unlockApp();
+			});
+		});
+	}
+
+	private static boolean accepts(Context context, String userExpression) {
+		SecurePrefsManager securePrefs = new SecurePrefsManager(context);
+		PasscodeThrottle throttle = new PasscodeThrottle(
+				new PasscodeAttemptStore(securePrefs,
+						SecurityFragment.PREF_KEY_CALCULATOR_ATTEMPTS),
+				new AndroidPasscodeClock());
+		if (throttle.isLocked()) return false;
+
 		SecureValue stored = securePrefs
 				.read(SecurityFragment.PREF_KEY_CALCULATOR_PASSCODE);
 
-		// An unreadable passcode must not unlock, and must not say so: this
-		// screen has to look like a calculator either way.
-		if (!stored.isPresent()) return;
+		// An unreadable passcode must not unlock, and must not say so. It is
+		// not counted as a wrong answer either, because no answer would be
+		// right.
+		if (!stored.isPresent()) return false;
 		String savedExpression = stored.get();
-		if (savedExpression.isEmpty()) {
-			return;
-		}
+		if (savedExpression.isEmpty()) return false;
 
-		// Clean up both expressions: remove spaces
-		String cleanedUserExpr = userExpression.replaceAll("\\s+", "");
-		String cleanedSavedExpr = savedExpression.replaceAll("\\s+", "");
-
-		if (cleanedSavedExpr.equals(cleanedUserExpr)) {
-			unlockApp();
+		if (!PasscodeHasher.verify(userExpression, savedExpression)) {
+			throttle.recordFailure();
+			return false;
 		}
+		if (PasscodeHasher.needsRehash(savedExpression)) {
+			// The only moment an older stored form can be replaced without
+			// asking for the passcode again.
+			securePrefs.putEncrypted(
+					SecurityFragment.PREF_KEY_CALCULATOR_PASSCODE,
+					PasscodeHasher.hash(userExpression));
+		}
+		throttle.recordSuccess();
+		return true;
 	}
 
 	@Override
@@ -195,11 +247,18 @@ public class CalculatorActivity extends AppCompatActivity {
 	protected void onPause() {
 		super.onPause();
 		PanicSequenceDetector.getInstance().setListener(null);
+		// A half-typed passcode must not be left on screen for whoever picks
+		// the phone up next, nor in the recents thumbnail.
+		clearEntry();
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		passcodeExecutor.shutdownNow();
 	}
 
 	private void unlockApp() {
-		Toast.makeText(this, getString(R.string.unlocking_anonchat), Toast.LENGTH_SHORT).show();
-
 		Intent intent = new Intent(this, org.anonomi.android.navdrawer.NavDrawerActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 		startActivity(intent);
