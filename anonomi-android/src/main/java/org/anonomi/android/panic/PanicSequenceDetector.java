@@ -35,7 +35,6 @@ public class PanicSequenceDetector {
 	private boolean tracking = false;
 	private boolean longPressHandled = false;
 	private boolean enabled = false;
-	private boolean loadError = false;
 	private PanicTriggerListener listener;
 
 	private PanicSequenceDetector() {
@@ -58,10 +57,29 @@ public class PanicSequenceDetector {
 			Log.w(TAG, "Could not read the panic settings", e);
 			result = new LoadResult(new ArrayList<>(), false, true);
 		}
+		if (result.loadError && !result.enabled) {
+			// Distinguish this in the log from a trigger that was simply never
+			// set up. What the user sees is the warning on the panic settings
+			// screen, which reaches the same conclusion from the same rule.
+			Log.w(TAG, "Panic trigger is disarmed because a setting could " +
+					"not be read");
+		}
 		sequence = result.sequence;
 		enabled = result.enabled;
-		loadError = result.loadError;
 		reset();
+	}
+
+	/**
+	 * Whether the stored enabled flag leaves the trigger switched on.
+	 * <p>
+	 * Absent means it was never turned off, and unreadable tells us nothing
+	 * that would justify turning it off, so both leave it on. Only an explicit
+	 * stored value other than "true" switches it off. The panic settings and
+	 * the PTT conflict check apply this same rule, so it lives here rather
+	 * than in each of them.
+	 */
+	public static boolean isTriggerEnabled(SecureValue enabledValue) {
+		return !enabledValue.isPresent() || "true".equals(enabledValue.get());
 	}
 
 	/**
@@ -77,8 +95,7 @@ public class PanicSequenceDetector {
 	 */
 	static LoadResult resolveLoad(SecureValue enabledValue,
 			SecureValue sequenceValue) {
-		boolean prefEnabled = !enabledValue.isPresent() ||
-				"true".equals(enabledValue.get());
+		boolean prefEnabled = isTriggerEnabled(enabledValue);
 		boolean loadError =
 				enabledValue.isUnreadable() || sequenceValue.isUnreadable();
 
@@ -88,15 +105,6 @@ public class PanicSequenceDetector {
 			return new LoadResult(steps, steps.size() >= 3, loadError);
 		}
 		return new LoadResult(new ArrayList<>(), false, loadError);
-	}
-
-	/**
-	 * Whether the last {@link #loadSequence(Context)} hit a setting it could
-	 * not read. The detector may be disarmed as a result, and settings shows
-	 * this so it does not look like panic was simply never configured.
-	 */
-	public boolean hasLoadError() {
-		return loadError;
 	}
 
 	static final class LoadResult {

@@ -47,27 +47,17 @@ public class SecureValueTest {
 		assertGetThrows(SecureValue.unreadable("decryption failed"));
 	}
 
-	@Test
-	public void orIfAbsentSuppliesTheDefaultOnlyForAbsent() {
-		assertEquals("stored",
-				SecureValue.present("stored").orIfAbsent("fallback"));
-		assertEquals("fallback",
-				SecureValue.absent().orIfAbsent("fallback"));
-	}
-
 	/**
-	 * The point of the type. A caller that wants a default for "never set"
-	 * must still say what it wants for "could not be read", rather than
-	 * getting the same answer for both by accident.
+	 * The reason is for diagnosis, so it has to reach the exception a caller
+	 * would actually see.
 	 */
 	@Test
-	public void orIfAbsentRefusesToDefaultAnUnreadableValue() {
+	public void refusingToReadAnUnreadableValueExplainsWhy() {
 		try {
-			SecureValue.unreadable("decryption failed").orIfAbsent("fallback");
-			fail("orIfAbsent silently supplied a default for an unreadable " +
-					"value, which is the ambiguity this type removes");
-		} catch (IllegalStateException expected) {
-			// what we want
+			SecureValue.unreadable("record has no separator").get();
+			fail("expected IllegalStateException");
+		} catch (IllegalStateException e) {
+			assertTrue(e.getMessage().contains("record has no separator"));
 		}
 	}
 

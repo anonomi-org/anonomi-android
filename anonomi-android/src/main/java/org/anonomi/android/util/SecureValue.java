@@ -13,10 +13,12 @@ import androidx.annotation.Nullable;
  * security settings" as "you have no security settings", which is how a
  * configured panic action used to degrade into the weakest one.
  * <p>
- * Callers must decide for themselves what {@link State#UNREADABLE} means, so
- * {@link #orIfAbsent(String)} deliberately refuses to supply a default for it.
- * There is no accessor that returns the value or {@code null}: that would
- * restore the ambiguity this type exists to remove.
+ * Callers must decide for themselves what {@link State#UNREADABLE} means, and
+ * the type gives them no way round it. There is no accessor that returns the
+ * value or {@code null}, and none that supplies a default, because either one
+ * would let "could not be read" quietly collapse back into "not set" - the
+ * ambiguity this type exists to remove. Reading means asking which of the
+ * three states you are in.
  */
 public final class SecureValue {
 
@@ -84,45 +86,16 @@ public final class SecureValue {
 
 	/**
 	 * @throws IllegalStateException unless this value is
-	 * {@link State#PRESENT}. Check {@link #isPresent()} first, or use
-	 * {@link #orIfAbsent(String)}.
+	 * {@link State#PRESENT}. Check {@link #isPresent()} first.
 	 */
 	public String get() {
 		if (state != State.PRESENT) {
 			throw new IllegalStateException(
-					"No value to read; state is " + state);
+					"No value to read; state is " + state +
+							(reason == null ? "" : ": " + reason));
 		}
 		//noinspection ConstantConditions - PRESENT always carries a value
 		return value;
-	}
-
-	/**
-	 * Returns the stored value if it is {@link State#PRESENT}, or
-	 * {@code fallback} if nothing has ever been stored.
-	 *
-	 * @throws IllegalStateException if the value is
-	 * {@link State#UNREADABLE}. An unreadable value is not an unset one, and
-	 * the caller has to say what it wants to happen instead.
-	 */
-	public String orIfAbsent(String fallback) {
-		switch (state) {
-			case PRESENT:
-				//noinspection ConstantConditions
-				return value;
-			case ABSENT:
-				return fallback;
-			default:
-				throw new IllegalStateException(
-						"Value is unreadable, not absent: " + reason);
-		}
-	}
-
-	/**
-	 * Why the value could not be read, or null if it could.
-	 */
-	@Nullable
-	public String getReason() {
-		return reason;
 	}
 
 	/**

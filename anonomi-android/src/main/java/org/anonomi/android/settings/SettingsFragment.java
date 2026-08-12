@@ -171,10 +171,9 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 	private boolean isPttConflictWithPanic(String pttValue) {
 		SecurePrefsManager securePrefs =
 				new SecurePrefsManager(requireContext());
-		SecureValue enabledValue = securePrefs.read(
-				PanicSequenceDetector.PREF_KEY_PANIC_ENABLED);
-		boolean panicEnabled = !enabledValue.isPresent() ||
-				"true".equals(enabledValue.get());
+		boolean panicEnabled = PanicSequenceDetector.isTriggerEnabled(
+				securePrefs.read(
+						PanicSequenceDetector.PREF_KEY_PANIC_ENABLED));
 		if (!panicEnabled) return false;
 
 		SecureValue sequenceValue = securePrefs.read(

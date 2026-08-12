@@ -46,10 +46,8 @@ public class PanicPreferencesFragment extends PreferenceFragmentCompat {
 		panicActionPref = findPreference(KEY_PANIC_ACTION_LIST);
 
 		if (enabledPref != null) {
-			SecureValue enabledValue =
-					securePrefs.read(PREF_KEY_PANIC_ENABLED);
-			boolean isEnabled = !enabledValue.isPresent() ||
-					"true".equals(enabledValue.get());
+			boolean isEnabled = PanicSequenceDetector.isTriggerEnabled(
+					securePrefs.read(PREF_KEY_PANIC_ENABLED));
 			enabledPref.setChecked(isEnabled);
 			updateDependentPrefs(isEnabled);
 

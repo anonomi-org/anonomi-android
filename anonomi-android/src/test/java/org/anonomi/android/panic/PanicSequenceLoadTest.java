@@ -77,6 +77,26 @@ public class PanicSequenceLoadTest {
 		assertFalse(result.loadError);
 	}
 
+	/**
+	 * The rule the panic settings screen and the PTT conflict check share
+	 * with the detector. Neither "never set" nor "cannot be read" is a reason
+	 * to treat the trigger as switched off - only an explicit stored value
+	 * that is not "true".
+	 */
+	@Test
+	public void onlyAnExplicitStoredValueCanDisableTheTrigger() {
+		assertTrue(PanicSequenceDetector
+				.isTriggerEnabled(SecureValue.present("true")));
+		assertFalse(PanicSequenceDetector
+				.isTriggerEnabled(SecureValue.present("false")));
+		assertTrue("Never setting the flag switched the trigger off",
+				PanicSequenceDetector
+						.isTriggerEnabled(SecureValue.absent()));
+		assertTrue("An unreadable flag switched the trigger off",
+				PanicSequenceDetector.isTriggerEnabled(
+						SecureValue.unreadable("decryption failed")));
+	}
+
 	@Test
 	public void anEmptySequenceIsNotAnError() {
 		LoadResult result = PanicSequenceDetector.resolveLoad(
