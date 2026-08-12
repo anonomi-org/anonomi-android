@@ -186,12 +186,20 @@ class AccountManagerImpl implements AccountManager {
 	}
 
 	@Override
+	public void deleteDatabaseKey() {
+		synchronized (stateChangeLock) {
+			LOG.info("Deleting database key");
+			IoUtils.deleteFileOrDir(databaseConfig.getDatabaseKeyDirectory());
+			databaseKey = null;
+		}
+	}
+
+	@Override
 	public void deleteAccount() {
 		synchronized (stateChangeLock) {
 			LOG.info("Deleting account");
-			IoUtils.deleteFileOrDir(databaseConfig.getDatabaseKeyDirectory());
+			deleteDatabaseKey();
 			IoUtils.deleteFileOrDir(databaseConfig.getDatabaseDirectory());
-			databaseKey = null;
 		}
 	}
 

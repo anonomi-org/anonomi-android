@@ -20,16 +20,21 @@ import org.anonchatsecure.bramble.BrambleCoreEagerSingletons;
 import org.anonchatsecure.anonchat.BriarCoreEagerSingletons;
 import org.anonomi.R;
 import org.anonomi.android.logging.CachingLogHandler;
+import org.anonomi.android.panic.InterruptedPanicWipe;
 import org.anonomi.android.util.UiUtils;
 import org.anonomi.android.util.VoiceCacheCleaner;
 
 import java.lang.Thread.UncaughtExceptionHandler;
+import java.util.List;
 import java.util.logging.Handler;
 import java.util.logging.Logger;
 
 import androidx.annotation.NonNull;
 
 import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND;
+import static android.content.Context.ACTIVITY_SERVICE;
+import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Process.myPid;
 import static java.util.logging.Level.FINE;
 import static java.util.logging.Level.INFO;
 import static java.util.logging.Logger.getLogger;
@@ -68,6 +73,14 @@ public class AnonChatApplicationImpl extends Application
 				applicationComponent.exceptionHandler();
 		Thread.setDefaultUncaughtExceptionHandler(exceptionHandler);
 
+		// Before anything can offer to create an account, and only in the
+		// main process: the crash reporter and the startup failure screen run
+		// in their own, and two of them deleting at once helps nobody
+		if (isMainProcess()) {
+			InterruptedPanicWipe.finish(this,
+					applicationComponent.accountManager());
+		}
+
 		Logger rootLogger = getLogger("");
 		Handler[] handlers = rootLogger.getHandlers();
 		// Disable the Android logger for release builds
@@ -88,6 +101,22 @@ public class AnonChatApplicationImpl extends Application
 		EmojiManager.install(new GoogleEmojiProvider());
 
 		VoiceCacheCleaner.cleanupOldVoiceFiles(getApplicationContext());
+	}
+
+	private boolean isMainProcess() {
+		String packageName = getPackageName();
+		if (SDK_INT >= 28) return packageName.equals(getProcessName());
+		ActivityManager am =
+				(ActivityManager) getSystemService(ACTIVITY_SERVICE);
+		if (am == null) return true;
+		List<RunningAppProcessInfo> running = am.getRunningAppProcesses();
+		if (running == null) return true;
+		for (RunningAppProcessInfo info : running) {
+			if (info.pid == myPid()) {
+				return packageName.equals(info.processName);
+			}
+		}
+		return true;
 	}
 
 	protected AndroidComponent createApplicationComponent() {

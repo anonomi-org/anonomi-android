@@ -339,6 +339,79 @@ public class AccountManagerImplTest extends BrambleMockTestCase {
 		assertEquals(newEncryptedKeyHex, loadDatabaseKey(keyBackupFile));
 	}
 
+	/**
+	 * Deleting the key is enough to put an account beyond recovery, and it is
+	 * a couple of small files rather than the whole database. Callers that
+	 * need that to have happened promptly can ask for it on its own.
+	 */
+	@Test
+	public void testDeleteDatabaseKeyDeletesBothCopies() throws Exception {
+		File dbFile = new File(dbDir, "db.mv.db");
+		storeDatabaseKey(dbFile, encryptedKeyHex);
+		signIn();
+
+		accountManager.deleteDatabaseKey();
+
+		assertFalse(keyFile.exists());
+		assertFalse(keyBackupFile.exists());
+		// The copy held in memory has to go too, or the process that is
+		// still running can carry on reading the database
+		assertFalse(accountManager.hasDatabaseKey());
+		assertFalse(accountManager.accountExists());
+		// The database cannot be read without the key, so deleting it is not
+		// part of the same piece of work
+		assertTrue(dbFile.exists());
+	}
+
+	/**
+	 * A wipe that was interrupted starts again from the beginning, so this
+	 * has to be safe to repeat.
+	 */
+	@Test
+	public void testDeleteDatabaseKeyCanBeRepeated() throws Exception {
+		signIn();
+
+		accountManager.deleteDatabaseKey();
+		accountManager.deleteDatabaseKey();
+
+		assertFalse(accountManager.hasDatabaseKey());
+		assertFalse(accountManager.accountExists());
+	}
+
+	@Test
+	public void testDeleteAccountDeletesTheKeyAndTheDatabase()
+			throws Exception {
+		File dbFile = new File(dbDir, "db.mv.db");
+		storeDatabaseKey(dbFile, encryptedKeyHex);
+		signIn();
+
+		accountManager.deleteAccount();
+
+		assertFalse(keyFile.exists());
+		assertFalse(keyBackupFile.exists());
+		assertFalse(dbFile.exists());
+		assertFalse(accountManager.hasDatabaseKey());
+		assertFalse(accountManager.accountExists());
+	}
+
+	/**
+	 * Puts a key on disk and in memory, so that deleting it has both to
+	 * remove.
+	 */
+	private void signIn() throws Exception {
+		context.checking(new Expectations() {{
+			oneOf(crypto).decryptWithPassword(encryptedKey, password,
+					keyStrengthener);
+			will(returnValue(key.getBytes()));
+			oneOf(crypto).isEncryptedWithStrengthenedKey(encryptedKey);
+			will(returnValue(true));
+		}});
+		storeDatabaseKey(keyFile, encryptedKeyHex);
+		storeDatabaseKey(keyBackupFile, encryptedKeyHex);
+		accountManager.signIn(password);
+		assertTrue(accountManager.hasDatabaseKey());
+	}
+
 	private void storeDatabaseKey(File f, String hex) throws IOException {
 		f.getParentFile().mkdirs();
 		FileOutputStream out = new FileOutputStream(f);

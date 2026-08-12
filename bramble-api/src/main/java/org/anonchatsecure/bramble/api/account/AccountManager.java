@@ -44,6 +44,16 @@ public interface AccountManager {
 	boolean createAccount(String name, String password);
 
 	/**
+	 * Deletes the encrypted database key from disk, leaving the rest of the
+	 * account's state where it is. The state is encrypted with the key, so it
+	 * cannot be read back afterwards and {@link #accountExists()} will return
+	 * false. Deleting the key is a small enough piece of work to be worth
+	 * separating from {@link #deleteAccount()} where it has to happen
+	 * promptly. Does nothing if the key is already gone.
+	 */
+	void deleteDatabaseKey();
+
+	/**
 	 * Deletes all account state from disk. {@link #accountExists()} will
 	 * return false after this method returns.
 	 */
