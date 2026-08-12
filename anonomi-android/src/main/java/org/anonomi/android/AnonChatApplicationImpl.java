@@ -20,6 +20,7 @@ import org.anonchatsecure.bramble.BrambleCoreEagerSingletons;
 import org.anonchatsecure.anonchat.BriarCoreEagerSingletons;
 import org.anonomi.R;
 import org.anonomi.android.logging.CachingLogHandler;
+import org.anonomi.android.panic.InterruptedPanicWipe;
 import org.anonomi.android.util.UiUtils;
 import org.anonomi.android.util.VoiceCacheCleaner;
 
@@ -64,6 +65,9 @@ public class AnonChatApplicationImpl extends Application
 		if (IS_DEBUG_BUILD) enableStrictMode();
 
 		applicationComponent = createApplicationComponent();
+		// Before anything can offer to create an account
+		InterruptedPanicWipe.finish(this,
+				applicationComponent.accountManager());
 		UncaughtExceptionHandler exceptionHandler =
 				applicationComponent.exceptionHandler();
 		Thread.setDefaultUncaughtExceptionHandler(exceptionHandler);

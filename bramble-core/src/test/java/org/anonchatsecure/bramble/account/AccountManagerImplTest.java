@@ -339,6 +339,62 @@ public class AccountManagerImplTest extends BrambleMockTestCase {
 		assertEquals(newEncryptedKeyHex, loadDatabaseKey(keyBackupFile));
 	}
 
+	/**
+	 * Deleting the key is enough to put an account beyond recovery, and it is
+	 * a couple of small files rather than the whole database. Callers that
+	 * need that to have happened promptly can ask for it on its own.
+	 */
+	@Test
+	public void testDeleteDatabaseKeyDeletesBothCopies() throws Exception {
+		storeDatabaseKey(keyFile, encryptedKeyHex);
+		storeDatabaseKey(keyBackupFile, encryptedKeyHex);
+		File dbFile = new File(dbDir, "db.mv.db");
+		storeDatabaseKey(dbFile, encryptedKeyHex);
+
+		accountManager.deleteDatabaseKey();
+
+		assertFalse(keyFile.exists());
+		assertFalse(keyBackupFile.exists());
+		assertFalse(accountManager.hasDatabaseKey());
+		assertFalse(accountManager.accountExists());
+		// The database cannot be read without the key, so deleting it is not
+		// part of the same piece of work
+		assertTrue(dbFile.exists());
+	}
+
+	/**
+	 * A wipe that was interrupted starts again from the beginning, so this
+	 * has to be safe to repeat.
+	 */
+	@Test
+	public void testDeleteDatabaseKeyCanBeRepeated() throws Exception {
+		storeDatabaseKey(keyFile, encryptedKeyHex);
+		storeDatabaseKey(keyBackupFile, encryptedKeyHex);
+
+		accountManager.deleteDatabaseKey();
+		accountManager.deleteDatabaseKey();
+
+		assertFalse(accountManager.hasDatabaseKey());
+		assertFalse(accountManager.accountExists());
+	}
+
+	@Test
+	public void testDeleteAccountDeletesTheKeyAndTheDatabase()
+			throws Exception {
+		storeDatabaseKey(keyFile, encryptedKeyHex);
+		storeDatabaseKey(keyBackupFile, encryptedKeyHex);
+		File dbFile = new File(dbDir, "db.mv.db");
+		storeDatabaseKey(dbFile, encryptedKeyHex);
+
+		accountManager.deleteAccount();
+
+		assertFalse(keyFile.exists());
+		assertFalse(keyBackupFile.exists());
+		assertFalse(dbFile.exists());
+		assertFalse(accountManager.hasDatabaseKey());
+		assertFalse(accountManager.accountExists());
+	}
+
 	private void storeDatabaseKey(File f, String hex) throws IOException {
 		f.getParentFile().mkdirs();
 		FileOutputStream out = new FileOutputStream(f);
