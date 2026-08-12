@@ -41,7 +41,7 @@ public class ExpiredActivity extends AppCompatActivity
 
 	@Override
 	public void onClick(View v) {
-		Uri uri = Uri.parse("https://anonchat/download");
+		Uri uri = Uri.parse("https://anonomi.org/docs/downloads/");
 		startActivity(new Intent(ACTION_VIEW, uri));
 		finish();
 	}

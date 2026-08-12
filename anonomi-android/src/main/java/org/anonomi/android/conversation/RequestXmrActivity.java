@@ -374,6 +374,10 @@ public class RequestXmrActivity extends BriarActivity {
 					Log.w("QRDebug", "Error parsing minor index: " + minorStr, e);
 				}
 			}
+			if (minor < 0 || minor == Integer.MAX_VALUE) {
+				abortGenerate(R.string.minor_index_invalid);
+				return;
+			}
 			minor++;  // increment for sequential
 			currentMinorIndex = minor;
 		}
@@ -494,10 +498,20 @@ public class RequestXmrActivity extends BriarActivity {
 	 * link their payments to the same wallet.
 	 */
 	private void persistMinorIndex() {
-		if (!radioSequential.isChecked()) return;
 		SecurePrefsManager securePrefs = new SecurePrefsManager(this);
-		securePrefs.putEncrypted(PREF_KEY_MINOR_INDEX,
-				String.valueOf(currentMinorIndex));
+		SecureValue stored = securePrefs.read(PREF_KEY_MINOR_INDEX);
+		// Only ever move forward, so an index used in either mode is not
+		// handed out again by the other.
+		int highest = currentMinorIndex;
+		if (stored.isPresent()) {
+			try {
+				highest = Math.max(highest, Integer.parseInt(stored.get()));
+			} catch (NumberFormatException ignored) {
+			}
+		} else if (stored.isUnreadable()) {
+			return;
+		}
+		securePrefs.putEncrypted(PREF_KEY_MINOR_INDEX, String.valueOf(highest));
 	}
 
 
