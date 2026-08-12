@@ -10,6 +10,7 @@ import org.anonomi.R;
 import org.anonomi.android.activity.ActivityComponent;
 import org.anonomi.android.activity.BriarActivity;
 import org.anonomi.android.util.SecurePrefsManager;
+import org.anonomi.android.util.SecureValue;
 import org.anonchatsecure.bramble.api.contact.Contact;
 import org.anonchatsecure.bramble.api.contact.ContactId;
 import org.anonchatsecure.bramble.api.contact.ContactManager;
@@ -69,12 +70,11 @@ public class PanicResponderActivity extends BriarActivity {
 		Log.d("PanicResponder", "Panic trigger accepted!");
 
 		// Check for action override from PanicDialogHelper (dialog choice)
-		String action = intent.getStringExtra(EXTRA_PANIC_ACTION);
-		if (action == null) {
-			SecurePrefsManager securePrefs = new SecurePrefsManager(this);
-			action = securePrefs.getDecrypted(PREF_KEY_PANIC_ACTION);
-		}
-		if (action == null) action = ACTION_SIGN_OUT;
+		String override = intent.getStringExtra(EXTRA_PANIC_ACTION);
+		SecureValue stored = override == null
+				? new SecurePrefsManager(this).read(PREF_KEY_PANIC_ACTION)
+				: SecureValue.absent();
+		String action = PanicActionPolicy.resolve(override, stored);
 
 		sendPanicMessages();
 		long delayMillis = panicMessagesSent ? 5000 : 0;

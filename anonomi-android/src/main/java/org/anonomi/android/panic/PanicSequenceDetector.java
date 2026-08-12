@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.KeyEvent;
 
 import org.anonomi.android.util.SecurePrefsManager;
+import org.anonomi.android.util.SecureValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,23 +42,51 @@ public class PanicSequenceDetector {
 	}
 
 	public void loadSequence(Context context) {
+		LoadResult result;
 		try {
 			SecurePrefsManager securePrefs = new SecurePrefsManager(context);
-			String enabledStr = securePrefs.getDecrypted(PREF_KEY_PANIC_ENABLED);
-			boolean prefEnabled = enabledStr == null || "true".equals(enabledStr);
-			String raw = securePrefs.getDecrypted(PREF_KEY_PANIC_SEQUENCE);
-			if (prefEnabled && raw != null && !raw.isEmpty()) {
-				sequence = deserializeSequence(raw);
-				enabled = sequence.size() >= 3;
-			} else {
-				sequence = new ArrayList<>();
-				enabled = false;
-			}
-		} catch (Exception e) {
-			sequence = new ArrayList<>();
-			enabled = false;
+			result = resolveLoad(
+					securePrefs.read(PREF_KEY_PANIC_ENABLED),
+					securePrefs.read(PREF_KEY_PANIC_SEQUENCE));
+		} catch (RuntimeException e) {
+			// Secure storage itself is unavailable, so there is no sequence to
+			// match against.
+			result = new LoadResult(new ArrayList<>(), false);
 		}
+		sequence = result.sequence;
+		enabled = result.enabled;
 		reset();
+	}
+
+	/**
+	 * Works out the detector state implied by the two stored settings. Kept
+	 * free of Android types so it can be tested directly.
+	 */
+	static LoadResult resolveLoad(SecureValue enabledValue,
+			SecureValue sequenceValue) {
+		// TODO: an unreadable setting is treated exactly like an unset one
+		// here, so a storage failure silently turns panic off. Preserved so
+		// that extracting this method changes no behaviour; fixed in the
+		// following commit.
+		boolean prefEnabled = !enabledValue.isPresent() ||
+				"true".equals(enabledValue.get());
+		String raw = sequenceValue.isPresent() ? sequenceValue.get() : null;
+		if (prefEnabled && raw != null && !raw.isEmpty()) {
+			List<Step> steps = deserializeSequence(raw);
+			return new LoadResult(steps, steps.size() >= 3);
+		}
+		return new LoadResult(new ArrayList<>(), false);
+	}
+
+	static final class LoadResult {
+
+		final List<Step> sequence;
+		final boolean enabled;
+
+		LoadResult(List<Step> sequence, boolean enabled) {
+			this.sequence = sequence;
+			this.enabled = enabled;
+		}
 	}
 
 	public void setListener(PanicTriggerListener listener) {

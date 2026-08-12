@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import org.anonomi.R;
 import org.anonomi.android.util.SecurePrefsManager;
+import org.anonomi.android.util.SecureValue;
 
 import java.util.List;
 
@@ -45,8 +46,10 @@ public class PanicPreferencesFragment extends PreferenceFragmentCompat {
 		panicActionPref = findPreference(KEY_PANIC_ACTION_LIST);
 
 		if (enabledPref != null) {
-			String enabledStr = securePrefs.getDecrypted(PREF_KEY_PANIC_ENABLED);
-			boolean isEnabled = enabledStr == null || "true".equals(enabledStr);
+			SecureValue enabledValue =
+					securePrefs.read(PREF_KEY_PANIC_ENABLED);
+			boolean isEnabled = !enabledValue.isPresent() ||
+					"true".equals(enabledValue.get());
 			enabledPref.setChecked(isEnabled);
 			updateDependentPrefs(isEnabled);
 
@@ -103,13 +106,10 @@ public class PanicPreferencesFragment extends PreferenceFragmentCompat {
 
 		if (panicActionPref != null) {
 			// Load current action value from encrypted prefs
-			String currentAction =
-					securePrefs.getDecrypted(PREF_KEY_PANIC_ACTION);
-			if (currentAction != null) {
-				panicActionPref.setValue(currentAction);
-			} else {
-				panicActionPref.setValue(ACTION_SIGN_OUT);
-			}
+			SecureValue storedAction =
+					securePrefs.read(PREF_KEY_PANIC_ACTION);
+			panicActionPref.setValue(storedAction.isPresent()
+					? storedAction.get() : ACTION_SIGN_OUT);
 			updateActionSummary(panicActionPref.getValue());
 
 			panicActionPref.setOnPreferenceChangeListener((pref, newValue) -> {
@@ -123,7 +123,9 @@ public class PanicPreferencesFragment extends PreferenceFragmentCompat {
 
 	private void updateSequenceDisplay() {
 		if (recordSequencePref == null) return;
-		String raw = securePrefs.getDecrypted(PREF_KEY_PANIC_SEQUENCE);
+		SecureValue sequenceValue =
+				securePrefs.read(PREF_KEY_PANIC_SEQUENCE);
+		String raw = sequenceValue.isPresent() ? sequenceValue.get() : null;
 		if (raw != null && !raw.isEmpty()) {
 			List<PanicSequenceDetector.Step> steps =
 					PanicSequenceDetector.deserializeSequence(raw);
@@ -174,8 +176,11 @@ public class PanicPreferencesFragment extends PreferenceFragmentCompat {
 	}
 
 	private boolean isPanicConflictWithPtt() {
-		String raw = securePrefs.getDecrypted(PREF_KEY_PANIC_SEQUENCE);
-		if (raw == null || raw.isEmpty()) return false;
+		SecureValue sequenceValue =
+				securePrefs.read(PREF_KEY_PANIC_SEQUENCE);
+		if (!sequenceValue.isPresent()) return false;
+		String raw = sequenceValue.get();
+		if (raw.isEmpty()) return false;
 
 		List<PanicSequenceDetector.Step> steps =
 				PanicSequenceDetector.deserializeSequence(raw);

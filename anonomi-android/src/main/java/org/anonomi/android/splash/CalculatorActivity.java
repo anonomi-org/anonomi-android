@@ -15,6 +15,7 @@ import org.anonomi.android.panic.PanicResponderActivity;
 import org.anonomi.android.panic.PanicSequenceDetector;
 import org.anonomi.android.settings.SecurityFragment;
 import org.anonomi.android.util.SecurePrefsManager;
+import org.anonomi.android.util.SecureValue;
 
 public class CalculatorActivity extends AppCompatActivity {
 
@@ -154,9 +155,14 @@ public class CalculatorActivity extends AppCompatActivity {
 
 	private void checkPasscode(String userExpression) {
 		SecurePrefsManager securePrefs = new SecurePrefsManager(this);
-		String savedExpression = securePrefs.getDecrypted(SecurityFragment.PREF_KEY_CALCULATOR_PASSCODE);
+		SecureValue stored = securePrefs
+				.read(SecurityFragment.PREF_KEY_CALCULATOR_PASSCODE);
 
-		if (savedExpression == null || savedExpression.isEmpty()) {
+		// An unreadable passcode must not unlock, and must not say so: this
+		// screen has to look like a calculator either way.
+		if (!stored.isPresent()) return;
+		String savedExpression = stored.get();
+		if (savedExpression.isEmpty()) {
 			return;
 		}
 

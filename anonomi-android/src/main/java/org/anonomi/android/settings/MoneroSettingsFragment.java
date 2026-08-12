@@ -10,6 +10,7 @@ import org.anonomi.R;
 import org.briarproject.nullsafety.MethodsNotNullByDefault;
 import org.briarproject.nullsafety.ParametersNotNullByDefault;
 import org.anonomi.android.util.SecurePrefsManager;
+import org.anonomi.android.util.SecureValue;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import org.anonomi.android.xmr.AnonMoneroUtils;
@@ -47,9 +48,9 @@ public class MoneroSettingsFragment extends PreferenceFragmentCompat {
 		EditTextPreference minorPref = findPreference(PREF_KEY_MINOR_INDEX);
 
 		if (addressPref != null) {
-			String decryptedAddress = securePrefs.getDecrypted(PREF_KEY_PRIMARY_ADDRESS);
-			if (decryptedAddress != null) {
-				addressPref.setText(decryptedAddress);
+			SecureValue address = securePrefs.read(PREF_KEY_PRIMARY_ADDRESS);
+			if (address.isPresent()) {
+				addressPref.setText(address.get());
 			}
 			addressPref.setSummaryProvider(EditTextPreference.SimpleSummaryProvider.getInstance());
 
@@ -66,9 +67,9 @@ public class MoneroSettingsFragment extends PreferenceFragmentCompat {
 		}
 
 		if (viewKeyPref != null) {
-			String decryptedViewKey = securePrefs.getDecrypted(PREF_KEY_PRIVATE_VIEW_KEY);
-			if (decryptedViewKey != null) {
-				viewKeyPref.setText(decryptedViewKey);
+			SecureValue viewKey = securePrefs.read(PREF_KEY_PRIVATE_VIEW_KEY);
+			if (viewKey.isPresent()) {
+				viewKeyPref.setText(viewKey.get());
 			}
 			viewKeyPref.setSummaryProvider(EditTextPreference.SimpleSummaryProvider.getInstance());
 
@@ -85,9 +86,9 @@ public class MoneroSettingsFragment extends PreferenceFragmentCompat {
 		}
 
 		if (minorPref != null) {
-			String decryptedMinorIndex = securePrefs.getDecrypted(PREF_KEY_MINOR_INDEX);
-			if (decryptedMinorIndex != null) {
-				minorPref.setText(decryptedMinorIndex);
+			SecureValue minorIndex = securePrefs.read(PREF_KEY_MINOR_INDEX);
+			if (minorIndex.isPresent()) {
+				minorPref.setText(minorIndex.get());
 			}
 			minorPref.setSummaryProvider(EditTextPreference.SimpleSummaryProvider.getInstance());
 

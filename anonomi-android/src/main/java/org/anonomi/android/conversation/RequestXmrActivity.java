@@ -36,6 +36,11 @@ import org.anonchatsecure.anonchat.api.messaging.PrivateMessageFactory;
 import org.anonchatsecure.anonchat.api.attachment.AttachmentHeader;
 
 import org.anonomi.android.util.SecurePrefsManager;
+import org.anonomi.android.util.SecureValue;
+
+import static org.anonomi.android.settings.MoneroSettingsFragment.PREF_KEY_MINOR_INDEX;
+import static org.anonomi.android.settings.MoneroSettingsFragment.PREF_KEY_PRIMARY_ADDRESS;
+import static org.anonomi.android.settings.MoneroSettingsFragment.PREF_KEY_PRIVATE_VIEW_KEY;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -281,8 +286,14 @@ public class RequestXmrActivity extends BriarActivity {
 		SecurePrefsManager securePrefs = new SecurePrefsManager(this);
 
 		// ✅ 1️⃣ Load primary address and private view key
-		String primaryAddress = securePrefs.getDecrypted("pref_key_primary_address");
-		String privateViewKeyHex = securePrefs.getDecrypted("pref_key_private_view_key");
+		SecureValue addressValue =
+				securePrefs.read(PREF_KEY_PRIMARY_ADDRESS);
+		SecureValue viewKeyValue =
+				securePrefs.read(PREF_KEY_PRIVATE_VIEW_KEY);
+		String primaryAddress =
+				addressValue.isPresent() ? addressValue.get() : null;
+		String privateViewKeyHex =
+				viewKeyValue.isPresent() ? viewKeyValue.get() : null;
 
 		// ✅ 2️⃣ Early checks
 		if (primaryAddress == null || primaryAddress.isEmpty() || privateViewKeyHex == null || privateViewKeyHex.isEmpty()) {
@@ -334,7 +345,9 @@ public class RequestXmrActivity extends BriarActivity {
 			currentMinorIndex = minor;  // For display
 		} else {
 			// Sequential mode: load from secure prefs
-			String minorStr = securePrefs.getDecrypted("pref_key_minor_index_key");
+			SecureValue minorValue = securePrefs.read(PREF_KEY_MINOR_INDEX);
+			String minorStr =
+					minorValue.isPresent() ? minorValue.get() : null;
 			minor = 1;
 			if (minorStr != null && !minorStr.isEmpty()) {
 				try {
@@ -454,7 +467,7 @@ public class RequestXmrActivity extends BriarActivity {
 	private void persistMinorIndex() {
 		if (!radioSequential.isChecked()) return;
 		SecurePrefsManager securePrefs = new SecurePrefsManager(this);
-		securePrefs.putEncrypted("pref_key_minor_index_key",
+		securePrefs.putEncrypted(PREF_KEY_MINOR_INDEX,
 				String.valueOf(currentMinorIndex));
 	}
 
