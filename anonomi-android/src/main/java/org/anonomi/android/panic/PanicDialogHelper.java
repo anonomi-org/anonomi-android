@@ -30,24 +30,17 @@ public class PanicDialogHelper {
 		if (ACTION_SHOW_DIALOG.equals(action)) {
 			showPanicDialog(activity);
 		} else {
-			showStatusAndLaunch(activity, action);
+			launchPanicResponder(activity, action);
 		}
 	}
 
-	private static void showStatusAndLaunch(Activity activity, String action) {
-		int messageRes = ACTION_DELETE_ACCOUNT.equals(action)
-				? R.string.panic_status_deleting
-				: R.string.panic_status_signing_out;
-
-		new MaterialAlertDialogBuilder(activity, R.style.AnonDialogTheme)
-				.setTitle(R.string.panic_dialog_title)
-				.setMessage(messageRes)
-				.setCancelable(false)
-				.show();
-
-		launchPanicResponder(activity, action);
-	}
-
+	/**
+	 * Nothing is shown while this runs. A dialog naming the app and saying an
+	 * account is being deleted would stay on screen for as long as the work
+	 * takes, on a device that is about to be handed over - and the person who
+	 * triggered it already knows what they did. The app disappearing is the
+	 * confirmation.
+	 */
 	private static void launchPanicResponder(Activity activity,
 			String actionOverride) {
 		Intent i = new Intent(activity, PanicResponderActivity.class);
@@ -125,11 +118,11 @@ public class PanicDialogHelper {
 		builder.setAdapter(adapter, (dialog, which) -> {
 			switch (which) {
 				case 0:
-					showStatusAndLaunch(activity,
+					launchPanicResponder(activity,
 							PanicSequenceDetector.ACTION_SIGN_OUT);
 					break;
 				case 1:
-					showStatusAndLaunch(activity,
+					launchPanicResponder(activity,
 							ACTION_DELETE_ACCOUNT);
 					break;
 				default:

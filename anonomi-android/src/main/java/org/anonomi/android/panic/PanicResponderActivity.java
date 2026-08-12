@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import org.anonomi.R;
+import org.anonomi.android.AnonChatApplication;
 import org.anonomi.android.activity.ActivityComponent;
 import org.anonomi.android.activity.BriarActivity;
 import org.anonomi.android.controller.AnonChatController;
-import org.anonomi.android.logout.ExitActivity;
 import org.anonomi.android.util.SecurePrefsManager;
 import org.anonomi.android.util.SecureValue;
 import org.anonchatsecure.bramble.api.account.AccountManager;
@@ -30,10 +30,6 @@ import java.util.logging.Logger;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 
-import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
-import static android.content.Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS;
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
-import static android.content.Intent.FLAG_ACTIVITY_NO_ANIMATION;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.logging.Level.WARNING;
 import static java.util.logging.Logger.getLogger;
@@ -147,8 +143,11 @@ public class PanicResponderActivity extends BriarActivity {
 		// from underneath it would do the most damage.
 		boolean unlocked = accountManager.hasDatabaseKey();
 		new PanicWipe(new WipeSteps(unlocked), new PanicWipeMarker(this),
-				wakefulExecutor())
-				.begin(() -> runOnUiThread(this::exitApp));
+				wakefulExecutor()).begin(this::exitProcess);
+		// begin() does not return until the account is beyond recovery, so
+		// the app can leave the screen now instead of waiting for the last
+		// file to go. What is left of the wipe carries on without a UI.
+		finishAndRemoveTask();
 	}
 
 	/**
@@ -167,11 +166,14 @@ public class PanicResponderActivity extends BriarActivity {
 		return task -> wakeLockManager.executeWakefully(task, "PanicResponder");
 	}
 
-	private void exitApp() {
-		Intent i = new Intent(this, ExitActivity.class);
-		i.addFlags(FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
-				| FLAG_ACTIVITY_NO_ANIMATION | FLAG_ACTIVITY_CLEAR_TASK);
-		startActivity(i);
+	/**
+	 * Ends the process once there is nothing left to delete. The task is
+	 * already gone by this point, so there is no activity to start and
+	 * nothing to bring back to the screen on the way out.
+	 */
+	private void exitProcess() {
+		AnonChatApplication app = (AnonChatApplication) getApplication();
+		if (!app.isInstrumentationTest()) System.exit(0);
 	}
 
 	private boolean sendPanicMessages() {
