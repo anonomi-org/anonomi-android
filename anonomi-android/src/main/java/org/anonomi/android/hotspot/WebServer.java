@@ -15,6 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -49,8 +50,10 @@ class WebServer extends NanoHTTPD {
 
 	/**
 	 * The bundled companion APKs, named by the exact request path each one is
-	 * offered under. {@link #setButton} writes these same names into the page
-	 * as hrefs, so the links and the allowlist cannot drift apart.
+	 * offered under. The same names are passed to {@link #setButton} to build
+	 * the page, so the two lists have to be kept in step by hand: adding an
+	 * asset here but not there widens what the server will hand out beyond
+	 * what it offers.
 	 */
 	private static final Set<String> APK_ASSETS =
 			unmodifiableSet(new HashSet<>(asList(
@@ -58,13 +61,6 @@ class WebServer extends NanoHTTPD {
 					"monerujo.apk",
 					"orbot.apk",
 					"tor-browser.apk")));
-
-	/**
-	 * The href the app's own download button carries in {@link #FILE_HTML}.
-	 * {@link #getHtml} rewrites it to the versioned file name before serving,
-	 * but the template ships this path, so it keeps resolving to our own APK.
-	 */
-	private static final String APP_APK = "app.apk";
 
 	/**
 	 * Tests whether a bundled asset is present in this build and really is an
@@ -144,9 +140,7 @@ class WebServer extends NanoHTTPD {
 			AssetCheck assetCheck) {
 		String name = fileName(uri);
 		if (name == null) return null;
-		if (name.equals(installedApkName) || name.equals(APP_APK)) {
-			return ApkRoute.INSTALLED_APK;
-		}
+		if (name.equals(installedApkName)) return ApkRoute.INSTALLED_APK;
 		if (!APK_ASSETS.contains(name)) return null;
 		// Never hand over an asset that is absent or is not really an APK.
 		// tor-browser.apk is stored in Git LFS and builds without the object
@@ -209,8 +203,18 @@ class WebServer extends NanoHTTPD {
 			return newFixedLengthResponse(NOT_FOUND, MIME_PLAINTEXT, NOT_FOUND.getDescription());
 		}
 
-		if (uri.endsWith(".apk")) {
-			return serveApkForUri(uri);
+		// The resolver alone decides what may be served, so that a request
+		// which looks like an APK can never fall through to the page instead
+		// of being refused.
+		ApkRoute route = resolveApk(uri, getApkFileName(), this::assetExists);
+		if (route != null) {
+			if (route.isInstalledApk()) return serveInstalledApk();
+			return serveAssetFile(requireNonNull(route.getAssetName()),
+					MIME_APK);
+		}
+		if (isApkRequest(uri)) {
+			return newFixedLengthResponse(NOT_FOUND, MIME_PLAINTEXT,
+					NOT_FOUND.getDescription());
 		}
 
 		try {
@@ -223,14 +227,14 @@ class WebServer extends NanoHTTPD {
 		}
 	}
 
-	private Response serveApkForUri(String uri) {
-		ApkRoute route = resolveApk(uri, getApkFileName(), this::assetExists);
-		if (route == null) {
-			return newFixedLengthResponse(NOT_FOUND, MIME_PLAINTEXT,
-					NOT_FOUND.getDescription());
-		}
-		if (route.isInstalledApk()) return serveInstalledApk();
-		return serveAssetFile(requireNonNull(route.getAssetName()), MIME_APK);
+	/**
+	 * True if the request asks for an APK by name, whatever it resolved to.
+	 * Matched case-insensitively so that this cannot disagree with
+	 * {@link #resolveApk} about whether a refusal or the page is the right
+	 * answer.
+	 */
+	private static boolean isApkRequest(String uri) {
+		return uri.toLowerCase(Locale.US).endsWith(".apk");
 	}
 
 	private Response serveInstalledApk() {
@@ -239,9 +243,9 @@ class WebServer extends NanoHTTPD {
 
 		try {
 			FileInputStream fis = new FileInputStream(file);
-			Response res = newFixedLengthResponse(OK, MIME_APK, fis, fileLen);
-			res.addHeader("Content-Length", String.valueOf(fileLen));
-			return res;
+			// No explicit Content-Length header: NanoHTTPD emits one from the
+			// length passed here, and adding it by hand emits it twice.
+			return newFixedLengthResponse(OK, MIME_APK, fis, fileLen);
 		} catch (FileNotFoundException e) {
 			logException(LOG, WARNING, e);
 			return newFixedLengthResponse(NOT_FOUND, MIME_PLAINTEXT,
@@ -251,12 +255,11 @@ class WebServer extends NanoHTTPD {
 
 	private Response serveAssetFile(String assetName, String mime) {
 		try {
-			long length = assetLength(assetName);
 			InputStream is = ctx.getAssets().open(assetName);
+			long length = assetLength(assetName, is);
 			if (length < 0) {
-				// The build stored this asset compressed, so its real length is
-				// not available up front. Chunked transfer sends it without a
-				// Content-Length, which is correct; announcing a length we
+				// No exact length to be had. Chunked transfer is correct
+				// without a Content-Length, whereas announcing a length we
 				// cannot stand behind risks handing over a truncated APK.
 				return newChunkedResponse(OK, mime, is);
 			}
@@ -269,18 +272,31 @@ class WebServer extends NanoHTTPD {
 	}
 
 	/**
-	 * The exact length of a bundled asset, or -1 if it cannot be determined.
-	 * {@link android.content.res.AssetManager#openFd(String)} only succeeds for
-	 * assets the build stored uncompressed. The companion APKs are currently
-	 * deflated, so this returns -1 for them until the build declares them
-	 * noCompress.
+	 * The exact number of bytes {@code is} will yield, or -1 if that cannot be
+	 * established.
+	 * <p>
+	 * {@link android.content.res.AssetManager#openFd(String)} is the documented
+	 * way to ask, but it only succeeds for assets the build stored
+	 * uncompressed, and the companion APKs are currently deflated. For those,
+	 * AssetInputStream#available() reports the whole uncompressed length of a
+	 * freshly opened stream, so it is exact here even though InputStream in
+	 * general only promises an estimate. A saturated int is treated as unknown
+	 * rather than trusted, since that is the one case where it would be short.
 	 */
-	private long assetLength(String assetName) {
+	private long assetLength(String assetName, InputStream is) {
 		try (AssetFileDescriptor afd = ctx.getAssets().openFd(assetName)) {
-			return afd.getLength();
+			long length = afd.getLength();
+			if (length >= 0) return length;
 		} catch (IOException e) {
-			return -1;
+			// stored compressed, so fall back to the stream
 		}
+		try {
+			int available = is.available();
+			if (available > 0 && available < Integer.MAX_VALUE) return available;
+		} catch (IOException e) {
+			// fall through to the chunked path
+		}
+		return -1;
 	}
 
 	private String getHtml(@Nullable String userAgent) throws Exception {
@@ -299,7 +315,10 @@ class WebServer extends NanoHTTPD {
 		if (httpNotice != null) {
 			httpNotice.text(ctx.getString(R.string.website_http_notice));
 		}
-		requireNonNull(doc.selectFirst(".button")).attr("href", filename);
+		// Root-absolute, like the hrefs the template ships: the resolver only
+		// accepts top-level names, so a relative href would break the download
+		// for anyone who loaded the page at anything but "/".
+		requireNonNull(doc.selectFirst(".button")).attr("href", "/" + filename);
 		requireNonNull(doc.selectFirst("#download_button"))
 				.text(ctx.getString(R.string.website_download_button));
 
@@ -336,7 +355,7 @@ class WebServer extends NanoHTTPD {
 			btn.remove();
 			return;
 		}
-		btn.attr("href", assetName);
+		btn.attr("href", "/" + assetName);
 		Element span = btn.selectFirst("span");
 		if (span != null) {
 			span.text(ctx.getString(textRes));

@@ -59,11 +59,11 @@ public class WebServerRoutingTest {
 	}
 
 	@Test
-	public void templateAppPathResolvesToInstalledApk() {
-		// hotspot.html ships href="/app.apk" on the app download button
-		ApkRoute route = resolveApk("/app.apk", INSTALLED_APK, ALL_PRESENT);
-		assertTrue("the template's own app href must serve the installed APK",
-				route != null && route.isInstalledApk());
+	public void unrewrittenTemplateAppPathIsNotServed() {
+		// hotspot.html ships href="/app.apk", but getHtml always rewrites it to
+		// the versioned name, so no served page ever links here and the server
+		// should not answer a path it never advertises
+		assertNull(resolveApk("/app.apk", INSTALLED_APK, ALL_PRESENT));
 	}
 
 	// --- no fall-through to the installed APK --------------------------------
