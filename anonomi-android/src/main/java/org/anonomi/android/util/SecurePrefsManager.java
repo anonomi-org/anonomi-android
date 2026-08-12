@@ -155,9 +155,12 @@ public class SecurePrefsManager {
 	 * value that afterwards looks authentic. That is worse than the same
 	 * attacker simply destroying the ciphertext, because destruction is now
 	 * visible: it reads as unreadable, panic fails strong, and settings says
-	 * so. Adoption is silent. The window is one run per install, it covers
-	 * only these four keys, and the keys worth planting - the stealth
-	 * passcode and the panic sequence - are not on the list.
+	 * so. Adoption is silent. The window is one run per install and covers
+	 * only these four keys. The stealth passcode and the panic sequence are
+	 * not among them - but pref_key_panic_action is, and planting sign_out
+	 * there downgrades a configured deletion into the weakest action while
+	 * afterwards looking authentic, which makes it the most valuable thing
+	 * an adversary could put in this set.
 	 */
 	private void migrateLegacyPlaintext() {
 		try {
