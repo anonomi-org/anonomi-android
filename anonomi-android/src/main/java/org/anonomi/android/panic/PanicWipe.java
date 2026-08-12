@@ -41,11 +41,19 @@ public class PanicWipe {
 		void destroyKey();
 
 		/**
-		 * Tells the contacts chosen for it that the trigger was used. Best
-		 * effort: it writes to the local database and delivery still depends
-		 * on the network afterwards, so there is no answer worth waiting for.
+		 * Tells the contacts chosen for it that the trigger was used.
+		 *
+		 * @return true if anything was queued that could still be delivered.
 		 */
-		void notifyPanicContacts();
+		boolean notifyPanicContacts();
+
+		/**
+		 * Gives whatever was queued its chance to leave the device before the
+		 * database holding it is deleted. Only worth doing once the key has
+		 * gone, which is what makes the wait affordable: an interruption
+		 * during it still leaves an account that cannot be recovered.
+		 */
+		void waitForDelivery();
 
 		/**
 		 * Shuts the services down and deletes the data the key protected.
@@ -88,7 +96,9 @@ public class PanicWipe {
 		marker.set();
 		steps.destroyKey();
 		executor.execute(() -> {
-			notifyQuietly();
+			// Nothing queued means nothing to wait for, and the sooner the
+			// rest of it is gone the better.
+			if (notifyQuietly()) steps.waitForDelivery();
 			finish(onComplete);
 		});
 	}
@@ -110,13 +120,14 @@ public class PanicWipe {
 		return true;
 	}
 
-	private void notifyQuietly() {
+	private boolean notifyQuietly() {
 		try {
-			steps.notifyPanicContacts();
+			return steps.notifyPanicContacts();
 		} catch (RuntimeException e) {
 			// Contacts are told as a courtesy. Failing to tell them is not a
 			// reason to leave the data on the device.
 			logException(LOG, WARNING, e);
+			return false;
 		}
 	}
 

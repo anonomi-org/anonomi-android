@@ -34,6 +34,7 @@ import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NO_ANIMATION;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.logging.Level.WARNING;
 import static java.util.logging.Logger.getLogger;
 import static org.anonchatsecure.bramble.util.LogUtils.logException;
@@ -51,6 +52,15 @@ public class PanicResponderActivity extends BriarActivity {
 			"org.anonomi.android.panic.ACTION_INTERNAL_PANIC";
 	public static final String EXTRA_PANIC_ACTION =
 			"org.anonomi.android.panic.EXTRA_PANIC_ACTION";
+
+	/**
+	 * How long a queued message is given to reach the network before the
+	 * database holding it is deleted. Spent after the key has gone, so it
+	 * costs nothing that an interruption could take back.
+	 */
+	private static final long DELIVERY_WINDOW_MS = 5000;
+
+	private static final long SHUTDOWN_TIMEOUT_MS = 15_000;
 
 	@Inject
 	ContactManager contactManager;
@@ -130,10 +140,13 @@ public class PanicResponderActivity extends BriarActivity {
 	 * slower work to a thread that holds a wake lock.
 	 */
 	private void wipeAccount() {
-		// Asked now because it is answered from the database key, which is
-		// the first thing the wipe destroys.
-		boolean wasSignedIn = controller.accountSignedIn();
-		new PanicWipe(new WipeSteps(wasSignedIn), new PanicWipeMarker(this),
+		// Whether the account was unlocked, asked now because it is answered
+		// from the database key, which is the first thing the wipe destroys.
+		// Not accountSignedIn(): that is also false while the database is
+		// open and still migrating, which is exactly when deleting its files
+		// from underneath it would do the most damage.
+		boolean unlocked = accountManager.hasDatabaseKey();
+		new PanicWipe(new WipeSteps(unlocked), new PanicWipeMarker(this),
 				wakefulExecutor())
 				.begin(() -> runOnUiThread(this::exitApp));
 	}
@@ -146,7 +159,7 @@ public class PanicResponderActivity extends BriarActivity {
 	private void signOutAfterNotifying() {
 		wakefulExecutor().execute(() -> {
 			sendPanicMessages();
-			signOut(true, false);
+			runOnUiThread(() -> signOut(true, false));
 		});
 	}
 
@@ -161,20 +174,22 @@ public class PanicResponderActivity extends BriarActivity {
 		startActivity(i);
 	}
 
-	private void sendPanicMessages() {
+	private boolean sendPanicMessages() {
 		Collection<Contact> contacts;
 		try {
 			contacts = contactManager.getContacts();
 		} catch (DbException e) {
 			logException(LOG, WARNING, e);
-			return;
+			return false;
 		}
+		boolean sent = false;
 		for (Contact c : contacts) {
-			if (c.isPanicContact()) sendPanicMessage(c);
+			if (c.isPanicContact()) sent |= sendPanicMessage(c);
 		}
+		return sent;
 	}
 
-	private void sendPanicMessage(Contact c) {
+	private boolean sendPanicMessage(Contact c) {
 		try {
 			ContactId contactId = c.getId();
 			GroupId groupId = messagingManager.getConversationId(contactId);
@@ -183,10 +198,12 @@ public class PanicResponderActivity extends BriarActivity {
 					privateMessageFactory.createPrivateMessage(groupId,
 							timestamp, panicMessage, Collections.emptyList());
 			messagingManager.addLocalMessage(panicMsg);
+			return true;
 		} catch (Exception e) {
 			// One contact that cannot be reached is not a reason to skip the
 			// rest, or to stop what the trigger was used for.
 			logException(LOG, WARNING, e);
+			return false;
 		}
 	}
 
@@ -197,10 +214,10 @@ public class PanicResponderActivity extends BriarActivity {
 
 	private class WipeSteps implements PanicWipe.Steps {
 
-		private final boolean wasSignedIn;
+		private final boolean unlocked;
 
-		WipeSteps(boolean wasSignedIn) {
-			this.wasSignedIn = wasSignedIn;
+		WipeSteps(boolean unlocked) {
+			this.unlocked = unlocked;
 		}
 
 		@Override
@@ -209,31 +226,47 @@ public class PanicResponderActivity extends BriarActivity {
 		}
 
 		@Override
-		public void notifyPanicContacts() {
+		public boolean notifyPanicContacts() {
 			// The database is still open and still holds the key it was
 			// unlocked with, so this works after the key file has gone.
-			sendPanicMessages();
+			return sendPanicMessages();
+		}
+
+		@Override
+		public void waitForDelivery() {
+			try {
+				Thread.sleep(DELIVERY_WINDOW_MS);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
 		}
 
 		@Override
 		public void deleteRemainingData() {
-			if (!wasSignedIn) {
-				// The trigger can be used from the lock screen, where nothing
-				// was ever started and there is nothing to wait for.
-				controller.deleteAccount();
-				return;
-			}
-			// Shutting the services down first lets the database close
-			// instead of having its files deleted underneath it. Waiting is
-			// safe here: the key is already gone, and if the shutdown never
-			// finishes the marker stays set and the next start clears up.
+			if (unlocked && shutDownServices()) return;
+			// Either nothing was running, or it did not stop. Deleting is
+			// what the trigger was for, so it does not wait for either.
+			controller.deleteAccount();
+		}
+
+		/**
+		 * @return true if the services stopped and took the account with
+		 * them.
+		 */
+		private boolean shutDownServices() {
+			// Stopping first lets the database close instead of having its
+			// files deleted underneath it. The wait is bounded because the
+			// shutdown can block on a service that will never finish
+			// starting now that the key it needs has gone.
 			CountDownLatch done = new CountDownLatch(1);
 			controller.signOut(result -> done.countDown(), true);
 			try {
-				done.await();
+				if (done.await(SHUTDOWN_TIMEOUT_MS, MILLISECONDS)) return true;
+				LOG.warning("Timed out waiting for services to stop");
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
+			return false;
 		}
 	}
 }

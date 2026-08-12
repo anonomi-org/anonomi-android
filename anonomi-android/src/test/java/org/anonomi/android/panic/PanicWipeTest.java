@@ -20,6 +20,7 @@ public class PanicWipeTest {
 
 	private static final String DESTROY_KEY = "destroyKey";
 	private static final String NOTIFY = "notifyPanicContacts";
+	private static final String WAIT = "waitForDelivery";
 	private static final String DELETE = "deleteRemainingData";
 
 	private final RecordingSteps steps = new RecordingSteps();
@@ -155,6 +156,45 @@ public class PanicWipeTest {
 		assertFalse(steps.calls.contains(NOTIFY));
 	}
 
+	/**
+	 * Queueing a message only puts it in the database. If that database is
+	 * deleted in the next breath the message never reaches anyone, so it is
+	 * given a moment first - which is affordable only because the key has
+	 * already gone by then.
+	 */
+	@Test
+	public void queuedMessagesAreGivenTimeBeforeTheDataIsDeleted() {
+		new PanicWipe(steps, marker, RUNS).begin(() -> {
+		});
+		assertTrue("Nothing was given a chance to be delivered before the " +
+				"database holding it was deleted", steps.calls.contains(WAIT));
+		assertTrue(steps.calls.indexOf(DESTROY_KEY) <
+				steps.calls.indexOf(WAIT));
+		assertTrue(steps.calls.indexOf(NOTIFY) < steps.calls.indexOf(WAIT));
+		assertTrue(steps.calls.indexOf(WAIT) < steps.calls.indexOf(DELETE));
+	}
+
+	/**
+	 * Most people have no panic contacts. Waiting for a delivery that was
+	 * never queued would only keep their data on the device for longer.
+	 */
+	@Test
+	public void nothingQueuedMeansNothingIsWaitedFor() {
+		steps.anythingQueued = false;
+		new PanicWipe(steps, marker, RUNS).begin(() -> {
+		});
+		assertFalse(steps.calls.contains(WAIT));
+		assertTrue(steps.calls.contains(DELETE));
+	}
+
+	@Test
+	public void aFailureToNotifyIsNotWaitedFor() {
+		steps.failOnNotify = true;
+		new PanicWipe(steps, marker, RUNS).begin(() -> {
+		});
+		assertFalse(steps.calls.contains(WAIT));
+	}
+
 	@Test
 	public void completionIsReportedOnlyOnceNothingIsLeft() {
 		List<String> calls = steps.calls;
@@ -167,6 +207,7 @@ public class PanicWipeTest {
 
 		private final List<String> calls = new ArrayList<>();
 		private boolean failOnNotify = false;
+		private boolean anythingQueued = true;
 
 		@Override
 		public void destroyKey() {
@@ -174,9 +215,15 @@ public class PanicWipeTest {
 		}
 
 		@Override
-		public void notifyPanicContacts() {
+		public boolean notifyPanicContacts() {
 			calls.add(NOTIFY);
 			if (failOnNotify) throw new RuntimeException("no contacts");
+			return anythingQueued;
+		}
+
+		@Override
+		public void waitForDelivery() {
+			calls.add(WAIT);
 		}
 
 		@Override

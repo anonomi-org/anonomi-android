@@ -39,9 +39,15 @@ public class InterruptedPanicWipe {
 		}
 
 		@Override
-		public void notifyPanicContacts() {
+		public boolean notifyPanicContacts() {
 			// Not reached when resuming: contacts were told when the trigger
 			// was used, or the chance to tell them has gone.
+			return false;
+		}
+
+		@Override
+		public void waitForDelivery() {
+			// Nothing was queued, so there is nothing to wait for.
 		}
 
 		@Override
