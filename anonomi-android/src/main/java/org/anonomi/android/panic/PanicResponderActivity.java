@@ -30,6 +30,9 @@ import java.util.logging.Logger;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 
+import static android.content.Intent.ACTION_MAIN;
+import static android.content.Intent.CATEGORY_HOME;
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.logging.Level.WARNING;
 import static java.util.logging.Logger.getLogger;
@@ -147,6 +150,23 @@ public class PanicResponderActivity extends BriarActivity {
 		// begin() does not return until the account is beyond recovery, so
 		// the app can leave the screen now instead of waiting for the last
 		// file to go. What is left of the wipe carries on without a UI.
+		leaveScreen();
+	}
+
+	/**
+	 * Puts the launcher in front before taking the task away.
+	 * <p>
+	 * Taking the task away on its own lets whatever was underneath return to
+	 * the top for a moment, and an activity that resumes without a database
+	 * key sends its user to the setup screen - so the app comes back offering
+	 * to create an account instead of disappearing. Nothing of ours resumes
+	 * while the launcher is on top.
+	 */
+	private void leaveScreen() {
+		Intent home = new Intent(ACTION_MAIN);
+		home.addCategory(CATEGORY_HOME);
+		home.setFlags(FLAG_ACTIVITY_NEW_TASK);
+		startActivity(home);
 		finishAndRemoveTask();
 	}
 
