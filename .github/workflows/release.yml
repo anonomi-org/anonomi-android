@@ -18,6 +18,34 @@ jobs:
         with:
           submodules: recursive
 
+      # Tor Browser is fetched here rather than committed, so the repository does
+      # not carry a 110 MB binary that every clone and mirror run has to pull.
+      # Fetched from the archive host, not the dist host: dist serves only the
+      # current release, so a pinned version there stops resolving as soon as the
+      # next one ships.
+      #
+      # The SHA-256 is the gate. It pins the exact bytes of a download whose
+      # OpenPGP signature was checked against the Tor Browser Developers key
+      # (EF6E286DDA85EA2A4BA7DE684E2C6E8793298290) when the version was last
+      # raised, so re-checking the signature here could not tell us anything the
+      # hash does not already guarantee - and it would tie every future release
+      # to that key's expiry date. Verify the signature when you change the
+      # version below, not on every build.
+      - name: Fetch Tor Browser for the official flavour
+        env:
+          TB_VERSION: "15.0.19"
+          TB_ABI: "aarch64"
+          TB_SHA256: "4982ff6e9eb1075f6035acae84aafcd70e4b9a70e72499af2476e6c1852516d0"
+        run: |
+          set -euo pipefail
+          base="https://archive.torproject.org/tor-package-archive/torbrowser/${TB_VERSION}"
+          apk="tor-browser-android-${TB_ABI}-${TB_VERSION}.apk"
+          dest="anonomi-android/src/official/assets"
+          curl -fsSL --retry 3 --retry-delay 5 -o "${dest}/${apk}" "${base}/${apk}"
+          echo "${TB_SHA256}  ${dest}/${apk}" | sha256sum -c -
+          mv "${dest}/${apk}" "${dest}/tor-browser.apk"
+          ls -l "${dest}"
+
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:

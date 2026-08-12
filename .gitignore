@@ -37,3 +37,7 @@ keystore.properties
 *.der
 **/keystore.properties
 ripple_cert.der
+
+# Fetched at release time by .github/workflows/release.yml, and by hand for a
+# local official build. Never committed: see the version and SHA-256 there.
+anonomi-android/src/official/assets/tor-browser.apk

@@ -34,10 +34,10 @@ public class WebServerRoutingTest {
 	private static final AssetCheck NONE_PRESENT = assetName -> false;
 
 	/**
-	 * Everything bundled except tor-browser.apk, which is the Git LFS pointer
-	 * rather than an APK because the object was never pulled.
+	 * Everything bundled except tor-browser.apk, as on any build where it was
+	 * not fetched: it is pulled at release time rather than kept in the tree.
 	 */
-	private static final AssetCheck TOR_BROWSER_IS_LFS_POINTER =
+	private static final AssetCheck TOR_BROWSER_MISSING =
 			assetName -> !assetName.equals("tor-browser.apk");
 
 	// --- exact known paths resolve to the right asset ------------------------
@@ -113,9 +113,9 @@ public class WebServerRoutingTest {
 	public void assetFailingTheApkCheckIsNotServed() {
 		assertNull("a Git LFS pointer must not be served as an APK",
 				resolveApk("/tor-browser.apk", INSTALLED_APK,
-						TOR_BROWSER_IS_LFS_POINTER));
+						TOR_BROWSER_MISSING));
 		// the other assets are unaffected
-		assertAsset("orbot.apk", "/orbot.apk", TOR_BROWSER_IS_LFS_POINTER);
+		assertAsset("orbot.apk", "/orbot.apk", TOR_BROWSER_MISSING);
 	}
 
 	@Test
