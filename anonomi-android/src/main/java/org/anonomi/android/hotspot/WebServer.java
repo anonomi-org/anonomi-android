@@ -1,6 +1,7 @@
 package org.anonomi.android.hotspot;
 
 import android.content.Context;
+import android.content.res.AssetFileDescriptor;
 
 import org.anonomi.R;
 import org.briarproject.nullsafety.NotNullByDefault;
@@ -13,8 +14,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,6 +28,8 @@ import static android.util.Xml.Encoding.UTF_8;
 import static fi.iki.elonen.NanoHTTPD.Response.Status.INTERNAL_ERROR;
 import static fi.iki.elonen.NanoHTTPD.Response.Status.NOT_FOUND;
 import static fi.iki.elonen.NanoHTTPD.Response.Status.OK;
+import static java.util.Arrays.asList;
+import static java.util.Collections.unmodifiableSet;
 import static java.util.Objects.requireNonNull;
 import static java.util.logging.Level.WARNING;
 import static java.util.logging.Logger.getLogger;
@@ -45,21 +49,144 @@ class WebServer extends NanoHTTPD {
 	private static final Pattern REGEX_AGENT = Pattern.compile("Android ([0-9]+)");
 
 	/**
-	 * Order matters: first match wins.
-	 * Key: substring in URI, Value: asset filename
+	 * The bundled companion APKs, named by the exact request path each one is
+	 * offered under. The same names are passed to {@link #setButton} to build
+	 * the page, so the two lists have to be kept in step by hand: adding an
+	 * asset here but not there widens what the server will hand out beyond
+	 * what it offers.
 	 */
-	private static final Map<String, String> APK_ASSETS = new LinkedHashMap<>();
-	static {
-		APK_ASSETS.put("postbox", "anonomi-postbox.apk");
-		APK_ASSETS.put("monerujo", "monerujo.apk");
-		APK_ASSETS.put("orbot", "orbot.apk");
-		APK_ASSETS.put("tor-browser", "tor-browser.apk");
+	private static final Set<String> APK_ASSETS =
+			unmodifiableSet(new HashSet<>(asList(
+					"anonomi-postbox.apk",
+					"monerujo.apk",
+					"orbot.apk",
+					"tor-browser.apk")));
+
+	/**
+	 * Tests whether a bundled asset is present in this build and really is an
+	 * APK. Only the official flavour bundles the companion APKs, so on fdroid
+	 * this returns false for all of them, which is the normal case and not an
+	 * error.
+	 */
+	interface AssetCheck {
+		boolean isApk(String assetName);
+	}
+
+	/**
+	 * The file an APK request resolved to. Either the APK of the app itself,
+	 * read back from the installed package, or one named bundled asset.
+	 */
+	static final class ApkRoute {
+
+		static final ApkRoute INSTALLED_APK = new ApkRoute(null);
+
+		@Nullable
+		private final String assetName;
+
+		private ApkRoute(@Nullable String assetName) {
+			this.assetName = assetName;
+		}
+
+		static ApkRoute asset(String assetName) {
+			return new ApkRoute(assetName);
+		}
+
+		boolean isInstalledApk() {
+			return assetName == null;
+		}
+
+		@Nullable
+		String getAssetName() {
+			return assetName;
+		}
+
+		@Override
+		public boolean equals(@Nullable Object o) {
+			if (this == o) return true;
+			if (!(o instanceof ApkRoute)) return false;
+			String other = ((ApkRoute) o).assetName;
+			return assetName == null ? other == null : assetName.equals(other);
+		}
+
+		@Override
+		public int hashCode() {
+			return assetName == null ? 0 : assetName.hashCode();
+		}
+
+		@Override
+		public String toString() {
+			return assetName == null ? "ApkRoute[installed APK]"
+					: "ApkRoute[asset " + assetName + "]";
+		}
+	}
+
+	/**
+	 * Decides which file, if any, an APK request is allowed to fetch. Pure: it
+	 * touches neither Android nor the network, so the routing decision can be
+	 * unit tested without standing up a server.
+	 *
+	 * @param uri the request path, as returned by
+	 * 		{@link IHTTPSession#getUri()}. NanoHTTPD has already stripped the
+	 * 		query string and percent-decoded it, so escaped traversal sequences
+	 * 		arrive here already decoded.
+	 * @param installedApkName the file name under which the app offers its own
+	 * 		APK, from {@link HotspotViewModel#getApkFileName()}
+	 * @param assetCheck tests whether a bundled asset can actually be served
+	 * @return the file to serve, or null if the request must be answered with
+	 * 		404
+	 */
+	@Nullable
+	static ApkRoute resolveApk(String uri, String installedApkName,
+			AssetCheck assetCheck) {
+		String name = fileName(uri);
+		if (name == null) return null;
+		if (name.equals(installedApkName)) return ApkRoute.INSTALLED_APK;
+		if (!APK_ASSETS.contains(name)) return null;
+		// Never hand over an asset that is absent or is not really an APK.
+		// tor-browser.apk is stored in Git LFS and builds without the object
+		// pulled package the ~130 byte text pointer under the same name. On
+		// fdroid none of the companion APKs are bundled at all, so a negative
+		// answer here is the normal case rather than an error.
+		if (!assetCheck.isApk(name)) return null;
+		return ApkRoute.asset(name);
+	}
+
+	/**
+	 * The single file name a request path names, or null if it is anything
+	 * else. Traversal segments are rejected outright rather than normalised
+	 * away, so no input can resolve to a name outside the allowlist.
+	 * <p>
+	 * NanoHTTPD has already removed the query string, so a '?' or '#' reaching
+	 * this method came from percent-encoding and is treated as a bad request.
+	 */
+	@Nullable
+	private static String fileName(String uri) {
+		if (!uri.startsWith("/")) return null;
+		String name = uri.substring(1);
+		if (name.isEmpty()) return null;
+		for (int i = 0; i < name.length(); i++) {
+			switch (name.charAt(i)) {
+				case '/':
+				case '\\':
+				case '?':
+				case '#':
+				case '\0':
+					return null;
+			}
+		}
+		return name;
 	}
 
 	private final Context ctx;
 
-	WebServer(Context ctx) {
-		super(PORT);
+	/**
+	 * @param bindAddress the address of the hotspot interface to listen on.
+	 * 		This must not be null: NanoHTTPD reads a null host as the wildcard
+	 * 		address, which would also expose the server to any other network the
+	 * 		device is attached to.
+	 */
+	WebServer(Context ctx, String bindAddress) {
+		super(bindAddress, PORT);
 		this.ctx = ctx;
 	}
 
@@ -76,8 +203,18 @@ class WebServer extends NanoHTTPD {
 			return newFixedLengthResponse(NOT_FOUND, MIME_PLAINTEXT, NOT_FOUND.getDescription());
 		}
 
-		if (uri.endsWith(".apk")) {
-			return serveApkForUri(uri);
+		// The resolver alone decides what may be served, so that a request
+		// which looks like an APK can never fall through to the page instead
+		// of being refused.
+		ApkRoute route = resolveApk(uri, getApkFileName(), this::assetExists);
+		if (route != null) {
+			if (route.isInstalledApk()) return serveInstalledApk();
+			return serveAssetFile(requireNonNull(route.getAssetName()),
+					MIME_APK);
+		}
+		if (isApkRequest(uri)) {
+			return newFixedLengthResponse(NOT_FOUND, MIME_PLAINTEXT,
+					NOT_FOUND.getDescription());
 		}
 
 		try {
@@ -90,15 +227,14 @@ class WebServer extends NanoHTTPD {
 		}
 	}
 
-	private Response serveApkForUri(String uri) {
-		// Serve known asset apks first
-		for (Map.Entry<String, String> e : APK_ASSETS.entrySet()) {
-			if (uri.contains(e.getKey())) {
-				return serveAssetFile(e.getValue(), MIME_APK);
-			}
-		}
-		// Fallback: serve installed app APK
-		return serveInstalledApk();
+	/**
+	 * True if the request asks for an APK by name, whatever it resolved to.
+	 * Matched case-insensitively so that this cannot disagree with
+	 * {@link #resolveApk} about whether a refusal or the page is the right
+	 * answer.
+	 */
+	private static boolean isApkRequest(String uri) {
+		return uri.toLowerCase(Locale.US).endsWith(".apk");
 	}
 
 	private Response serveInstalledApk() {
@@ -107,9 +243,9 @@ class WebServer extends NanoHTTPD {
 
 		try {
 			FileInputStream fis = new FileInputStream(file);
-			Response res = newFixedLengthResponse(OK, MIME_APK, fis, fileLen);
-			res.addHeader("Content-Length", String.valueOf(fileLen));
-			return res;
+			// No explicit Content-Length header: NanoHTTPD emits one from the
+			// length passed here, and adding it by hand emits it twice.
+			return newFixedLengthResponse(OK, MIME_APK, fis, fileLen);
 		} catch (FileNotFoundException e) {
 			logException(LOG, WARNING, e);
 			return newFixedLengthResponse(NOT_FOUND, MIME_PLAINTEXT,
@@ -120,19 +256,47 @@ class WebServer extends NanoHTTPD {
 	private Response serveAssetFile(String assetName, String mime) {
 		try {
 			InputStream is = ctx.getAssets().open(assetName);
-
-			// NOTE: available() is not a guaranteed "total length" for all streams,
-			// but for AssetInputStream it typically corresponds to remaining bytes.
-			int size = is.available();
-
-			Response res = newFixedLengthResponse(OK, mime, is, size);
-			res.addHeader("Content-Length", String.valueOf(size));
-			return res;
+			long length = assetLength(assetName, is);
+			if (length < 0) {
+				// No exact length to be had. Chunked transfer is correct
+				// without a Content-Length, whereas announcing a length we
+				// cannot stand behind risks handing over a truncated APK.
+				return newChunkedResponse(OK, mime, is);
+			}
+			return newFixedLengthResponse(OK, mime, is, length);
 		} catch (IOException e) {
 			logException(LOG, WARNING, e);
 			return newFixedLengthResponse(NOT_FOUND, MIME_PLAINTEXT,
 					ctx.getString(R.string.hotspot_error_web_server_serve));
 		}
+	}
+
+	/**
+	 * The exact number of bytes {@code is} will yield, or -1 if that cannot be
+	 * established.
+	 * <p>
+	 * {@link android.content.res.AssetManager#openFd(String)} is the documented
+	 * way to ask, but it only succeeds for assets the build stored
+	 * uncompressed, and the companion APKs are currently deflated. For those,
+	 * AssetInputStream#available() reports the whole uncompressed length of a
+	 * freshly opened stream, so it is exact here even though InputStream in
+	 * general only promises an estimate. A saturated int is treated as unknown
+	 * rather than trusted, since that is the one case where it would be short.
+	 */
+	private long assetLength(String assetName, InputStream is) {
+		try (AssetFileDescriptor afd = ctx.getAssets().openFd(assetName)) {
+			long length = afd.getLength();
+			if (length >= 0) return length;
+		} catch (IOException e) {
+			// stored compressed, so fall back to the stream
+		}
+		try {
+			int available = is.available();
+			if (available > 0 && available < Integer.MAX_VALUE) return available;
+		} catch (IOException e) {
+			// fall through to the chunked path
+		}
+		return -1;
 	}
 
 	private String getHtml(@Nullable String userAgent) throws Exception {
@@ -151,7 +315,10 @@ class WebServer extends NanoHTTPD {
 		if (httpNotice != null) {
 			httpNotice.text(ctx.getString(R.string.website_http_notice));
 		}
-		requireNonNull(doc.selectFirst(".button")).attr("href", filename);
+		// Root-absolute, like the hrefs the template ships: the resolver only
+		// accepts top-level names, so a relative href would break the download
+		// for anyone who loaded the page at anything but "/".
+		requireNonNull(doc.selectFirst(".button")).attr("href", "/" + filename);
 		requireNonNull(doc.selectFirst("#download_button"))
 				.text(ctx.getString(R.string.website_download_button));
 
@@ -188,7 +355,7 @@ class WebServer extends NanoHTTPD {
 			btn.remove();
 			return;
 		}
-		btn.attr("href", assetName);
+		btn.attr("href", "/" + assetName);
 		Element span = btn.selectFirst("span");
 		if (span != null) {
 			span.text(ctx.getString(textRes));
@@ -202,6 +369,9 @@ class WebServer extends NanoHTTPD {
 	 * because tor-browser.apk is stored in Git LFS: without the object pulled,
 	 * the build packages the ~130 byte text pointer under the same name, which
 	 * would otherwise be offered as a download.
+	 * <p>
+	 * This guards both the button in the page and {@link #resolveApk}, so a
+	 * direct request cannot reach a file the page declined to link to.
 	 */
 	private boolean assetExists(String assetName) {
 		try (InputStream is = ctx.getAssets().open(assetName)) {
