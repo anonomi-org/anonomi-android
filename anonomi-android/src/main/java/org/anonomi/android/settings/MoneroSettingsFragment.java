@@ -170,7 +170,8 @@ public class MoneroSettingsFragment extends PreferenceFragmentCompat {
 		}
 		try {
 			int index = Integer.parseInt(input);
-			return index >= 0; // Minor index should be a non-negative integer
+			// Non-negative, and low enough to still increment.
+			return index >= 0 && index < Integer.MAX_VALUE;
 		} catch (NumberFormatException e) {
 			return false; // Not a valid integer
 		}

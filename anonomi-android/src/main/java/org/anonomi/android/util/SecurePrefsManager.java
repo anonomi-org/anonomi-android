@@ -33,6 +33,7 @@ public class SecurePrefsManager {
 
 	private static final String TAG = "SecurePrefsManager";
 	private static final String AES_MODE = "AES/GCM/NoPadding";
+	// Existing data is encrypted under this alias; renaming it orphans that data.
 	private static final String KEYSTORE_ALIAS = "AnonChatSecurePrefsKey";
 	private static final String ANDROID_KEYSTORE = "AndroidKeyStore";
 

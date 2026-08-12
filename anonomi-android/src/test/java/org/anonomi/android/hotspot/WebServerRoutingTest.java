@@ -25,7 +25,7 @@ public class WebServerRoutingTest {
 	 * The name the app offers its own APK under, from
 	 * {@link HotspotViewModel#getApkFileName()}.
 	 */
-	private static final String INSTALLED_APK = "anonchat-1.4.0.apk";
+	private static final String INSTALLED_APK = "anonomi-1.4.0.apk";
 
 	/** Every companion APK bundled and valid, as on the official flavour. */
 	private static final AssetCheck ALL_PRESENT = assetName -> true;
