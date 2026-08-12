@@ -34,4 +34,6 @@ keystore.properties
 *.p12
 *.pem
 *.key
-**/keystore.propertiesripple_cert.der
+*.der
+**/keystore.properties
+ripple_cert.der
