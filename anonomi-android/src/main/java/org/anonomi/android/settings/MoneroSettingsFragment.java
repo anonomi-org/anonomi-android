@@ -5,6 +5,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.preference.EditTextPreference;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import org.anonomi.R;
 import org.briarproject.nullsafety.MethodsNotNullByDefault;
@@ -67,11 +68,13 @@ public class MoneroSettingsFragment extends PreferenceFragmentCompat {
 		}
 
 		if (viewKeyPref != null) {
+			// Set the provider before the text, so the private view key is
+			// never the summary even briefly.
+			viewKeyPref.setSummaryProvider(new SetOrNotSetSummaryProvider());
 			SecureValue viewKey = securePrefs.read(PREF_KEY_PRIVATE_VIEW_KEY);
 			if (viewKey.isPresent()) {
 				viewKeyPref.setText(viewKey.get());
 			}
-			viewKeyPref.setSummaryProvider(EditTextPreference.SimpleSummaryProvider.getInstance());
 
 			viewKeyPref.setOnPreferenceChangeListener((preference, newValue) -> {
 				String newViewKey = (String) newValue;
@@ -113,6 +116,26 @@ public class MoneroSettingsFragment extends PreferenceFragmentCompat {
 			});
 		}
 	}
+	/**
+	 * Reports whether a value is set, without showing it.
+	 * <p>
+	 * {@link EditTextPreference.SimpleSummaryProvider} renders the value
+	 * itself as the summary line. For the private view key that means the key
+	 * is printed on the settings screen, readable by anyone looking at the
+	 * device and captured by any screenshot of that screen.
+	 */
+	private static class SetOrNotSetSummaryProvider
+			implements Preference.SummaryProvider<EditTextPreference> {
+
+		@Override
+		public CharSequence provideSummary(@NonNull EditTextPreference pref) {
+			String text = pref.getText();
+			boolean set = text != null && !text.isEmpty();
+			return pref.getContext().getString(
+					set ? R.string.pref_value_set : R.string.pref_value_not_set);
+		}
+	}
+
 	private boolean isValidMinorIndex(String input) {
 		if (input == null || input.isEmpty()) {
 			return false;

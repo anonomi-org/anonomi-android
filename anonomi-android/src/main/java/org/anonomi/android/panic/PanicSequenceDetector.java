@@ -1,6 +1,7 @@
 package org.anonomi.android.panic;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.KeyEvent;
 
 import org.anonomi.android.util.SecurePrefsManager;
@@ -10,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PanicSequenceDetector {
+
+	private static final String TAG = "PanicSequenceDetector";
 
 	public static final String PREF_KEY_PANIC_SEQUENCE = "pref_key_panic_sequence";
 	public static final String PREF_KEY_PANIC_ACTION = "pref_key_panic_action";
@@ -32,6 +35,7 @@ public class PanicSequenceDetector {
 	private boolean tracking = false;
 	private boolean longPressHandled = false;
 	private boolean enabled = false;
+	private boolean loadError = false;
 	private PanicTriggerListener listener;
 
 	private PanicSequenceDetector() {
@@ -50,42 +54,61 @@ public class PanicSequenceDetector {
 					securePrefs.read(PREF_KEY_PANIC_SEQUENCE));
 		} catch (RuntimeException e) {
 			// Secure storage itself is unavailable, so there is no sequence to
-			// match against.
-			result = new LoadResult(new ArrayList<>(), false);
+			// match against. That is a failure, not a configuration.
+			Log.w(TAG, "Could not read the panic settings", e);
+			result = new LoadResult(new ArrayList<>(), false, true);
 		}
 		sequence = result.sequence;
 		enabled = result.enabled;
+		loadError = result.loadError;
 		reset();
 	}
 
 	/**
 	 * Works out the detector state implied by the two stored settings. Kept
 	 * free of Android types so it can be tested directly.
+	 * <p>
+	 * A setting that could not be read is never allowed to look like a
+	 * setting that was turned off. An unreadable enabled flag leaves panic
+	 * armed, because nothing tells us it was ever switched off; an unreadable
+	 * sequence cannot leave it armed, because there is no sequence left to
+	 * match - but it is reported as an error rather than passed off as "no
+	 * sequence configured".
 	 */
 	static LoadResult resolveLoad(SecureValue enabledValue,
 			SecureValue sequenceValue) {
-		// TODO: an unreadable setting is treated exactly like an unset one
-		// here, so a storage failure silently turns panic off. Preserved so
-		// that extracting this method changes no behaviour; fixed in the
-		// following commit.
 		boolean prefEnabled = !enabledValue.isPresent() ||
 				"true".equals(enabledValue.get());
-		String raw = sequenceValue.isPresent() ? sequenceValue.get() : null;
-		if (prefEnabled && raw != null && !raw.isEmpty()) {
-			List<Step> steps = deserializeSequence(raw);
-			return new LoadResult(steps, steps.size() >= 3);
+		boolean loadError =
+				enabledValue.isUnreadable() || sequenceValue.isUnreadable();
+
+		if (prefEnabled && sequenceValue.isPresent() &&
+				!sequenceValue.get().isEmpty()) {
+			List<Step> steps = deserializeSequence(sequenceValue.get());
+			return new LoadResult(steps, steps.size() >= 3, loadError);
 		}
-		return new LoadResult(new ArrayList<>(), false);
+		return new LoadResult(new ArrayList<>(), false, loadError);
+	}
+
+	/**
+	 * Whether the last {@link #loadSequence(Context)} hit a setting it could
+	 * not read. The detector may be disarmed as a result, and settings shows
+	 * this so it does not look like panic was simply never configured.
+	 */
+	public boolean hasLoadError() {
+		return loadError;
 	}
 
 	static final class LoadResult {
 
 		final List<Step> sequence;
 		final boolean enabled;
+		final boolean loadError;
 
-		LoadResult(List<Step> sequence, boolean enabled) {
+		LoadResult(List<Step> sequence, boolean enabled, boolean loadError) {
 			this.sequence = sequence;
 			this.enabled = enabled;
+			this.loadError = loadError;
 		}
 	}
 

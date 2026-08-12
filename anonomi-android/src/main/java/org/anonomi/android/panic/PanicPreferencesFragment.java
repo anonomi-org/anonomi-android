@@ -108,9 +108,17 @@ public class PanicPreferencesFragment extends PreferenceFragmentCompat {
 			// Load current action value from encrypted prefs
 			SecureValue storedAction =
 					securePrefs.read(PREF_KEY_PANIC_ACTION);
-			panicActionPref.setValue(storedAction.isPresent()
-					? storedAction.get() : ACTION_SIGN_OUT);
-			updateActionSummary(panicActionPref.getValue());
+			// Show what panic will actually do, which for a setting we cannot
+			// read is not what was configured. Say so rather than letting the
+			// list quietly display an action nobody chose.
+			String resolved = PanicActionPolicy.resolve(null, storedAction);
+			panicActionPref.setValue(resolved);
+			if (isActionUnreadable(storedAction)) {
+				panicActionPref.setSummary(
+						R.string.panic_action_unreadable_summary);
+			} else {
+				updateActionSummary(resolved);
+			}
 
 			panicActionPref.setOnPreferenceChangeListener((pref, newValue) -> {
 				String value = (String) newValue;
@@ -121,10 +129,26 @@ public class PanicPreferencesFragment extends PreferenceFragmentCompat {
 		}
 	}
 
+	/**
+	 * True if an action is configured but we cannot honour it: either it did
+	 * not decrypt, or it decrypted to something that is not an action.
+	 */
+	private boolean isActionUnreadable(SecureValue storedAction) {
+		if (storedAction.isUnreadable()) return true;
+		return storedAction.isPresent() &&
+				!PanicActionPolicy.isKnownAction(storedAction.get());
+	}
+
 	private void updateSequenceDisplay() {
 		if (recordSequencePref == null) return;
 		SecureValue sequenceValue =
 				securePrefs.read(PREF_KEY_PANIC_SEQUENCE);
+		// A sequence we cannot read is not a sequence that was never
+		// recorded, and panic is disarmed until it is recorded again.
+		if (sequenceValue.isUnreadable()) {
+			recordSequencePref.setSummary(R.string.panic_sequence_unreadable);
+			return;
+		}
 		String raw = sequenceValue.isPresent() ? sequenceValue.get() : null;
 		if (raw != null && !raw.isEmpty()) {
 			List<PanicSequenceDetector.Step> steps =

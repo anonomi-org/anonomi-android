@@ -28,6 +28,7 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 import static org.anonomi.android.panic.PanicSequenceDetector.ACTION_DELETE_ACCOUNT;
+import static org.anonomi.android.panic.PanicSequenceDetector.ACTION_SHOW_DIALOG;
 import static org.anonomi.android.panic.PanicSequenceDetector.ACTION_SIGN_OUT;
 import static org.anonomi.android.panic.PanicSequenceDetector.PREF_KEY_PANIC_ACTION;
 
@@ -90,8 +91,20 @@ public class PanicResponderActivity extends BriarActivity {
 				finishAndRemoveTask();
 				break;
 			case ACTION_SIGN_OUT:
-			default:
+			case ACTION_SHOW_DIALOG:
+				// Reaching here with "show dialog" means we were started
+				// without a choice and cannot ask for one - normally
+				// PanicDialogHelper asks first and passes the answer. The
+				// setting was read successfully and it says "ask me", not
+				// "delete", so take the reversible action.
 				signOut(true, false);
+				finishAndRemoveTask();
+				break;
+			default:
+				// Unreachable: PanicActionPolicy only returns known actions.
+				// If that ever changes, an action we cannot interpret is a
+				// configuration we cannot honour, which fails strong.
+				signOut(true, true);
 				finishAndRemoveTask();
 				break;
 		}

@@ -3,12 +3,17 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto">
 
+	<!-- persistent="false" below: these keys are also written by
+	     SecurePrefsManager, and the framework would persist the value in
+	     plaintext over the ciphertext. -->
+
 	<PreferenceCategory
 		android:layout="@layout/preferences_category"
 		android:title="@string/pref_category_monero_wallet">
 
 		<EditTextPreference
 			android:key="pref_key_primary_address"
+			android:persistent="false"
 			android:title="@string/pref_primary_address_title"
 			android:hint="@string/pref_primary_address_hint"
 			android:inputType="text"
@@ -16,14 +21,18 @@
 			app:singleLineTitle="false"
 			app:useSimpleSummaryProvider="true" />
 
+		<!-- No useSimpleSummaryProvider: that renders the value as the
+		     summary, which for the private view key means printing it on the
+		     settings screen. MoneroSettingsFragment supplies a provider that
+		     reports only whether it is set. -->
 		<EditTextPreference
 			android:key="pref_key_private_view_key"
+			android:persistent="false"
 			android:title="@string/pref_private_view_key_title"
 			android:hint="@string/pref_private_view_key_hint"
 			android:inputType="text"
 			app:iconSpaceReserved="false"
-			app:singleLineTitle="false"
-			app:useSimpleSummaryProvider="true" />
+			app:singleLineTitle="false" />
 
 	</PreferenceCategory>
 
@@ -43,6 +52,7 @@
 
 		<EditTextPreference
 			android:key="pref_key_minor_index_key"
+			android:persistent="false"
 			android:title="@string/pref_minor_index_title"
 			android:hint="@string/pref_minor_index_hint"
 			android:inputType="number"

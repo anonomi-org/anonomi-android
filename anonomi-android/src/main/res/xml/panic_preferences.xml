@@ -18,8 +18,12 @@
 		app:iconSpaceReserved="false"
 		app:singleLineTitle="false" />
 
+	<!-- persistent="false": this key is also written by SecurePrefsManager,
+	     and the framework would persist the value in plaintext over the
+	     ciphertext. -->
 	<ListPreference
 		android:key="pref_key_panic_action"
+		android:persistent="false"
 		android:title="@string/panic_action_title"
 		android:entries="@array/panic_action_entries"
 		android:entryValues="@array/panic_action_values"
