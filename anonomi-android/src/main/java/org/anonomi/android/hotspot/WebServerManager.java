@@ -43,14 +43,25 @@ class WebServerManager {
 	private static final Logger LOG =
 			getLogger(WebServerManager.class.getName());
 
-	private final WebServer webServer;
+	/**
+	 * The address a Wi-Fi Direct group owner takes on Android. Used only when
+	 * the hotspot interface cannot be identified, so that the server still
+	 * binds to a single address rather than to every interface the device is
+	 * attached to. If the hotspot is not actually reachable there, binding
+	 * fails and the user is told, which beats quietly serving the whole LAN.
+	 */
+	private static final String DEFAULT_AP_ADDRESS = "192.168.49.1";
+
+	private final Application ctx;
 	private final DisplayMetrics dm;
 
 	private volatile WebServerListener listener;
+	@Nullable
+	private volatile WebServer webServer;
 
 	@Inject
 	WebServerManager(Application ctx) {
-		webServer = new WebServer(ctx);
+		this.ctx = ctx;
 		dm = ctx.getResources().getDisplayMetrics();
 	}
 
@@ -61,28 +72,45 @@ class WebServerManager {
 
 	@IoExecutor
 	void startWebServer() {
+		// The hotspot interface only exists once the hotspot is up, and
+		// NanoHTTPD takes its bind address in the constructor, so the server
+		// is built here rather than at injection time.
+		stopWebServer();
+		String host = getBindAddress();
+		WebServer server = new WebServer(ctx, host);
+		webServer = server;
 		try {
-			webServer.start();
-			onWebServerStarted();
+			server.start();
+			onWebServerStarted(host);
 		} catch (IOException e) {
 			logException(LOG, WARNING, e);
 			listener.onWebServerError();
 		}
 	}
 
+	/**
+	 * The address of the hotspot interface, which the server both binds to and
+	 * advertises. Deriving both from one lookup keeps the address we listen on
+	 * and the address in the QR code from drifting apart.
+	 */
 	@IoExecutor
-	private void onWebServerStarted() {
-		String url = "http://192.168.49.1:" + PORT;
+	private String getBindAddress() {
 		InetAddress address = getAccessPointAddress();
 		if (address == null) {
 			//LOG.info(
 			//		"Could not find access point address, assuming 192.168.49.1");
-		} else {
-			//if (LOG.isLoggable(INFO)) {
-			//	LOG.info("Access point address " + address.getHostAddress());
-			//}
-			url = "http://" + address.getHostAddress() + ":" + PORT;
+			return DEFAULT_AP_ADDRESS;
 		}
+		//if (LOG.isLoggable(INFO)) {
+		//	LOG.info("Access point address " + address.getHostAddress());
+		//}
+		String host = address.getHostAddress();
+		return host == null ? DEFAULT_AP_ADDRESS : host;
+	}
+
+	@IoExecutor
+	private void onWebServerStarted(String host) {
+		String url = "http://" + host + ":" + PORT;
 		Bitmap qrCode = QrCodeUtils.createQrCode(
 				(int) (dm.heightPixels * HOTSPOT_QRCODE_FACTOR), url);
 		listener.onWebServerStarted(new WebsiteConfig(url, qrCode));
@@ -93,7 +121,9 @@ class WebServerManager {
 	 */
 	@IoExecutor
 	void stopWebServer() {
-		webServer.stop();
+		WebServer server = webServer;
+		if (server != null) server.stop();
+		webServer = null;
 	}
 
 	@Nullable
