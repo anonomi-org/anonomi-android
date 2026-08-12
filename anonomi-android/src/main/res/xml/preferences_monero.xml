@@ -5,7 +5,14 @@
 
 	<!-- persistent="false" below: these keys are also written by
 	     SecurePrefsManager, and the framework would persist the value in
-	     plaintext over the ciphertext. -->
+	     plaintext over the ciphertext.
+
+	     No useSimpleSummaryProvider on those either. It prints the value as
+	     the summary, which for the private view key means putting the key on
+	     screen, and it has no way to say "could not be read" - it would call
+	     an undecryptable value unset. MoneroSettingsFragment installs
+	     SecureSummaryProvider instead. The rate keeps the simple provider: it
+	     is never encrypted. -->
 
 	<PreferenceCategory
 		android:layout="@layout/preferences_category"
@@ -18,13 +25,7 @@
 			android:hint="@string/pref_primary_address_hint"
 			android:inputType="text"
 			app:iconSpaceReserved="false"
-			app:singleLineTitle="false"
-			app:useSimpleSummaryProvider="true" />
-
-		<!-- No useSimpleSummaryProvider: that renders the value as the
-		     summary, which for the private view key means printing it on the
-		     settings screen. MoneroSettingsFragment supplies a provider that
-		     reports only whether it is set. -->
+			app:singleLineTitle="false" />
 		<EditTextPreference
 			android:key="pref_key_private_view_key"
 			android:persistent="false"
@@ -57,8 +58,7 @@
 			android:hint="@string/pref_minor_index_hint"
 			android:inputType="number"
 			app:iconSpaceReserved="false"
-			app:singleLineTitle="false"
-			app:useSimpleSummaryProvider="true" />
+			app:singleLineTitle="false" />
 
 	</PreferenceCategory>
 

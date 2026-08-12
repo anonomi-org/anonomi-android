@@ -50,10 +50,11 @@ public class MoneroSettingsFragment extends PreferenceFragmentCompat {
 
 		if (addressPref != null) {
 			SecureValue address = securePrefs.read(PREF_KEY_PRIMARY_ADDRESS);
+			addressPref.setSummaryProvider(new SecureSummaryProvider(
+					false, address.isUnreadable()));
 			if (address.isPresent()) {
 				addressPref.setText(address.get());
 			}
-			addressPref.setSummaryProvider(EditTextPreference.SimpleSummaryProvider.getInstance());
 
 			addressPref.setOnPreferenceChangeListener((preference, newValue) -> {
 				String newAddress = (String) newValue;
@@ -68,10 +69,11 @@ public class MoneroSettingsFragment extends PreferenceFragmentCompat {
 		}
 
 		if (viewKeyPref != null) {
+			SecureValue viewKey = securePrefs.read(PREF_KEY_PRIVATE_VIEW_KEY);
 			// Set the provider before the text, so the private view key is
 			// never the summary even briefly.
-			viewKeyPref.setSummaryProvider(new SetOrNotSetSummaryProvider());
-			SecureValue viewKey = securePrefs.read(PREF_KEY_PRIVATE_VIEW_KEY);
+			viewKeyPref.setSummaryProvider(new SecureSummaryProvider(
+					true, viewKey.isUnreadable()));
 			if (viewKey.isPresent()) {
 				viewKeyPref.setText(viewKey.get());
 			}
@@ -90,10 +92,11 @@ public class MoneroSettingsFragment extends PreferenceFragmentCompat {
 
 		if (minorPref != null) {
 			SecureValue minorIndex = securePrefs.read(PREF_KEY_MINOR_INDEX);
+			minorPref.setSummaryProvider(new SecureSummaryProvider(
+					false, minorIndex.isUnreadable()));
 			if (minorIndex.isPresent()) {
 				minorPref.setText(minorIndex.get());
 			}
-			minorPref.setSummaryProvider(EditTextPreference.SimpleSummaryProvider.getInstance());
 
 			minorPref.setOnPreferenceChangeListener((preference, newValue) -> {
 				String newMinorIndex = (String) newValue;
@@ -117,22 +120,47 @@ public class MoneroSettingsFragment extends PreferenceFragmentCompat {
 		}
 	}
 	/**
-	 * Reports whether a value is set, without showing it.
+	 * Summary line for a value backed by {@link SecurePrefsManager}.
 	 * <p>
-	 * {@link EditTextPreference.SimpleSummaryProvider} renders the value
-	 * itself as the summary line. For the private view key that means the key
-	 * is printed on the settings screen, readable by anyone looking at the
-	 * device and captured by any screenshot of that screen.
+	 * Replaces {@link EditTextPreference.SimpleSummaryProvider} for two
+	 * reasons. It renders the value itself, which for the private view key
+	 * means printing the key on the settings screen where anyone looking at
+	 * the device - or any screenshot - picks it up. And it has only two
+	 * answers, so a value that could not be decrypted comes out as "Not
+	 * set", which is the same conflation of unreadable with unset that this
+	 * branch exists to remove. Here it matters twice over: told the minor
+	 * index is unset, someone re-enters a low one and hands two contacts the
+	 * same subaddress, which is exactly what RequestXmrActivity now refuses
+	 * to do on their behalf.
 	 */
-	private static class SetOrNotSetSummaryProvider
+	private static class SecureSummaryProvider
 			implements Preference.SummaryProvider<EditTextPreference> {
+
+		private final boolean secret;
+		private final boolean unreadable;
+
+		/**
+		 * @param secret whether showing the value would disclose one.
+		 * @param unreadable whether the stored value failed to decrypt. Only
+		 * consulted while the preference has no text: once the user enters a
+		 * value the stale read no longer describes what is stored.
+		 */
+		SecureSummaryProvider(boolean secret, boolean unreadable) {
+			this.secret = secret;
+			this.unreadable = unreadable;
+		}
 
 		@Override
 		public CharSequence provideSummary(@NonNull EditTextPreference pref) {
 			String text = pref.getText();
-			boolean set = text != null && !text.isEmpty();
-			return pref.getContext().getString(
-					set ? R.string.pref_value_set : R.string.pref_value_not_set);
+			if (text == null || text.isEmpty()) {
+				return pref.getContext().getString(unreadable
+						? R.string.monero_value_unreadable
+						: R.string.pref_value_not_set);
+			}
+			return secret
+					? pref.getContext().getString(R.string.pref_value_set)
+					: text;
 		}
 	}
 

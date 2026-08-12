@@ -47,18 +47,11 @@ public final class PanicActionPolicy {
 	}
 
 	/**
-	 * Resolves the action to run.
+	 * Resolves the action to run from the stored setting.
 	 *
-	 * @param intentOverride an action chosen explicitly for this trigger, for
-	 * example by the panic dialog. Wins over stored configuration.
 	 * @param stored the configured action as read from secure storage.
 	 */
-	public static String resolve(@Nullable String intentOverride,
-			SecureValue stored) {
-		if (intentOverride != null) {
-			return isKnownAction(intentOverride)
-					? intentOverride : UNREADABLE_ACTION;
-		}
+	public static String resolve(SecureValue stored) {
 		// Absent is the only outcome that means "not configured".
 		if (stored.isAbsent()) return DEFAULT_ACTION;
 		if (stored.isPresent() && isKnownAction(stored.get())) {
@@ -68,6 +61,21 @@ public final class PanicActionPolicy {
 		// that is not an action we recognise. Both mean a configured setting
 		// we cannot honour, and neither means the setting was never made.
 		return UNREADABLE_ACTION;
+	}
+
+	/**
+	 * Whether an action chosen for a single trigger - by the panic dialog,
+	 * say - can be used as given.
+	 * <p>
+	 * An override arrives as a method argument from our own code, so an
+	 * unrecognised one is a programming error rather than a setting that
+	 * failed to decrypt. It is not evidence that anything was tampered with,
+	 * and answering a bug with an irreversible account deletion is not a
+	 * trade worth making. Callers fall back to {@link #resolve} instead, and
+	 * the stored setting decides.
+	 */
+	public static boolean isUsableOverride(@Nullable String override) {
+		return override != null && isKnownAction(override);
 	}
 
 	public static boolean isKnownAction(@Nullable String action) {

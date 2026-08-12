@@ -46,8 +46,16 @@ public class PanicPreferencesFragment extends PreferenceFragmentCompat {
 		panicActionPref = findPreference(KEY_PANIC_ACTION_LIST);
 
 		if (enabledPref != null) {
+			// The switch has to agree with the record-sequence row below it.
+			// An unreadable enabled flag leaves the trigger on, but an
+			// unreadable sequence disarms it - and a lost Keystore key makes
+			// both unreadable at once, which would otherwise leave the switch
+			// claiming panic is armed while it is not. Showing it off does
+			// not store anything: the preference is persistent="false" and
+			// setChecked does not fire the change listener.
 			boolean isEnabled = PanicSequenceDetector.isTriggerEnabled(
-					securePrefs.read(PREF_KEY_PANIC_ENABLED));
+					securePrefs.read(PREF_KEY_PANIC_ENABLED)) &&
+					!securePrefs.read(PREF_KEY_PANIC_SEQUENCE).isUnreadable();
 			enabledPref.setChecked(isEnabled);
 			updateDependentPrefs(isEnabled);
 
@@ -109,7 +117,7 @@ public class PanicPreferencesFragment extends PreferenceFragmentCompat {
 			// Show what panic will actually do, which for a setting we cannot
 			// read is not what was configured. Say so rather than letting the
 			// list quietly display an action nobody chose.
-			String resolved = PanicActionPolicy.resolve(null, storedAction);
+			String resolved = PanicActionPolicy.resolve(storedAction);
 			panicActionPref.setValue(resolved);
 			if (isActionUnreadable(storedAction)) {
 				panicActionPref.setSummary(

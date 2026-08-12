@@ -18,6 +18,16 @@ import androidx.annotation.Nullable;
  * implementation and {@code java.util.Base64} signal bad input by throwing
  * {@link IllegalArgumentException}, which is the only behaviour this class
  * relies on.
+ * <p>
+ * They are not equally strict, and the tests run against the JVM one, so be
+ * clear about what that does and does not cover. The checks that keep a
+ * planted value from being trusted are string operations - one separator, two
+ * non-empty fields, and in particular the rejection of a value with no
+ * separator at all - and those behave identically whichever decoder is
+ * underneath. Base64 strictness is not load-bearing: {@code android.util.Base64}
+ * skips line breaks and is looser about padding, so it will accept a few
+ * records the JVM decoder rejects, and each one then has to survive GCM tag
+ * verification. Authenticity rests on the tag, not on the encoding.
  */
 public final class SecurePrefsCodec {
 

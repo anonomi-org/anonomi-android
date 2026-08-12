@@ -28,6 +28,7 @@
     <string name="missing_monero_addressor_view_key">Missing Monero address or private view key.</string>
     <string name="monero_primary_address_not_set">Primary address is not set.</string>
     <string name="monero_settings_unreadable">Your saved Monero settings could not be read. Please enter them again.</string>
+    <string name="monero_value_unreadable">Could not be read — not the same as unset. Enter it again.</string>
     <string name="pref_value_set">Set</string>
     <string name="pref_value_not_set">Not set</string>
     <string name="qr_decode_error">Failed to decode QR code</string>

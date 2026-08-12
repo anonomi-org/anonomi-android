@@ -7,7 +7,9 @@ import static org.anonomi.android.panic.PanicSequenceDetector.ACTION_DELETE_ACCO
 import static org.anonomi.android.panic.PanicSequenceDetector.ACTION_SHOW_DIALOG;
 import static org.anonomi.android.panic.PanicSequenceDetector.ACTION_SIGN_OUT;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Someone configures "delete account", their stored setting later fails to
@@ -18,7 +20,7 @@ public class PanicActionPolicyTest {
 
 	@Test
 	public void unreadableActionDoesNotResolveToSignOut() {
-		String action = PanicActionPolicy.resolve(null,
+		String action = PanicActionPolicy.resolve(
 				SecureValue.unreadable("decryption failed"));
 		assertNotEquals("An unreadable panic action resolved to the weakest " +
 				"action, so a configured account deletion silently became a " +
@@ -27,7 +29,7 @@ public class PanicActionPolicyTest {
 
 	@Test
 	public void unreadableActionResolvesToDeleteAccount() {
-		assertEquals(ACTION_DELETE_ACCOUNT, PanicActionPolicy.resolve(null,
+		assertEquals(ACTION_DELETE_ACCOUNT, PanicActionPolicy.resolve(
 				SecureValue.unreadable("decryption failed")));
 	}
 
@@ -37,14 +39,14 @@ public class PanicActionPolicyTest {
 	 */
 	@Test
 	public void unrecognisedActionDoesNotResolveToSignOut() {
-		assertEquals(ACTION_DELETE_ACCOUNT, PanicActionPolicy.resolve(null,
+		assertEquals(ACTION_DELETE_ACCOUNT, PanicActionPolicy.resolve(
 				SecureValue.present("not_an_action")));
 	}
 
 	@Test
 	public void emptyStoredActionDoesNotResolveToSignOut() {
 		assertEquals(ACTION_DELETE_ACCOUNT,
-				PanicActionPolicy.resolve(null, SecureValue.present("")));
+				PanicActionPolicy.resolve(SecureValue.present("")));
 	}
 
 	/**
@@ -54,28 +56,38 @@ public class PanicActionPolicyTest {
 	@Test
 	public void absentActionResolvesToSignOut() {
 		assertEquals(ACTION_SIGN_OUT,
-				PanicActionPolicy.resolve(null, SecureValue.absent()));
+				PanicActionPolicy.resolve(SecureValue.absent()));
 	}
 
 	@Test
 	public void storedActionIsHonoured() {
-		assertEquals(ACTION_DELETE_ACCOUNT, PanicActionPolicy.resolve(null,
+		assertEquals(ACTION_DELETE_ACCOUNT, PanicActionPolicy.resolve(
 				SecureValue.present(ACTION_DELETE_ACCOUNT)));
-		assertEquals(ACTION_SIGN_OUT, PanicActionPolicy.resolve(null,
+		assertEquals(ACTION_SIGN_OUT, PanicActionPolicy.resolve(
 				SecureValue.present(ACTION_SIGN_OUT)));
-		assertEquals(ACTION_SHOW_DIALOG, PanicActionPolicy.resolve(null,
+		assertEquals(ACTION_SHOW_DIALOG, PanicActionPolicy.resolve(
 				SecureValue.present(ACTION_SHOW_DIALOG)));
 	}
 
 	/**
-	 * The dialog passes the choice the user just made; it must win over
-	 * whatever is stored, including over an unreadable stored value.
+	 * The dialog passes the choice the user just made, so it is used as given.
 	 */
 	@Test
-	public void intentOverrideWins() {
-		assertEquals(ACTION_SIGN_OUT, PanicActionPolicy.resolve(ACTION_SIGN_OUT,
-				SecureValue.present(ACTION_DELETE_ACCOUNT)));
-		assertEquals(ACTION_SIGN_OUT, PanicActionPolicy.resolve(ACTION_SIGN_OUT,
-				SecureValue.unreadable("decryption failed")));
+	public void aKnownOverrideIsUsable() {
+		assertTrue(PanicActionPolicy.isUsableOverride(ACTION_SIGN_OUT));
+		assertTrue(PanicActionPolicy.isUsableOverride(ACTION_DELETE_ACCOUNT));
+		assertTrue(PanicActionPolicy.isUsableOverride(ACTION_SHOW_DIALOG));
+	}
+
+	/**
+	 * An override is an argument from our own code, so an unrecognised one is
+	 * a bug, not a tampered setting. It must not be the thing that decides to
+	 * delete an account - the caller falls back to the stored setting.
+	 */
+	@Test
+	public void anUnrecognisedOverrideIsNotUsable() {
+		assertFalse(PanicActionPolicy.isUsableOverride("not_an_action"));
+		assertFalse(PanicActionPolicy.isUsableOverride(""));
+		assertFalse(PanicActionPolicy.isUsableOverride(null));
 	}
 }

@@ -38,9 +38,14 @@ public class SecurePrefsManager {
 
 	/**
 	 * Set once the values in {@link #LEGACY_PLAINTEXT_KEYS} have been
-	 * re-encrypted. Not itself a secret, and deliberately not encrypted: a
-	 * flag we could not read would put us back in the state this class exists
-	 * to remove.
+	 * re-encrypted. Written through {@link #putEncrypted}, so corrupting it
+	 * cannot re-open the adoption window: an unreadable flag is treated as
+	 * "already migrated", which is the direction that adopts nothing.
+	 * <p>
+	 * Earlier builds stored this as a boolean. Reading one now raises
+	 * {@link ClassCastException} inside {@link #read}, which surfaces as
+	 * unreadable and so skips the migration - correct, because those installs
+	 * have already run it.
 	 */
 	private static final String PREF_KEY_LEGACY_MIGRATED =
 			"secure_prefs_plaintext_migrated";
@@ -138,22 +143,37 @@ public class SecurePrefsManager {
 	 * Re-encrypts, once, the values that used to be stored in plaintext by
 	 * the preference framework. See {@link #LEGACY_PLAINTEXT_KEYS}.
 	 * <p>
-	 * This is the one window in which a plaintext value is still trusted. It
-	 * closes for good the first time it runs, and it only ever covers the
-	 * four keys that were genuinely written in plaintext. An attacker who can
-	 * write to this app's preferences file could clear the flag and re-open
-	 * it, but that needs root or a sandbox compromise - the app sets
-	 * {@code allowBackup="false"} - and an attacker with that access can
-	 * already destroy the encrypted values outright.
+	 * This is trust on first use, and it cannot be made watertight. Adoption
+	 * has to trust something on the one run where it happens, and deleting
+	 * the flag returns us to that run. Corrupting the flag no longer does,
+	 * because unreadable means "already migrated".
+	 * <p>
+	 * So state the residual risk plainly rather than explaining it away.
+	 * Something able to write this app's preferences file - which needs root
+	 * or a sandbox compromise, as {@code allowBackup="false"} - can delete
+	 * the flag, plant plaintext, and have it adopted and encrypted into a
+	 * value that afterwards looks authentic. That is worse than the same
+	 * attacker simply destroying the ciphertext, because destruction is now
+	 * visible: it reads as unreadable, panic fails strong, and settings says
+	 * so. Adoption is silent. The window is one run per install, it covers
+	 * only these four keys, and the keys worth planting - the stealth
+	 * passcode and the panic sequence - are not on the list.
 	 */
 	private void migrateLegacyPlaintext() {
 		try {
-			if (prefs.getBoolean(PREF_KEY_LEGACY_MIGRATED, false)) return;
+			// Absent is the only state that means "not yet migrated".
+			if (!read(PREF_KEY_LEGACY_MIGRATED).isAbsent()) return;
 			for (String key : LEGACY_PLAINTEXT_KEYS) {
 				String stored;
 				try {
 					stored = prefs.getString(key, null);
 				} catch (ClassCastException e) {
+					// Unreachable for these four: every Preference sharing
+					// one of these keys stores a String. If it ever happens,
+					// the value is not ours to adopt and the key will read as
+					// unreadable, so close the window anyway rather than
+					// leave it open for the other three.
+					Log.w(TAG, "Skipping non-string legacy value for " + key);
 					continue;
 				}
 				if (stored == null) continue;
@@ -164,8 +184,9 @@ public class SecurePrefsManager {
 					// plaintext left by the preference framework
 				}
 				putEncrypted(key, stored);
+				Log.i(TAG, "Re-encrypted legacy plaintext value for " + key);
 			}
-			prefs.edit().putBoolean(PREF_KEY_LEGACY_MIGRATED, true).apply();
+			putEncrypted(PREF_KEY_LEGACY_MIGRATED, "1");
 		} catch (RuntimeException e) {
 			// Leave the flag unset so this is retried, rather than losing
 			// settings because the Keystore was briefly unavailable.

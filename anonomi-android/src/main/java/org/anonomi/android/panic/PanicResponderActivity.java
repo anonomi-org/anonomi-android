@@ -72,10 +72,14 @@ public class PanicResponderActivity extends BriarActivity {
 
 		// Check for action override from PanicDialogHelper (dialog choice)
 		String override = intent.getStringExtra(EXTRA_PANIC_ACTION);
-		SecureValue stored = override == null
-				? new SecurePrefsManager(this).read(PREF_KEY_PANIC_ACTION)
-				: SecureValue.absent();
-		String action = PanicActionPolicy.resolve(override, stored);
+		String action;
+		if (PanicActionPolicy.isUsableOverride(override)) {
+			action = override;
+		} else {
+			SecureValue stored = new SecurePrefsManager(this)
+					.read(PREF_KEY_PANIC_ACTION);
+			action = PanicActionPolicy.resolve(stored);
+		}
 
 		sendPanicMessages();
 		long delayMillis = panicMessagesSent ? 5000 : 0;
@@ -101,10 +105,12 @@ public class PanicResponderActivity extends BriarActivity {
 				finishAndRemoveTask();
 				break;
 			default:
-				// Unreachable: PanicActionPolicy only returns known actions.
-				// If that ever changes, an action we cannot interpret is a
-				// configuration we cannot honour, which fails strong.
-				signOut(true, true);
+				// Unreachable: the action is either a validated override or
+				// comes from PanicActionPolicy, which only returns known
+				// actions. Reaching it would be a bug in this app, not a
+				// tampered setting, so take the reversible branch - a defect
+				// should not cost someone their account.
+				signOut(true, false);
 				finishAndRemoveTask();
 				break;
 		}
