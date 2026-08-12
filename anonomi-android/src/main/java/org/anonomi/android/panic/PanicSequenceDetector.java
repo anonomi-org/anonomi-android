@@ -1,14 +1,18 @@
 package org.anonomi.android.panic;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.KeyEvent;
 
 import org.anonomi.android.util.SecurePrefsManager;
+import org.anonomi.android.util.SecureValue;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PanicSequenceDetector {
+
+	private static final String TAG = "PanicSequenceDetector";
 
 	public static final String PREF_KEY_PANIC_SEQUENCE = "pref_key_panic_sequence";
 	public static final String PREF_KEY_PANIC_ACTION = "pref_key_panic_action";
@@ -41,23 +45,79 @@ public class PanicSequenceDetector {
 	}
 
 	public void loadSequence(Context context) {
+		LoadResult result;
 		try {
 			SecurePrefsManager securePrefs = new SecurePrefsManager(context);
-			String enabledStr = securePrefs.getDecrypted(PREF_KEY_PANIC_ENABLED);
-			boolean prefEnabled = enabledStr == null || "true".equals(enabledStr);
-			String raw = securePrefs.getDecrypted(PREF_KEY_PANIC_SEQUENCE);
-			if (prefEnabled && raw != null && !raw.isEmpty()) {
-				sequence = deserializeSequence(raw);
-				enabled = sequence.size() >= 3;
-			} else {
-				sequence = new ArrayList<>();
-				enabled = false;
-			}
-		} catch (Exception e) {
-			sequence = new ArrayList<>();
-			enabled = false;
+			result = resolveLoad(
+					securePrefs.read(PREF_KEY_PANIC_ENABLED),
+					securePrefs.read(PREF_KEY_PANIC_SEQUENCE));
+		} catch (RuntimeException e) {
+			// Secure storage itself is unavailable, so there is no sequence to
+			// match against. That is a failure, not a configuration.
+			Log.w(TAG, "Could not read the panic settings", e);
+			result = new LoadResult(new ArrayList<>(), false, true);
 		}
+		if (result.loadError && !result.enabled) {
+			// Distinguish this in the log from a trigger that was simply never
+			// set up. What the user sees is the warning on the panic settings
+			// screen, which reaches the same conclusion from the same rule.
+			Log.w(TAG, "Panic trigger is disarmed because a setting could " +
+					"not be read");
+		}
+		sequence = result.sequence;
+		enabled = result.enabled;
 		reset();
+	}
+
+	/**
+	 * Whether the stored enabled flag leaves the trigger switched on.
+	 * <p>
+	 * Absent means it was never turned off, and unreadable tells us nothing
+	 * that would justify turning it off, so both leave it on. Only an explicit
+	 * stored value other than "true" switches it off. The panic settings and
+	 * the PTT conflict check apply this same rule, so it lives here rather
+	 * than in each of them.
+	 */
+	public static boolean isTriggerEnabled(SecureValue enabledValue) {
+		return !enabledValue.isPresent() || "true".equals(enabledValue.get());
+	}
+
+	/**
+	 * Works out the detector state implied by the two stored settings. Kept
+	 * free of Android types so it can be tested directly.
+	 * <p>
+	 * A setting that could not be read is never allowed to look like a
+	 * setting that was turned off. An unreadable enabled flag leaves panic
+	 * armed, because nothing tells us it was ever switched off; an unreadable
+	 * sequence cannot leave it armed, because there is no sequence left to
+	 * match - but it is reported as an error rather than passed off as "no
+	 * sequence configured".
+	 */
+	static LoadResult resolveLoad(SecureValue enabledValue,
+			SecureValue sequenceValue) {
+		boolean prefEnabled = isTriggerEnabled(enabledValue);
+		boolean loadError =
+				enabledValue.isUnreadable() || sequenceValue.isUnreadable();
+
+		if (prefEnabled && sequenceValue.isPresent() &&
+				!sequenceValue.get().isEmpty()) {
+			List<Step> steps = deserializeSequence(sequenceValue.get());
+			return new LoadResult(steps, steps.size() >= 3, loadError);
+		}
+		return new LoadResult(new ArrayList<>(), false, loadError);
+	}
+
+	static final class LoadResult {
+
+		final List<Step> sequence;
+		final boolean enabled;
+		final boolean loadError;
+
+		LoadResult(List<Step> sequence, boolean enabled, boolean loadError) {
+			this.sequence = sequence;
+			this.enabled = enabled;
+			this.loadError = loadError;
+		}
 	}
 
 	public void setListener(PanicTriggerListener listener) {

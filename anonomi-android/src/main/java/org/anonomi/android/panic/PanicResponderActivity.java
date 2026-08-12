@@ -10,6 +10,7 @@ import org.anonomi.R;
 import org.anonomi.android.activity.ActivityComponent;
 import org.anonomi.android.activity.BriarActivity;
 import org.anonomi.android.util.SecurePrefsManager;
+import org.anonomi.android.util.SecureValue;
 import org.anonchatsecure.bramble.api.contact.Contact;
 import org.anonchatsecure.bramble.api.contact.ContactId;
 import org.anonchatsecure.bramble.api.contact.ContactManager;
@@ -27,6 +28,7 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 import static org.anonomi.android.panic.PanicSequenceDetector.ACTION_DELETE_ACCOUNT;
+import static org.anonomi.android.panic.PanicSequenceDetector.ACTION_SHOW_DIALOG;
 import static org.anonomi.android.panic.PanicSequenceDetector.ACTION_SIGN_OUT;
 import static org.anonomi.android.panic.PanicSequenceDetector.PREF_KEY_PANIC_ACTION;
 
@@ -69,12 +71,15 @@ public class PanicResponderActivity extends BriarActivity {
 		Log.d("PanicResponder", "Panic trigger accepted!");
 
 		// Check for action override from PanicDialogHelper (dialog choice)
-		String action = intent.getStringExtra(EXTRA_PANIC_ACTION);
-		if (action == null) {
-			SecurePrefsManager securePrefs = new SecurePrefsManager(this);
-			action = securePrefs.getDecrypted(PREF_KEY_PANIC_ACTION);
+		String override = intent.getStringExtra(EXTRA_PANIC_ACTION);
+		String action;
+		if (PanicActionPolicy.isUsableOverride(override)) {
+			action = override;
+		} else {
+			SecureValue stored = new SecurePrefsManager(this)
+					.read(PREF_KEY_PANIC_ACTION);
+			action = PanicActionPolicy.resolve(stored);
 		}
-		if (action == null) action = ACTION_SIGN_OUT;
 
 		sendPanicMessages();
 		long delayMillis = panicMessagesSent ? 5000 : 0;
@@ -90,7 +95,21 @@ public class PanicResponderActivity extends BriarActivity {
 				finishAndRemoveTask();
 				break;
 			case ACTION_SIGN_OUT:
+			case ACTION_SHOW_DIALOG:
+				// Reaching here with "show dialog" means we were started
+				// without a choice and cannot ask for one - normally
+				// PanicDialogHelper asks first and passes the answer. The
+				// setting was read successfully and it says "ask me", not
+				// "delete", so take the reversible action.
+				signOut(true, false);
+				finishAndRemoveTask();
+				break;
 			default:
+				// Unreachable: the action is either a validated override or
+				// comes from PanicActionPolicy, which only returns known
+				// actions. Reaching it would be a bug in this app, not a
+				// tampered setting, so take the reversible branch - a defect
+				// should not cost someone their account.
 				signOut(true, false);
 				finishAndRemoveTask();
 				break;

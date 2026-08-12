@@ -24,8 +24,8 @@ public class PanicDialogHelper {
 
 	public static void onPanicTriggered(Activity activity) {
 		SecurePrefsManager securePrefs = new SecurePrefsManager(activity);
-		String action = securePrefs.getDecrypted(PREF_KEY_PANIC_ACTION);
-		if (action == null) action = PanicSequenceDetector.ACTION_SIGN_OUT;
+		String action = PanicActionPolicy.resolve(
+				securePrefs.read(PREF_KEY_PANIC_ACTION));
 
 		if (ACTION_SHOW_DIALOG.equals(action)) {
 			showPanicDialog(activity);

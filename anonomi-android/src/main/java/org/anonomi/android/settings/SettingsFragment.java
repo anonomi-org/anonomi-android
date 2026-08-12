@@ -12,6 +12,7 @@ import org.anonomi.R;
 import org.anonomi.android.mailbox.MailboxActivity;
 import org.anonomi.android.panic.PanicSequenceDetector;
 import org.anonomi.android.util.SecurePrefsManager;
+import org.anonomi.android.util.SecureValue;
 import org.briarproject.nullsafety.MethodsNotNullByDefault;
 import org.briarproject.nullsafety.ParametersNotNullByDefault;
 
@@ -170,15 +171,16 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 	private boolean isPttConflictWithPanic(String pttValue) {
 		SecurePrefsManager securePrefs =
 				new SecurePrefsManager(requireContext());
-		String enabledStr = securePrefs.getDecrypted(
-				PanicSequenceDetector.PREF_KEY_PANIC_ENABLED);
-		boolean panicEnabled =
-				enabledStr == null || "true".equals(enabledStr);
+		boolean panicEnabled = PanicSequenceDetector.isTriggerEnabled(
+				securePrefs.read(
+						PanicSequenceDetector.PREF_KEY_PANIC_ENABLED));
 		if (!panicEnabled) return false;
 
-		String raw = securePrefs.getDecrypted(
+		SecureValue sequenceValue = securePrefs.read(
 				PanicSequenceDetector.PREF_KEY_PANIC_SEQUENCE);
-		if (raw == null || raw.isEmpty()) return false;
+		if (!sequenceValue.isPresent()) return false;
+		String raw = sequenceValue.get();
+		if (raw.isEmpty()) return false;
 
 		List<PanicSequenceDetector.Step> steps =
 				PanicSequenceDetector.deserializeSequence(raw);

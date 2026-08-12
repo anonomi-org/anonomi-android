@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import org.anonomi.R;
 import org.anonomi.android.util.SecurePrefsManager;
+import org.anonomi.android.util.SecureValue;
 
 import java.util.List;
 
@@ -45,8 +46,16 @@ public class PanicPreferencesFragment extends PreferenceFragmentCompat {
 		panicActionPref = findPreference(KEY_PANIC_ACTION_LIST);
 
 		if (enabledPref != null) {
-			String enabledStr = securePrefs.getDecrypted(PREF_KEY_PANIC_ENABLED);
-			boolean isEnabled = enabledStr == null || "true".equals(enabledStr);
+			// The switch has to agree with the record-sequence row below it.
+			// An unreadable enabled flag leaves the trigger on, but an
+			// unreadable sequence disarms it - and a lost Keystore key makes
+			// both unreadable at once, which would otherwise leave the switch
+			// claiming panic is armed while it is not. Showing it off does
+			// not store anything: the preference is persistent="false" and
+			// setChecked does not fire the change listener.
+			boolean isEnabled = PanicSequenceDetector.isTriggerEnabled(
+					securePrefs.read(PREF_KEY_PANIC_ENABLED)) &&
+					!securePrefs.read(PREF_KEY_PANIC_SEQUENCE).isUnreadable();
 			enabledPref.setChecked(isEnabled);
 			updateDependentPrefs(isEnabled);
 
@@ -103,14 +112,19 @@ public class PanicPreferencesFragment extends PreferenceFragmentCompat {
 
 		if (panicActionPref != null) {
 			// Load current action value from encrypted prefs
-			String currentAction =
-					securePrefs.getDecrypted(PREF_KEY_PANIC_ACTION);
-			if (currentAction != null) {
-				panicActionPref.setValue(currentAction);
+			SecureValue storedAction =
+					securePrefs.read(PREF_KEY_PANIC_ACTION);
+			// Show what panic will actually do, which for a setting we cannot
+			// read is not what was configured. Say so rather than letting the
+			// list quietly display an action nobody chose.
+			String resolved = PanicActionPolicy.resolve(storedAction);
+			panicActionPref.setValue(resolved);
+			if (isActionUnreadable(storedAction)) {
+				panicActionPref.setSummary(
+						R.string.panic_action_unreadable_summary);
 			} else {
-				panicActionPref.setValue(ACTION_SIGN_OUT);
+				updateActionSummary(resolved);
 			}
-			updateActionSummary(panicActionPref.getValue());
 
 			panicActionPref.setOnPreferenceChangeListener((pref, newValue) -> {
 				String value = (String) newValue;
@@ -121,9 +135,27 @@ public class PanicPreferencesFragment extends PreferenceFragmentCompat {
 		}
 	}
 
+	/**
+	 * True if an action is configured but we cannot honour it: either it did
+	 * not decrypt, or it decrypted to something that is not an action.
+	 */
+	private boolean isActionUnreadable(SecureValue storedAction) {
+		if (storedAction.isUnreadable()) return true;
+		return storedAction.isPresent() &&
+				!PanicActionPolicy.isKnownAction(storedAction.get());
+	}
+
 	private void updateSequenceDisplay() {
 		if (recordSequencePref == null) return;
-		String raw = securePrefs.getDecrypted(PREF_KEY_PANIC_SEQUENCE);
+		SecureValue sequenceValue =
+				securePrefs.read(PREF_KEY_PANIC_SEQUENCE);
+		// A sequence we cannot read is not a sequence that was never
+		// recorded, and panic is disarmed until it is recorded again.
+		if (sequenceValue.isUnreadable()) {
+			recordSequencePref.setSummary(R.string.panic_sequence_unreadable);
+			return;
+		}
+		String raw = sequenceValue.isPresent() ? sequenceValue.get() : null;
 		if (raw != null && !raw.isEmpty()) {
 			List<PanicSequenceDetector.Step> steps =
 					PanicSequenceDetector.deserializeSequence(raw);
@@ -174,8 +206,11 @@ public class PanicPreferencesFragment extends PreferenceFragmentCompat {
 	}
 
 	private boolean isPanicConflictWithPtt() {
-		String raw = securePrefs.getDecrypted(PREF_KEY_PANIC_SEQUENCE);
-		if (raw == null || raw.isEmpty()) return false;
+		SecureValue sequenceValue =
+				securePrefs.read(PREF_KEY_PANIC_SEQUENCE);
+		if (!sequenceValue.isPresent()) return false;
+		String raw = sequenceValue.get();
+		if (raw.isEmpty()) return false;
 
 		List<PanicSequenceDetector.Step> steps =
 				PanicSequenceDetector.deserializeSequence(raw);

@@ -27,6 +27,10 @@
     <string name="invalid_monero_minor_index_key">Invalid Monero Subaddress index.</string>
     <string name="missing_monero_addressor_view_key">Missing Monero address or private view key.</string>
     <string name="monero_primary_address_not_set">Primary address is not set.</string>
+    <string name="monero_settings_unreadable">Your saved Monero settings could not be read. Please enter them again.</string>
+    <string name="monero_value_unreadable">Could not be read — not the same as unset. Enter it again.</string>
+    <string name="pref_value_set">Set</string>
+    <string name="pref_value_not_set">Not set</string>
     <string name="qr_decode_error">Failed to decode QR code</string>
     <string name="copy_content_to_clipboard">Copy Content</string>
     <string name="copied_to_clipboard">Copied to clipboard</string>
@@ -828,6 +832,8 @@
     <string name="panic_enabled_summary">Detect volume button sequence to trigger panic mode</string>
     <string name="panic_record_sequence_title">Record panic sequence</string>
     <string name="panic_sequence_not_set">No sequence configured</string>
+    <string name="panic_sequence_unreadable">Your saved sequence could not be read, so the panic trigger is off. Record it again.</string>
+    <string name="panic_action_unreadable_summary">Your saved choice could not be read. Until you choose again, panic will delete your account.</string>
     <string name="panic_sequence_too_short">Sequence must be at least 3 steps</string>
     <string name="panic_action_title">Panic action</string>
     <string name="panic_dialog_title">Panic Mode</string>

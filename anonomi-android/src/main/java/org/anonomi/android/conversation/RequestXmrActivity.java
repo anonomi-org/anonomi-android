@@ -36,6 +36,13 @@ import org.anonchatsecure.anonchat.api.messaging.PrivateMessageFactory;
 import org.anonchatsecure.anonchat.api.attachment.AttachmentHeader;
 
 import org.anonomi.android.util.SecurePrefsManager;
+import org.anonomi.android.util.SecureValue;
+
+import androidx.annotation.StringRes;
+
+import static org.anonomi.android.settings.MoneroSettingsFragment.PREF_KEY_MINOR_INDEX;
+import static org.anonomi.android.settings.MoneroSettingsFragment.PREF_KEY_PRIMARY_ADDRESS;
+import static org.anonomi.android.settings.MoneroSettingsFragment.PREF_KEY_PRIVATE_VIEW_KEY;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -281,22 +288,36 @@ public class RequestXmrActivity extends BriarActivity {
 		SecurePrefsManager securePrefs = new SecurePrefsManager(this);
 
 		// ✅ 1️⃣ Load primary address and private view key
-		String primaryAddress = securePrefs.getDecrypted("pref_key_primary_address");
-		String privateViewKeyHex = securePrefs.getDecrypted("pref_key_private_view_key");
+		SecureValue addressValue =
+				securePrefs.read(PREF_KEY_PRIMARY_ADDRESS);
+		SecureValue viewKeyValue =
+				securePrefs.read(PREF_KEY_PRIVATE_VIEW_KEY);
+		String primaryAddress =
+				addressValue.isPresent() ? addressValue.get() : null;
+		String privateViewKeyHex =
+				viewKeyValue.isPresent() ? viewKeyValue.get() : null;
 
 		// ✅ 2️⃣ Early checks
+		// Settings we could not read are not settings the user never entered,
+		// and telling them to enter an address they already entered would send
+		// them round in circles.
+		if (addressValue.isUnreadable() || viewKeyValue.isUnreadable()) {
+			abortGenerate(R.string.monero_settings_unreadable);
+			return;
+		}
+
 		if (primaryAddress == null || primaryAddress.isEmpty() || privateViewKeyHex == null || privateViewKeyHex.isEmpty()) {
-			Toast.makeText(this, R.string.missing_monero_addressor_view_key, Toast.LENGTH_SHORT).show();
+			abortGenerate(R.string.missing_monero_addressor_view_key);
 			return;
 		}
 
 		if (!AnonMoneroUtils.isValidMoneroPrivateKey(privateViewKeyHex)) {
-			Toast.makeText(this, R.string.invalid_monero_private_view_key, Toast.LENGTH_SHORT).show();
+			abortGenerate(R.string.invalid_monero_private_view_key);
 			return;
 		}
 
 		if (!AnonMoneroUtils.isValidMoneroAddress(primaryAddress)) {
-			Toast.makeText(this, R.string.invalid_monero_address, Toast.LENGTH_SHORT).show();
+			abortGenerate(R.string.invalid_monero_address);
 			return;
 		}
 
@@ -334,7 +355,17 @@ public class RequestXmrActivity extends BriarActivity {
 			currentMinorIndex = minor;  // For display
 		} else {
 			// Sequential mode: load from secure prefs
-			String minorStr = securePrefs.getDecrypted("pref_key_minor_index_key");
+			SecureValue minorValue = securePrefs.read(PREF_KEY_MINOR_INDEX);
+			// Falling back to 1 here would hand out a subaddress that has
+			// already been issued, which is exactly what persistMinorIndex()
+			// exists to prevent: two contacts receiving the same subaddress
+			// can link their payments to the same wallet. Refuse instead.
+			if (minorValue.isUnreadable()) {
+				abortGenerate(R.string.monero_settings_unreadable);
+				return;
+			}
+			String minorStr =
+					minorValue.isPresent() ? minorValue.get() : null;
 			minor = 1;
 			if (minorStr != null && !minorStr.isEmpty()) {
 				try {
@@ -445,6 +476,17 @@ public class RequestXmrActivity extends BriarActivity {
 	}
 
 	/**
+	 * Reports why QR generation stopped and puts the controls back. The
+	 * checks at the top of {@link #generateQrCode()} used to return without
+	 * this, leaving the spinner up and the generate button disabled.
+	 */
+	private void abortGenerate(@StringRes int messageRes) {
+		Toast.makeText(this, messageRes, Toast.LENGTH_SHORT).show();
+		progressSpinner.setVisibility(View.GONE);
+		generateButton.setEnabled(true);
+	}
+
+	/**
 	 * Records the highest minor index handed out, so the next sequential
 	 * request starts after it. Called when a subaddress is generated rather
 	 * than when it is sent: a subaddress the user saw but did not send must
@@ -454,7 +496,7 @@ public class RequestXmrActivity extends BriarActivity {
 	private void persistMinorIndex() {
 		if (!radioSequential.isChecked()) return;
 		SecurePrefsManager securePrefs = new SecurePrefsManager(this);
-		securePrefs.putEncrypted("pref_key_minor_index_key",
+		securePrefs.putEncrypted(PREF_KEY_MINOR_INDEX,
 				String.valueOf(currentMinorIndex));
 	}
 
