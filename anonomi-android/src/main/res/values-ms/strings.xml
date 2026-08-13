@@ -127,7 +127,7 @@
     <string name="qr_decode_error">Gagal menyahkod kod QR</string>
     <string name="copy_content_to_clipboard">Salin Kandungan</string>
     <string name="copied_to_clipboard">Disalin ke papan keratan</string>
-    <string name="more_info_title">Anonim Messenger</string>
+    <string name="more_info_title">Anonomi Messenger</string>
     <string name="request_xmr_amount">Jumlah XMR</string>
     <string name="request_xmr_amount_hint">contohnya, 0.5</string>
     <string name="request_xmr_fiat_rate">Kadar Fiat (cth., 242 EUR/XMR)</string>
@@ -155,7 +155,7 @@
     <string name="no">Tidak</string>
     <string name="rate_updated">Kadar berjaya dikemas kini!</string>
     <string name="intro_desc">Anonomi Messenger ialah platform komunikasi mengutamakan privasi yang direka untuk perbincangan tanpa nama, selamat dan terdesentralisasi.\nTiada nombor telefon, tiada alamat e-mel dan tiada pengecam peribadi diperlukan.</string>
-    <string name="how_it_works_title">Cara Anonimi Messenger berfungsi</string>
+    <string name="how_it_works_title">Cara Anonomi Messenger berfungsi</string>
     <string name="how_it_works_desc">Anonomi Messenger menghubungkan pengguna melalui rangkaian yang menjaga privasi untuk membolehkan perbualan selamat tanpa mendedahkan identiti anda.\nSambungan diwujudkan secara automatik sebaik sahaja aplikasi berjalan.</string>
     <string name="onion_link">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/</string>
     <string name="onion_link_instructions">Anda boleh melayari laman web Anonomi Messenger untuk kemas kini, dokumentasi dan sokongan.\nAkses memerlukan Pelayar Tor, kerana laman web ini dihoskan sebagai perkhidmatan onion.</string>
@@ -175,12 +175,12 @@
     <string name="more_info">Maklumat Lanjut</string>
     <string name="don_t_ask_again">Jangan tanya lagi</string>
     <string name="dnkm_huawei_protected_text">Sila ketik butang di bawah dan pastikan Anonomi Messenger dilindungi dalam skrin \"Aplikasi Dilindungi\".</string>
-    <string name="dnkm_huawei_protected_button">Lindungi Anonim Messenger</string>
+    <string name="dnkm_huawei_protected_button">Lindungi Anonomi Messenger</string>
     <string name="dnkm_huawei_protected_help">Jika Anonomi Messenger tidak ditambahkan ke senarai aplikasi yang dilindungi, ia tidak akan dapat berjalan di latar belakang.</string>
     <string name="dnkm_huawei_app_launch_text">Sila ketik butang di bawah, buka skrin \"Pelancaran aplikasi\" dan pastikan Anonomi Messenger ditetapkan kepada \"Urus secara manual\".</string>
     <string name="dnkm_huawei_app_launch_help">Jika Anonomi Messenger tidak ditetapkan kepada \"Urus secara manual\" dalam skrin \"Pelancaran aplikasi\", ia tidak akan dapat berjalan di latar belakang.</string>
     <string name="dnkm_xiaomi_text">Untuk berjalan di latar belakang, Anonomi Messenger perlu dikunci ke senarai aplikasi terkini.</string>
-    <string name="dnkm_xiaomi_button">Lindungi Anonim Messenger</string>
+    <string name="dnkm_xiaomi_button">Lindungi Anonomi Messenger</string>
     <string name="dnkm_xiaomi_help">Jika Anonomi Messenger tidak dikunci pada senarai aplikasi terkini, ia tidak akan dapat berjalan di latar belakang.</string>
     <string name="dnkm_xiaomi_dialog_body_old">1. Buka senarai aplikasi terkini (juga dipanggil penukar aplikasi)\n\n2. Leret ke bawah pada imej Anonomi Messenger untuk memaparkan ikon mangga\n\n3. Jika mangga tidak dikunci, ketik untuk menguncinya</string>
     <string name="dnkm_xiaomi_dialog_body_new">1. Buka senarai aplikasi terkini (juga dipanggil penukar aplikasi)\n\n2. Jika Anonomi Messenger mempunyai imej kecil mangga di sebelah namanya, anda tidak perlu melakukan apa-apa\n\n3. Jika tiada mangga, tekan dan tahan imej Anonomi Messenger sehingga butang mangga muncul, kemudian ketiknya</string>
@@ -244,9 +244,9 @@
     <string name="bt_plugin_status_inactive">Anonomi Messenger tidak dapat menyambung ke Bluetooth</string>
     <string name="bt_plugin_status_disabled">Anonomi Messenger dikonfigurasikan untuk tidak menggunakan Bluetooth</string>
     <string name="reminder_notification_text">Ketik untuk log masuk semula.</string>
-    <string name="reminder_notification_channel_title">Peringatan Daftar Masuk Anonimi Messenger</string>
+    <string name="reminder_notification_channel_title">Peringatan Daftar Masuk Anonomi Messenger</string>
     <string name="reminder_notification_dismiss">Ketepikan</string>
-    <string name="ongoing_notification_text">Sentuh untuk membuka Anonim Messenger.</string>
+    <string name="ongoing_notification_text">Sentuh untuk membuka Anonomi Messenger.</string>
     <plurals name="group_message_notification_text">
         <item quantity="other">%d mesej kumpulan baharu.</item>
     </plurals>
@@ -362,7 +362,7 @@
     <string name="add_contact_choose_a_nickname">Masukkan nama panggilan</string>
     <string name="nickname_intro">Berikan nama panggilan kepada kenalan anda. Hanya anda sahaja yang boleh melihatnya.</string>
     <string name="your_link">Berikan pautan ini kepada kenalan yang ingin anda tambahkan</string>
-    <string name="link_clip_label">Pautan Anonim Messenger</string>
+    <string name="link_clip_label">Pautan Anonomi Messenger</string>
     <string name="link_copied_toast">Pautan disalin</string>
     <string name="adding_contact_error">Terdapat ralat semasa menambah kenalan.</string>
     <string name="pending_contact_requests_snackbar">Terdapat permintaan hubungan yang belum selesai</string>
@@ -604,7 +604,7 @@
     <string name="tor_network_setting_without_bridges">Gunakan rangkaian Tor tanpa jambatan</string>
     <string name="security_settings_title">Keselamatan</string>
     <string name="pref_lock_title">Kunci aplikasi</string>
-    <string name="pref_lock_summary">Gunakan kunci skrin peranti untuk melindungi Anonim Messenger semasa log masuk</string>
+    <string name="pref_lock_summary">Gunakan kunci skrin peranti untuk melindungi Anonomi Messenger semasa log masuk</string>
     <string name="pref_lock_disabled_summary">Untuk menggunakan ciri ini, sediakan kunci skrin untuk peranti anda</string>
     <string name="pref_lock_timeout_title">Tamat masa tidak aktif kunci aplikasi</string>
     <string name="pref_lock_timeout_summary">Apabila tidak menggunakan Anonomi Messenger, kuncikannya secara automatik selepas %s</string>
@@ -629,7 +629,7 @@
     <string name="action_send_location">Hantar Lokasi Luar Talian</string>
     <string name="location_sent">Lokasi dihantar</string>
     <string name="tap_to_view_on_map">▸ Ketik untuk melihat pada peta</string>
-    <string name="unlocking_anonchat">Membuka kunci Anonim Messenger...</string>
+    <string name="unlocking_anonchat">Membuka kunci Anonomi Messenger...</string>
     <string name="stealth_mode_enabled">Mod sembunyi diaktifkan.</string>
     <string name="offline_maps_copy_url_summary">Ketik untuk menyalin URL perkhidmatan Onion bagi memuat turun data peta luar talian.</string>
     <string name="offline_maps_url_copied_dialog_title">URL Disalin</string>
@@ -707,7 +707,7 @@
     <string name="pref_monero_rate_hint">Masukkan kadar XMR (cth., 120.50)</string>
     <string name="pref_minor_index_title">Indeks SubAlamat</string>
     <string name="pref_minor_index_hint">Masukkan indeks semasa</string>
-    <string name="mailbox_settings_title">Peti Surat Anonim</string>
+    <string name="mailbox_settings_title">Peti Surat Anonomi</string>
     <string name="mailbox_setup_title">Persediaan peti pos</string>
     <string name="mailbox_setup_intro">Postbox membolehkan kenalan anda menghantar mesej kepada anda semasa anda berada di luar talian. Postbox akan menerima mesej anda dan menyimpannya sehingga anda berada dalam talian.\n\nAnda boleh memasang aplikasi Anonomi Postbox pada peranti ganti. Pastikan ia disambungkan kepada kuasa dan Wi-Fi supaya ia sentiasa dalam talian.</string>
     <string name="mailbox_setup_download">Pertama, pasang aplikasi Postbox pada peranti lain dengan memuat turun \"Anonomi Postbox\" dari tempat anda memuat turun Anonomi Messenger.\n\nKemudian pautkan Postbox anda dengan Anonomi Messenger dengan mengimbas kod QR yang ditunjukkan oleh aplikasi Postbox.</string>
@@ -736,7 +736,7 @@
     <string name="mailbox_status_connected_title">Peti Surat sedang berjalan</string>
     <string name="mailbox_status_problem_title">Anonomi Messenger menghadapi masalah untuk menyambung ke Peti Surat</string>
     <string name="mailbox_status_failure_title">Peti surat tidak tersedia</string>
-    <string name="mailbox_status_app_too_old_title">Anonim Messenger terlalu lama</string>
+    <string name="mailbox_status_app_too_old_title">Anonomi Messenger terlalu lama</string>
     <string name="mailbox_status_app_too_old_message">Kemas kini Anonomi Messenger kepada versi terkini aplikasi dan cuba lagi.</string>
     <string name="mailbox_status_mailbox_too_old_title">Peti surat terlalu lama</string>
     <string name="mailbox_status_mailbox_too_old_message">Kemas kini Postbox anda kepada versi aplikasi terkini dan cuba lagi.</string>
@@ -750,7 +750,7 @@
     <string name="mailbox_status_unlink_no_wipe_title">Peti Surat anda telah dinyahpautkan</string>
     <string name="mailbox_status_unlink_no_wipe_message">Lain kali anda mempunyai akses kepada peranti Postbox anda, sila buka aplikasi Postbox dan ketik butang \"Nyahpaut\" untuk melengkapkan proses tersebut.\n\nJika anda tidak lagi mempunyai akses kepada peranti Postbox anda, jangan risau. Data anda disulitkan jadi ia akan kekal selamat walaupun anda tidak melengkapkan proses tersebut.</string>
     <string name="mailbox_status_unlink_success">Peti Surat anda telah dinyahpautkan</string>
-    <string name="mailbox_error_notification_title">Peti Surat Anonim tidak tersedia</string>
+    <string name="mailbox_error_notification_title">Peti Surat Anonomi tidak tersedia</string>
     <string name="mailbox_error_notification_text">Ketik untuk menyelesaikan masalah.</string>
     <string name="mailbox_error_wizard_button">Betulkan masalah</string>
     <string name="mailbox_error_wizard_title">Wizard penyelesaian masalah peti pos</string>
@@ -771,7 +771,7 @@
     <string name="mailbox_error_wizard_info2">Sila kembali ke skrin ini apabila anda mempunyai akses kepada peranti ini.</string>
     <string name="mailbox_error_wizard_info3">Sila nyahpautkan peti mel anda menggunakan butang di bawah.\n\nSelepas menyahpautkan Peti Surat lama anda, anda boleh menyediakan Peti Surat baharu pada bila-bila masa.</string>
     <string name="about_title">Mengenai</string>
-    <string name="anonomi_version">Versi Anonim Messenger: %s</string>
+    <string name="anonomi_version">Versi Anonomi Messenger: %s</string>
     <string name="tor_version">Versi Tor: %s</string>
     <string name="links">Pautan</string>
     <string name="briar_website">• <a href="">Laman Web</a></string>
@@ -845,10 +845,10 @@
     <string name="permission_bluetooth_denied_body">Anda telah menolak akses kepada peranti berdekatan, tetapi Anonomi Messenger memerlukan kebenaran ini untuk menggunakan Bluetooth.\n\nSila pertimbangkan untuk memberikan akses.</string>
     <string name="qr_code">Kod QR</string>
     <string name="show_qr_code_fullscreen">Tunjukkan kod QR skrin penuh</string>
-    <string name="lock_unlock">Buka kunci Anonim Messenger</string>
-    <string name="lock_unlock_verbose">Masukkan PIN, corak atau kata laluan peranti anda untuk membuka kunci Anonim Messenger</string>
+    <string name="lock_unlock">Buka kunci Anonomi Messenger</string>
+    <string name="lock_unlock_verbose">Masukkan PIN, corak atau kata laluan peranti anda untuk membuka kunci Anonomi Messenger</string>
     <string name="lock_unlock_fingerprint_description">Sentuh sensor cap jari anda dengan jari yang didaftarkan untuk meneruskan</string>
-    <string name="lock_is_locked">Anonim Messenger dikunci</string>
+    <string name="lock_is_locked">Anonomi Messenger dikunci</string>
     <string name="lock_tap_to_unlock">Ketik untuk membuka kunci</string>
     <string name="transports_help_text">Anonomi Messenger boleh bersambung ke kenalan anda melalui Internet, Wi-Fi atau Bluetooth.\n\nSemua sambungan Internet melalui rangkaian Tor untuk privasi.\n\nJika kenalan boleh dihubungi melalui pelbagai kaedah, Anonomi Messenger menggunakannya secara selari.</string>
     <string name="hotspot_title">Kongsi aplikasi ini di luar talian</string>
@@ -857,7 +857,7 @@
     <string name="hotspot_button_stop_sharing">Hentikan hotspot</string>
     <string name="hotspot_progress_text_start">Menyediakan hotspot…</string>
     <string name="hotspot_notification_channel_title">Hotspot Wi-Fi</string>
-    <string name="hotspot_notification_title">Berkongsi Anonimi Messenger di luar talian</string>
+    <string name="hotspot_notification_title">Berkongsi Anonomi Messenger di luar talian</string>
     <string name="hotspot_button_connected">Seterusnya</string>
     <string name="permission_hotspot_location_request_body">Untuk mencipta hotspot Wi-Fi, Anonomi Messenger memerlukan kebenaran untuk mengakses lokasi anda.\n\nAnonomi Messenger tidak menyimpan lokasi anda atau berkongsinya dengan sesiapa pun.</string>
     <string name="permission_hotspot_location_request_precise_body">Untuk mencipta hotspot Wi-Fi, Anonomi Messenger memerlukan kebenaran untuk mengakses lokasi tepat anda.\n\nAnonomi Messenger tidak menyimpan lokasi anda atau berkongsinya dengan sesiapa pun.</string>
@@ -882,10 +882,10 @@
     <string name="hotspot_manual_site">Telefon anda menyediakan hotspot Wi-Fi. Orang yang disambungkan ke hotspot boleh memuat turun Anonomi Messenger dengan menaip pautan berikut dalam pelayar web atau %s.</string>
     <string name="hotspot_manual_site_address">Alamat (URL)</string>
     <string name="hotspot_qr_site">Telefon anda menyediakan hotspot Wi-Fi. Orang yang disambungkan ke hotspot boleh memuat turun Anonomi Messenger dengan mengimbas kod QR ini.</string>
-    <string name="website_download_title_1">Muat Turun Anonimi Messenger %s</string>
-    <string name="website_download_intro_1">Seseorang berdekatan telah berkongsi Anonimi Messenger dengan anda.</string>
+    <string name="website_download_title_1">Muat Turun Anonomi Messenger %s</string>
+    <string name="website_download_intro_1">Seseorang berdekatan telah berkongsi Anonomi Messenger dengan anda.</string>
     <string name="website_http_notice">Pelayar anda mungkin memberi amaran bahawa sambungan ini tidak selamat. Ini dijangkakan — halaman tersebut disiarkan secara setempat melalui sambungan Wi-Fi terus anda dan tidak bergerak melalui internet.</string>
-    <string name="website_download_button">Muat turun Anonim Messenger</string>
+    <string name="website_download_button">Muat turun Anonomi Messenger</string>
     <string name="website_download_mailbox_button">Muat Turun Anonomi Postbox</string>
     <string name="website_download_outro">Selepas muat turun selesai, buka fail yang dimuat turun dan pasangkannya.</string>
     <string name="website_troubleshooting_title">Penyelesaian masalah</string>
@@ -966,7 +966,7 @@
     <string name="load_qr_code">Muatkan Kod QR</string>
     <string name="panic_option_delete_account">Padam Akaun</string>
     <string name="panic_record_dialog_title">Rekod Urutan Panik</string>
-    <string name="mailbox_error_notification_channel_title">Masalah Peti Surat Anonim</string>
+    <string name="mailbox_error_notification_channel_title">Masalah Peti Surat Anonomi</string>
     <string name="panic_enabled_title">Dayakan pencetus panik</string>
     <string name="panic_enabled_summary">Kesan urutan butang kelantangan untuk mencetuskan mod panik</string>
     <string name="panic_record_sequence_title">Rakam urutan panik</string>
