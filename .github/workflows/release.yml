@@ -58,6 +58,76 @@ jobs:
       - name: Cache Gradle
         uses: gradle/actions/setup-gradle@v3
 
+      # The companion APKs are not built by this job, so check them before they
+      # ship: apksigner confirms each is a real APK and names the certificate it
+      # was signed with.
+      #
+      # Certificates rather than file hashes. A version bump changes every byte
+      # but keeps the key, so the pin survives an update and still catches a
+      # binary signed by anyone else. Each digest below is the one on the
+      # publisher's own release.
+      #
+      # tor-browser.apk is pinned by SHA-256 where it is fetched, so only its
+      # signature is checked here.
+      - name: Verify bundled companion APKs
+        run: |
+          set -euo pipefail
+          SDK="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-}}"
+          if [ -z "$SDK" ]; then
+            echo "::error::neither ANDROID_HOME nor ANDROID_SDK_ROOT is set"
+            exit 1
+          fi
+          APKSIGNER="$(ls -d "$SDK"/build-tools/*/apksigner | sort -V | tail -1)"
+          echo "Using $APKSIGNER"
+
+          assets="anonomi-android/src/official/assets"
+          fail=0
+
+          # The hotspot hides the button for anything missing, so an absent APK
+          # would not show up at runtime.
+          for required in anonomi-postbox.apk monerujo.apk orbot.apk tor-browser.apk; do
+            if [ ! -f "$assets/$required" ]; then
+              echo "::error::missing $assets/$required"
+              fail=1
+            fi
+          done
+
+          shopt -s nullglob
+          for apk in "$assets"/*.apk; do
+            name="$(basename "$apk")"
+            if ! "$APKSIGNER" verify --print-certs "$apk" > /tmp/asset-sig.txt 2>&1; then
+              echo "::error::unsigned, corrupt or not an APK: $name ($(wc -c < "$apk") bytes)"
+              cat /tmp/asset-sig.txt
+              fail=1
+              continue
+            fi
+            sha="$(grep -m1 -i 'certificate SHA-256 digest' /tmp/asset-sig.txt | awk '{print $NF}')"
+            case "$name" in
+              anonomi-postbox.apk)
+                expected="0c42c2a2e9be889eef2e7da10e8cd9cc71e6e6bc0e676fc994a8066d1766cb8d" ;;
+              monerujo.apk)
+                expected="967ca1930c19f383a43729a059cd21727855f78cd5e0d9882f780189fe1d8cf1" ;;
+              orbot.apk)
+                expected="a454b87a1847a89ed7f5e70fba6bba96f3ef29c26e0981204fe347bf231dfd5b" ;;
+              tor-browser.apk)
+                expected="" ;;
+              *)
+                expected=""
+                echo "::warning::$name is bundled but not pinned, and the hotspot will not offer it" ;;
+            esac
+            if [ -n "$expected" ] && [ "$sha" != "$expected" ]; then
+              echo "::error::$name is signed by $sha, expected $expected"
+              fail=1
+            else
+              echo "signed OK: $name (SHA-256 $sha)"
+            fi
+          done
+
+          if [ "$fail" -ne 0 ]; then
+            echo "Bundled companion APKs failed verification - not building."
+            exit 1
+          fi
+
       # Write keystore to disk
       - name: Decode keystore
         run: |
