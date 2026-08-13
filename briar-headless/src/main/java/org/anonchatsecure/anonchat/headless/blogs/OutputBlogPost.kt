@@ -1,6 +1,6 @@
 package org.anonchatsecure.anonchat.headless.blogs
 
-import org.briarproject.bramble.identity.output
+import org.anonchatsecure.bramble.identity.output
 import org.anonchatsecure.anonchat.api.blog.BlogPostHeader
 import org.anonchatsecure.anonchat.api.blog.MessageType
 import org.anonchatsecure.anonchat.headless.json.JsonDict

@@ -59,7 +59,7 @@ internal class HeadlessModule(private val appDir: File) {
 
     @Provides
     @Singleton
-    internal fun provideBriarService(anonchatService: BriarServiceImpl): AnonchatService = anonchatService
+    internal fun provideBriarService(anonchatService: BriarServiceImpl): BriarService = anonchatService
 
     @Provides
     @Singleton

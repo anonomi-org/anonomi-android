@@ -52,7 +52,7 @@ internal class HeadlessTestModule(private val appDir: File) {
 
     @Provides
     @Singleton
-    internal fun provideBriarService(anonchatService: BriarTestServiceImpl): AnonchatService =
+    internal fun provideBriarService(anonchatService: BriarTestServiceImpl): BriarService =
         anonchatService
 
     @Provides

@@ -1,7 +1,7 @@
-package org.briarproject.anonchat.headless.messaging
+package org.anonchatsecure.anonchat.headless.messaging
 
 import org.anonchatsecure.bramble.api.contact.ContactId
-import org.briarproject.bramble.identity.output
+import org.anonchatsecure.bramble.identity.output
 import org.anonchatsecure.anonchat.api.blog.BlogInvitationResponse
 import org.anonchatsecure.anonchat.api.conversation.ConversationMessageHeader
 import org.anonchatsecure.anonchat.api.conversation.ConversationResponse

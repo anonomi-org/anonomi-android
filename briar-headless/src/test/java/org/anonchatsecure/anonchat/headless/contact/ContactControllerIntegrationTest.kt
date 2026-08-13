@@ -55,8 +55,8 @@ class ContactControllerIntegrationTest : IntegrationTest() {
         val response = get("$url/contacts/add/link")
         assertEquals(200, response.code)
         val link = response.jsonObject.getString("link")
-        assertTrue(link.startsWith("briar://"))
-        assertEquals(BASE32_LINK_BYTES + 8, link.length)
+        assertTrue(link.startsWith("anon://"))
+        assertEquals(BASE32_LINK_BYTES + 7, link.length)
     }
 
     @Test

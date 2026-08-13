@@ -11,7 +11,7 @@ import org.anonchatsecure.bramble.api.db.DbCallable
 import org.anonchatsecure.bramble.api.db.DbException
 import org.anonchatsecure.bramble.api.db.Transaction
 import org.anonchatsecure.bramble.api.sync.MessageId
-import org.briarproject.bramble.identity.output
+import org.anonchatsecure.bramble.identity.output
 import org.anonchatsecure.bramble.util.StringUtils.getRandomString
 import org.anonchatsecure.anonchat.api.blog.Blog
 import org.anonchatsecure.anonchat.api.blog.BlogConstants.MAX_BLOG_POST_TEXT_LENGTH

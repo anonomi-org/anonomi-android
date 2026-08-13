@@ -1,4 +1,4 @@
-package org.briarproject.anonchat.headless.messaging
+package org.anonchatsecure.anonchat.headless.messaging
 
 import dagger.Module
 import dagger.Provides

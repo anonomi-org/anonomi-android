@@ -1,4 +1,4 @@
-package org.briarproject.anonchat.headless.contact
+package org.anonchatsecure.anonchat.headless.contact
 
 import io.javalin.http.BadRequestResponse
 import io.javalin.http.NotFoundResponse
@@ -26,7 +26,7 @@ import org.anonchatsecure.bramble.api.db.PendingContactExistsException
 import org.anonchatsecure.bramble.api.identity.AuthorConstants.MAX_AUTHOR_NAME_LENGTH
 import org.anonchatsecure.bramble.api.plugin.event.ContactConnectedEvent
 import org.anonchatsecure.bramble.api.plugin.event.ContactDisconnectedEvent
-import org.briarproject.bramble.identity.output
+import org.anonchatsecure.bramble.identity.output
 import org.anonchatsecure.bramble.test.TestUtils.getPendingContact
 import org.anonchatsecure.bramble.test.TestUtils.getRandomBytes
 import org.anonchatsecure.bramble.util.StringUtils.getRandomString

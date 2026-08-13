@@ -36,7 +36,7 @@ private const val WS = "/$VERSION/ws"
 internal class Router
 @Inject
 constructor(
-    private val anonchatService: AnonchatService,
+    private val anonchatService: BriarService,
     private val webSocketController: WebSocketController,
     private val contactController: ContactController,
     private val messagingController: MessagingController,
