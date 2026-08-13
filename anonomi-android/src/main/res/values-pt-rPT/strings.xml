@@ -936,7 +936,7 @@ O teu contacto também pode alterar esta configuração para ambos.</string>
     <string name="hotspot_manual_site_address">Endereço (URL)</string>
     <string name="hotspot_qr_site">O teu telemóvel está a fornecer um ponto de acesso Wi-Fi. As pessoas que estão conectadas ao ponto de acesso podem descarregar o Anonomi através da leitura deste código QR.</string>
     <!--e.g. Download Anonomi 1.2.20-->
-  <string name="website_download_title_1">Descarregar o Anonomi em %s</string>
+  <string name="website_download_title_1">Descarregar o Anonomi Messenger %s</string>
     <string name="website_download_intro_1">Alguém nas proximidades partilhou o Anonomi contigo.</string>
     <string name="website_download_button">Descarregar o Anonomi</string>
     <string name="website_download_outro">Quando a descarga estiver concluída, abre o ficheiro descarregado e instala-o.</string>
