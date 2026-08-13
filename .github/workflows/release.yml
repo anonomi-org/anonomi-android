@@ -18,77 +18,10 @@ jobs:
         with:
           submodules: recursive
 
-      # Tor Browser is fetched here rather than committed, so the repository does
-      # not carry a 110 MB binary that every clone and mirror run has to pull.
-      # Fetched from the archive host, not the dist host: dist serves only the
-      # current release, so a pinned version there stops resolving as soon as the
-      # next one ships.
-      #
-      # The SHA-256 is the gate. It pins the exact bytes of a download whose
-      # OpenPGP signature was checked against the Tor Browser Developers key
-      # (EF6E286DDA85EA2A4BA7DE684E2C6E8793298290) when the version was last
-      # raised, so re-checking the signature here could not tell us anything the
-      # hash does not already guarantee - and it would tie every future release
-      # to that key's expiry date. Verify the signature when you change the
-      # version below, not on every build.
-      - name: Fetch Tor Browser for the official flavour
-        env:
-          TB_VERSION: "15.0.19"
-          TB_ABI: "aarch64"
-          TB_SHA256: "4982ff6e9eb1075f6035acae84aafcd70e4b9a70e72499af2476e6c1852516d0"
-        run: |
-          set -euo pipefail
-          base="https://archive.torproject.org/tor-package-archive/torbrowser/${TB_VERSION}"
-          apk="tor-browser-android-${TB_ABI}-${TB_VERSION}.apk"
-          dest="anonomi-android/src/official/assets"
-          curl -fsSL --retry 3 --retry-delay 5 -o "${dest}/${apk}" "${base}/${apk}"
-          echo "${TB_SHA256}  ${dest}/${apk}" | sha256sum -c -
-          mv "${dest}/${apk}" "${dest}/tor-browser.apk"
-          ls -l "${dest}"
-
-      # Fetched for the same reasons as Tor Browser: the tree stays free of
-      # large binaries and a version change is a two-line edit. GitHub keeps
-      # every release, so a pinned version here keeps resolving.
-      #
-      # The signature published beside the APK was checked against
-      # BBE20FD6DA48A3DD4CC7DF41A801183E69B37AA9 when this version was pinned.
-      # Check it again when you change the version; the SHA-256 covers the rest.
-      #
-      # arm64-v8a, matching what has shipped. The universal build covers every
-      # architecture at 82 MB against 34 MB.
-      - name: Fetch Orbot for the official flavour
-        env:
-          ORBOT_VERSION: "17.9.5-RC-4-tor-0.4.9.11"
-          ORBOT_ABI: "arm64-v8a"
-          ORBOT_SHA256: "9cfacb21eaf5ad9e397f80d4f48b9d913ef585c5c6cd96ac254d008052305cbb"
-        run: |
-          set -euo pipefail
-          base="https://github.com/guardianproject/orbot/releases/download/${ORBOT_VERSION}"
-          apk="Orbot-${ORBOT_VERSION}-fullperm-${ORBOT_ABI}-release.apk"
-          dest="anonomi-android/src/official/assets"
-          curl -fsSL --retry 3 --retry-delay 5 -o "${dest}/${apk}" "${base}/${apk}"
-          echo "${ORBOT_SHA256}  ${dest}/${apk}" | sha256sum -c -
-          mv "${dest}/${apk}" "${dest}/orbot.apk"
-          ls -l "${dest}"
-
-      # One universal build, so no architecture to choose. The tag and the file
-      # name spell the version differently, hence the substitution. No detached
-      # signature is published alongside it: the SHA-256 pins the bytes and the
-      # certificate pin in the check below covers the key.
-      - name: Fetch Monerujo for the official flavour
-        env:
-          MONERUJO_VERSION: "4.1.7"
-          MONERUJO_SHA256: "0b31ad7f0b1f677daa6dfeff95730241222467c33c4465469c7a0d820beb260a"
-        run: |
-          set -euo pipefail
-          named="$(echo "${MONERUJO_VERSION}" | tr . x)"
-          base="https://github.com/m2049r/xmrwallet/releases/download/v${MONERUJO_VERSION}"
-          apk="monerujo-${named}_universal.apk"
-          dest="anonomi-android/src/official/assets"
-          curl -fsSL --retry 3 --retry-delay 5 -o "${dest}/${apk}" "${base}/${apk}"
-          echo "${MONERUJO_SHA256}  ${dest}/${apk}" | sha256sum -c -
-          mv "${dest}/${apk}" "${dest}/monerujo.apk"
-          ls -l "${dest}"
+      # Versions and hashes live in the script, which check-bundled-apks.yml
+      # runs too, so a pull request exercises the same fetch this does.
+      - name: Fetch the companion APKs
+        run: .github/scripts/fetch-companion-apks.sh
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -102,75 +35,10 @@ jobs:
       - name: Cache Gradle
         uses: gradle/actions/setup-gradle@v3
 
-      # The companion APKs are not built by this job, so check them before they
-      # ship: apksigner confirms each is a real APK and names the certificate it
-      # was signed with.
-      #
-      # Certificates rather than file hashes. A version bump changes every byte
-      # but keeps the key, so the pin survives an update and still catches a
-      # binary signed by anyone else. Each digest below is the one on the
-      # publisher's own release.
-      #
-      # tor-browser.apk is pinned by SHA-256 where it is fetched, so only its
-      # signature is checked here.
-      - name: Verify bundled companion APKs
-        run: |
-          set -euo pipefail
-          SDK="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-}}"
-          if [ -z "$SDK" ]; then
-            echo "::error::neither ANDROID_HOME nor ANDROID_SDK_ROOT is set"
-            exit 1
-          fi
-          APKSIGNER="$(ls -d "$SDK"/build-tools/*/apksigner | sort -V | tail -1)"
-          echo "Using $APKSIGNER"
-
-          assets="anonomi-android/src/official/assets"
-          fail=0
-
-          # The hotspot hides the button for anything missing, so an absent APK
-          # would not show up at runtime.
-          for required in anonomi-postbox.apk monerujo.apk orbot.apk tor-browser.apk; do
-            if [ ! -f "$assets/$required" ]; then
-              echo "::error::missing $assets/$required"
-              fail=1
-            fi
-          done
-
-          shopt -s nullglob
-          for apk in "$assets"/*.apk; do
-            name="$(basename "$apk")"
-            if ! "$APKSIGNER" verify --print-certs "$apk" > /tmp/asset-sig.txt 2>&1; then
-              echo "::error::unsigned, corrupt or not an APK: $name ($(wc -c < "$apk") bytes)"
-              cat /tmp/asset-sig.txt
-              fail=1
-              continue
-            fi
-            sha="$(grep -m1 -i 'certificate SHA-256 digest' /tmp/asset-sig.txt | awk '{print $NF}')"
-            case "$name" in
-              anonomi-postbox.apk)
-                expected="0c42c2a2e9be889eef2e7da10e8cd9cc71e6e6bc0e676fc994a8066d1766cb8d" ;;
-              monerujo.apk)
-                expected="967ca1930c19f383a43729a059cd21727855f78cd5e0d9882f780189fe1d8cf1" ;;
-              orbot.apk)
-                expected="a454b87a1847a89ed7f5e70fba6bba96f3ef29c26e0981204fe347bf231dfd5b" ;;
-              tor-browser.apk)
-                expected="" ;;
-              *)
-                expected=""
-                echo "::warning::$name is bundled but not pinned, and the hotspot will not offer it" ;;
-            esac
-            if [ -n "$expected" ] && [ "$sha" != "$expected" ]; then
-              echo "::error::$name is signed by $sha, expected $expected"
-              fail=1
-            else
-              echo "signed OK: $name (SHA-256 $sha)"
-            fi
-          done
-
-          if [ "$fail" -ne 0 ]; then
-            echo "Bundled companion APKs failed verification - not building."
-            exit 1
-          fi
+      # Certificate pins live in the script, which check-bundled-apks.yml
+      # runs too, so a pull request applies the same check this does.
+      - name: Verify the companion APKs
+        run: .github/scripts/verify-bundled-apks.sh
 
       # Write keystore to disk
       - name: Decode keystore
