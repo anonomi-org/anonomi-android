@@ -1,0 +1,66 @@
+# Builds the app and runs the unit tests on every pull request.
+#
+# The companion APKs are fetched at release time and are not in the tree, so
+# they are absent here. The app builds without them - the hotspot simply offers
+# fewer downloads - and check-bundled-apks.yml covers that side on its own.
+#
+# src/official holds assets and no code, so building the fdroid variant compiles
+# every source path. The official variant is built too, to catch anything
+# variant-specific in the manifest or resource merge.
+name: Build and test
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+# A new push supersedes whatever was already running for the same ref.
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # The Postbox submodule is a Gradle project in settings.gradle, so the
+      # build needs it present even though nothing here builds it.
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Cache Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Test
+        run: ./gradlew test
+
+      - name: Build
+        run: |
+          ./gradlew :anonomi-android:assembleFdroidDebug \
+                    :anonomi-android:assembleOfficialDebug
+
+      # Only on failure: the HTML reports say which test broke and why, which
+      # the log alone does not.
+      - name: Upload test reports
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: "*/build/reports/tests/**"
+          retention-days: 7
