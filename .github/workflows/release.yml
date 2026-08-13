@@ -46,6 +46,50 @@ jobs:
           mv "${dest}/${apk}" "${dest}/tor-browser.apk"
           ls -l "${dest}"
 
+      # Fetched for the same reasons as Tor Browser: the tree stays free of
+      # large binaries and a version change is a two-line edit. GitHub keeps
+      # every release, so a pinned version here keeps resolving.
+      #
+      # The signature published beside the APK was checked against
+      # BBE20FD6DA48A3DD4CC7DF41A801183E69B37AA9 when this version was pinned.
+      # Check it again when you change the version; the SHA-256 covers the rest.
+      #
+      # arm64-v8a, matching what has shipped. The universal build covers every
+      # architecture at 82 MB against 34 MB.
+      - name: Fetch Orbot for the official flavour
+        env:
+          ORBOT_VERSION: "17.9.5-RC-4-tor-0.4.9.11"
+          ORBOT_ABI: "arm64-v8a"
+          ORBOT_SHA256: "9cfacb21eaf5ad9e397f80d4f48b9d913ef585c5c6cd96ac254d008052305cbb"
+        run: |
+          set -euo pipefail
+          base="https://github.com/guardianproject/orbot/releases/download/${ORBOT_VERSION}"
+          apk="Orbot-${ORBOT_VERSION}-fullperm-${ORBOT_ABI}-release.apk"
+          dest="anonomi-android/src/official/assets"
+          curl -fsSL --retry 3 --retry-delay 5 -o "${dest}/${apk}" "${base}/${apk}"
+          echo "${ORBOT_SHA256}  ${dest}/${apk}" | sha256sum -c -
+          mv "${dest}/${apk}" "${dest}/orbot.apk"
+          ls -l "${dest}"
+
+      # One universal build, so no architecture to choose. The tag and the file
+      # name spell the version differently, hence the substitution. No detached
+      # signature is published alongside it: the SHA-256 pins the bytes and the
+      # certificate pin in the check below covers the key.
+      - name: Fetch Monerujo for the official flavour
+        env:
+          MONERUJO_VERSION: "4.1.7"
+          MONERUJO_SHA256: "0b31ad7f0b1f677daa6dfeff95730241222467c33c4465469c7a0d820beb260a"
+        run: |
+          set -euo pipefail
+          named="$(echo "${MONERUJO_VERSION}" | tr . x)"
+          base="https://github.com/m2049r/xmrwallet/releases/download/v${MONERUJO_VERSION}"
+          apk="monerujo-${named}_universal.apk"
+          dest="anonomi-android/src/official/assets"
+          curl -fsSL --retry 3 --retry-delay 5 -o "${dest}/${apk}" "${base}/${apk}"
+          echo "${MONERUJO_SHA256}  ${dest}/${apk}" | sha256sum -c -
+          mv "${dest}/${apk}" "${dest}/monerujo.apk"
+          ls -l "${dest}"
+
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
