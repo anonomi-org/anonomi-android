@@ -1,4 +1,4 @@
-package org.briarproject.anonchat.headless.messaging
+package org.anonchatsecure.anonchat.headless.messaging
 
 import org.anonchatsecure.bramble.api.contact.ContactId
 import org.anonchatsecure.anonchat.api.blog.BlogInvitationRequest

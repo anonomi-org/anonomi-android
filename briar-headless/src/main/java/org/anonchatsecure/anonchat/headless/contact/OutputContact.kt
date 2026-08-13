@@ -4,7 +4,7 @@ import org.anonchatsecure.bramble.api.contact.Contact
 import org.anonchatsecure.bramble.api.contact.event.ContactAddedEvent
 import org.anonchatsecure.bramble.api.plugin.event.ContactConnectedEvent
 import org.anonchatsecure.bramble.api.plugin.event.ContactDisconnectedEvent
-import org.briarproject.bramble.identity.output
+import org.anonchatsecure.bramble.identity.output
 import org.anonchatsecure.anonchat.headless.json.JsonDict
 
 internal fun Contact.output(latestMsgTime: Long, connected: Boolean, unreadCount: Int) = JsonDict(

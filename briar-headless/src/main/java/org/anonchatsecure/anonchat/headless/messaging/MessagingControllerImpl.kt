@@ -1,4 +1,4 @@
-package org.briarproject.anonchat.headless.messaging
+package org.anonchatsecure.anonchat.headless.messaging
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.javalin.http.BadRequestResponse
