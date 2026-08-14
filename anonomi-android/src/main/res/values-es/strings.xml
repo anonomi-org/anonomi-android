@@ -933,7 +933,7 @@
     <string name="intro_desc">Anonomi es una plataforma de comunicación que da prioridad a la privacidad, diseñada para conversaciones anónimas,\nseguras y descentralizadas.\nNo se requieren números de teléfono, direcciones de correo electrónico\nni identificadores personales.</string>
     <string name="how_it_works_title">Cómo funciona Anonomi</string>
     <string name="how_it_works_desc">Anonomi conecta a los usuarios a través de redes que preservan la privacidad para permitir conversaciones seguras sin revelar su identidad.\nLas conexiones se establecen automáticamente una vez que la aplicación está en funcionamiento.</string>
-    <string name="onion_link">http://627jvml2fultrmzw4xjs4hdcxlhlymht5xyzqujmak5wevsdh34btjad.onion/</string>
+    <string name="onion_link">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/</string>
     <string name="onion_link_instructions">Puede visitar el sitio web de Anonomi para obtener actualizaciones, documentación y asistencia.\nEl acceso requiere el navegador Tor, ya que el sitio está alojado como un servicio onion.</string>
     <string name="nickname_title">Acerca de tu apodo</string>
     <string name="nickname_desc">Tu apodo es la forma en que otros usuarios te reconocerán en Anonomi.\nSerá visible para los demás y no se podrá cambiar una vez creada la cuenta.\nElige algo que no revele información personal.</string>
@@ -963,7 +963,7 @@
     <string name="unlocking_anonchat">Desbloqueando Anonomi...</string>
     <string name="stealth_mode_enabled">Modo sigiloso activado.</string>
     <string name="offline_maps_copy_onion_title">Dónde obtener datos de mapas sin conexión</string>
-    <string name="offline_maps_onion_url">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/maps/</string>
+    <string name="offline_maps_onion_url">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/maps/</string>
     <string name="offline_maps_clearnet_url">https://anonomi.org/maps/</string>
     <string name="copy_clearnet_url">Copiar URL de Clearnet</string>
     <string name="offline_maps_copy_url_title">Copiar la URL onion del repositorio de datos de mapas sin conexión.</string>
@@ -1023,7 +1023,7 @@
     <string name="pref_minor_index_title">Índice de subdirecciones</string>
     <string name="pref_minor_index_hint">Introduzca el índice actual.</string>
     <string name="anonomi_version">Versión de Anonomi: %s</string>
-    <string name="anonchat_url">http://qeaknqubhyki4xlrslaalb5h6vmvcdt4bmse436ivk7mugjgxvkucvyd.onion/</string>
+    <string name="anonchat_url">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/</string>
     <string name="anonchat_url_note">Esta URL solo es accesible a través de la red Tor. Utilice el navegador Tor o un servicio compatible para abrirla de forma segura.</string>
     <string name="about_anonomi_body">Anonomi es una aplicación de mensajería diseñada para resistir la vigilancia, la centralización y la captura de infraestructura a través de su arquitectura técnica.\n\n En lugar de depender de la confianza institucional o las garantías políticas, Anonomi integra sus supuestos directamente en la forma en que se implementan la comunicación, la identidad y las redes.\n\n Supuestos de diseño\n\n Anonomi se basa en un pequeño conjunto de supuestos explícitos:\n• Las redes pueden ser monitoreadas, filtradas o manipuladas.\n • La infraestructura puede ser confiscada, alterada o cerrada.\n • Las plataformas y los intermediarios pueden actuar bajo coacción.\n • Los usuarios pueden operar bajo diferentes niveles de riesgo.\n\n Estas condiciones se tratan como entornos operativos normales, no como casos excepcionales.\n\n Arquitectura por encima de la política\n\n Anonomi no depende de:\n • Servidores centralizados.\n • Directorios globales.\n • Sistemas de identidad basados en cuentas.\n • Mecanismos de recuperación vinculados a proveedores externos.\n\n En su lugar, la comunicación se produce directamente entre pares, utilizando el medio de transporte más seguro en las condiciones actuales.\n\n Comunicación de uso general\n\n Anonomi se puede utilizar como un servicio de mensajería de uso general, incluyendo conversaciones individuales, chats grupales, contactos a largo plazo y comunicación cotidiana.\n\n Resiliencia de la red\n\n Anonomi está diseñado para funcionar en redes poco fiables, conexiones filtradas o degradadas y entornos en los que el acceso directo a Internet no es seguro o no está disponible.\n\n Código abierto y bifurcabilidad\n\n Anonomi es de código abierto, por lo que sus afirmaciones de seguridad pueden verificarse de forma independiente y el proyecto sigue siendo bifurcable si la gobernanza o la dirección divergen.\n\n Límites y responsabilidad\n\n Anonomi mejora la privacidad y la resiliencia, pero no elimina el riesgo. No puede proteger contra dispositivos comprometidos, malware o usuarios que revelan voluntariamente información de identificación.\n\n Atribución del proyecto upstream\n\n Anonomi deriva del proyecto Briar, desarrollado por Briar Project y con licencia GNU General Public License v3.0.\n\n Anonomi es un proyecto independiente y no está afiliado, respaldado ni patrocinado por Briar Project.</string>
     <string name="website_download_monerujo_button">Descargar la aplicación Monerujo</string>

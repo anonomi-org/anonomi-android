@@ -940,7 +940,7 @@
     <string name="intro_desc">Anonomi Messenger je komunikační platforma zaměřená na ochranu soukromí, navržená pro anonymní, bezpečné a decentralizované diskuse.\nNejsou vyžadována žádná telefonní čísla, e-mailové adresy ani osobní identifikátory.</string>
     <string name="how_it_works_title">Jak funguje Anonomi Messenger</string>
     <string name="how_it_works_desc">Anonomi Messenger propojuje uživatele prostřednictvím sítí chránících soukromí, aby umožnil bezpečné konverzace bez odhalení vaší identity.\nPřipojení se naváže automaticky, jakmile je aplikace spuštěna.</string>
-    <string name="onion_link">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/</string>
+    <string name="onion_link">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/</string>
     <string name="onion_link_instructions">Aktualizace, dokumentaci a podporu najdete na webových stránkách Anonomi Messenger.\nPro přístup je nutný prohlížeč Tor, protože stránky jsou hostovány jako onion service.</string>
     <string name="nickname_title">O vaší přezdívce</string>
     <string name="nickname_desc">Vaše přezdívka je to, podle čeho vás ostatní uživatelé v Anonomi Messenger poznají.\nBude viditelná pro ostatní a po vytvoření účtu ji nelze změnit.\nVyberte si něco, co neodhaluje vaše osobní údaje.</string>
@@ -1012,7 +1012,7 @@
     <string name="offline_maps_import_title">Importovat offline mapy</string>
     <string name="offline_maps_import_success">%1$d Dlaždice byly úspěšně importovány.</string>
     <string name="offline_maps_clearnet_url">https://anonomi.org/maps/</string>
-    <string name="offline_maps_onion_url">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/maps/</string>
+    <string name="offline_maps_onion_url">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/maps/</string>
     <string name="panic_record_dialog_title">Zaznamenejte sekvenci paniky</string>
     <string name="panic_record_save">Uložit</string>
     <string name="panic_record_dialog_instruction">Stiskněte tlačítka pro zvýšení/snížení hlasitosti v požadovaném pořadí. Krátké stisknutí (&lt; 0,5 s) nebo dlouhé stisknutí (&gt;= 0,5 s). Vyžadují se minimálně 3 kroky.</string>
@@ -1039,7 +1039,7 @@
     <string name="pref_minor_index_title">Index subadres</string>
     <string name="pref_minor_index_hint">Zadejte aktuální index</string>
     <string name="anonomi_version">Verze Anonomi Messenger: %s</string>
-    <string name="anonchat_url">http://qeaknqubhyki4xlrslaalb5h6vmvcdt4bmse436ivk7mugjgxvkucvyd.onion/</string>
+    <string name="anonchat_url">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/</string>
     <string name="anonchat_url_note">Tato URL adresa je přístupná pouze přes síť Tor. K jejímu bezpečnému otevření použijte prohlížeč Tor nebo kompatibilní službu.</string>
     <string name="about_anonomi_body">Anonomi Messenger je aplikace pro zasílání zpráv, která je díky své technické architektuře odolná vůči sledování, centralizaci a zachycování infrastruktury.\n\n Anonomi Messenger se nespoléhá na institucionální důvěru nebo politické záruky, ale své předpoklady přímo zakotvuje do způsobu, jakým jsou implementovány komunikace, identita a síťové propojení.\n\n Předpoklady návrhu\n\n Anonomi Messenger je postaven na malém souboru explicitních předpokladů:\n• Sítě mohou být monitorovány, filtrovány nebo manipulovány.\n • Infrastruktura může být zabavena, změněna nebo vypnuta\n • Platformy a zprostředkovatelé mohou jednat pod nátlakem\n • Uživatelé mohou pracovat s různou mírou rizika\n\n Tyto podmínky jsou považovány za normální provozní prostředí, nikoli za výjimečné případy.\n\n Architektura nad politikou\n\n Anonomi Messenger není závislý na:\n • Centralizovaných serverech\n • Globálních adresářích\n • Systémech identity založených na účtech\n • Mechanismech obnovy vázaných na externí poskytovatele\n\n Místo toho komunikace probíhá přímo mezi peer-to-peer, s využitím nejbezpečnějšího přenosu za daných podmínek.\n\n Komunikace pro všeobecné účely\n\n Anonomi Messenger lze použít jako messenger pro všeobecné účely, včetně individuálních konverzací, skupinových chatů, dlouhodobých kontaktů a každodenní komunikace.\n\n Odolnost sítě\n\n Anonomi Messenger je navržen tak, aby fungoval v nespolehlivých sítích, filtrovaných nebo zhoršených připojeních a prostředích, kde je přímý přístup k internetu nebezpečný nebo nedostupný.\n\n Otevřený zdrojový kód a možnost rozvětvení\n\n Anonomi Messenger je otevřený zdrojový kód, takže jeho bezpečnostní tvrzení lze nezávisle ověřit a projekt zůstává rozvětvitelný, pokud se liší správa nebo směr.\n\n Omezení a odpovědnost\n\n Anonomi Messenger zlepšuje soukromí a odolnost, ale neodstraňuje rizika. Nemůže chránit před napadenými zařízeními, malwarem nebo uživateli, kteří dobrovolně odhalují identifikační informace.\n\n Přiřazení upstreamového projektu\n\n Anonomi Messenger vychází z projektu Briar, který byl vyvinut společností Briar Project a je licencován pod GNU General Public License v3.0.\n\n Anonomi Messenger je nezávislý projekt a není spojen s projektem Briar Project, ani není tímto projektem podporován nebo sponzorován.</string>
     <string name="website_download_monerujo_button">Stáhnout aplikaci Monerujo</string>

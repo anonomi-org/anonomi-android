@@ -75,7 +75,7 @@
     <string name="how_it_works_desc">
 		Anonomi Messenger connects users over privacy-preserving networks to enable secure conversations without revealing your identity.\nConnections are established automatically once the app is running.
 	</string>
-    <string name="onion_link">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/</string>
+    <string name="onion_link">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/</string>
     <string name="onion_link_instructions">
         You can visit the Anonomi Messenger website for updates, documentation, and support.\nAccess requires Tor Browser, as the site is hosted as an onion service.
 	</string>
@@ -677,7 +677,7 @@
     <string name="unlocking_anonchat">Unlocking Anonomi Messenger...</string>
     <string name="stealth_mode_enabled">Stealth mode enabled.</string>
     <string name="offline_maps_copy_onion_title">Where to get Offline Maps data</string>
-    <string name="offline_maps_onion_url">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/maps/</string>
+    <string name="offline_maps_onion_url">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/maps/</string>
     <string name="offline_maps_clearnet_url">https://anonomi.org/maps/</string>
     <string name="copy_clearnet_url">Copy Clearnet URL</string>
     <string name="offline_maps_copy_url_title">Copy Onion URL of Offline Maps Data Repository</string>
@@ -749,7 +749,7 @@
     <string name="tile_cache_clear_confirm">All downloaded map tiles will be deleted. Continue?</string>
     <string name="pref_category_offline_maps">Offline Maps Management</string>
     <string name="pref_category_offline_maps_list">Imported Offline Maps</string>
-    <string name="default_map_server_url" translatable="false">http://khpmg7zqfpnybbvvdv6ycj6zvcx5kzkjf5scdb5cfz4fqfmn6z4quiyd.onion</string>
+    <string name="default_map_server_url" translatable="false">http://sycqogh7ohhdnwiaimumert5lfxdbhpqhxlixbqlmmyke5e4orlvivid.onion</string>
     <string name="pref_title_default_map_server">Default Map Server</string>
     <string name="reset_to_default">Default</string>
     <string name="pref_title_add_online_map">Add online map</string>
@@ -972,7 +972,7 @@
     <string name="briar_changelog">\u2022 <a href="">Changelog</a></string>
     <string name="briar_privacy_policy">\u2022 <a href="">Privacy Policy</a></string>
     <string name="translator_thanks">Thanks to all the contributors at the Localization Lab</string>
-    <string name="anonchat_url">http://qeaknqubhyki4xlrslaalb5h6vmvcdt4bmse436ivk7mugjgxvkucvyd.onion/</string>
+    <string name="anonchat_url">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/</string>
     <string name="anonchat_url_note">This URL is only accessible via the Tor network. Use the Tor Browser or a compatible service to open it securely.</string>
     <string name="about_anonomi_body">
 Anonomi Messenger is a messaging application designed to resist surveillance, centralization, and infrastructure capture through its technical architecture.\n\n

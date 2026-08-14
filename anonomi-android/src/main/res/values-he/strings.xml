@@ -681,7 +681,7 @@
     <string name="intro_desc">Anonomi Messenger היא פלטפורמת תקשורת המציבה את הפרטיות בראש סדר העדיפויות, המיועדת לדיונים אנונימיים, מאובטחים ומבוזרים.\nאין צורך במספרי טלפון, כתובות דוא\"ל או מזהים אישיים.</string>
     <string name="how_it_works_title">איך Anonomi Messenger עובדת</string>
     <string name="how_it_works_desc">Anonomi Messenger מחבר בין משתמשים ברשתות השומרות על פרטיות כדי לאפשר שיחות מאובטחות מבלי לחשוף את זהותכם.\nהחיבורים נוצרים באופן אוטומטי ברגע שהאפליקציה פועלת.</string>
-    <string name="onion_link">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/</string>
+    <string name="onion_link">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/</string>
     <string name="onion_link_instructions">ניתן לבקר באתר Anonomi Messenger לקבלת עדכונים, תיעוד ותמיכה.\nהגישה דורשת דפדפן Tor, מכיוון שהאתר מתארח כשירות בצל.</string>
     <string name="nickname_title">אודות הכינוי שלך</string>
     <string name="info">מידע</string>
@@ -816,7 +816,7 @@
     <string name="offline_maps_import_success">%1$d אריחים יובאו בהצלחה.</string>
     <string name="offline_maps_import_failed">נכשל בייבוא מפות לא מקוונות.</string>
     <string name="offline_maps_clearnet_url">https://anonomi.org/maps/</string>
-    <string name="offline_maps_onion_url">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/maps/</string>
+    <string name="offline_maps_onion_url">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/maps/</string>
     <plurals name="duration_minutes">
         <item quantity="one">%d דקה</item>
         <item quantity="two">%d דקות</item>
@@ -925,7 +925,7 @@
     <string name="briar_changelog">• <a href=""> יומן שינויים </a></string>
     <string name="briar_privacy_policy">• <a href=""> מדיניות פרטיות </a></string>
     <string name="translator_thanks">תודה לכל התורמים במעבדת הלוקליזציה.</string>
-    <string name="anonchat_url">http://qeaknqubhyki4xlrslaalb5h6vmvcdt4bmse436ivk7mugjgxvkucvyd.onion/</string>
+    <string name="anonchat_url">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/</string>
     <string name="anonchat_url_note">כתובת URL זו נגישה רק דרך רשת Tor. השתמש בדפדפן Tor או בשירות תואם כדי לפתוח אותה בצורה מאובטחת.</string>
     <string name="about_anonomi_body">Anonomi Messenger היא אפליקציית הודעות שתוכננה להתנגד למעקב, ריכוזיות ותפיסת תשתיות באמצעות הארכיטקטורה הטכנית שלה.\n\n במקום להסתמך על אמון מוסדי או ערבויות מדיניות, Anonomi Messenger משלבת את הנחות היסוד שלה ישירות באופן שבו מיושמים תקשורת, זהות ורשתות.\n\n הנחות עיצוב\n\n Anonomi Messenger בנויה סביב קבוצה קטנה של הנחות מפורשות:\n • רשתות עשויות להיות מנוטרות, מסוננות או מנוהלות\n • התשתית עשויה להילקח, להשתנות או להיסגר\n • פלטפורמות ומתווכים עשויים לפעול תחת כפייה\n • משתמשים עשויים לפעול תחת רמות סיכון שונות\n\n תנאים אלה מטופלים כסביבות הפעלה רגילות, ולא כמקרים חריגים.\n\n ארכיטקטורה על פני מדיניות\n\n Anonomi Messenger אינו תלוי ב:\n • שרתים מרכזיים\n • ספריות גלובליות\n • מערכות זהות מבוססות חשבון\n • מנגנוני שחזור הקשורים לספקים חיצוניים\n\n במקום זאת, התקשורת מתבצעת ישירות בין עמיתים, תוך שימוש באמצעי התקשורת הבטוח ביותר בתנאים הנוכחיים.\n\n תקשורת למטרות כלליות\n\n Anonomi Messenger יכול לשמש כמסנג\'ר למטרות כלליות, כולל שיחות אחד על אחד, צ\'אטים קבוצתיים, אנשי קשר לטווח ארוך ותקשורת יומיומית.\n\n עמידות הרשת\n\n Anonomi Messenger תוכנן לתפקד ברשתות לא אמינות, בחיבורים מסוננים או פגומים, ובסביבות שבהן הגישה הישירה לאינטרנט אינה בטוחה או אינה זמינה.\n\n קוד פתוח ויכולת פיצול\n\nAnonomi Messenger הוא קוד פתוח, כך שניתן לאמת את טענות האבטחה שלו באופן עצמאי והפרויקט נשאר ניתן לפיצול אם הממשל או הכיוון משתנים.\n\nמגבלות ואחריות\n\nAnonomi Messenger משפר את הפרטיות והעמידות, אך אינו מבטל את הסיכון. הוא אינו יכול להגן מפני מכשירים שנפרצו, תוכנות זדוניות או משתמשים החושפים מרצונם מידע מזהה.\n\n ייחוס לפרויקט מקור\n\n Anonomi Messenger נגזר מפרויקט Briar, שפותח על ידי Briar Project ומורשה תחת GNU General Public License v3.0.\n\n Anonomi Messenger הוא פרויקט עצמאי ואינו קשור, מאושר או ממומן על ידי Briar Project.</string>
     <string name="disappearing_messages_title">הודעות נעלמות</string>

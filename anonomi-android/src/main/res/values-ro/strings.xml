@@ -1037,7 +1037,7 @@
     <string name="intro_desc">Anonomi Messenger este o platformă de comunicare care pune accentul pe confidențialitate, concepută pentru discuții anonime, securizate și descentralizate.\n\nNu sunt necesare numere de telefon, adrese de e-mail și identificatori personali.</string>
     <string name="how_it_works_title">Cum funcționează Anonomi Messenger</string>
     <string name="how_it_works_desc">Anonomi Messenger conectează utilizatorii prin rețele care păstrează confidențialitatea pentru a permite conversații securizate fără a dezvălui identitatea utilizatorilor.\n\nConexiunile sunt stabilite automat odată ce aplicația rulează.</string>
-    <string name="onion_link">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/</string>
+    <string name="onion_link">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/</string>
     <string name="onion_link_instructions">Puteți vizita site-ul web Anonomi Messenger pentru actualizări, documentație și asistență.\nAccesul necesită browserul Tor, deoarece site-ul este găzduit ca serviciu onion.</string>
     <string name="nickname_title">Despre porecla ta</string>
     <string name="nickname_desc">Porecla ta este modul în care te vor recunoaște alți utilizatori în Anonomi Messenger.\nVa fi vizibilă pentru ceilalți și nu poate fi modificată după crearea contului tău.\nAlege ceva care nu dezvăluie informații personale.</string>
@@ -1052,9 +1052,9 @@
     <string name="pref_monero_rate_hint">Introduceți cursul XMR (de exemplu, 120,50)</string>
     <string name="pref_minor_index_title">Indexul subadreselor</string>
     <string name="pref_minor_index_hint">Introduceți indexul curent</string>
-    <string name="offline_maps_onion_url">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/maps/</string>
+    <string name="offline_maps_onion_url">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/maps/</string>
     <string name="anonomi_version">Versiunea Anonomi Messenger: %s</string>
-    <string name="anonchat_url">http://qeaknqubhyki4xlrslaalb5h6vmvcdt4bmse436ivk7mugjgxvkucvyd.onion/</string>
+    <string name="anonchat_url">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/</string>
     <string name="anonchat_url_note">Această adresă URL este accesibilă doar prin rețeaua Tor. Folosește browserul Tor sau un serviciu compatibil pentru a o deschide în siguranță.</string>
     <string name="website_http_notice">Browserul dvs. poate avertiza că această conexiune nu este securizată. Acest lucru este de așteptat - pagina este difuzată local prin conexiunea Wi-Fi directă și nu circulă prin internet.</string>
     <string name="website_download_mailbox_button">Descărcați Anonomi Postbox</string>

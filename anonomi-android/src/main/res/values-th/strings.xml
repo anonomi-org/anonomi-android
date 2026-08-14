@@ -56,7 +56,7 @@
     <string name="intro_desc">Anonomi Messenger เป็นแพลตฟอร์มการสื่อสารที่ให้ความสำคัญกับความเป็นส่วนตัว ออกแบบมาเพื่อการสนทนาแบบไม่ระบุตัวตน ปลอดภัย และกระจายอำนาจ\nไม่จำเป็นต้องระบุหมายเลขโทรศัพท์ ที่อยู่อีเมล หรือข้อมูลระบุตัวตนส่วนบุคคลใดๆ</string>
     <string name="how_it_works_title">วิธีใช้งาน Anonomi Messenger</string>
     <string name="how_it_works_desc">Anonomi Messenger เชื่อมต่อผู้ใช้ผ่านเครือข่ายที่รักษาความเป็นส่วนตัว เพื่อให้สามารถสนทนาได้อย่างปลอดภัยโดยไม่ต้องเปิดเผยตัวตนของคุณ\nการเชื่อมต่อจะถูกสร้างขึ้นโดยอัตโนมัติเมื่อแอปเริ่มทำงาน</string>
-    <string name="onion_link">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/</string>
+    <string name="onion_link">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/</string>
     <string name="onion_link_instructions">คุณสามารถเยี่ยมชมเว็บไซต์ Anonomi Messenger เพื่อรับข้อมูลอัปเดต เอกสารประกอบ และการสนับสนุน\nการเข้าถึงต้องใช้ Tor Browser เนื่องจากเว็บไซต์นี้โฮสต์อยู่บนบริการ Onion</string>
     <string name="nickname_title">เกี่ยวกับชื่อเล่นของคุณ</string>
     <string name="nickname_desc">ชื่อเล่นของคุณคือชื่อที่ผู้ใช้รายอื่นจะจดจำคุณได้ใน Anonomi Messenger\nชื่อเล่นของคุณจะปรากฏให้ผู้อื่นเห็นและไม่สามารถเปลี่ยนแปลงได้หลังจากสร้างบัญชีแล้ว\nโปรดเลือกชื่อที่ไม่เปิดเผยข้อมูลส่วนบุคคล</string>
@@ -588,7 +588,7 @@
     <string name="unlocking_anonchat">ปลดล็อก Anonomi Messenger...</string>
     <string name="stealth_mode_enabled">เปิดใช้งานโหมดซ่อนตัวแล้ว</string>
     <string name="offline_maps_copy_onion_title">จะหาข้อมูลแผนที่ออฟไลน์ได้จากที่ไหน</string>
-    <string name="offline_maps_onion_url">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/maps/</string>
+    <string name="offline_maps_onion_url">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/maps/</string>
     <string name="offline_maps_clearnet_url">https://anonomi.org/maps/</string>
     <string name="copy_clearnet_url">คัดลอก URL ของ Clearnet</string>
     <string name="offline_maps_copy_url_title">คัดลอก URL ของ Onion ของคลังข้อมูลแผนที่ออฟไลน์</string>
@@ -767,7 +767,7 @@
     <string name="briar_changelog">• <a href="">บันทึกการเปลี่ยนแปลง</a></string>
     <string name="briar_privacy_policy">• นโยบายความเป็นส่วนตัว <a href=""> </a></string>
     <string name="translator_thanks">ขอขอบคุณผู้มีส่วนร่วมทุกท่านใน Localization Lab</string>
-    <string name="anonchat_url">http://qeaknqubhyki4xlrslaalb5h6vmvcdt4bmse436ivk7mugjgxvkucvyd.onion/</string>
+    <string name="anonchat_url">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/</string>
     <string name="anonchat_url_note">URL นี้สามารถเข้าถึงได้ผ่านเครือข่าย Tor เท่านั้น โปรดใช้ Tor Browser หรือบริการที่เข้ากันได้เพื่อเปิดอย่างปลอดภัย</string>
     <string name="about_anonomi_body">Anonomi Messenger เป็นแอปพลิเคชันส่งข้อความที่ออกแบบมาเพื่อต่อต้านการสอดแนม การรวมศูนย์ และการยึดครองโครงสร้างพื้นฐาน ผ่านสถาปัตยกรรมทางเทคนิค\n\nแทนที่จะพึ่งพาความไว้วางใจจากสถาบันหรือการรับประกันตามนโยบาย Anonomi Messenger ฝังสมมติฐานของตนไว้โดยตรงในวิธีการสื่อสาร การระบุตัวตน และการสร้างเครือข่าย\n\nสมมติฐานในการออกแบบ\n\nAnonomi Messenger สร้างขึ้นจากสมมติฐานที่ชัดเจนเพียงไม่กี่ข้อ:\n• เครือข่ายอาจถูกตรวจสอบ กรอง หรือเปลี่ยนแปลง\n• โครงสร้างพื้นฐานอาจถูกยึด เปลี่ยนแปลง หรือปิดใช้งาน\n• แพลตฟอร์มและตัวกลางอาจกระทำการภายใต้การบีบบังคับ\n• ผู้ใช้อาจดำเนินการภายใต้ระดับความเสี่ยงที่แตกต่างกัน\n\nเงื่อนไขเหล่านี้ถือเป็นสภาพแวดล้อมการทำงานปกติ ไม่ใช่กรณีพิเศษ\n\nสถาปัตยกรรมเหนือนโยบาย\n\nAnonomi Messenger ไม่ขึ้นอยู่กับ:\n\n• เซิร์ฟเวอร์ส่วนกลาง\n• ไดเร็กทอรีทั่วโลก\n\n• ระบบระบุตัวตนแบบบัญชี\n• กลไกการกู้คืนที่ผูกติดกับผู้ให้บริการภายนอก\n\nแต่การสื่อสารเกิดขึ้นโดยตรงระหว่างผู้ใช้งาน โดยใช้การขนส่งใด ๆ ที่ปลอดภัยที่สุดภายใต้เงื่อนไขปัจจุบัน\n\nการสื่อสารทั่วไป\n\nAnonomi Messenger สามารถใช้เป็นโปรแกรมส่งข้อความทั่วไปได้ รวมถึงการสนทนาแบบตัวต่อตัว การแชทกลุ่ม การติดต่อระยะยาว และการสื่อสารในชีวิตประจำวัน\n\nความยืดหยุ่นของเครือข่าย\n\nAnonomi Messenger ได้รับการออกแบบให้ทำงานได้บนเครือข่ายที่ไม่เสถียร การเชื่อมต่อที่ถูกกรองหรือลดคุณภาพ และสภาพแวดล้อมที่การเข้าถึงอินเทอร์เน็ตโดยตรงไม่ปลอดภัยหรือไม่สามารถใช้งานได้\n\nโอเพนซอร์สและการแยกสาขา\n\nAnonomi Messenger เป็นโอเพนซอร์ส เพื่อให้สามารถตรวจสอบความปลอดภัยได้อย่างอิสระ และโครงการยังคงสามารถแยกสาขาได้หากการกำกับดูแลหรือทิศทางแตกต่างกัน\n\nข้อจำกัดและความรับผิดชอบ\n\nAnonomi Messenger ช่วยเพิ่มความเป็นส่วนตัวและความยืดหยุ่น แต่ไม่ได้กำจัดความเสี่ยงทั้งหมด ไม่สามารถป้องกันอุปกรณ์ที่ถูกบุกรุก มัลแวร์ หรือผู้ใช้เปิดเผยข้อมูลระบุตัวตนโดยสมัครใจได้\n\nการอ้างอิงโครงการต้นทาง\n\nAnonomi Messenger มาจากโครงการ Briar ซึ่งพัฒนาโดยโครงการ Briar และได้รับอนุญาตภายใต้ GNU General Public License v3.0\n\nAnonomi Messenger เป็นโครงการอิสระและไม่มีส่วนเกี่ยวข้อง สนับสนุน หรือได้รับการรับรองจาก Briar Project แต่อย่างใด</string>
     <string name="disappearing_messages_title">ข้อความที่หายไป</string>

@@ -580,7 +580,7 @@
     <string name="intro_desc">Anonomi Messenger je komunikacijska platforma koja na prvo mjesto stavlja privatnost, dizajnirana za anonimne, sigurne i decentralizirane diskusije.\nNisu potrebni brojevi telefona, adrese e-pošte niti lični identifikatori.</string>
     <string name="how_it_works_title">Kako funkcioniše Anonomi Messenger</string>
     <string name="how_it_works_desc">Anonomi Messenger povezuje korisnike putem mreža koje čuvaju privatnost kako bi omogućio sigurne razgovore bez otkrivanja vašeg identiteta.\nVeze se uspostavljaju automatski nakon pokretanja aplikacije.</string>
-    <string name="onion_link">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/</string>
+    <string name="onion_link">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/</string>
     <string name="onion_link_instructions">Možete posjetiti web stranicu Anonomi Messengera za ažuriranja, dokumentaciju i podršku.\nZa pristup je potreban Tor preglednik, jer se stranica hostuje kao onion servis.</string>
     <string name="nickname_title">O tvom nadimku</string>
     <string name="nickname_desc">Vaš nadimak je način na koji će vas drugi korisnici prepoznati u Anonomi Messengeru.\nBit će vidljiv drugima i ne može se promijeniti nakon što kreirate svoj račun.\nOdaberite nešto što ne otkriva lične podatke.</string>
@@ -876,7 +876,7 @@
     <string name="briar_changelog">• <a href="">Dnevnik promjena</a></string>
     <string name="briar_privacy_policy">• <a href="">Politika privatnosti</a></string>
     <string name="translator_thanks">Zahvaljujemo se svim saradnicima u Laboratoriju za lokalizaciju</string>
-    <string name="anonchat_url">http://qeaknqubhyki4xlrslaalb5h6vmvcdt4bmse436ivk7mugjgxvkucvyd.onion/</string>
+    <string name="anonchat_url">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/</string>
     <string name="anonchat_url_note">Ovom URL-u se može pristupiti samo putem Tor mreže. Koristite Tor preglednik ili kompatibilnu uslugu da ga sigurno otvorite.</string>
     <string name="about_anonomi_body">Anonomi Messenger je aplikacija za razmjenu poruka dizajnirana da se odupre nadzoru, centralizaciji i preuzimanju infrastrukture putem svoje tehničke arhitekture.\n\nUmjesto da se oslanja na institucionalno povjerenje ili garancije politike, Anonomi Messenger direktno ugrađuje svoje pretpostavke u način na koji se implementiraju komunikacija, identitet i umrežavanje.\n\nPretpostavke dizajna\n\nAnonomi Messenger je izgrađen oko malog skupa eksplicitnih pretpostavki:\n• Mreže se mogu pratiti, filtrirati ili manipulirati\n• Infrastruktura se može zaplijeniti, mijenjati ili isključiti\n• Platforme i posrednici mogu djelovati pod prisilom\n• Korisnici mogu raditi pod različitim nivoima rizika\n\nOvi uslovi se tretiraju kao normalna operativna okruženja, a ne kao izuzetni slučajevi.\n\nArhitektura iznad politike\n\nAnonomi Messenger ne zavisi od:\n• Centralizovanih servera\n• Globalnih direktorijuma\n• Sistema identiteta zasnovanih na računima\n• Mehanizama oporavka povezanih s vanjskim provajderima\n\nUmjesto toga, komunikacija se odvija direktno između vršnjaka, koristeći bilo koji transport koji je najsigurniji u trenutnim uslovima.\n\nKomunikacija opće namjene\n\nAnonomi Messenger se može koristiti kao program za razmjenu poruka opće namjene, uključujući razgovore jedan na jedan, grupne chatove, dugoročne kontakte i svakodnevnu komunikaciju.\n\nOtpornost mreže\n\nAnonomi Messenger je dizajniran da funkcionira na nepouzdanim mrežama, filtriranim ili degradiranim vezama i okruženjima gdje je direktan pristup internetu nesiguran ili nedostupan.\n\nOtvoreni kod i mogućnost deljenja\n\nAnonomi Messenger je otvorenog koda tako da se njegove sigurnosne tvrdnje mogu nezavisno provjeriti i da projekat ostaje dostupan za deljenje ako se upravljanje ili smjer razlikuju.\n\nOgraničenja i odgovornost\n\nAnonomi Messenger poboljšava privatnost i otpornost, ali ne eliminira rizik. Ne može zaštititi od kompromitovanih uređaja, zlonamjernog softvera ili korisnika koji dobrovoljno otkrivaju identifikacijske podatke.\n\nAtribucija projekta uzvodno\n\nAnonomi Messenger proizilazi iz projekta Briar, koji je razvio Briar Project i licenciran pod GNU General Public License v3.0.\n\nAnonomi Messenger je nezavisni projekat i nije povezan s, podržan ili sponzoriran od strane Briar Projecta.</string>
     <string name="disappearing_messages_title">Nestajuće poruke</string>
@@ -1012,7 +1012,7 @@
     <string name="scan_qr_code">Skeniraj QR kod</string>
     <string name="load_qr_code">Učitaj QR kod</string>
     <string name="offline_maps_clearnet_url">https://anonomi.org/maps/</string>
-    <string name="offline_maps_onion_url">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/maps/</string>
+    <string name="offline_maps_onion_url">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/maps/</string>
     <plurals name="forum_post_notification_text">
         <item quantity="one"/>
         <item quantity="few">%d nove objave na forumu.</item>

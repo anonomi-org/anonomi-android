@@ -943,7 +943,7 @@
     <string name="intro_desc">Anonomi — це комунікаційна платформа, що ставить на перше місце конфіденційність і призначена для анонімних,\nбезпечних і децентралізованих обговорень.\nНе потрібні ні телефонні номери, ні адреси електронної пошти,\nні особисті ідентифікатори.</string>
     <string name="how_it_works_title">Як працює Anonomi</string>
     <string name="how_it_works_desc">Anonomi з\'єднує користувачів через мережі, що забезпечують конфіденційність, щоб забезпечити безпечні розмови без розкриття вашої особи.\nЗ\'єднання встановлюються автоматично після запуску програми.</string>
-    <string name="onion_link">http://627jvml2fultrmzw4xjs4hdcxlhlymht5xyzqujmak5wevsdh34btjad.onion/</string>
+    <string name="onion_link">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/</string>
     <string name="onion_link_instructions">Ви можете відвідати веб-сайт Anonomi для оновлень, документації та підтримки.\nДля доступу необхідний браузер Tor, оскільки сайт розміщений як onion-сервіс.</string>
     <string name="nickname_title">Про ваше прізвисько</string>
     <string name="nickname_desc">Ваш псевдонім — це те, як інші користувачі будуть вас впізнавати в Anonomi.\nВін буде видимий для інших і не може бути змінений після створення вашого облікового запису.\nВиберіть щось, що не розкриває особисту інформацію.</string>
@@ -976,7 +976,7 @@
     <string name="unlocking_anonchat">Розблокування Anonomi...</string>
     <string name="stealth_mode_enabled">Увімкнено режим стелс.</string>
     <string name="offline_maps_copy_onion_title">Де отримати дані офлайн-карт</string>
-    <string name="offline_maps_onion_url">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/maps/</string>
+    <string name="offline_maps_onion_url">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/maps/</string>
     <string name="offline_maps_clearnet_url">https://anonomi.org/maps/</string>
     <string name="copy_clearnet_url">Копіювати URL Clearnet</string>
     <string name="offline_maps_copy_url_title">Скопіюйте URL-адресу Onion сховища даних офлайн-карт</string>
@@ -1036,7 +1036,7 @@
     <string name="pref_minor_index_title">Індекс суб-адреси</string>
     <string name="pref_minor_index_hint">Введіть поточний індекс</string>
     <string name="anonomi_version">Версія Anonomi: %s</string>
-    <string name="anonchat_url">http://qeaknqubhyki4xlrslaalb5h6vmvcdt4bmse436ivk7mugjgxvkucvyd.onion/</string>
+    <string name="anonchat_url">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/</string>
     <string name="anonchat_url_note">Цей URL-адресу можна відкрити лише через мережу Tor. Для безпечного відкриття використовуйте браузер Tor або сумісну службу.</string>
     <string name="about_anonomi_body">Anonomi — це додаток для обміну повідомленнями, розроблений для протидії стеженню, централізації та захопленню інфраструктури завдяки своїй технічній архітектурі.\n\n Замість того, щоб покладатися на інституційну довіру або політичні гарантії, Anonomi вбудовує свої припущення безпосередньо в те, як реалізуються комунікація, ідентифікація та мережеві зв\'язки.\n\n Припущення щодо дизайну\n\n Anonomi побудований на основі невеликого набору чітких припущень:\n• Мережі можуть контролюватися, фільтруватися або маніпулюватися\n • Інфраструктура може бути захоплена, змінена або вимкнена\n • Платформи та посередники можуть діяти під примусом\n • Користувачі можуть працювати з різним рівнем ризику\n\n Ці умови розглядаються як нормальні умови роботи, а не виняткові випадки.\n\n Архітектура понад політикою\n\n Anonomi не залежить від:\n • Централізованих серверів\n • Глобальних каталогів\n • Систем ідентифікації на основі облікових записів\n • Механізмів відновлення, пов\'язаних із зовнішніми постачальниками\n\n Натомість, комунікація відбувається безпосередньо між рівними учасниками, використовуючи найбезпечніший за поточних умов транспорт.\n\n Загальнопризначена комунікація\n\n Anonomi може використовуватися як загальнопризначений месенджер, включаючи індивідуальні розмови, групові чати, довгострокові контакти та повсякденну комунікацію.\n\n Стійкість мережі\n\n Anonomi розроблений для функціонування в ненадійних мережах, фільтрованих або погіршених з\'єднаннях та середовищах, де прямий доступ до Інтернету є небезпечним або недоступним.\n\n Відкритий код та можливість розгалуження\n\n Anonomi є відкритим кодом, тому його заявлені характеристики безпеки можуть бути незалежно перевірені, а проект залишається розгалуженим, якщо управління або напрямок діяльності змінюються.\n\n Обмеження та відповідальність\n\n Anonomi покращує конфіденційність та стійкість, але не усуває ризики. Він не може захистити від скомпрометованих пристроїв, шкідливого програмного забезпечення або добровільного розкриття ідентифікуючої інформації користувачами.\n\n Атрибуція проекту\n\n Anonomi походить від проекту Briar, розробленого Briar Project і ліцензованого під GNU General Public License v3.0.\n\n Anonomi є незалежним проектом і не пов\'язаний, не підтримується і не спонсорується Briar Project.</string>
     <string name="website_download_monerujo_button">Завантажити додаток Monerujo</string>

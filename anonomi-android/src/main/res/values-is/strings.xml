@@ -855,7 +855,7 @@
     <string name="intro_desc">Anonomi Messenger er samskiptavettvangur sem hefur friðhelgi einkalífsins í fyrirrúmi, hannaður fyrir nafnlausar, öruggar og dreifðar umræður.\nEngin símanúmer, engin netföng og engin persónuskilríki eru nauðsynleg.</string>
     <string name="how_it_works_title">Hvernig Anonomi Messenger virkar</string>
     <string name="how_it_works_desc">Anonomi Messenger tengir notendur saman yfir net sem vernda friðhelgi einkalífsins til að gera öruggar samræður mögulegar án þess að upplýsa hver þú ert.\nTengingar eru sjálfkrafa stofnaðar þegar forritið er keyrt.</string>
-    <string name="onion_link">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/</string>
+    <string name="onion_link">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/</string>
     <string name="onion_link_instructions">Þú getur heimsótt vefsíðu Anonomi Messenger til að fá uppfærslur, skjöl og aðstoð.\nAðgangur krefst Tor vafra, þar sem síðan er hýst sem onion þjónusta.</string>
     <string name="nickname_title">Um gælunafnið þitt</string>
     <string name="nickname_desc">Gælunafnið þitt er það sem aðrir notendur munu þekkja þig í Anonomi Messenger.\nÞað verður sýnilegt öðrum og ekki er hægt að breyta því eftir að aðgangurinn þinn hefur verið stofnaður.\nVeldu eitthvað sem afhjúpar ekki persónuupplýsingar.</string>
@@ -997,7 +997,7 @@
     <string name="briar_changelog">• <a href="">Breytingarskrá</a></string>
     <string name="briar_privacy_policy">• <a href=""> Persónuverndarstefna </a></string>
     <string name="translator_thanks">Þökk sé öllum þeim sem lögðu sitt af mörkum í Staðsetningarrannsóknarstofunni</string>
-    <string name="anonchat_url">http://qeaknqubhyki4xlrslaalb5h6vmvcdt4bmse436ivk7mugjgxvkucvyd.onion/</string>
+    <string name="anonchat_url">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/</string>
     <string name="anonchat_url_note">Þessi vefslóð er aðeins aðgengileg í gegnum Tor netið. Notaðu Tor vafrann eða samhæfa þjónustu til að opna hana á öruggan hátt.</string>
     <string name="about_anonomi_body">Anonomi Messenger er skilaboðaforrit hannað til að standast eftirlit, miðstýringu og innviðaupptöku með tæknilegri arkitektúr sínum.\n\nÍ stað þess að reiða sig á stofnanalegt traust eða stefnuábyrgðir, fellur Anonomi Messenger forsendur sínar beint inn í hvernig samskipti, auðkenni og netkerfi eru útfærð.\n\nHönnunarforsendur\n\nAnonomi Messenger er byggt upp í kringum fáein skýr forsendur:\n• Net geta verið vöktuð, síuð eða stjórnað\n• Innviðir geta verið haldlagðir, breyttir eða lokaðir\n• Pallar og milliliðir geta starfað undir nauðung\n• Notendur geta starfað undir mismunandi áhættustigum\n\nÞessum aðstæðum er litið á sem eðlilegt rekstrarumhverfi, ekki undantekningartilvik.\n\nArkitektúr frekar en stefnu\n\nAnonomi Messenger er ekki háð:\n• Miðlægum netþjónum\n• Alþjóðlegum skrám\n• Reikningsbundnum auðkenniskerfum\n• Endurheimtarkerfum sem tengjast utanaðkomandi þjónustuaðilum\n\nÍ staðinn eiga samskipti sér stað beint milli jafningja, með því að nota hvaða flutning sem er öruggastur við núverandi aðstæður.\n\nAlmenn samskipti\n\nAnonomi Messenger er hægt að nota sem almennan boðbera, þar á meðal einn-á-mann samtöl, hópspjall, langtímasambönd og dagleg samskipti.\n\nSeigla netsins\n\nAnonomi Messenger er hannað til að virka á óáreiðanlegum netum, síuðum eða skemmdum tengingum og umhverfi þar sem beinn aðgangur að internetinu er óöruggur eða ekki tiltækur.\n\nOpinn hugbúnaður og gagnvirkni\n\nAnonomi Messenger er opinn hugbúnaður þannig að öryggiskröfur þess geta verið staðfestar óháð og verkefnið er áfram gagnvirkt ef stjórn eða stefna víkur frá.\n\nTakmörk og ábyrgð\n\nAnonomi Messenger bætir friðhelgi einkalífs og seiglu, en það útilokar ekki áhættu. Það getur ekki verndað gegn skemmdum tækjum, spilliforritum eða notendum sem gefa sjálfviljuglega persónugreinanlegar upplýsingar.\n\nTilvísun til verkefnisins\n\nAnonomi Messenger er dregið af Briar verkefninu, þróað af Briar verkefninu og leyfisveitt undir GNU General Public License v3.0.\n\nAnonomi Messenger er sjálfstætt verkefni og er ekki tengt, studd af eða styrkt af Briar verkefninu.</string>
     <string name="privacy_policy">Með því að senda okkur gögn samþykkir þú persónuverndarstefnu okkar <a href=""/></string>
@@ -1040,7 +1040,7 @@
     <string name="scan_qr_code">Skannaðu QR kóða</string>
     <string name="load_qr_code">Hlaða QR kóða</string>
     <string name="offline_maps_clearnet_url">https://anonomi.org/maps/</string>
-    <string name="offline_maps_onion_url">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/maps/</string>
+    <string name="offline_maps_onion_url">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/maps/</string>
     <string name="panic_enabled_title">Virkja neyðarkveikjara</string>
     <string name="panic_enabled_summary">Greina röð hljóðstyrkstakka til að virkja neyðarstillingu</string>
     <string name="panic_record_sequence_title">Taka upp lætisröð</string>

@@ -924,7 +924,7 @@
     <string name="intro_desc">Anonomi Messenger 是一個以隱私為先的通訊平台，旨在實現匿名、安全和去中心化的交流。\n\n無需提供電話號碼、電子郵件地址或任何個人識別資訊。</string>
     <string name="how_it_works_title">Anonomi Messenger 的工作原理</string>
     <string name="how_it_works_desc">Anonomi Messenger 透過保護隱私的網路連結用戶，實現安全對話，無需透露您的身分。\n\n應用啟動後，連線將自動建立。</string>
-    <string name="onion_link">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/</string>
+    <string name="onion_link">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/</string>
     <string name="onion_link_instructions">您可以造訪 Anonomi Messenger 網站以取得更新、文件和支援。\n\n由於網站託管在洋蔥伺服器上，因此需要使用 Tor 瀏覽器存取。</string>
     <string name="nickname_title">關於你的暱稱</string>
     <string name="nickname_desc">您的暱稱是其他使用者在 Anonomi Messenger 中識別您的方式。\n\n您的暱稱對其他人可見，且建立帳戶後無法變更。\n\n請選擇不會洩露個人資訊的暱稱。</string>
@@ -937,7 +937,7 @@
     <string name="stealth_mode_switch_summary">啟用後，Anonomi Messenger 會在應用程式抽屜中顯示為計算機。</string>
     <string name="pref_stealth_mode_title">隱身模式</string>
     <string name="slide_to_cancel">正在錄製…滑動取消</string>
-    <string name="offline_maps_onion_url">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/maps/</string>
+    <string name="offline_maps_onion_url">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/maps/</string>
     <string name="offline_maps_clearnet_url">https://anonomi.org/maps/</string>
     <string name="panic_action_title">恐慌行動</string>
     <string name="panic_dialog_title">恐慌模式</string>
@@ -1022,7 +1022,7 @@
     <string name="pref_monero_rate_hint">輸入 XMR 匯率（例如，120.50）</string>
     <string name="pref_minor_index_title">子地址索引</string>
     <string name="pref_minor_index_hint">輸入當前索引</string>
-    <string name="anonchat_url">http://qeaknqubhyki4xlrslaalb5h6vmvcdt4bmse436ivk7mugjgxvkucvyd.onion/</string>
+    <string name="anonchat_url">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/</string>
     <string name="anonchat_url_note">此網址只能透過 Tor 網路存取。請使用 Tor 瀏覽器或相容服務安全地開啟它。</string>
     <string name="about_anonomi_body">Anonomi Messenger 是一款旨在透過其技術架構抵禦監控、中心化和基礎設施劫持的即時通訊應用。\n\nAnonomi Messenger 不依賴機構信任或政策保障，而是將自身假設直接嵌入到通訊、身分和網路實現方式中。\n\n設計假設\n\nAnonomi Messenger 基於以下幾個明確的假設建構：\n\n• 網路可能被監控、過濾或操縱\n\n• 基礎設施可能被查封、竄改或關閉\n\n• 平台和中介機構可能受到脅迫\n\n• 使用者可能面臨不同程度的風險\n\n這些情況被視為正常運作環境，而非特殊情況。\n\n架構優先於政策\n\nAnonomi Messenger 不依賴：\n\n• 中心化伺服器\n\n• 全域目錄\n\n• 以帳戶為基礎的身份系統\n\n• 與外部提供者綁定的復原機制\n\n相反，通訊直接在用戶之間進行，並使用當前情況下最安全的傳輸方式。\n\n通用通訊\n\nAnonomi Messenger 可用作通用通訊工具，包括一對一對話、群組聊天、長期聯繫和日常通訊。\n\n網路彈性\n\nAnonomi Messenger 旨在適應不可靠的網路、過濾或降級的連接，以及無法或不安全直接存取網路的環境。\n\n開源和可分叉性\n\nAnonomi Messenger 是開源的，因此其安全性聲明可以被獨立驗證，如果管理或方向出現分歧，該專案仍然可以分叉。\n\n限制和責任\n\nAnonomi Messenger 提高了隱私和彈性，但並不能消除風險。它無法防止設備被入侵、惡意軟體感染或用戶自願洩露身分資訊。\n\n上游專案歸屬\n\nAnonomi Messenger 源自 Briar 項目，由 Briar 項目開發，並根據 GNU 通用公共授權 v3.0 授權。\n\nAnonomi Messenger 是一個獨立項目，與 Briar Project 沒有關聯，也沒有得到 Briar Project 的認可或贊助。</string>
     <string name="permission_hotspot_nearby_wifi_request_body">要建立 Wi-Fi 熱點，Anonomi Messenger 需要獲得存取附近裝置的權限。</string>

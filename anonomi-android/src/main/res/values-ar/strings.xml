@@ -973,7 +973,7 @@
     <string name="intro_desc">Anonomi هي منصة اتصال تركز على الخصوصية أولاً ومصممة للمناقشات المجهولة\nوالآمنة واللامركزية.\nلا يلزم وجود أرقام هواتف أو عناوين بريد إلكتروني\nأو معرفات شخصية.</string>
     <string name="how_it_works_title">كيف يعمل Anonomi</string>
     <string name="how_it_works_desc">يربط Anonomi المستخدمين عبر شبكات تحافظ على الخصوصية لتمكين إجراء محادثات آمنة دون الكشف عن هويتك.\nيتم إنشاء الاتصالات تلقائيًا بمجرد تشغيل التطبيق.</string>
-    <string name="onion_link">http://627jvml2fultrmzw4xjs4hdcxlhlymht5xyzqujmak5wevsdh34btjad.onion/</string>
+    <string name="onion_link">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/</string>
     <string name="onion_link_instructions">يمكنك زيارة موقع Anonomi للحصول على التحديثات والوثائق والدعم.\nيتطلب الوصول إلى الموقع استخدام متصفح Tor، حيث يتم استضافة الموقع كخدمة onion.</string>
     <string name="nickname_title">حول اسمك المستعار</string>
     <string name="nickname_desc">اسمك المستعار هو الطريقة التي سيتعرف بها المستخدمون الآخرون عليك في Anonomi.\nسيكون مرئيًا للآخرين ولا يمكن تغييره بعد إنشاء حسابك.\nاختر اسمًا لا يكشف عن معلوماتك الشخصية.</string>
@@ -1003,7 +1003,7 @@
     <string name="unlocking_anonchat">فتح Anonomi...</string>
     <string name="stealth_mode_enabled">تم تمكين وضع التخفي.</string>
     <string name="offline_maps_copy_onion_title">أين يمكن الحصول على بيانات الخرائط دون اتصال بالإنترنت</string>
-    <string name="offline_maps_onion_url">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/maps/</string>
+    <string name="offline_maps_onion_url">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/maps/</string>
     <string name="offline_maps_clearnet_url">https://anonomi.org/maps/</string>
     <string name="copy_clearnet_url">نسخ عنوان URL الخاص بشبكة Clearnet</string>
     <string name="offline_maps_copy_url_title">نسخ عنوان URL البصل لمستودع بيانات الخرائط غير المتصلة بالإنترنت</string>
@@ -1063,7 +1063,7 @@
     <string name="pref_minor_index_title">فهرس العناوين الفرعية</string>
     <string name="pref_minor_index_hint">أدخل الفهرس الحالي</string>
     <string name="anonomi_version">إصدار Anonomi: %s</string>
-    <string name="anonchat_url">http://qeaknqubhyki4xlrslaalb5h6vmvcdt4bmse436ivk7mugjgxvkucvyd.onion/</string>
+    <string name="anonchat_url">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/</string>
     <string name="anonchat_url_note">لا يمكن الوصول إلى عنوان URL هذا إلا عبر شبكة Tor. استخدم متصفح Tor أو خدمة متوافقة لفتحه بأمان.</string>
     <string name="about_anonomi_body">Anonomi هو تطبيق مراسلة مصمم لمقاومة المراقبة والمركزية والاستيلاء على البنية التحتية من خلال بنيته التقنية.\n\n بدلاً من الاعتماد على الثقة المؤسسية أو الضمانات السياسية، يدمج Anonomi افتراضاته مباشرة في كيفية تنفيذ الاتصالات والهوية والشبكات.\n\n افتراضات التصميم\n\n تم بناء Anonomi حول مجموعة صغيرة من الافتراضات الصريحة:\n • قد يتم مراقبة الشبكات أو ترشيحها أو التلاعب بها\n • قد يتم الاستيلاء على البنية التحتية أو تغييرها أو إغلاقها\n • قد تعمل المنصات والوسطاء تحت الإكراه\n • قد يعمل المستخدمون تحت مستويات متفاوتة من المخاطر\n\n يتم التعامل مع هذه الظروف على أنها بيئات تشغيل عادية، وليست حالات استثنائية.\n\n البنية فوق السياسة\n\n لا يعتمد Anonomi على:\n • الخوادم المركزية\n • الدلائل العالمية\n • أنظمة الهوية القائمة على الحسابات\n • آليات الاسترداد المرتبطة بمقدمي الخدمات الخارجيين\n\n بدلاً من ذلك، تتم الاتصالات مباشرة بين الأقران، باستخدام أي وسيلة نقل تكون الأكثر أمانًا في ظل الظروف الحالية.\n\n اتصالات للأغراض العامة\n\n يمكن استخدام Anonomi كبرنامج مراسلة للأغراض العامة، بما في ذلك المحادثات الفردية والمحادثات الجماعية والاتصالات طويلة الأمد والاتصالات اليومية.\n\n مرونة الشبكة\n\n تم تصميم Anonomi ليعمل عبر شبكات غير موثوقة واتصالات مفلترة أو متدهورة وبيئات يكون فيها الوصول المباشر إلى الإنترنت غير آمن أو غير متاح.\n\n المصدر المفتوح وقابلية التفرع\n\n Anonomi هو برنامج مفتوح المصدر بحيث يمكن التحقق من ادعاءاته الأمنية بشكل مستقل ويظل المشروع قابلاً للتفرع في حالة اختلاف الحوكمة أو التوجه.\n\n الحدود والمسؤولية\n\n يعمل Anonomi على تحسين الخصوصية والمرونة، ولكنه لا يلغي المخاطر. لا يمكنه الحماية من الأجهزة المخترقة أو البرامج الضارة أو المستخدمين الذين يكشفون طواعية عن معلومات التعريف.\n\n نسبة المشروع الأصلي\n\n Anonomi مشتق من مشروع Briar، الذي طوره Briar Project وحصل على ترخيص GNU General Public License v3.0.\n\n Anonomi هو مشروع مستقل ولا يرتبط بمشروع Briar Project ولا يحظى بتأييده أو رعايته.</string>
     <string name="website_download_monerujo_button">تنزيل تطبيق Monerujo</string>

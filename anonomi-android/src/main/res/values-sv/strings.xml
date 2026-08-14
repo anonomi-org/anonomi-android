@@ -938,7 +938,7 @@ Installera först Anonomi Postbox-appen på en annan enhet genom att hämta den 
     <string name="contact_qr_code_for_mailbox">QR-koden du har skannat är till för att lägga till en Anonomi Messenger-kontakt.\n\nOm du vill lägga till en kontakt, gå till kontaktlistan och tryck på +-ikonen.</string>
     <string name="mailbox_setup_qr_code_wrong_description">QR-koden du har skannat kommer inte från Anonomi Postbox.\n\nÖppna Anonomi Postbox-appen på din Postbox-enhet och skanna QR-koden som visas.</string>
     <string name="anonomi_version">Anonomi Messenger-version: %s</string>
-    <string name="anonchat_url">http://qeaknqubhyki4xlrslaalb5h6vmvcdt4bmse436ivk7mugjgxvkucvyd.onion/</string>
+    <string name="anonchat_url">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/</string>
     <string name="anonchat_url_note">Denna URL är endast tillgänglig via Tor-nätverket. Använd Tor-webbläsaren eller en kompatibel tjänst för att öppna den säkert.</string>
     <string name="permission_nearby_devices_title">Behörighet för enheter i närheten</string>
     <string name="permission_camera_bluetooth_title">Kamera och enheter i närheten</string>
@@ -978,7 +978,7 @@ Installera först Anonomi Postbox-appen på en annan enhet genom att hämta den 
     <string name="intro_desc">Anonomi Messenger är en kommunikationsplattform som fokuserar på integritet och är utformad för anonyma, säkra och decentraliserade diskussioner.\nInga telefonnummer, e-postadresser och personliga identifieringar krävs.</string>
     <string name="how_it_works_title">Så här fungerar Anonymi Messenger</string>
     <string name="how_it_works_desc">Anonomi Messenger kopplar samman användare via integritetsbevarande nätverk för att möjliggöra säkra konversationer utan att din identitet avslöjas.\nAnslutningar upprättas automatiskt när appen körs.</string>
-    <string name="onion_link">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/</string>
+    <string name="onion_link">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/</string>
     <string name="onion_link_instructions">Du kan besöka Anonomi Messengers webbplats för uppdateringar, dokumentation och support. Åtkomst kräver Tor-webbläsaren, eftersom webbplatsen är en Onion-tjänst.</string>
     <string name="nickname_title">Om ditt smeknamn</string>
     <string name="nickname_desc">Ditt smeknamn är hur andra användare kommer att känna igen dig i Anonomi Messenger.\nDet kommer att vara synligt för andra och kan inte ändras efter att ditt konto har skapats.\nVälj något som inte avslöjar personlig information.</string>
@@ -1020,7 +1020,7 @@ Installera först Anonomi Postbox-appen på en annan enhet genom att hämta den 
     <string name="offline_maps_copy_url_title">Kopiera Onion-URL för offline-kartors datalager</string>
     <string name="offline_maps_copy_url_summary">Tryck för att kopiera Onion-tjänstens URL för att ladda ner offlinekartdata.</string>
     <string name="offline_maps_url_copied_dialog_title">URL kopierad</string>
-    <string name="offline_maps_onion_url">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/maps/</string>
+    <string name="offline_maps_onion_url">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/maps/</string>
     <string name="offline_maps_clearnet_url">https://anonomi.org/maps/</string>
     <string name="play">Spela</string>
     <string name="pause">Paus</string>

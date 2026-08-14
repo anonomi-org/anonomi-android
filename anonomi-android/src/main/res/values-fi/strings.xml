@@ -502,7 +502,7 @@
     <string name="intro_desc">Anonomi Messenger on yksityisyyttä ensisijaisesti ajatteleva viestintäalusta, joka on suunniteltu nimettömiä, turvallisia ja hajautettuja keskusteluja varten.\nPuhelinnumeroita, sähköpostiosoitteita tai henkilökohtaisia tunnistetietoja ei vaadita.</string>
     <string name="how_it_works_title">Kuinka Anonomi Messenger toimii</string>
     <string name="how_it_works_desc">Anonomi Messenger yhdistää käyttäjät yksityisyyttä suojaavien verkkojen kautta, jotta he voivat keskustella turvallisesti paljastamatta henkilöllisyyttään.\nYhteydet muodostetaan automaattisesti, kun sovellus on käynnissä.</string>
-    <string name="onion_link">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/</string>
+    <string name="onion_link">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/</string>
     <string name="onion_link_instructions">Voit vierailla Anonomi Messengerin verkkosivustolla saadaksesi päivityksiä, dokumentaatiota ja tukea.\nPääsy edellyttää Tor-selainta, koska sivusto on onion-palveluna.</string>
     <string name="nickname_title">Tietoja nimimerkistäsi</string>
     <string name="nickname_desc">Käyttäjätunnuksesi on se, miten muut käyttäjät tunnistavat sinut Anonomi Messengerissä.\nSe on näkyvissä muille, eikä sitä voi muuttaa tilin luomisen jälkeen.\nValitse nimi, joka ei paljasta henkilökohtaisia tietojasi.</string>
@@ -814,7 +814,7 @@
     <string name="briar_changelog">• <a href=""> Muutokset </a></string>
     <string name="briar_privacy_policy">• <a href=""> Tietosuojakäytäntö </a></string>
     <string name="translator_thanks">Kiitos kaikille Localization Labin avustajille.</string>
-    <string name="anonchat_url">http://qeaknqubhyki4xlrslaalb5h6vmvcdt4bmse436ivk7mugjgxvkucvyd.onion/</string>
+    <string name="anonchat_url">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/</string>
     <string name="anonchat_url_note">Tämä URL-osoite on käytettävissä vain Tor-verkon kautta. Käytä Tor-selainta tai yhteensopivaa palvelua avataksesi sen turvallisesti.</string>
     <string name="about_anonomi_body">Anonomi Messenger on viestisovellus, joka on suunniteltu vastustamaan valvontaa, keskittämistä ja infrastruktuurin kaappausta teknisen arkkitehtuurinsa avulla.\n\n Anonomi Messenger ei luota institutionaaliseen luottamukseen tai poliittisiin takuisiin, vaan sisällyttää oletuksensa suoraan viestinnän, identiteetin ja verkostoitumisen toteutukseen.\n\n Suunnitteluoletukset\n\n Anonomi Messenger perustuu pieneen joukkoon selkeitä oletuksia:\n• Verkkoja voidaan valvoa, suodattaa tai manipuloida\n • Infrastruktuuri voidaan takavarikoida, muuttaa tai sulkea\n • Alustat ja välittäjät voivat toimia pakon alla\n • Käyttäjät voivat toimia vaihtelevilla riskitasoilla\n\n Näitä olosuhteita pidetään normaaleina toimintaympäristöinä, ei poikkeustapauksina.\n\n Arkkitehtuuri politiikan edelle\n\n Anonomi Messenger ei ole riippuvainen:\n • Keskitetyistä palvelimista\n • Globaaleista hakemistoista\n • Tilipohjaisista identiteettijärjestelmistä\n • Ulkoisiin palveluntarjoajiin sidotuista palautusmekanismeista\n\n Sen sijaan viestintä tapahtuu suoraan vertaisverkossa käyttäen turvallisinta kuljetusmuotoa vallitsevissa olosuhteissa.\n\n Yleiskäyttöinen viestintä\n\n Anonomi Messengeria voidaan käyttää yleiskäyttöisenä viestintäsovelluksena, mukaan lukien kahdenväliset keskustelut, ryhmäkeskustelut, pitkäaikaiset yhteydet ja päivittäinen viestintä.\n\n Verkon kestävyys\n\n Anonomi Messenger on suunniteltu toimimaan epäluotettavissa verkoissa, suodatetuissa tai heikentyneissä yhteyksissä sekä ympäristöissä, joissa suora internetyhteys on vaarallinen tai ei ole käytettävissä.\n\n Avoin lähdekoodi ja haarautettavuus\n\n Anonomi Messenger on avoimen lähdekoodin sovellus, joten sen turvallisuusväittämät voidaan tarkistaa riippumattomasti ja projekti pysyy haarautettavissa, jos hallinto tai suunta poikkeaa.\n\n Rajoitukset ja vastuu\n\n Anonomi Messenger parantaa yksityisyyttä ja kestävyyttä, mutta se ei poista riskejä. Se ei voi suojata laitteiden vaarantumiselta, haittaohjelmilta tai käyttäjien vapaaehtoiselta tunnistetietojen paljastamiselta.\n\n Ylävirran projektin attribuutiot\n\n Anonomi Messenger on peräisin Briar-projektista, jonka on kehittänyt Briar Project ja lisensoitu GNU General Public License v3.0 -lisenssillä.\n\n Anonomi Messenger on itsenäinen projekti, joka ei ole sidoksissa Briar Projectiin, eikä se ole sen tukema tai sponsoroima.</string>
     <string name="disappearing_messages_title">Katoavat viestit</string>
@@ -967,7 +967,7 @@
     <string name="scan_qr_code">Skannaa QR-koodi</string>
     <string name="camera_permission_denied">Kameran käyttöoikeus evätty.</string>
     <string name="load_qr_code">Lataa QR-koodi</string>
-    <string name="offline_maps_onion_url">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/maps/</string>
+    <string name="offline_maps_onion_url">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/maps/</string>
     <string name="offline_maps_clearnet_url">https://anonomi.org/maps/</string>
     <plurals name="duration_minutes">
         <item quantity="one">%d minuutti</item>

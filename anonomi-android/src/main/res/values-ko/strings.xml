@@ -618,7 +618,7 @@
     <string name="intro_desc">Anonomi Messenger는 익명성, 보안성, 탈중앙화를 기반으로 한 대화를 위해 설계된 프라이버시 중심 커뮤니케이션 플랫폼입니다.\n전화번호, 이메일 주소, 개인 식별 정보가 전혀 필요하지 않습니다.</string>
     <string name="how_it_works_title">Anonomi Messenger 작동 방식</string>
     <string name="how_it_works_desc">Anonomi Messenger는 프라이버시를 보호하는 네트워크를 통해 사용자를 연결하여 신원을 노출하지 않고 안전한 대화를 가능하게 합니다.\n앱이 실행되면 연결이 자동으로 설정됩니다.</string>
-    <string name="onion_link">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/</string>
+    <string name="onion_link">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/</string>
     <string name="onion_link_instructions">업데이트, 문서 및 지원은 Anonomi Messenger 웹사이트를 방문하세요.\n해당 사이트는 양파 서비스로 호스팅되므로 접속 시 Tor 브라우저가 필요합니다.</string>
     <string name="nickname_title">닉네임에 관하여</string>
     <string name="nickname_desc">닉네임은 Anonomi Messenger에서 다른 사용자가 여러분을 인식하는 방식입니다.\n다른 사용자에게 공개되며 계정 생성 후 변경할 수 없습니다.\n개인 정보를 노출하지 않는 이름을 선택하세요.</string>
@@ -762,7 +762,7 @@
     <string name="offline_maps_import_success">%1$d 타일 가져오기 성공.</string>
     <string name="offline_maps_import_failed">오프라인 지도 가져오기에 실패했습니다.</string>
     <string name="offline_maps_clearnet_url">https://anonomi.org/maps/</string>
-    <string name="offline_maps_onion_url">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/maps/</string>
+    <string name="offline_maps_onion_url">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/maps/</string>
     <string name="mailbox_setup_title">Postbox 설정</string>
     <string name="monero_settings_title">모네로 (XMR)</string>
     <string name="pref_primary_address_title">주 모네로 주소</string>
@@ -870,7 +870,7 @@
     <string name="briar_changelog">• <a href="">변경로그</a></string>
     <string name="briar_privacy_policy">• <a href="">개인정보 보호정책</a></string>
     <string name="translator_thanks">Localization Lab에 참여해주신 모든 분들께 감사드립니다.</string>
-    <string name="anonchat_url">http://qeaknqubhyki4xlrslaalb5h6vmvcdt4bmse436ivk7mugjgxvkucvyd.onion/</string>
+    <string name="anonchat_url">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/</string>
     <string name="anonchat_url_note">이 URL은 Tor 네트워크를 통해서만 접속할 수 있습니다. Tor 브라우저 또는 호환되는 서비스를 사용하여 안전하게 접속하세요.</string>
     <string name="about_anonomi_body">아노노미 메신저는 기술 아키텍처를 통해 감시, 중앙 집중화 및 인프라 장악에 저항하도록 설계된 메시징 애플리케이션입니다.\n\n제도적 신뢰나 정책 보장에 의존하는 대신, 아노노미 메신저는 통신, 신원 확인 및 네트워킹 구현 방식에 자체적인 가정을 내재화합니다.\n\n설계 가정\n\n아노노미 메신저는 다음과 같은 몇 가지 명확한 가정을 기반으로 구축되었습니다.\n\n• 네트워크는 감시, 필터링 또는 조작될 수 있습니다.\n\n• 인프라는 장악, 변경 또는 폐쇄될 수 있습니다.\n\n• 플랫폼 및 중개자는 강압에 의해 운영될 수 있습니다.\n\n• 사용자는 다양한 수준의 위험에 노출될 수 있습니다.\n\n이러한 상황은 예외적인 경우가 아닌 정상적인 운영 환경으로 간주됩니다.\n\n정책보다 아키텍처 우선\n\n아노노미 메신저는 다음과 같은 요소에 의존하지 않습니다.\n\n• 중앙 집중식 서버\n\n• 글로벌 디렉터리\n\n• 계정 기반 신원 확인 시스템\n\n• 외부 제공업체에 연결된 복구 메커니즘\n\n대신, 통신은 현재 상황에서 가장 안전한 전송 방식을 사용하여 피어 간에 직접 이루어집니다.\n\n범용 통신\n\nAnonomi Messenger는 일대일 대화, 그룹 채팅, 장기 연락, 일상적인 소통 등 범용 메신저로 사용할 수 있습니다.\n\n네트워크 복원력\n\nAnonomi Messenger는 불안정한 네트워크, 필터링되거나 연결 상태가 저하된 환경, 그리고 직접적인 인터넷 접속이 안전하지 않거나 불가능한 환경에서도 작동하도록 설계되었습니다.\n\n오픈 소스 및 포크 가능성\n\nAnonomi Messenger는 오픈 소스이므로 보안 관련 주장을 독립적으로 검증할 수 있으며, 거버넌스나 개발 방향이 달라질 경우 포크할 수 있습니다.\n\n한계 및 책임\n\nAnonomi Messenger는 개인 정보 보호 및 복원력을 향상시키지만 위험을 완전히 제거하지는 않습니다. 기기 손상, 악성코드 감염, 또는 사용자가 자발적으로 개인 식별 정보를 공개하는 경우로부터는 보호할 수 없습니다.\n\n업스트림 프로젝트 출처\n\nAnonomi Messenger는 Briar 프로젝트에서 파생되었으며, Briar 프로젝트에서 개발하고 GNU 일반 공중 사용 허가서 v3.0에 따라 배포됩니다.\n\nAnonomi Messenger는 독립적인 프로젝트이며 Briar Project와 제휴, 승인 또는 후원 관계가 없습니다.</string>
     <string name="disappearing_messages_explanation_long">이 설정을 켜면 이 대화에서 새 메시지가 자동으로 사라집니다.\n\n발신자의 메시지 사본은 메시지가 전송된 후부터 사라지기 시작합니다. 수신자의 메시지 사본은 메시지를 읽은 후부터 사라집니다.\n\n사라지는 메시지에는 폭탄 아이콘이 표시됩니다.\n\n수신자는 여전히 보낸 메시지를 복사할 수 있다는 점에 유의하세요.\n\n이 설정을 변경하면 발신자의 새 메시지에는 즉시 적용되고, 수신자는 다음 메시지를 수신하는 즉시 해당 메시지에 적용됩니다. 수신자도 이 설정을 변경할 수 있습니다.</string>

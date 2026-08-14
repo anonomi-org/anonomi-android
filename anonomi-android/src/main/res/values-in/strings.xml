@@ -56,7 +56,7 @@
     <string name="intro_desc">Anonomi Messenger adalah platform komunikasi yang mengutamakan privasi, dirancang untuk diskusi anonim, aman, dan terdesentralisasi.\nTidak diperlukan nomor telepon, alamat email, atau identitas pribadi apa pun.</string>
     <string name="how_it_works_title">Cara kerja Anonomi Messenger</string>
     <string name="how_it_works_desc">Anonomi Messenger menghubungkan pengguna melalui jaringan yang menjaga privasi untuk memungkinkan percakapan yang aman tanpa mengungkapkan identitas Anda.\nKoneksi dibuat secara otomatis setelah aplikasi dijalankan.</string>
-    <string name="onion_link">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/</string>
+    <string name="onion_link">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/</string>
     <string name="onion_link_instructions">Anda dapat mengunjungi situs web Anonomi Messenger untuk pembaruan, dokumentasi, dan dukungan.\nAkses memerlukan Tor Browser, karena situs tersebut dihosting sebagai layanan onion.</string>
     <string name="nickname_title">Tentang nama panggilanmu</string>
     <string name="nickname_desc">Nama panggilan Anda adalah cara pengguna lain mengenali Anda di Anonomi Messenger.\nNama panggilan akan terlihat oleh orang lain dan tidak dapat diubah setelah akun Anda dibuat.\nPilih nama panggilan yang tidak mengungkapkan informasi pribadi.</string>
@@ -588,7 +588,7 @@
     <string name="unlocking_anonchat">Membuka kunci Anonomi Messenger...</string>
     <string name="stealth_mode_enabled">Mode siluman diaktifkan.</string>
     <string name="offline_maps_copy_onion_title">Di mana mendapatkan data Peta Offline?</string>
-    <string name="offline_maps_onion_url">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/maps/</string>
+    <string name="offline_maps_onion_url">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/maps/</string>
     <string name="offline_maps_clearnet_url">https://anonomi.org/maps/</string>
     <string name="copy_clearnet_url">Salin URL Clearnet</string>
     <string name="offline_maps_copy_url_title">Salin URL Onion dari Repositori Data Peta Offline</string>
@@ -767,7 +767,7 @@
     <string name="briar_changelog">• <a href="">Catatan Perubahan</a></string>
     <string name="briar_privacy_policy">• <a href="">Kebijakan Privasi</a></string>
     <string name="translator_thanks">Terima kasih kepada semua kontributor di Laboratorium Lokalisasi.</string>
-    <string name="anonchat_url">http://qeaknqubhyki4xlrslaalb5h6vmvcdt4bmse436ivk7mugjgxvkucvyd.onion/</string>
+    <string name="anonchat_url">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/</string>
     <string name="anonchat_url_note">URL ini hanya dapat diakses melalui jaringan Tor. Gunakan Tor Browser atau layanan yang kompatibel untuk membukanya dengan aman.</string>
     <string name="about_anonomi_body">Anonomi Messenger adalah aplikasi perpesanan yang dirancang untuk melawan pengawasan, sentralisasi, dan penguasaan infrastruktur melalui arsitektur teknisnya.\n\nAlih-alih bergantung pada kepercayaan institusional atau jaminan kebijakan, Anonomi Messenger menanamkan asumsinya secara langsung ke dalam bagaimana komunikasi, identitas, dan jaringan diimplementasikan.\n\nAsumsi Desain\n\nAnonomi Messenger dibangun berdasarkan sejumlah kecil asumsi eksplisit:\n\n• Jaringan dapat dipantau, disaring, atau dimanipulasi\n• Infrastruktur dapat disita, diubah, atau dimatikan\n• Platform dan perantara dapat bertindak di bawah paksaan\n• Pengguna dapat beroperasi di bawah berbagai tingkat risiko\n\nKondisi ini diperlakukan sebagai lingkungan operasi normal, bukan kasus luar biasa.\n\nArsitektur di atas kebijakan\n\nAnonomi Messenger tidak bergantung pada:\n\n• Server terpusat\n• Direktori global\n• Sistem identitas berbasis akun\n• Mekanisme pemulihan yang terkait dengan penyedia eksternal\n\nSebaliknya, komunikasi terjadi langsung antar rekan, menggunakan transportasi apa pun yang paling aman dalam kondisi saat ini.\n\nKomunikasi Serbaguna\n\nAnonomi Messenger dapat digunakan sebagai aplikasi pesan serbaguna, termasuk percakapan satu lawan satu, obrolan grup, kontak jangka panjang, dan komunikasi sehari-hari.\n\nKetahanan Jaringan\n\nAnonomi Messenger dirancang untuk berfungsi di jaringan yang tidak andal, koneksi yang difilter atau terdegradasi, dan lingkungan di mana akses internet langsung tidak aman atau tidak tersedia.\n\nSumber Terbuka dan Kemampuan untuk Dikembangbiakkan\n\nAnonomi Messenger adalah sumber terbuka sehingga klaim keamanannya dapat diverifikasi secara independen dan proyek tetap dapat dikembangkan jika tata kelola atau arahnya berbeda.\n\nBatasan dan Tanggung Jawab\n\nAnonomi Messenger meningkatkan privasi dan ketahanan, tetapi tidak menghilangkan risiko. Aplikasi ini tidak dapat melindungi dari perangkat yang disusupi, malware, atau pengguna yang secara sukarela mengungkapkan informasi identitas.\n\nAtribusi Proyek Hulu\n\nAnonomi Messenger berasal dari proyek Briar, dikembangkan oleh Proyek Briar dan dilisensikan di bawah Lisensi Publik Umum GNU v3.0.\n\nAnonomi Messenger adalah proyek independen dan tidak berafiliasi dengan, didukung oleh, atau disponsori oleh Briar Project.</string>
     <string name="disappearing_messages_title">Pesan yang menghilang</string>

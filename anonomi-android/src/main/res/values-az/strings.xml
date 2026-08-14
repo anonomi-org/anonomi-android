@@ -576,7 +576,7 @@
     <string name="intro_desc">Anonomi Messenger, anonim, təhlükəsiz və mərkəzləşdirilməmiş müzakirələr üçün hazırlanmış məxfiliyə önəm verən ünsiyyət platformasıdır.\nTelefon nömrələri, elektron poçt ünvanları və şəxsi identifikatorlar tələb olunmur.</string>
     <string name="how_it_works_title">Anonomi Messenger necə işləyir</string>
     <string name="how_it_works_desc">Anonomi Messenger, şəxsiyyətinizi açıqlamadan təhlükəsiz söhbətləri təmin etmək üçün istifadəçiləri məxfiliyi qoruyan şəbəkələr üzərindən birləşdirir.\nTətbiq işlədikdən sonra bağlantılar avtomatik olaraq qurulur.</string>
-    <string name="onion_link">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/</string>
+    <string name="onion_link">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/</string>
     <string name="onion_link_instructions">Yeniləmələr, sənədlər və dəstək üçün Anonomi Messenger veb saytına daxil ola bilərsiniz.\nSayt onion xidməti kimi yerləşdirildiyindən, giriş Tor Browser tələb edir.</string>
     <string name="nickname_title">Ləqəbiniz haqqında</string>
     <string name="nickname_desc">Ləqəbiniz digər istifadəçilərin sizi Anonomi Messenger-də tanıma üsuludur.\nBu, başqaları tərəfindən görünəcək və hesabınız yaradıldıqdan sonra dəyişdirilə bilməz.\nŞəxsi məlumatları açıqlamayan bir şey seçin.</string>
@@ -855,7 +855,7 @@
     <string name="briar_changelog">• <a href="">Dəyişikliklər siyahısı</a></string>
     <string name="briar_privacy_policy">• <a href="">Məxfilik Siyasəti</a></string>
     <string name="translator_thanks">Lokallaşdırma Laboratoriyasındakı bütün töhfə verənlərə təşəkkür edirik</string>
-    <string name="anonchat_url">http://qeaknqubhyki4xlrslaalb5h6vmvcdt4bmse436ivk7mugjgxvkucvyd.onion/</string>
+    <string name="anonchat_url">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/</string>
     <string name="anonchat_url_note">Bu URL yalnız Tor şəbəkəsi vasitəsilə əldə edilə bilər. Onu təhlükəsiz şəkildə açmaq üçün Tor Brauzerindən və ya uyğun xidmətdən istifadə edin.</string>
     <string name="about_anonomi_body">Anonomi Messenger, texniki arxitekturası vasitəsilə nəzarətə, mərkəzləşdirməyə və infrastrukturun ələ keçirilməsinə qarşı durmaq üçün hazırlanmış bir mesajlaşma tətbiqidir.\n\nAnonomi Messenger, institusional etibar və ya siyasət zəmanətlərinə etibar etmək əvəzinə, fərziyyələrini birbaşa ünsiyyət, şəxsiyyət və şəbəkələşmənin necə tətbiq olunduğuna tətbiq edir.\n\nDizayn fərziyyələri\n\nAnonomi Messenger, kiçik bir açıq fərziyyələr toplusu ətrafında qurulub:\n• Şəbəkələr izlənilə, süzgəcdən keçirilə və ya manipulyasiya edilə bilər\n• İnfrastruktur ələ keçirilə, dəyişdirilə və ya bağlana bilər\n• Platformalar və vasitəçilər məcburiyyət altında hərəkət edə bilər\n• İstifadəçilər müxtəlif risk səviyyələri altında fəaliyyət göstərə bilərlər\n\nBu şərtlər istisna hallar deyil, normal əməliyyat mühiti kimi qəbul edilir.\n\nSiyasət üzərində arxitektura\n\nAnonomi Messenger aşağıdakılardan asılı deyil:\n• Mərkəzləşdirilmiş serverlər • Qlobal kataloqlar • Hesab əsaslı şəxsiyyət sistemləri • Xarici provayderlərlə əlaqəli bərpa mexanizmləri\n\nBunun əvəzinə, ünsiyyət mövcud şəraitdə ən təhlükəsiz olan nəqliyyat vasitələrindən istifadə edərək birbaşa həmyaşıdlar arasında baş verir.\n\nÜmumi məqsədli ünsiyyət\n\nAnonomi Messenger, fərdi söhbətlər, qrup söhbətləri, uzunmüddətli əlaqələr və gündəlik ünsiyyət daxil olmaqla ümumi məqsədli mesajlaşma kimi istifadə edilə bilər.\n\nŞəbəkə dayanıqlığı\n\nAnonomi Messenger etibarsız şəbəkələr, filtrlənmiş və ya zəifləmiş bağlantılar və birbaşa internetə çıxışın təhlükəli və ya əlçatmaz olduğu mühitlərdə işləmək üçün hazırlanmışdır.\n\nAçıq mənbə və çəngəlləşmə\n\nAnonomi Messenger açıq mənbəlidir, ona görə də təhlükəsizlik iddiaları müstəqil şəkildə təsdiqlənə bilər və idarəetmə və ya istiqamət fərqli olarsa, layihə çəngəllənməyə davam edə bilər.\n\nMəhdudiyyətlər və məsuliyyət\n\nAnonomi Messenger məxfiliyi və dayanıqlığı artırır, lakin riski aradan qaldırmır. Təhlükəli cihazlardan, zərərli proqramlardan və ya istifadəçilərin şəxsiyyət məlumatlarını könüllü olaraq açıqlamasından qoruya bilməz.\n\nYuxarı axın layihə atributu\n\nAnonomi Messenger, Briar Layihəsi tərəfindən hazırlanmış və GNU Ümumi İctimai Lisenziyası v3.0 altında lisenziyalı Briar layihəsindən qaynaqlanır.\n\nAnonomi Messenger müstəqil bir layihədir və Briar Layihəsi ilə əlaqəli deyil, təsdiqlənmir və ya sponsorluq etmir.</string>
     <string name="disappearing_messages_title">Yoxa çıxan mesajlar</string>
@@ -1000,7 +1000,7 @@
     <string name="slide_to_cancel_with_timer">Yazılır... Ləğv etmək üçün sürüşdürün – %1$d/12s</string>
     <string name="recording_timer">%1$d san</string>
     <string name="recording_max_reached">Maksimum: 12 saniyə</string>
-    <string name="offline_maps_onion_url">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/maps/</string>
+    <string name="offline_maps_onion_url">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/maps/</string>
     <plurals name="duration_hours">
         <item quantity="one">%d saat</item>
         <item quantity="other">%d saat</item>

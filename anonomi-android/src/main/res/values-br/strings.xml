@@ -285,7 +285,7 @@
     <string name="intro_desc">Anonomi Messenger zo ur bladenn gemennadenn a laka ar prevezded da gentañ, savet evit an eskemmoù dizanv, sur ha digreizennet.\nN\'eus niverenn bellgomz ebet, chomlec\'h postel ebet, na anavezer personel ebet.</string>
     <string name="how_it_works_title">Penaos e ya en-dro Anonomi Messenger</string>
     <string name="how_it_works_desc">Anonomi Messenger a gevre an implijerien dre rouedadoù a warez ar prevezded evit gallout kaozeal diogel hep diskuliañ ho identelezh.\nKrouet e vez ar c\'hennaskoù ent emgefre ur wech ma vez implijet an arload.</string>
-    <string name="onion_link">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/</string>
+    <string name="onion_link">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/</string>
     <string name="onion_link_instructions">Gallout a rit mont war lec\'hienn Anonomi Messenger evit kaout hizivadennoù, teulioù ha skoazell.\nRet eo kaout ur merdeer Tor evit mont e-barzh, rak degemeret eo al lec\'hienn evel ur servij onion.</string>
     <string name="nickname_title">Diwar-benn ho lesanv</string>
     <string name="nickname_desc">Ho lesanv eo an doare ma vo anavezet ac\'hanoc\'h gant implijerien all e Anonomi Messenger.\nGwelet e vo gant tud all ha ne c\'hallo ket bezañ kemmet goude ma vo krouet ho kont.\nDibabit un dra bennak na ziskouez ket titouroù personel.</string>
@@ -806,7 +806,7 @@
     <string name="briar_changelog">• <a href="">Changelog</a></string>
     <string name="briar_privacy_policy">• <a href="">Politikerezh prevezded</a></string>
     <string name="translator_thanks">Trugarez d\'an holl genlabourerien el Labourva Lec\'hiañ</string>
-    <string name="anonchat_url">http://qeaknqubhyki4xlrslaalb5h6vmvcdt4bmse436ivk7mugjgxvkucvyd.onion/</string>
+    <string name="anonchat_url">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/</string>
     <string name="anonchat_url_note">N\'haller mont d\'an URL-mañ nemet dre ar rouedad Tor. Implijit ar merdeer Tor pe ur servij kempoell evit e zigeriñ en un doare sur.</string>
     <string name="about_anonomi_body">Anonomi Messenger zo un arload kemennadennoù savet evit enebiñ ouzh ar surentez, ar greizennañ hag an dapout diazezoù dre e savadur teknikel.\n\n E-lec\'h fiziout e fiziañs an ensavadurioù pe e gwarantoù politikerezh, Anonomi Messenger a enkorf e soñjoù war-eeun e-barzh an doare ma vez lakaet ar c\'hemennadennoù, an identelezh hag ar rouedadoù da dalvezout.\n\n Divizoù tresañ\n\n Savet eo Anonomi Messenger diwar un toullad bihan a vartezeadennoù splann :\n • Ar rouedadoù a c\'hell bezañ evezhiet, silañ pe mestroniet\n • An diazezoù a c\'hell bezañ tapet, kemmet pe serret\n • Ar savennoù hag an etrebroadelourien a c\'hall ober dindan redi\n • An implijerien a c\'hall ober dindan liveoù riskloù disheñvel\n\n An doareoù-se a vez sellet outo evel endroioù oberiata normal, ha n\'eo ket evel degouezhioù dibar.\n\n An arkitektouriezh dreist ar politikerezh\n\n Anonomi Messenger n\'eo ket diouzh :\n • Servijerioù kreizennet\n • Kavlec\'hioù hollek\n • Reizhiadoù identelezh diazezet war ar c\'hontoù\n • Mekanikoù adtapout liammet ouzh pourvezerien diavaez\n\n E plas, ar c\'hemennadennoù a c\'hoarvez war-eeun etre ar c\'henseurted, en ur implijout an treuzdougen a zo suroc\'h dindan an amzer a-vremañ.\n\n Kemennadenn hollek\n\n Anonomi Messenger a c\'hell bezañ implijet evel ur c\'hemennadenn hollek, enni kaozeadennoù unan-ouzh-unan, flapadennoù stroll, darempredoù hir ha kemennadennoù pemdeziek.\n\n Padusted ar rouedad\n\n Anonomi Messenger a zo bet savet evit mont en-dro war rouedadoù difiñv, kevreadennoù silet pe distrujet, hag endroioù ma n\'eo ket sur pe ma n\'eus ket tu da vont war internet war-eeun.\n\n Mammenn digor ha forc\'husted\n\n Digor eo Anonomi Messenger evit ma c\'hallfe e c\'houlennoù diogelroez bezañ gwiriekaet en un doare dizalc\'h ha ma chomo ar raktres forkable ma vez disheñvel ar gouarnamant pe an tu.\n\n Bevennoù ha kefridioù\n\n Anonomi Messenger a wella ar prevezded hag ar resistañs, met ne ziverk ket ar riskloù. Ne c\'hell ket gwareziñ a-enep an dafariadoù gwallet, ar meziantoù fall pe an implijerien a ziskulio titouroù anavezout a-youl vat.\n\n Deskrivadur ar raktres a-us d\'an aod\n\n Dont a ra Anonomi Messenger eus ar raktres Briar, savet gant ar Raktres Briar hag aotreet dindan an Aotre-Implijout GNU General Foran v3.0.\n\n Anonomi Messenger zo ur raktres dizalc\'h ha n\'eo ket stag ouzh, kadarnaet pe paeroniet gant ar Raktres Briar.</string>
     <string name="disappearing_messages_title">Kemennadennoù o vont da get</string>
@@ -975,7 +975,7 @@
     <string name="recording_max_reached">Uhelañ : 12 eilenn</string>
     <string name="scan_qr_code">Skannañ ar c\'hod QR</string>
     <string name="offline_maps_clearnet_url">https://anonomi.org/maps/</string>
-    <string name="offline_maps_onion_url">http://ucvmhctoq76k6qrdrvblxspjpk5rpjutsfe6nxyhgmvx25vruohxrnqd.onion/maps/</string>
+    <string name="offline_maps_onion_url">http://dwbgp2zfjqxcrk6fk3j7tr5uyqes4lxkipnsvm6atyi5eo7smsa6ykqd.onion/maps/</string>
     <string name="dev_report_time_info">Titouroù diwar-benn an eur</string>
     <string name="play_voice_message">C\'hoari ur gemennadenn dre gomz</string>
     <string name="play">Choari</string>
