@@ -39,7 +39,9 @@ keystore.properties
 ripple_cert.der
 
 # Fetched at release time by .github/workflows/release.yml, and by hand for a
-# local official build. Never committed: see the version and SHA-256 there.
+# local official build. Never committed: see the version and SHA-256 in
+# .github/scripts/fetch-companion-apks.sh.
+anonomi-android/src/official/assets/anonomi-postbox.apk
 anonomi-android/src/official/assets/tor-browser.apk
 anonomi-android/src/official/assets/orbot.apk
 anonomi-android/src/official/assets/monerujo.apk
