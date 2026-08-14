@@ -2,10 +2,8 @@ package org.anonomi.android.settings;
 
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.text.InputType;
 import android.view.View;
 
@@ -96,6 +94,12 @@ public class SecurityFragment extends PreferenceFragmentCompat {
 		SwitchPreferenceCompat stealthSwitch =
 				findPreference(PREF_KEY_STEALTH_MODE);
 		if (stealthSwitch != null) {
+			// Answered by the launcher rather than stored, because the two
+			// disagree after an account is deleted: the alias outlives the
+			// preferences, so a stored answer would report a disguise that is
+			// still in place as gone, and offer no way to take it off.
+			stealthSwitch.setPersistent(false);
+			stealthSwitch.setChecked(stealthEnabled());
 			stealthSwitch.setOnPreferenceChangeListener(
 					(preference, newValue) -> {
 						boolean enableStealth = (Boolean) newValue;
@@ -111,15 +115,8 @@ public class SecurityFragment extends PreferenceFragmentCompat {
 								clearFailedAttempts(
 										new SecurePrefsManager(ctx));
 
-								SharedPreferences prefs =
-										PreferenceManager.getDefaultSharedPreferences(
-												ctx);
-								prefs.edit()
-										.putBoolean(PREF_KEY_STEALTH_MODE, true)
-										.apply();
-
-								stealthSwitch.setChecked(true);
 								enableStealthMode();
+								stealthSwitch.setChecked(stealthEnabled());
 
 								Toast.makeText(ctx,
 										R.string.stealth_mode_enabled,
@@ -135,12 +132,6 @@ public class SecurityFragment extends PreferenceFragmentCompat {
 							clearFailedAttempts(new SecurePrefsManager(ctx));
 
 							disableStealthMode();
-							SharedPreferences prefs =
-									PreferenceManager.getDefaultSharedPreferences(
-											ctx);
-							prefs.edit()
-									.putBoolean(PREF_KEY_STEALTH_MODE, false)
-									.apply();
 							return true;
 						}
 					});
@@ -296,6 +287,28 @@ public class SecurityFragment extends PreferenceFragmentCompat {
 			screenLock.setChecked(false);
 			screenLock.setSummary(R.string.pref_lock_disabled_summary);
 		}
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		// Asked again on the way back in: the disguise can have been taken off
+		// by a wipe since this screen was built.
+		SwitchPreferenceCompat stealthSwitch =
+				findPreference(PREF_KEY_STEALTH_MODE);
+		if (stealthSwitch != null) {
+			stealthSwitch.setChecked(stealthEnabled());
+		}
+	}
+
+	/**
+	 * Whether the app is wearing the disguise, which is what the launcher was
+	 * last told rather than what any preference of ours says.
+	 */
+	private boolean stealthEnabled() {
+		return requireContext().getPackageManager()
+				.getComponentEnabledSetting(calcAlias()) ==
+				PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
 	}
 
 	private void setStateIfNeeded(PackageManager pm, ComponentName cn,
