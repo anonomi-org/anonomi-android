@@ -2,6 +2,7 @@ package org.anonomi.android.login;
 
 import android.app.Application;
 
+import org.anonchatsecure.bramble.account.ExternalStorageCleanup;
 import org.anonchatsecure.bramble.api.account.AccountManager;
 import org.anonchatsecure.bramble.api.crypto.DecryptionException;
 import org.anonchatsecure.bramble.api.crypto.DecryptionResult;
@@ -133,6 +134,10 @@ public class StartupViewModel extends AndroidViewModel
 	@UiThread
 	void deleteAccount() {
 		accountManager.deleteAccount();
+		// Not on this thread, which is the UI one: how long external storage
+		// takes to delete depends on how much of a map was looked at, and
+		// nothing here is waiting for it to be gone.
+		new ExternalStorageCleanup(getApplication()).runIfDueInBackground();
 		accountDeleted.setEvent(true);
 	}
 

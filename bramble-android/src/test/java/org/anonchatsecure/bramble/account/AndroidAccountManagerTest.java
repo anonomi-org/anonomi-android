@@ -16,6 +16,7 @@ import org.junit.Test;
 
 import java.io.File;
 
+import static android.content.Context.MODE_PRIVATE;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static org.anonchatsecure.bramble.test.TestUtils.deleteTestDirectory;
@@ -27,6 +28,8 @@ public class AndroidAccountManagerTest extends BrambleMockTestCase {
 			context.mock(SharedPreferences.class, "prefs");
 	private final SharedPreferences defaultPrefs =
 			context.mock(SharedPreferences.class, "defaultPrefs");
+	private final SharedPreferences cleanupPrefs =
+			context.mock(SharedPreferences.class, "cleanupPrefs");
 	private final DatabaseConfig databaseConfig =
 			context.mock(DatabaseConfig.class);
 	private final CryptoComponent crypto = context.mock(CryptoComponent.class);
@@ -93,6 +96,15 @@ public class AndroidAccountManagerTest extends BrambleMockTestCase {
 		File externalMediaDir2 = new File(testDir, "externalMediaDir2");
 
 		context.checking(new Expectations() {{
+			// External storage is marked for deletion, not deleted here
+			oneOf(app).getSharedPreferences("external_cleanup", MODE_PRIVATE);
+			will(returnValue(cleanupPrefs));
+			oneOf(cleanupPrefs).edit();
+			will(returnValue(editor));
+			oneOf(editor).putBoolean("due", true);
+			will(returnValue(editor));
+			oneOf(editor).commit();
+			will(returnValue(true));
 			oneOf(prefs).edit();
 			will(returnValue(editor));
 			oneOf(editor).clear();

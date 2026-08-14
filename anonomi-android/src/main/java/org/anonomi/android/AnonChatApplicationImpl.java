@@ -16,6 +16,7 @@ import com.vanniktech.emoji.google.GoogleEmojiProvider;
 
 import org.anonchatsecure.bramble.BrambleAndroidEagerSingletons;
 import org.anonchatsecure.bramble.BrambleAppComponent;
+import org.anonchatsecure.bramble.account.ExternalStorageCleanup;
 import org.anonchatsecure.bramble.BrambleCoreEagerSingletons;
 import org.anonchatsecure.anonchat.BriarCoreEagerSingletons;
 import org.anonomi.R;
@@ -79,6 +80,10 @@ public class AnonChatApplicationImpl extends Application
 		if (isMainProcess()) {
 			InterruptedPanicWipe.finish(this,
 					applicationComponent.accountManager());
+			// Not on this thread: unlike the account data above, nothing has
+			// to wait for external storage to be gone, and how long it takes
+			// depends on how much of a map was looked at.
+			new ExternalStorageCleanup(this).runIfDueInBackground();
 		}
 
 		Logger rootLogger = getLogger("");

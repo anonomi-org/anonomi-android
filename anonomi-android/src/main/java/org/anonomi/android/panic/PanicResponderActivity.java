@@ -10,6 +10,7 @@ import org.anonomi.android.activity.BriarActivity;
 import org.anonomi.android.controller.AnonChatController;
 import org.anonomi.android.util.SecurePrefsManager;
 import org.anonomi.android.util.SecureValue;
+import org.anonchatsecure.bramble.account.ExternalStorageCleanup;
 import org.anonchatsecure.bramble.api.account.AccountManager;
 import org.anonchatsecure.bramble.api.contact.Contact;
 import org.anonchatsecure.bramble.api.contact.ContactId;
@@ -178,7 +179,7 @@ public class PanicResponderActivity extends BriarActivity {
 	private void signOutAfterNotifying() {
 		wakefulExecutor().execute(() -> {
 			sendPanicMessages();
-			runOnUiThread(() -> signOut(true, false));
+			runOnUiThread(() -> signOut(true));
 		});
 	}
 
@@ -265,10 +266,18 @@ public class PanicResponderActivity extends BriarActivity {
 
 		@Override
 		public void deleteRemainingData() {
-			if (unlocked && shutDownServices()) return;
-			// Either nothing was running, or it did not stop. Deleting is
-			// what the trigger was for, so it does not wait for either.
-			controller.deleteAccount();
+			if (!unlocked || !shutDownServices()) {
+				// Either nothing was running, or it did not stop. Deleting is
+				// what the trigger was for, so it does not wait for either.
+				controller.deleteAccount();
+			}
+			// External storage is deleted here rather than with the rest of
+			// the account, so that a large map cache cannot spend the time
+			// the shutdown above is allowed. Waited for rather than left to
+			// run on: this returning is what lets the marker be cleared and
+			// the process end, and being killed in the middle of it is the
+			// case the marker is there for.
+			new ExternalStorageCleanup(PanicResponderActivity.this).runIfDue();
 		}
 
 		/**
