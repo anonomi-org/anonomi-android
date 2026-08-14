@@ -64,10 +64,14 @@ fetch() {
 	chmod 644 "${dest}/${name}"
 }
 
-if [ ! -d "$dest" ]; then
-	echo "::error::$dest not found - run this from the repository root"
+# Every APK here is fetched and ignored, so nothing in this directory is
+# tracked and a fresh checkout does not have it. Check for something that is
+# tracked to catch being run from the wrong place, then create it.
+if [ ! -f "settings.gradle" ]; then
+	echo "::error::settings.gradle not found - run this from the repository root"
 	exit 1
 fi
+mkdir -p "$dest"
 
 fetch "https://github.com/anonomi-org/anonomi-postbox/releases/download/v${POSTBOX_VERSION}/anonomi-postbox-release.apk" \
 	"anonomi-postbox.apk" "$POSTBOX_SHA256"
