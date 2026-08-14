@@ -15,4 +15,9 @@
 	<exclude
 		domain="sharedpref"
 		path="." />
+	<!-- domain=root is internal storage only, so it does not reach the map
+	     tiles in getExternalFilesDir(), which are in the default backup set -->
+	<exclude
+		domain="external"
+		path="." />
 </full-backup-content>
