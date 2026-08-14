@@ -82,6 +82,9 @@ public class AndroidAccountManagerTest extends BrambleMockTestCase {
 		File libFile = new File(libDir, "file");
 		File sharedPrefsDir = new File(testDir, "shared_prefs");
 		File sharedPrefsFile = new File(sharedPrefsDir, "file");
+		// Only the two preference files handed in are cleared, so settings
+		// kept in one of their own outlive an account
+		File otherPrefsFile = new File(sharedPrefsDir, "disguise.xml");
 		// Directory 'cache' should be emptied
 		File cacheDir = new File(testDir, "cache");
 		File cacheFile = new File(cacheDir, "file");
@@ -141,6 +144,7 @@ public class AndroidAccountManagerTest extends BrambleMockTestCase {
 		assertTrue(libFile.createNewFile());
 		assertTrue(sharedPrefsDir.mkdirs());
 		assertTrue(sharedPrefsFile.createNewFile());
+		assertTrue(otherPrefsFile.createNewFile());
 		assertTrue(cacheDir.mkdirs());
 		assertTrue(cacheFile.createNewFile());
 		assertTrue(potatoDir.mkdirs());
@@ -162,6 +166,7 @@ public class AndroidAccountManagerTest extends BrambleMockTestCase {
 		assertTrue(libFile.exists());
 		assertTrue(sharedPrefsDir.exists());
 		assertTrue(sharedPrefsFile.exists());
+		assertTrue(otherPrefsFile.exists());
 		assertTrue(cacheDir.exists());
 		assertFalse(cacheFile.exists());
 		assertFalse(potatoDir.exists());

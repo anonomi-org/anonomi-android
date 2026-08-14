@@ -271,6 +271,10 @@ public class PanicResponderActivity extends BriarActivity {
 				// what the trigger was for, so it does not wait for either.
 				controller.deleteAccount();
 			}
+			// The disguise is not kept with the settings an account owns, so
+			// removing it belongs to the wipe rather than to deleting an
+			// account. Cheap, and done before the slow step below.
+			SecurePrefsManager.deleteDisguise(PanicResponderActivity.this);
 			// External storage is deleted here rather than with the rest of
 			// the account, so that a large map cache cannot spend the time
 			// the shutdown above is allowed. Waited for rather than left to

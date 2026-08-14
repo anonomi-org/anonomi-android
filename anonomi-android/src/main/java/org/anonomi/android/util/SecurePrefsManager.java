@@ -21,9 +21,16 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.GCMParameterSpec;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * Stores small settings encrypted with an AES-256-GCM key held in the Android
- * Keystore, in the default {@link SharedPreferences} file.
+ * Keystore.
+ * <p>
+ * Most of them live in the default {@link SharedPreferences} file. How the
+ * device presents itself in the launcher has a file of its own - see
+ * {@link #forDisguise} - because it describes the phone rather than the
+ * account, and deleting an account has no business changing it.
  * <p>
  * Reads return a {@link SecureValue} rather than a nullable string, so callers
  * can tell "never set" from "could not be read". See {@link SecureValue} for
@@ -36,6 +43,20 @@ public class SecurePrefsManager {
 	// Existing data is encrypted under this alias; renaming it orphans that data.
 	private static final String KEYSTORE_ALIAS = "AnonChatSecurePrefsKey";
 	private static final String ANDROID_KEYSTORE = "AndroidKeyStore";
+
+	/**
+	 * The file holding how this device presents itself in the launcher. Its own
+	 * rather than the default one, which deleting an account clears.
+	 */
+	private static final String DISGUISE_PREFS_NAME = "disguise";
+
+	/**
+	 * Mirrored from {@code SecurityFragment} rather than imported, for the
+	 * reason given on {@link #LEGACY_PLAINTEXT_KEYS}, and guarded against drift
+	 * by the same test.
+	 */
+	static final String PREF_KEY_CALCULATOR_PASSCODE =
+			"pref_key_set_calculator_passcode";
 
 	/**
 	 * Set once the values in {@link #LEGACY_PLAINTEXT_KEYS} have been
@@ -110,7 +131,12 @@ public class SecurePrefsManager {
 	private final SecurePrefsCodec codec;
 
 	public SecurePrefsManager(Context context) {
-		prefs = PreferenceManager.getDefaultSharedPreferences(context);
+		this(PreferenceManager.getDefaultSharedPreferences(context));
+		migrateLegacyPlaintext();
+	}
+
+	private SecurePrefsManager(SharedPreferences prefs) {
+		this.prefs = prefs;
 		codec = new SecurePrefsCodec(ANDROID_BASE64);
 		try {
 			keyStore = KeyStore.getInstance(ANDROID_KEYSTORE);
@@ -137,7 +163,56 @@ public class SecurePrefsManager {
 		} catch (Exception e) {
 			throw new RuntimeException("Failed to initialize SecurePrefsManager", e);
 		}
-		migrateLegacyPlaintext();
+	}
+
+	/**
+	 * Opens the disguise preferences, moving the passcode out of the default
+	 * file the first time it is asked for.
+	 */
+	public static SecurePrefsManager forDisguise(Context context) {
+		Context appContext = context.getApplicationContext();
+		SharedPreferences disguise = appContext
+				.getSharedPreferences(DISGUISE_PREFS_NAME, MODE_PRIVATE);
+		moveEntry(PreferenceManager.getDefaultSharedPreferences(appContext),
+				disguise, PREF_KEY_CALCULATOR_PASSCODE);
+		return new SecurePrefsManager(disguise);
+	}
+
+	/**
+	 * Removes the disguise, file and all, so that a device is not left carrying
+	 * a note of what it used to look like.
+	 */
+	public static void deleteDisguise(Context context) {
+		context.getApplicationContext()
+				.deleteSharedPreferences(DISGUISE_PREFS_NAME);
+	}
+
+	/**
+	 * Moves one entry between preference files as it is stored, rather than
+	 * decrypting it and writing it again. A value that would not decrypt before
+	 * the move still does not decrypt after it, instead of arriving as one that
+	 * was never set - absent is the state that means nothing was configured.
+	 */
+	static void moveEntry(SharedPreferences from, SharedPreferences to,
+			String key) {
+		if (!from.contains(key)) return;
+		if (!to.contains(key)) {
+			String stored;
+			try {
+				stored = from.getString(key, null);
+			} catch (ClassCastException e) {
+				// Not something putEncrypted wrote, so there is no value of
+				// ours here to carry over. Left where it is rather than
+				// guessed at.
+				Log.w(TAG, "Not moving non-string value for " + key);
+				return;
+			}
+			if (stored == null) return;
+			// Committed before the old copy goes, so an interruption between
+			// the two leaves the value in both files rather than in neither.
+			if (!to.edit().putString(key, stored).commit()) return;
+		}
+		from.edit().remove(key).apply();
 	}
 
 	/**

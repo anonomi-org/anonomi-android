@@ -102,17 +102,18 @@ public class SecurityFragment extends PreferenceFragmentCompat {
 
 						if (enableStealth) {
 							showSetPasscodeTwiceDialog(newPasscode -> {
-								SecurePrefsManager securePrefs =
-										new SecurePrefsManager(
-												requireContext());
-								securePrefs.putEncrypted(
-										PREF_KEY_CALCULATOR_PASSCODE,
-										PasscodeHasher.hash(newPasscode));
-								clearFailedAttempts(securePrefs);
+								Context ctx = requireContext();
+								SecurePrefsManager.forDisguise(ctx)
+										.putEncrypted(
+												PREF_KEY_CALCULATOR_PASSCODE,
+												PasscodeHasher.hash(
+														newPasscode));
+								clearFailedAttempts(
+										new SecurePrefsManager(ctx));
 
 								SharedPreferences prefs =
 										PreferenceManager.getDefaultSharedPreferences(
-												requireContext());
+												ctx);
 								prefs.edit()
 										.putBoolean(PREF_KEY_STEALTH_MODE, true)
 										.apply();
@@ -120,23 +121,23 @@ public class SecurityFragment extends PreferenceFragmentCompat {
 								stealthSwitch.setChecked(true);
 								enableStealthMode();
 
-								Toast.makeText(requireContext(),
+								Toast.makeText(ctx,
 										R.string.stealth_mode_enabled,
 										Toast.LENGTH_SHORT).show();
 							});
 							return false; // we’ll enable only after successful set+confirm
 						} else {
 							// Optional cleanup: remove stored passcode when stealth mode is turned off
-							SecurePrefsManager securePrefs =
-									new SecurePrefsManager(requireContext());
-							securePrefs.putEncrypted(
-									PREF_KEY_CALCULATOR_PASSCODE, "");
-							clearFailedAttempts(securePrefs);
+							Context ctx = requireContext();
+							SecurePrefsManager.forDisguise(ctx)
+									.putEncrypted(
+											PREF_KEY_CALCULATOR_PASSCODE, "");
+							clearFailedAttempts(new SecurePrefsManager(ctx));
 
 							disableStealthMode();
 							SharedPreferences prefs =
 									PreferenceManager.getDefaultSharedPreferences(
-											requireContext());
+											ctx);
 							prefs.edit()
 									.putBoolean(PREF_KEY_STEALTH_MODE, false)
 									.apply();
