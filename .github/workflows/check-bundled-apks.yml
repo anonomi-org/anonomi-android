@@ -12,6 +12,8 @@ on:
       - ".github/workflows/check-bundled-apks.yml"
       - ".github/workflows/release.yml"
       - "anonomi-android/src/official/assets/**"
+      # A submodule bump alone can put the pinned Postbox out of step
+      - "anonomi-postbox"
 
 permissions:
   contents: read
@@ -21,10 +23,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # No submodules: the Postbox APK is a committed asset and nothing here
-      # builds from source.
+      # The submodule is checked out for its version number only - nothing here
+      # builds from source. verify-bundled-apks.sh reads the version the
+      # submodule would build and fails if the pinned Postbox APK disagrees.
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          submodules: true
 
       - name: Fetch the companion APKs
         run: .github/scripts/fetch-companion-apks.sh

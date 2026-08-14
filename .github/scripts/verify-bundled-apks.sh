@@ -4,12 +4,13 @@
 # They are not built here, so ask apksigner what each one is and whether it
 # carries the certificate we expect.
 #
-# Certificates rather than file hashes. A version bump changes every byte but
-# keeps the key, so the pin survives an update and still catches a binary signed
-# by anyone else. Each digest below is the one on the publisher's own release.
+# Certificates rather than file hashes. Every one of these is already pinned by
+# SHA-256 in fetch-companion-apks.sh, which fixes the bytes; the certificate is
+# the check that survives the next version bump, when the hash has to change but
+# the key must not. Each digest below is the one on the publisher's own release.
 #
-# tor-browser.apk is pinned by SHA-256 where it is fetched, so only its
-# signature is checked here.
+# tor-browser.apk publishes no certificate we pin, so for it the SHA-256 at
+# fetch time is the whole guarantee and only signature validity is checked here.
 
 set -euo pipefail
 
@@ -25,7 +26,9 @@ if [ -z "$SDK" ]; then
 	exit 1
 fi
 APKSIGNER="$(ls -d "$SDK"/build-tools/*/apksigner | sort -V | tail -1)"
+AAPT="$(ls -d "$SDK"/build-tools/*/aapt2 | sort -V | tail -1)"
 echo "using $APKSIGNER"
+echo "using $AAPT"
 
 fail=0
 report="$(mktemp)"
@@ -65,6 +68,37 @@ for apk in "$assets"/*.apk; do
 		echo "signed OK: $name ($sha)"
 	fi
 done
+
+# A release states the Postbox version twice: release.yml builds the standalone
+# APK from the anonomi-postbox submodule, while the official build packages the
+# APK that fetch-companion-apks.sh pins. Bump one and not the other and the
+# release page offers a Postbox the hotspot in that same build will not hand
+# out. Compare the two rather than trust them to be edited together.
+postbox_gradle="anonomi-postbox/postbox-android/build.gradle"
+if [ ! -f "$postbox_gradle" ]; then
+	# release.yml and check-bundled-apks.yml both check the submodule out, so in
+	# CI its absence is a broken workflow, not a maintainer running this bare.
+	if [ -n "${CI:-}" ]; then
+		echo "::error::$postbox_gradle not found - check the submodule out"
+		fail=1
+	else
+		echo "warning: $postbox_gradle not found, skipping the version check"
+	fi
+elif [ -f "$assets/anonomi-postbox.apk" ]; then
+	sub_ver="$(sed -n 's/.*versionName[[:space:]]*"\([^"]*\)".*/\1/p' "$postbox_gradle" | head -1)"
+	apk_ver="$("$AAPT" dump badging "$assets/anonomi-postbox.apk" 2>/dev/null |
+		sed -n "s/.*versionName='\([^']*\)'.*/\1/p" | head -1)"
+	if [ -z "$sub_ver" ] || [ -z "$apk_ver" ]; then
+		echo "::error::could not read the Postbox version (submodule '$sub_ver', APK '$apk_ver')"
+		fail=1
+	elif [ "$sub_ver" != "$apk_ver" ]; then
+		echo "::error::bundled Postbox is $apk_ver but the submodule builds $sub_ver"
+		echo "::error::bump POSTBOX_VERSION in fetch-companion-apks.sh and the submodule together"
+		fail=1
+	else
+		echo "Postbox version matches the submodule: $apk_ver"
+	fi
+fi
 
 if [ "$fail" -ne 0 ]; then
 	echo "Bundled companion APKs failed verification."

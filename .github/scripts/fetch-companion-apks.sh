@@ -13,6 +13,15 @@
 
 set -euo pipefail
 
+# Anonomi Postbox. Built from the anonomi-postbox submodule by that project's
+# own release workflow and signed with our release key, so the certificate is
+# pinned in verify-bundled-apks.sh as well. Keep POSTBOX_VERSION in step with
+# the submodule: release.yml builds the standalone Postbox from the submodule
+# and bundles this APK inside the official build, and verify-bundled-apks.sh
+# fails if the two disagree.
+POSTBOX_VERSION="1.0.6"
+POSTBOX_SHA256="3c29c0bee86c33fee92d2c7e0a8e07a6190a46e38d3b6f2fe6dc8b1748751f25"
+
 # Tor Browser. Read from the archive host rather than dist, which serves only
 # the current release, so a pinned version there stops resolving as soon as the
 # next one ships. Signature checked against the Tor Browser Developers key
@@ -59,6 +68,9 @@ if [ ! -d "$dest" ]; then
 	echo "::error::$dest not found - run this from the repository root"
 	exit 1
 fi
+
+fetch "https://github.com/anonomi-org/anonomi-postbox/releases/download/v${POSTBOX_VERSION}/anonomi-postbox-release.apk" \
+	"anonomi-postbox.apk" "$POSTBOX_SHA256"
 
 fetch "https://archive.torproject.org/tor-package-archive/torbrowser/${TB_VERSION}/tor-browser-android-${TB_ABI}-${TB_VERSION}.apk" \
 	"tor-browser.apk" "$TB_SHA256"
