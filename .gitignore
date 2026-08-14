@@ -26,6 +26,10 @@ local.properties
 build/
 captures
 *.iml
+
+# VS Code
+.vscode/
+
 projectFilesBackup/keystore.properties
 keystore.properties
 
