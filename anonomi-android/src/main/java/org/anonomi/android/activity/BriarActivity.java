@@ -208,8 +208,7 @@ public abstract class BriarActivity extends BaseActivity {
 		b.show();
 	}
 
-	protected void signOut(boolean removeFromRecentApps,
-			boolean deleteAccount) {
+	protected void signOut(boolean removeFromRecentApps) {
 		// Hold a wake lock to ensure we exit before the device goes to sleep
 		wakeLockManager.runWakefully(() -> {
 			if (briarController.accountSignedIn()) {
@@ -219,9 +218,8 @@ public abstract class BriarActivity extends BaseActivity {
 					Runnable exit = () -> exit(removeFromRecentApps);
 					wakeLockManager.executeWakefully(exit,
 							this::runOnUiThread, "SignOut");
-				}, deleteAccount);
+				}, false);
 			} else {
-				if (deleteAccount) briarController.deleteAccount();
 				exit(removeFromRecentApps);
 			}
 		}, "SignOut");

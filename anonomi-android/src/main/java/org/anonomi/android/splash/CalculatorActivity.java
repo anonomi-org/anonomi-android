@@ -202,8 +202,9 @@ public class CalculatorActivity extends AppCompatActivity {
 				new AndroidPasscodeClock());
 		if (throttle.isLocked()) return false;
 
-		SecureValue stored = securePrefs
-				.read(SecurityFragment.PREF_KEY_CALCULATOR_PASSCODE);
+		SecurePrefsManager disguise = SecurePrefsManager.forDisguise(context);
+		SecureValue stored =
+				disguise.read(SecurityFragment.PREF_KEY_CALCULATOR_PASSCODE);
 
 		// An unreadable passcode must not unlock, and must not say so. It is
 		// not counted as a wrong answer either, because no answer would be
@@ -219,7 +220,7 @@ public class CalculatorActivity extends AppCompatActivity {
 		if (PasscodeHasher.needsRehash(savedExpression)) {
 			// The only moment an older stored form can be replaced without
 			// asking for the passcode again.
-			securePrefs.putEncrypted(
+			disguise.putEncrypted(
 					SecurityFragment.PREF_KEY_CALCULATOR_PASSCODE,
 					PasscodeHasher.hash(userExpression));
 		}

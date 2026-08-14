@@ -248,7 +248,7 @@ public class NavDrawerActivity extends BriarActivity implements
 		} else if (BLOG_URI.equals(uri)) {
 			startFragment(FeedFragment.newInstance(), R.id.nav_btn_blogs);
 		} else if (SIGN_OUT_URI.equals(uri)) {
-			signOut(false, false);
+			signOut(false);
 		}
 	}
 
@@ -345,7 +345,7 @@ public class NavDrawerActivity extends BriarActivity implements
 
 	private void signOut() {
 		drawerLayout.setDrawerLockMode(LOCK_MODE_LOCKED_CLOSED);
-		signOut(false, false);
+		signOut(false);
 		finish();
 	}
 

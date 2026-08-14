@@ -39,6 +39,7 @@ class AndroidAccountManager extends AccountManagerImpl
 
 	protected final Context appContext;
 	private final SharedPreferences prefs;
+	private final ExternalStorageCleanup externalStorageCleanup;
 
 	@Inject
 	AndroidAccountManager(DatabaseConfig databaseConfig,
@@ -47,6 +48,7 @@ class AndroidAccountManager extends AccountManagerImpl
 		super(databaseConfig, crypto, identityManager);
 		this.prefs = prefs;
 		appContext = app.getApplicationContext();
+		externalStorageCleanup = new ExternalStorageCleanup(appContext);
 	}
 
 	@Override
@@ -66,6 +68,10 @@ class AndroidAccountManager extends AccountManagerImpl
 				LOG.info("Contents of account directory before deleting:");
 				logFileOrDir(LOG, INFO, getDataDir());
 			}
+			// Marked before anything is deleted, so that an interruption at
+			// any point afterwards still leaves the work to be found. Doing it
+			// here rather than in the callers means a caller cannot forget.
+			externalStorageCleanup.markDue();
 			super.deleteAccount();
 			SharedPreferences defaultPrefs = getDefaultSharedPreferences();
 			deleteAppData(prefs, defaultPrefs);

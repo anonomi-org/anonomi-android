@@ -71,6 +71,17 @@ public class SecurePrefsLegacyKeysTest {
 	}
 
 	/**
+	 * SecurePrefsManager spells this one out too, so that it can move the value
+	 * into the disguise file without importing the UI package. A name that
+	 * drifted would move nothing and leave the passcode where it was.
+	 */
+	@Test
+	public void theKeyMovedToTheDisguiseFileIsTheOneTheUiWrites() {
+		assertEquals(PREF_KEY_CALCULATOR_PASSCODE,
+				SecurePrefsManager.PREF_KEY_CALCULATOR_PASSCODE);
+	}
+
+	/**
 	 * The Monero rate is never encrypted - RequestXmrActivity reads it
 	 * straight from SharedPreferences - so it must stay out of this.
 	 */

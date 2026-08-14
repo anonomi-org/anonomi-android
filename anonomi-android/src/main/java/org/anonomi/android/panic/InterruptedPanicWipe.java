@@ -3,6 +3,7 @@ package org.anonomi.android.panic;
 import android.content.Context;
 
 import org.anonchatsecure.bramble.api.account.AccountManager;
+import org.anonomi.android.util.SecurePrefsManager;
 
 /**
  * Finishes a wipe that an earlier run of the app did not get to the end of.
@@ -20,16 +21,18 @@ public class InterruptedPanicWipe {
 	 * preference.
 	 */
 	public static void finish(Context ctx, AccountManager accountManager) {
-		new PanicWipe(new ResumeSteps(accountManager),
+		new PanicWipe(new ResumeSteps(ctx, accountManager),
 				new PanicWipeMarker(ctx), Runnable::run)
 				.resumeIfInterrupted();
 	}
 
 	private static class ResumeSteps implements PanicWipe.Steps {
 
+		private final Context appContext;
 		private final AccountManager accountManager;
 
-		ResumeSteps(AccountManager accountManager) {
+		ResumeSteps(Context ctx, AccountManager accountManager) {
+			appContext = ctx.getApplicationContext();
 			this.accountManager = accountManager;
 		}
 
@@ -55,6 +58,9 @@ public class InterruptedPanicWipe {
 			// Nothing has been started yet this early in the app's life, so
 			// there is nothing to shut down first.
 			accountManager.deleteAccount();
+			// The disguise is not part of deleting an account, so a wipe
+			// finished here removes it just as the one that started it would.
+			SecurePrefsManager.deleteDisguise(appContext);
 		}
 	}
 }

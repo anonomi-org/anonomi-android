@@ -16,6 +16,7 @@ import org.junit.Test;
 
 import java.io.File;
 
+import static android.content.Context.MODE_PRIVATE;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static org.anonchatsecure.bramble.test.TestUtils.deleteTestDirectory;
@@ -27,6 +28,8 @@ public class AndroidAccountManagerTest extends BrambleMockTestCase {
 			context.mock(SharedPreferences.class, "prefs");
 	private final SharedPreferences defaultPrefs =
 			context.mock(SharedPreferences.class, "defaultPrefs");
+	private final SharedPreferences cleanupPrefs =
+			context.mock(SharedPreferences.class, "cleanupPrefs");
 	private final DatabaseConfig databaseConfig =
 			context.mock(DatabaseConfig.class);
 	private final CryptoComponent crypto = context.mock(CryptoComponent.class);
@@ -79,6 +82,9 @@ public class AndroidAccountManagerTest extends BrambleMockTestCase {
 		File libFile = new File(libDir, "file");
 		File sharedPrefsDir = new File(testDir, "shared_prefs");
 		File sharedPrefsFile = new File(sharedPrefsDir, "file");
+		// Only the two preference files handed in are cleared, so settings
+		// kept in one of their own outlive an account
+		File otherPrefsFile = new File(sharedPrefsDir, "disguise.xml");
 		// Directory 'cache' should be emptied
 		File cacheDir = new File(testDir, "cache");
 		File cacheFile = new File(cacheDir, "file");
@@ -93,6 +99,15 @@ public class AndroidAccountManagerTest extends BrambleMockTestCase {
 		File externalMediaDir2 = new File(testDir, "externalMediaDir2");
 
 		context.checking(new Expectations() {{
+			// External storage is marked for deletion, not deleted here
+			oneOf(app).getSharedPreferences("external_cleanup", MODE_PRIVATE);
+			will(returnValue(cleanupPrefs));
+			oneOf(cleanupPrefs).edit();
+			will(returnValue(editor));
+			oneOf(editor).putBoolean("due", true);
+			will(returnValue(editor));
+			oneOf(editor).commit();
+			will(returnValue(true));
 			oneOf(prefs).edit();
 			will(returnValue(editor));
 			oneOf(editor).clear();
@@ -129,6 +144,7 @@ public class AndroidAccountManagerTest extends BrambleMockTestCase {
 		assertTrue(libFile.createNewFile());
 		assertTrue(sharedPrefsDir.mkdirs());
 		assertTrue(sharedPrefsFile.createNewFile());
+		assertTrue(otherPrefsFile.createNewFile());
 		assertTrue(cacheDir.mkdirs());
 		assertTrue(cacheFile.createNewFile());
 		assertTrue(potatoDir.mkdirs());
@@ -150,6 +166,7 @@ public class AndroidAccountManagerTest extends BrambleMockTestCase {
 		assertTrue(libFile.exists());
 		assertTrue(sharedPrefsDir.exists());
 		assertTrue(sharedPrefsFile.exists());
+		assertTrue(otherPrefsFile.exists());
 		assertTrue(cacheDir.exists());
 		assertFalse(cacheFile.exists());
 		assertFalse(potatoDir.exists());
