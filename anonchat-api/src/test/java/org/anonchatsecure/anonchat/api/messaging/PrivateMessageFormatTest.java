@@ -22,6 +22,7 @@ import org.junit.Test;
 
 import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_IMAGES;
 import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_IMAGES_AUTO_DELETE;
+import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_IMAGES_AUTO_DELETE_LOCATION;
 import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_ONLY;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -44,6 +45,14 @@ public class PrivateMessageFormatTest {
 	public void testTextImagesAutoDeleteSupportsBoth() {
 		assertTrue(TEXT_IMAGES_AUTO_DELETE.supportsImages());
 		assertTrue(TEXT_IMAGES_AUTO_DELETE.supportsAutoDelete());
+		assertFalse(TEXT_IMAGES_AUTO_DELETE.supportsLocation());
+	}
+
+	@Test
+	public void testTextImagesAutoDeleteLocationSupportsAll() {
+		assertTrue(TEXT_IMAGES_AUTO_DELETE_LOCATION.supportsImages());
+		assertTrue(TEXT_IMAGES_AUTO_DELETE_LOCATION.supportsAutoDelete());
+		assertTrue(TEXT_IMAGES_AUTO_DELETE_LOCATION.supportsLocation());
 	}
 
 	/**
@@ -57,6 +66,9 @@ public class PrivateMessageFormatTest {
 			if (f.compareTo(TEXT_IMAGES) >= 0) assertTrue(f.supportsImages());
 			if (f.compareTo(TEXT_IMAGES_AUTO_DELETE) >= 0) {
 				assertTrue(f.supportsAutoDelete());
+			}
+			if (f.compareTo(TEXT_IMAGES_AUTO_DELETE_LOCATION) >= 0) {
+				assertTrue(f.supportsLocation());
 			}
 		}
 	}

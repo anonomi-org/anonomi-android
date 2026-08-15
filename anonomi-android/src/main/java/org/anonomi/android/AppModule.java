@@ -353,6 +353,11 @@ public class AppModule {
 			}
 
 			@Override
+			public boolean shouldEnableLocationMessages() {
+				return true;
+			}
+
+			@Override
 			public boolean shouldEnablePrivateGroupsInCore() {
 				return true;
 			}

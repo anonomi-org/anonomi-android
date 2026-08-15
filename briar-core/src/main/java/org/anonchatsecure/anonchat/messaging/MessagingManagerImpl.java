@@ -91,6 +91,7 @@ import static org.anonchatsecure.anonchat.api.attachment.MediaConstants.MSG_KEY_
 import static org.anonchatsecure.anonchat.api.autodelete.AutoDeleteConstants.NO_AUTO_DELETE_TIMER;
 import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_IMAGES;
 import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_IMAGES_AUTO_DELETE;
+import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_IMAGES_AUTO_DELETE_LOCATION;
 import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_ONLY;
 import static org.anonchatsecure.anonchat.client.MessageTrackerConstants.MSG_KEY_READ;
 import static org.anonchatsecure.anonchat.messaging.MessageTypes.ATTACHMENT;
@@ -511,7 +512,8 @@ class MessagingManagerImpl implements MessagingManager, IncomingMessageHook,
 			ContactId c) throws DbException {
 		int minorVersion = clientVersioningManager
 				.getClientMinorVersion(txn, c, CLIENT_ID, 0);
-		if (minorVersion >= 3) return TEXT_IMAGES_AUTO_DELETE;
+		if (minorVersion >= 4) return TEXT_IMAGES_AUTO_DELETE_LOCATION;
+		else if (minorVersion >= 3) return TEXT_IMAGES_AUTO_DELETE;
 		else if (minorVersion >= 1) return TEXT_IMAGES;
 		else return TEXT_ONLY;
 	}

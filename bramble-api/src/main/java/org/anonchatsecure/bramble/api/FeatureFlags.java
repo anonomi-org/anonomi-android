@@ -11,6 +11,8 @@ public interface FeatureFlags {
 
 	boolean shouldEnableDisappearingMessages();
 
+	boolean shouldEnableLocationMessages();
+
 	boolean shouldEnablePrivateGroupsInCore();
 
 	boolean shouldEnableForumsInCore();
