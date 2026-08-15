@@ -28,6 +28,7 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import org.anonomi.R;
 import org.anonomi.android.activity.ActivityComponent;
 import org.anonomi.android.activity.BriarActivity;
+import org.anonchatsecure.bramble.api.FeatureFlags;
 import org.anonchatsecure.bramble.api.contact.ContactId;
 import org.anonchatsecure.bramble.api.sync.GroupId;
 import org.anonchatsecure.anonchat.api.messaging.MessagingManager;
@@ -73,6 +74,7 @@ public class RequestXmrActivity extends BriarActivity {
 
 	@Inject MessagingManager messagingManager;
 	@Inject PrivateMessageFactory privateMessageFactory;
+	@Inject FeatureFlags featureFlags;
 
 	private ProgressBar progressSpinner;
 	private EditText amountEditText;
@@ -561,7 +563,12 @@ public class RequestXmrActivity extends BriarActivity {
 			PrivateMessageFormat format = transactionManager
 					.transactionWithResult(true, txn -> messagingManager
 							.getContactMessageFormat(txn, contactId));
-			if (format.supportsMoneroRequest()) {
+			// The contact's format says what they can read, not what we are
+			// willing to send: the flag has to be checked here too, or
+			// turning it off would stop peers sending us a typed request
+			// while we carried on sending them one
+			if (featureFlags.shouldEnableMoneroRequests()
+					&& format.supportsMoneroRequest()) {
 				if (!sendTypedRequest(groupId, timestamp, autoDeleteTimer)) {
 					return;
 				}

@@ -982,7 +982,10 @@ public class ConversationActivity extends BriarActivity
 				viewModel.getPrivateMessageFormat().getValue();
 		String label =
 				data.getStringExtra(MapLocationPickerActivity.RESULT_LABEL);
-		if (format != null && format.supportsLocation() && label != null) {
+		// The contact's format says what they can read, not what we are
+		// willing to send, so the flag has to be checked here too
+		if (featureFlags.shouldEnableLocationMessages() && format != null
+				&& format.supportsLocation() && label != null) {
 			Location location = new Location(label,
 					data.getDoubleExtra(
 							MapLocationPickerActivity.RESULT_LATITUDE, 0),
