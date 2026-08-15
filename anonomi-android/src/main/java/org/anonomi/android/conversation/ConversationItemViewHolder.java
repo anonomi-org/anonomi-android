@@ -189,7 +189,7 @@ abstract class ConversationItemViewHolder extends ViewHolder {
 		Double rate = request.getRate();
 		String currency = request.getCurrency();
 		if (rate != null) {
-			String shown = formatDecimal(rate);
+			String shown = formatRate(rate);
 			s.append('\n').append(currency == null
 					? ctx.getString(R.string.monero_request_rate, shown)
 					: ctx.getString(R.string.monero_request_rate_currency,
@@ -215,13 +215,19 @@ abstract class ConversationItemViewHolder extends ViewHolder {
 	}
 
 	/**
-	 * Formats with a fixed separator rather than the reader's own, so that
-	 * the three figures in a request agree. The amount cannot use the
-	 * reader's: it is the same string a wallet reads out of the URI, where
-	 * a decimal comma would not be understood.
+	 * Formats a rate with a fixed separator rather than the reader's own, so
+	 * that the figures in a request agree. The amount cannot use the
+	 * reader's: it is the same string a wallet reads out of the URI, where a
+	 * decimal comma would not be understood.
+	 * <p>
+	 * The decimals are not fixed at two, since the currency is whatever the
+	 * sender wrote: a rate quoted against another coin can be far below
+	 * 0.01, and rounding it would print zero beside a converted value
+	 * worked out from the real figure.
 	 */
-	private static String formatDecimal(double value) {
-		return String.format(java.util.Locale.US, "%.2f", value);
+	private static String formatRate(double value) {
+		return BigDecimal.valueOf(value).stripTrailingZeros()
+				.toPlainString();
 	}
 
 	private boolean isMapMessage(String text) {
