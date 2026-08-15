@@ -37,12 +37,6 @@ import javax.annotation.concurrent.Immutable;
 @NotNullByDefault
 public class MoneroRequest {
 
-	/**
-	 * The atomic units ("piconero") in one XMR. Amounts travel as atomic
-	 * units so that a decimal amount cannot be rounded on the way.
-	 */
-	public static final long ATOMIC_UNITS_PER_XMR = 1_000_000_000_000L;
-
 	private final String subaddress;
 	@Nullable
 	private final Long amount;
@@ -68,8 +62,10 @@ public class MoneroRequest {
 	}
 
 	/**
-	 * Returns the amount requested in atomic units, or null if the sender
-	 * did not ask for a particular amount.
+	 * Returns the amount requested in atomic units ("piconero", a
+	 * millionth of a millionth of an XMR), or null if the sender did not
+	 * ask for a particular amount. Amounts travel as atomic units so that a
+	 * decimal amount cannot be rounded on the way.
 	 */
 	@Nullable
 	public Long getAmount() {
