@@ -85,6 +85,9 @@ abstract class ConversationItemViewHolder extends ViewHolder {
 				text.setText(displayText);
 				text.setOnClickListener(v -> listener.onMapMessageClicked(mapData));
 			} else {
+				// A holder showing a location is recycled into this one, so
+				// the listener it left behind has to go with it
+				text.setOnClickListener(null);
 				text.setText(trimmedText);
 				Linkify.addLinks(text, Linkify.WEB_URLS);
 				makeLinksClickable(text, listener::onLinkClick);
