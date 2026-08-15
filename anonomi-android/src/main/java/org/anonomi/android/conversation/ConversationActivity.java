@@ -1689,25 +1689,34 @@ public class ConversationActivity extends BriarActivity
 	@Override
 	public void onMoneroRequestClicked(MoneroRequest request) {
 		String subaddress = request.getSubaddress();
-		if (!AnonMoneroUtils.isValidMoneroSubaddress(subaddress)) {
-			Toast.makeText(this, R.string.monero_request_unpayable,
-					Toast.LENGTH_LONG).show();
-			return;
+		// We only ever send subaddresses, but the message type accepts any
+		// address a wallet could pay, and a primary one is still payable
+		boolean payable =
+				AnonMoneroUtils.isValidMoneroSubaddress(subaddress) ||
+						AnonMoneroUtils.isValidMoneroAddress(subaddress);
+		Bitmap qr = null;
+		if (payable) {
+			String uri = MoneroPaymentUri.build(subaddress,
+					request.getAmount(), request.getDescription());
+			DisplayMetrics dm = getResources().getDisplayMetrics();
+			int edge =
+					(int) (Math.min(dm.widthPixels, dm.heightPixels) * 0.8);
+			qr = QrCodeUtils.createQrCode(edge, uri);
 		}
-		String uri = MoneroPaymentUri.build(subaddress, request.getAmount(),
-				request.getDescription());
-		DisplayMetrics dm = getResources().getDisplayMetrics();
-		int edge = (int) (Math.min(dm.widthPixels, dm.heightPixels) * 0.8);
-		Bitmap qr = QrCodeUtils.createQrCode(edge, uri);
-
-		ImageView image = new ImageView(this);
-		image.setImageBitmap(qr);
-		image.setAdjustViewBounds(true);
 		MaterialAlertDialogBuilder builder =
 				new MaterialAlertDialogBuilder(this, R.style.AnonDialogTheme);
 		builder.setTitle(getString(R.string.monero_request_title));
-		builder.setView(image);
-		builder.setNegativeButton(R.string.monero_request_copy_address,
+		if (qr == null) {
+			// An address we cannot draw a code for is still an address, and
+			// copying it is the one thing the reader actually needs
+			builder.setMessage(R.string.monero_request_unpayable);
+		} else {
+			ImageView image = new ImageView(this);
+			image.setImageBitmap(qr);
+			image.setAdjustViewBounds(true);
+			builder.setView(image);
+		}
+		builder.setPositiveButton(R.string.monero_request_copy_address,
 				(dialog, which) -> {
 					ClipboardManager cm = (ClipboardManager)
 							getSystemService(CLIPBOARD_SERVICE);
@@ -1718,7 +1727,7 @@ public class ConversationActivity extends BriarActivity
 							R.string.monero_request_address_copied,
 							Toast.LENGTH_SHORT).show();
 				});
-		builder.setPositiveButton(R.string.cancel, null);
+		builder.setNegativeButton(R.string.cancel, null);
 		builder.show();
 	}
 
