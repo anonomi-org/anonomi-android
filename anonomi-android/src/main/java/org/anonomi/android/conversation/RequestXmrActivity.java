@@ -48,8 +48,10 @@ import static org.anonomi.android.settings.MoneroSettingsFragment.PREF_KEY_MINOR
 import static org.anonomi.android.settings.MoneroSettingsFragment.PREF_KEY_MONERO_CURRENCY;
 import static org.anonomi.android.settings.MoneroSettingsFragment.PREF_KEY_PRIMARY_ADDRESS;
 import static org.anonomi.android.settings.MoneroSettingsFragment.PREF_KEY_PRIVATE_VIEW_KEY;
+import static org.anonchatsecure.bramble.util.StringUtils.truncateUtf8;
 import static org.anonchatsecure.bramble.util.StringUtils.utf8IsTooLong;
 import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_MONERO_CURRENCY_LENGTH;
+import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_MONERO_DESCRIPTION_LENGTH;
 import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_MONERO_RATE;
 import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MIN_MONERO_RATE;
 
@@ -609,6 +611,12 @@ public class RequestXmrActivity extends BriarActivity {
 		}
 		String description = optionalMessageEditText.getText().toString().trim();
 		if (description.isEmpty()) description = null;
+		// The field is capped in characters and the limit is in bytes, so a
+		// description short enough to type can still be too long to send.
+		// The text form truncates rather than refusing, and a request that
+		// reaches one contact should not fail for another.
+		else description = truncateUtf8(description,
+				MAX_MONERO_DESCRIPTION_LENGTH);
 		MoneroRequest request = new MoneroRequest(lastGeneratedSubaddress,
 				amount, description, readCurrency(), readRate());
 		PrivateMessage pm = privateMessageFactory.createMoneroRequestMessage(
