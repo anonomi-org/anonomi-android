@@ -101,6 +101,13 @@ abstract class ConversationItemViewHolder extends ViewHolder {
 				Linkify.addLinks(text, Linkify.WEB_URLS);
 				makeLinksClickable(text, listener::onLinkClick);
 			}
+		} else if (text != null) {
+			// A message whose text has not been loaded yet reaches none of
+			// the branches above, so without this it keeps whatever the
+			// recycled holder was showing - someone else's location or
+			// payment request, still clickable, until the text arrives
+			text.setOnClickListener(null);
+			text.setText(null);
 		}
 
 		time.setText(formatDate(time.getContext(), item.getTime()));
