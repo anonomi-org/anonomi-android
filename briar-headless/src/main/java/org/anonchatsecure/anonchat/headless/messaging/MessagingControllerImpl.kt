@@ -30,6 +30,7 @@ import org.anonchatsecure.anonchat.api.introduction.IntroductionResponse
 import org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_PRIVATE_MESSAGE_TEXT_LENGTH
 import org.anonchatsecure.anonchat.api.messaging.MessagingManager
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessageFactory
+import org.anonchatsecure.anonchat.api.messaging.PrivateLocationHeader
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessageHeader
 import org.anonchatsecure.anonchat.api.privategroup.invitation.GroupInvitationRequest
 import org.anonchatsecure.anonchat.api.privategroup.invitation.GroupInvitationResponse
@@ -153,6 +154,8 @@ private class JsonVisitor(
 
     override fun visitPrivateMessageHeader(h: PrivateMessageHeader) =
         h.output(contactId, messagingManager.getMessageText(h.id))
+
+    override fun visitPrivateLocationHeader(h: PrivateLocationHeader) = h.output(contactId)
 
     override fun visitBlogInvitationRequest(r: BlogInvitationRequest) = r.output(contactId)
 

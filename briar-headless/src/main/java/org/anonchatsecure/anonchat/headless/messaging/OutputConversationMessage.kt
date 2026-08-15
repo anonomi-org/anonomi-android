@@ -7,6 +7,7 @@ import org.anonchatsecure.bramble.api.sync.event.MessagesSentEvent
 import org.anonchatsecure.anonchat.api.conversation.ConversationMessageHeader
 import org.anonchatsecure.anonchat.api.conversation.DeletionResult
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessage
+import org.anonchatsecure.anonchat.api.messaging.PrivateLocationHeader
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessageHeader
 import org.anonchatsecure.anonchat.headless.json.JsonDict
 
@@ -30,6 +31,15 @@ internal fun ConversationMessageHeader.output(contactId: ContactId, text: String
 internal fun PrivateMessageHeader.output(contactId: ContactId, text: String?) =
     (this as ConversationMessageHeader).output(contactId, text).apply {
         put("type", "PrivateMessage")
+    }
+
+internal fun PrivateLocationHeader.output(contactId: ContactId) =
+    (this as ConversationMessageHeader).output(contactId).apply {
+        put("type", "PrivateLocation")
+        put("label", location.label)
+        put("latitude", location.latitude)
+        put("longitude", location.longitude)
+        put("zoom", location.zoom)
     }
 
 /**

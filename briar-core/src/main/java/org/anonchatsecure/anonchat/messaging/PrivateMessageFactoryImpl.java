@@ -24,6 +24,7 @@ import org.anonchatsecure.bramble.api.data.BdfList;
 import org.anonchatsecure.bramble.api.sync.GroupId;
 import org.anonchatsecure.bramble.api.sync.Message;
 import org.anonchatsecure.anonchat.api.attachment.AttachmentHeader;
+import org.anonchatsecure.anonchat.api.messaging.Location;
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessage;
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessageFactory;
 import org.briarproject.nullsafety.NotNullByDefault;
@@ -36,7 +37,9 @@ import javax.inject.Inject;
 
 import static org.anonchatsecure.bramble.util.StringUtils.utf8IsTooLong;
 import static org.anonchatsecure.anonchat.api.autodelete.AutoDeleteConstants.NO_AUTO_DELETE_TIMER;
+import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_LOCATION_LABEL_LENGTH;
 import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_PRIVATE_MESSAGE_TEXT_LENGTH;
+import static org.anonchatsecure.anonchat.messaging.MessageTypes.LOCATION;
 import static org.anonchatsecure.anonchat.messaging.MessageTypes.PRIVATE_MESSAGE;
 
 @Immutable
@@ -86,6 +89,22 @@ class PrivateMessageFactoryImpl implements PrivateMessageFactory {
 		BdfList body = BdfList.of(PRIVATE_MESSAGE, text, attachmentList, timer);
 		Message m = clientHelper.createMessage(groupId, timestamp, body);
 		return new PrivateMessage(m, text != null, headers, autoDeleteTimer);
+	}
+
+	@Override
+	public PrivateMessage createLocationMessage(GroupId groupId, long timestamp,
+			Location location, long autoDeleteTimer) throws FormatException {
+		if (utf8IsTooLong(location.getLabel(), MAX_LOCATION_LABEL_LENGTH)) {
+			throw new IllegalArgumentException();
+		}
+		// Serialise the message
+		Long timer = autoDeleteTimer == NO_AUTO_DELETE_TIMER ?
+				null : autoDeleteTimer;
+		BdfList body = BdfList.of(LOCATION, location.getLabel(),
+				location.getLatitude(), location.getLongitude(),
+				location.getZoom(), timer);
+		Message m = clientHelper.createMessage(groupId, timestamp, body);
+		return new PrivateMessage(m, location, autoDeleteTimer);
 	}
 
 	private void validateTextAndAttachmentHeaders(@Nullable String text,

@@ -55,7 +55,9 @@ import org.anonchatsecure.anonchat.api.conversation.ConversationManager;
 import org.anonchatsecure.anonchat.api.conversation.ConversationManager.ConversationClient;
 import org.anonchatsecure.anonchat.api.conversation.ConversationMessageHeader;
 import org.anonchatsecure.anonchat.api.conversation.DeletionResult;
+import org.anonchatsecure.anonchat.api.messaging.Location;
 import org.anonchatsecure.anonchat.api.messaging.MessagingManager;
+import org.anonchatsecure.anonchat.api.messaging.PrivateLocationHeader;
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessage;
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat;
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessageHeader;
@@ -75,6 +77,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 import javax.inject.Inject;
 
@@ -95,12 +98,17 @@ import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEX
 import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_ONLY;
 import static org.anonchatsecure.anonchat.client.MessageTrackerConstants.MSG_KEY_READ;
 import static org.anonchatsecure.anonchat.messaging.MessageTypes.ATTACHMENT;
+import static org.anonchatsecure.anonchat.messaging.MessageTypes.LOCATION;
 import static org.anonchatsecure.anonchat.messaging.MessageTypes.PRIVATE_MESSAGE;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MISSING_ATTACHMENT_CLEANUP_DURATION_MS;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_ATTACHMENT_HEADERS;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_AUTO_DELETE_TIMER;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_HAS_TEXT;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_LOCAL;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_LOCATION_LABEL;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_LOCATION_LATITUDE;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_LOCATION_LONGITUDE;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_LOCATION_ZOOM;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_MSG_TYPE;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_TIMESTAMP;
 
@@ -203,12 +211,17 @@ class MessagingManagerImpl implements MessagingManager, IncomingMessageHook,
 			// Message type is null for version 0.0 private messages
 			Integer messageType = metaDict.getOptionalInt(MSG_KEY_MSG_TYPE);
 			if (messageType == null) {
-				incomingPrivateMessage(txn, m, metaDict, true, emptyList());
+				incomingPrivateMessage(txn, m, metaDict, true, emptyList(),
+						null);
 			} else if (messageType == PRIVATE_MESSAGE) {
 				boolean hasText = metaDict.getBoolean(MSG_KEY_HAS_TEXT);
 				List<AttachmentHeader> headers =
 						parseAttachmentHeaders(m.getGroupId(), metaDict);
-				incomingPrivateMessage(txn, m, metaDict, hasText, headers);
+				incomingPrivateMessage(txn, m, metaDict, hasText, headers,
+						null);
+			} else if (messageType == LOCATION) {
+				incomingPrivateMessage(txn, m, metaDict, false, emptyList(),
+						parseLocation(metaDict));
 			} else if (messageType == ATTACHMENT) {
 				incomingAttachment(txn, m);
 			} else {
@@ -221,7 +234,8 @@ class MessagingManagerImpl implements MessagingManager, IncomingMessageHook,
 	}
 
 	private void incomingPrivateMessage(Transaction txn, Message m,
-			BdfDictionary meta, boolean hasText, List<AttachmentHeader> headers)
+			BdfDictionary meta, boolean hasText, List<AttachmentHeader> headers,
+			@Nullable Location location)
 			throws DbException, FormatException {
 		long start = now();
 		GroupId groupId = m.getGroupId();
@@ -230,9 +244,11 @@ class MessagingManagerImpl implements MessagingManager, IncomingMessageHook,
 		boolean read = meta.getBoolean(MSG_KEY_READ);
 		long timer = meta.getLong(MSG_KEY_AUTO_DELETE_TIMER,
 				NO_AUTO_DELETE_TIMER);
-		PrivateMessageHeader header =
-				new PrivateMessageHeader(m.getId(), groupId, timestamp, local,
-						read, false, false, hasText, headers, timer);
+		PrivateMessageHeader header = location == null
+				? new PrivateMessageHeader(m.getId(), groupId, timestamp, local,
+						read, false, false, hasText, headers, timer)
+				: new PrivateLocationHeader(m.getId(), groupId, timestamp,
+						local, read, false, false, location, timer);
 		ContactId contactId = getContactId(txn, groupId);
 		PrivateMessageReceivedEvent event =
 				new PrivateMessageReceivedEvent(header, contactId);
@@ -245,6 +261,13 @@ class MessagingManagerImpl implements MessagingManager, IncomingMessageHook,
 				timestamp);
 		if (!headers.isEmpty()) stopAttachmentCleanupTimers(txn, m, headers);
 		logDuration(LOG, "Receiving private message", start);
+	}
+
+	private Location parseLocation(BdfDictionary meta) throws FormatException {
+		return new Location(meta.getString(MSG_KEY_LOCATION_LABEL),
+				meta.getDouble(MSG_KEY_LOCATION_LATITUDE),
+				meta.getDouble(MSG_KEY_LOCATION_LONGITUDE),
+				meta.getDouble(MSG_KEY_LOCATION_ZOOM));
 	}
 
 	private List<AttachmentHeader> parseAttachmentHeaders(GroupId g,
@@ -323,7 +346,17 @@ class MessagingManagerImpl implements MessagingManager, IncomingMessageHook,
 			meta.put(MSG_KEY_TIMESTAMP, m.getMessage().getTimestamp());
 			meta.put(MSG_KEY_LOCAL, true);
 			meta.put(MSG_KEY_READ, true);
-			if (m.getFormat().supportsImages()) {
+			Location location = m.getLocation();
+			if (location != null) {
+				meta.put(MSG_KEY_MSG_TYPE, LOCATION);
+				meta.put(MSG_KEY_LOCATION_LABEL, location.getLabel());
+				meta.put(MSG_KEY_LOCATION_LATITUDE, location.getLatitude());
+				meta.put(MSG_KEY_LOCATION_LONGITUDE, location.getLongitude());
+				meta.put(MSG_KEY_LOCATION_ZOOM, location.getZoom());
+				if (timer != NO_AUTO_DELETE_TIMER) {
+					meta.put(MSG_KEY_AUTO_DELETE_TIMER, timer);
+				}
+			} else if (m.getFormat().supportsImages()) {
 				meta.put(MSG_KEY_MSG_TYPE, PRIVATE_MESSAGE);
 				meta.put(MSG_KEY_HAS_TEXT, m.hasText());
 				BdfList headers = new BdfList();
@@ -446,12 +479,19 @@ class MessagingManagerImpl implements MessagingManager, IncomingMessageHook,
 			try {
 				// Message type is null for version 0.0 private messages
 				Integer messageType = meta.getOptionalInt(MSG_KEY_MSG_TYPE);
-				if (messageType != null && messageType != PRIVATE_MESSAGE)
+				if (messageType != null && messageType != PRIVATE_MESSAGE
+						&& messageType != LOCATION)
 					continue;
 				long timestamp = meta.getLong(MSG_KEY_TIMESTAMP);
 				boolean local = meta.getBoolean(MSG_KEY_LOCAL);
 				boolean read = meta.getBoolean(MSG_KEY_READ);
-				if (messageType == null) {
+				if (messageType != null && messageType == LOCATION) {
+					long timer = meta.getLong(MSG_KEY_AUTO_DELETE_TIMER,
+							NO_AUTO_DELETE_TIMER);
+					headers.add(new PrivateLocationHeader(id, g, timestamp,
+							local, read, s.isSent(), s.isSeen(),
+							parseLocation(meta), timer));
+				} else if (messageType == null) {
 					headers.add(new PrivateMessageHeader(id, g, timestamp,
 							local, read, s.isSent(), s.isSeen(), true,
 							emptyList(), NO_AUTO_DELETE_TIMER));

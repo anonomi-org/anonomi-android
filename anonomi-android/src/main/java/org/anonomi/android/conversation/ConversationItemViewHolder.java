@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.anonomi.R;
+import org.anonchatsecure.anonchat.api.messaging.Location;
 import org.briarproject.nullsafety.NotNullByDefault;
 
 import androidx.annotation.CallSuper;
@@ -67,9 +68,13 @@ abstract class ConversationItemViewHolder extends ViewHolder {
 
 		String messageTextRaw = item.getText();
 
-		if (messageTextRaw != null && text != null) {
+		if (item instanceof ConversationLocationItem && text != null) {
+			bindLocation(((ConversationLocationItem) item).getLocation());
+		} else if (messageTextRaw != null && text != null) {
 			String trimmedText = trim(messageTextRaw);
 
+			// Locations sent before they had a message type of their own are
+			// still in the database as text
 			if (isMapMessage(trimmedText)) {
 				MapMessageData mapData = parseMapMessage(trimmedText);
 				String displayText = "\uD83D\uDCCD" + mapData.label +
@@ -132,6 +137,18 @@ abstract class ConversationItemViewHolder extends ViewHolder {
 		} else {
 			topNotice.setVisibility(GONE);
 		}
+	}
+
+	private void bindLocation(Location location) {
+		MapMessageData data = new MapMessageData(location.getLabel(),
+				location.getLatitude(), location.getLongitude(),
+				String.valueOf(location.getZoom()));
+		text.setText("📍" + data.label +
+				"\n   " + data.latitude +
+				"\n   " + data.longitude +
+				"\n   " + text.getContext().getString(
+				R.string.tap_to_view_on_map));
+		text.setOnClickListener(v -> listener.onMapMessageClicked(data));
 	}
 
 	private boolean isMapMessage(String text) {

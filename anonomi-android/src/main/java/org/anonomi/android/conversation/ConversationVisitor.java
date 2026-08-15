@@ -12,6 +12,7 @@ import org.anonchatsecure.anonchat.api.forum.ForumInvitationRequest;
 import org.anonchatsecure.anonchat.api.forum.ForumInvitationResponse;
 import org.anonchatsecure.anonchat.api.introduction.IntroductionRequest;
 import org.anonchatsecure.anonchat.api.introduction.IntroductionResponse;
+import org.anonchatsecure.anonchat.api.messaging.PrivateLocationHeader;
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessageHeader;
 import org.anonchatsecure.anonchat.api.privategroup.invitation.GroupInvitationRequest;
 import org.anonchatsecure.anonchat.api.privategroup.invitation.GroupInvitationResponse;
@@ -92,6 +93,15 @@ class ConversationVisitor implements
 		}
 
 		return item;
+	}
+
+	@Override
+	public ConversationItem visitPrivateLocationHeader(
+			PrivateLocationHeader h) {
+		int layoutRes = h.isLocal()
+				? R.layout.list_item_conversation_msg_out
+				: R.layout.list_item_conversation_msg_in;
+		return new ConversationLocationItem(layoutRes, h, contactName);
 	}
 
 	@Override
