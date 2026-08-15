@@ -9,15 +9,21 @@ import javax.annotation.concurrent.NotThreadSafe;
 import androidx.annotation.LayoutRes;
 import androidx.lifecycle.LiveData;
 
+import static java.util.Collections.emptyList;
+
+/**
+ * Extends the message item because a location is shown in the same layout,
+ * and the adapter chooses a view holder by layout.
+ */
 @NotThreadSafe
 @NotNullByDefault
-class ConversationLocationItem extends ConversationItem {
+class ConversationLocationItem extends ConversationMessageItem {
 
 	private final Location location;
 
 	ConversationLocationItem(@LayoutRes int layoutRes, PrivateLocationHeader h,
 			LiveData<String> contactName) {
-		super(layoutRes, h, contactName);
+		super(layoutRes, h, contactName, emptyList());
 		this.location = h.getLocation();
 	}
 
