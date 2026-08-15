@@ -51,14 +51,22 @@ import static org.anonchatsecure.anonchat.api.attachment.MediaConstants.MSG_KEY_
 import static org.anonchatsecure.anonchat.api.attachment.MediaConstants.MSG_KEY_DESCRIPTOR_LENGTH;
 import static org.anonchatsecure.anonchat.api.autodelete.AutoDeleteConstants.NO_AUTO_DELETE_TIMER;
 import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_ATTACHMENTS_PER_MESSAGE;
+import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_LOCATION_LABEL_LENGTH;
+import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_LOCATION_ZOOM;
 import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_PRIVATE_MESSAGE_TEXT_LENGTH;
+import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MIN_LOCATION_ZOOM;
 import static org.anonchatsecure.anonchat.client.MessageTrackerConstants.MSG_KEY_READ;
 import static org.anonchatsecure.anonchat.messaging.MessageTypes.ATTACHMENT;
+import static org.anonchatsecure.anonchat.messaging.MessageTypes.LOCATION;
 import static org.anonchatsecure.anonchat.messaging.MessageTypes.PRIVATE_MESSAGE;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_ATTACHMENT_HEADERS;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_AUTO_DELETE_TIMER;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_HAS_TEXT;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_LOCAL;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_LOCATION_LABEL;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_LOCATION_LATITUDE;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_LOCATION_LONGITUDE;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_LOCATION_ZOOM;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_MSG_TYPE;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_TIMESTAMP;
 import static org.anonchatsecure.anonchat.util.ValidationUtils.validateAutoDeleteTimer;
@@ -108,6 +116,9 @@ class PrivateMessageValidator implements MessageValidator {
 					context = validatePrivateMessage(m, list);
 				} else if (messageType == ATTACHMENT) {
 					context = validateAttachment(m, list, bytesRead);
+				} else if (messageType == LOCATION) {
+					if (!reader.eof()) throw new FormatException();
+					context = validateLocation(m, list);
 				} else {
 					throw new InvalidMessageException();
 				}
@@ -170,6 +181,48 @@ class PrivateMessageValidator implements MessageValidator {
 			meta.put(MSG_KEY_AUTO_DELETE_TIMER, timer);
 		}
 		return new BdfMessageContext(meta);
+	}
+
+	private BdfMessageContext validateLocation(Message m, BdfList body)
+			throws FormatException {
+		// Message type, label, latitude, longitude, zoom, optional
+		// auto-delete timer
+		checkSize(body, 5, 6);
+		String label = body.getString(1);
+		checkLength(label, 0, MAX_LOCATION_LABEL_LENGTH);
+		double latitude = body.getDouble(2);
+		checkInRange(latitude, -90, 90);
+		double longitude = body.getDouble(3);
+		checkInRange(longitude, -180, 180);
+		double zoom = body.getDouble(4);
+		checkInRange(zoom, MIN_LOCATION_ZOOM, MAX_LOCATION_ZOOM);
+		long timer = NO_AUTO_DELETE_TIMER;
+		if (body.size() == 6) {
+			timer = validateAutoDeleteTimer(body.getOptionalLong(5));
+		}
+		// Return the metadata
+		BdfDictionary meta = new BdfDictionary();
+		meta.put(MSG_KEY_TIMESTAMP, m.getTimestamp());
+		meta.put(MSG_KEY_LOCAL, false);
+		meta.put(MSG_KEY_READ, false);
+		meta.put(MSG_KEY_MSG_TYPE, LOCATION);
+		meta.put(MSG_KEY_LOCATION_LABEL, label);
+		meta.put(MSG_KEY_LOCATION_LATITUDE, latitude);
+		meta.put(MSG_KEY_LOCATION_LONGITUDE, longitude);
+		meta.put(MSG_KEY_LOCATION_ZOOM, zoom);
+		if (timer != NO_AUTO_DELETE_TIMER) {
+			meta.put(MSG_KEY_AUTO_DELETE_TIMER, timer);
+		}
+		return new BdfMessageContext(meta);
+	}
+
+	/**
+	 * Rejects a value outside the range, and NaN with it, since every
+	 * comparison against NaN is false.
+	 */
+	private static void checkInRange(double value, double min, double max)
+			throws FormatException {
+		if (!(value >= min && value <= max)) throw new FormatException();
 	}
 
 	private BdfMessageContext validateAttachment(Message m, BdfList descriptor,

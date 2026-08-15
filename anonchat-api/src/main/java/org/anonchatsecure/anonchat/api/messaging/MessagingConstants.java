@@ -32,4 +32,16 @@ public interface MessagingConstants {
 	 */
 	int MAX_ATTACHMENTS_PER_MESSAGE = 10;
 
+	/**
+	 * The maximum length of a location's label in UTF-8 bytes.
+	 */
+	int MAX_LOCATION_LABEL_LENGTH = 200;
+
+	/**
+	 * The range of zoom levels a location may ask to be shown at. The upper
+	 * bound is the highest level the map library can address.
+	 */
+	double MIN_LOCATION_ZOOM = 0;
+	double MAX_LOCATION_ZOOM = 22;
+
 }

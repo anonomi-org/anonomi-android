@@ -51,14 +51,21 @@ import static org.anonchatsecure.anonchat.api.attachment.MediaConstants.MSG_KEY_
 import static org.anonchatsecure.anonchat.api.autodelete.AutoDeleteConstants.MAX_AUTO_DELETE_TIMER_MS;
 import static org.anonchatsecure.anonchat.api.autodelete.AutoDeleteConstants.MIN_AUTO_DELETE_TIMER_MS;
 import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_ATTACHMENTS_PER_MESSAGE;
+import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_LOCATION_LABEL_LENGTH;
+import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_LOCATION_ZOOM;
 import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_PRIVATE_MESSAGE_TEXT_LENGTH;
 import static org.anonchatsecure.anonchat.client.MessageTrackerConstants.MSG_KEY_READ;
 import static org.anonchatsecure.anonchat.messaging.MessageTypes.ATTACHMENT;
+import static org.anonchatsecure.anonchat.messaging.MessageTypes.LOCATION;
 import static org.anonchatsecure.anonchat.messaging.MessageTypes.PRIVATE_MESSAGE;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_ATTACHMENT_HEADERS;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_AUTO_DELETE_TIMER;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_HAS_TEXT;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_LOCAL;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_LOCATION_LABEL;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_LOCATION_LATITUDE;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_LOCATION_LONGITUDE;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_LOCATION_ZOOM;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_MSG_TYPE;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_TIMESTAMP;
 import static org.junit.Assert.assertEquals;
@@ -110,6 +117,19 @@ public class PrivateMessageValidatorTest extends BrambleMockTestCase {
 			// counting input stream
 			new BdfEntry(MSG_KEY_DESCRIPTOR_LENGTH, 0L),
 			new BdfEntry(MSG_KEY_CONTENT_TYPE, contentType)
+	);
+
+	private final String locationLabel =
+			getRandomString(MAX_LOCATION_LABEL_LENGTH);
+	private final BdfDictionary locationMeta = BdfDictionary.of(
+			new BdfEntry(MSG_KEY_TIMESTAMP, message.getTimestamp()),
+			new BdfEntry(MSG_KEY_LOCAL, false),
+			new BdfEntry(MSG_KEY_READ, false),
+			new BdfEntry(MSG_KEY_MSG_TYPE, LOCATION),
+			new BdfEntry(MSG_KEY_LOCATION_LABEL, locationLabel),
+			new BdfEntry(MSG_KEY_LOCATION_LATITUDE, 38.7),
+			new BdfEntry(MSG_KEY_LOCATION_LONGITUDE, -9.1),
+			new BdfEntry(MSG_KEY_LOCATION_ZOOM, 15.0)
 	);
 
 	private final PrivateMessageValidator validator =
@@ -407,7 +427,7 @@ public class PrivateMessageValidatorTest extends BrambleMockTestCase {
 	@Test(expected = InvalidMessageException.class)
 	public void testRejectsUnknownMessageType() throws Exception {
 		expectCheckTimestamp(now);
-		expectParseList(BdfList.of(ATTACHMENT + 1, contentType));
+		expectParseList(BdfList.of(LOCATION + 1, contentType));
 
 		validator.validateMessage(message, group);
 	}
@@ -460,6 +480,102 @@ public class PrivateMessageValidatorTest extends BrambleMockTestCase {
 		expectReadEof(true);
 
 		validator.validateMessage(message, group);
+	}
+
+	@Test
+	public void testAcceptsLocation() throws Exception {
+		testAcceptsPrivateMessage(
+				BdfList.of(LOCATION, locationLabel, 38.7, -9.1, 15.0),
+				locationMeta);
+	}
+
+	@Test
+	public void testAcceptsLocationAtRangeLimits() throws Exception {
+		BdfDictionary meta = BdfDictionary.of(
+				new BdfEntry(MSG_KEY_TIMESTAMP, message.getTimestamp()),
+				new BdfEntry(MSG_KEY_LOCAL, false),
+				new BdfEntry(MSG_KEY_READ, false),
+				new BdfEntry(MSG_KEY_MSG_TYPE, LOCATION),
+				new BdfEntry(MSG_KEY_LOCATION_LABEL, ""),
+				new BdfEntry(MSG_KEY_LOCATION_LATITUDE, -90.0),
+				new BdfEntry(MSG_KEY_LOCATION_LONGITUDE, 180.0),
+				new BdfEntry(MSG_KEY_LOCATION_ZOOM, MAX_LOCATION_ZOOM)
+		);
+		testAcceptsPrivateMessage(BdfList.of(LOCATION, "", -90.0, 180.0,
+				MAX_LOCATION_ZOOM), meta);
+	}
+
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsTooShortLocation() throws Exception {
+		testRejectsPrivateMessage(
+				BdfList.of(LOCATION, locationLabel, 38.7, -9.1));
+	}
+
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsTooLongLocation() throws Exception {
+		testRejectsPrivateMessage(BdfList.of(LOCATION, locationLabel, 38.7,
+				-9.1, 15.0, null, "extra"));
+	}
+
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsTooLongLocationLabel() throws Exception {
+		String invalid = getRandomString(MAX_LOCATION_LABEL_LENGTH + 1);
+
+		testRejectsPrivateMessage(BdfList.of(LOCATION, invalid, 38.7, -9.1,
+				15.0));
+	}
+
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsNonStringLocationLabel() throws Exception {
+		testRejectsPrivateMessage(BdfList.of(LOCATION, 123, 38.7, -9.1, 15.0));
+	}
+
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsLatitudeAboveRange() throws Exception {
+		testRejectsPrivateMessage(BdfList.of(LOCATION, locationLabel, 90.1,
+				-9.1, 15.0));
+	}
+
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsLatitudeBelowRange() throws Exception {
+		testRejectsPrivateMessage(BdfList.of(LOCATION, locationLabel, -90.1,
+				-9.1, 15.0));
+	}
+
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsLongitudeAboveRange() throws Exception {
+		testRejectsPrivateMessage(BdfList.of(LOCATION, locationLabel, 38.7,
+				180.1, 15.0));
+	}
+
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsNotANumberLatitude() throws Exception {
+		testRejectsPrivateMessage(BdfList.of(LOCATION, locationLabel,
+				Double.NaN, -9.1, 15.0));
+	}
+
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsInfiniteLongitude() throws Exception {
+		testRejectsPrivateMessage(BdfList.of(LOCATION, locationLabel, 38.7,
+				Double.POSITIVE_INFINITY, 15.0));
+	}
+
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsZoomAboveRange() throws Exception {
+		testRejectsPrivateMessage(BdfList.of(LOCATION, locationLabel, 38.7,
+				-9.1, MAX_LOCATION_ZOOM + 1));
+	}
+
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsIntegerLatitude() throws Exception {
+		testRejectsPrivateMessage(BdfList.of(LOCATION, locationLabel, 38, -9.1,
+				15.0));
+	}
+
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsNullLatitude() throws Exception {
+		testRejectsPrivateMessage(BdfList.of(LOCATION, locationLabel, null,
+				-9.1, 15.0));
 	}
 
 	private void testAcceptsLegacyMessage(BdfList body) throws Exception {

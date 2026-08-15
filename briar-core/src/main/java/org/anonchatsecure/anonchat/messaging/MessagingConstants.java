@@ -29,6 +29,10 @@ interface MessagingConstants {
 	String MSG_KEY_HAS_TEXT = "hasText";
 	String MSG_KEY_ATTACHMENT_HEADERS = "attachmentHeaders";
 	String MSG_KEY_AUTO_DELETE_TIMER = "autoDeleteTimer";
+	String MSG_KEY_LOCATION_LABEL = "locationLabel";
+	String MSG_KEY_LOCATION_LATITUDE = "locationLatitude";
+	String MSG_KEY_LOCATION_LONGITUDE = "locationLongitude";
+	String MSG_KEY_LOCATION_ZOOM = "locationZoom";
 
 	/**
 	 * How long to keep incoming attachments that aren't listed by any private

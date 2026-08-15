@@ -22,4 +22,5 @@ interface MessageTypes {
 
 	int PRIVATE_MESSAGE = 0;
 	int ATTACHMENT = 1;
+	int LOCATION = 2;
 }
