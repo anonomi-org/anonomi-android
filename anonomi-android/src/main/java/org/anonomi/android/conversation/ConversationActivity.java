@@ -84,6 +84,8 @@ import org.anonchatsecure.anonchat.api.conversation.event.ConversationMessageRec
 import org.anonchatsecure.anonchat.api.forum.ForumSharingManager;
 import org.anonchatsecure.anonchat.api.introduction.IntroductionManager;
 import org.anonchatsecure.anonchat.api.messaging.MessagingManager;
+import org.anonchatsecure.anonchat.api.messaging.Location;
+import org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat;
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessageHeader;
 import org.anonchatsecure.anonchat.api.privategroup.invitation.GroupInvitationManager;
 import org.briarproject.nullsafety.MethodsNotNullByDefault;
@@ -733,10 +735,7 @@ public class ConversationActivity extends BriarActivity
 					.make(list, R.string.introduction_sent, Snackbar.LENGTH_SHORT)
 					.show();
 		} else if (request == REQUEST_SEND_LOCATION && result == RESULT_OK && data != null) {
-			String message = data.getStringExtra(MapLocationPickerActivity.RESULT_MAP_MESSAGE);
-			if (message != null) {
-				sendMapMessage(message);
-			}
+			sendLocationResult(data);
 		}
 	}
 
@@ -966,8 +965,37 @@ public class ConversationActivity extends BriarActivity
 		startActivityForResult(intent, REQUEST_SEND_LOCATION);
 	}
 
+	/**
+	 * Sends the location as its own message where the contact can read one,
+	 * and as text where they are still on a release that cannot.
+	 */
+	private void sendLocationResult(Intent data) {
+		PrivateMessageFormat format =
+				viewModel.getPrivateMessageFormat().getValue();
+		String label =
+				data.getStringExtra(MapLocationPickerActivity.RESULT_LABEL);
+		if (format != null && format.supportsLocation() && label != null) {
+			Location location = new Location(label,
+					data.getDoubleExtra(
+							MapLocationPickerActivity.RESULT_LATITUDE, 0),
+					data.getDoubleExtra(
+							MapLocationPickerActivity.RESULT_LONGITUDE, 0),
+					data.getDoubleExtra(
+							MapLocationPickerActivity.RESULT_ZOOM, 15));
+			observeLocationSend(viewModel.sendLocation(location));
+			return;
+		}
+		String message = data.getStringExtra(
+				MapLocationPickerActivity.RESULT_MAP_MESSAGE);
+		if (message != null) sendMapMessage(message);
+	}
+
 	private void sendMapMessage(String messageText) {
-		viewModel.sendMapMessage(messageText).observe(this, state -> {
+		observeLocationSend(viewModel.sendMapMessage(messageText));
+	}
+
+	private void observeLocationSend(LiveData<SendState> sendState) {
+		sendState.observe(this, state -> {
 			if (state == SendState.SENT) {
 				Toast.makeText(this, R.string.location_sent, Toast.LENGTH_SHORT).show();
 				loadMessages();  // refresh UI

@@ -41,6 +41,8 @@ import org.anonchatsecure.anonchat.api.conversation.ConversationManager;
 import org.anonchatsecure.anonchat.api.identity.AuthorInfo;
 import org.anonchatsecure.anonchat.api.identity.AuthorManager;
 import org.anonchatsecure.anonchat.api.messaging.MessagingManager;
+import org.anonchatsecure.anonchat.api.messaging.Location;
+import org.anonchatsecure.anonchat.api.messaging.PrivateLocationHeader;
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessage;
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessageFactory;
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat;
@@ -434,6 +436,53 @@ public class ConversationViewModel extends DbViewModel
 	@UiThread
 	public LiveData<SendState> sendMapMessage(String text) {
 		return sendMessage(text, Collections.emptyList(), getAutoDeleteTimer().getValue());
+	}
+
+	LiveData<SendState> sendLocation(Location location) {
+		MutableLiveData<SendState> liveData = new MutableLiveData<>();
+		long expectedTimer =
+				requireNonNull(getAutoDeleteTimer().getValue());
+		runOnDbThread(() -> {
+			try {
+				db.transaction(false, txn -> {
+					Contact contact = requireNonNull(
+							contactItem.getValue()).getContact();
+					GroupId groupId =
+							messagingManager.getContactGroup(contact).getId();
+					long timestamp = conversationManager
+							.getTimestampForOutgoingMessage(txn,
+									requireNonNull(contactId));
+					long timer = autoDeleteManager
+							.getAutoDeleteTimer(txn, contactId, timestamp);
+					if (timer != expectedTimer) {
+						throw new UnexpectedTimerException();
+					}
+					PrivateMessage m;
+					try {
+						m = privateMessageFactory.createLocationMessage(
+								groupId, timestamp, location, timer);
+					} catch (FormatException e) {
+						throw new AssertionError(e);
+					}
+					messagingManager.addLocalMessage(txn, m);
+					Message message = m.getMessage();
+					PrivateLocationHeader h = new PrivateLocationHeader(
+							message.getId(), message.getGroupId(),
+							message.getTimestamp(), true, true, false, false,
+							location, m.getAutoDeleteTimer());
+					txn.attach(() -> {
+						liveData.setValue(SENT);
+						addedHeader.setEvent(h);
+					});
+				});
+			} catch (UnexpectedTimerException e) {
+				liveData.postValue(UNEXPECTED_TIMER);
+			} catch (DbException e) {
+				logException(LOG, WARNING, e);
+				liveData.postValue(ERROR);
+			}
+		});
+		return liveData;
 	}
 
 	private PrivateMessage createMessage(Transaction txn, @Nullable String text,

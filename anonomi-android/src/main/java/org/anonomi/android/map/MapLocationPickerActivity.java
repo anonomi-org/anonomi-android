@@ -44,6 +44,12 @@ import okhttp3.OkHttpClient;
 public class MapLocationPickerActivity extends BriarActivity {
 
 	public static final String RESULT_MAP_MESSAGE = "map_message";
+	// Returned alongside the message for callers that can send the values
+	// themselves rather than spell them into text
+	public static final String RESULT_LABEL = "map_label";
+	public static final String RESULT_LATITUDE = "map_latitude";
+	public static final String RESULT_LONGITUDE = "map_longitude";
+	public static final String RESULT_ZOOM = "map_zoom";
 
 	@Inject
 	WeakSingletonProvider<OkHttpClient> httpClientProvider;
@@ -193,6 +199,10 @@ public class MapLocationPickerActivity extends BriarActivity {
 
 			Intent result = new Intent();
 			result.putExtra(RESULT_MAP_MESSAGE, message);
+			result.putExtra(RESULT_LABEL, label);
+			result.putExtra(RESULT_LATITUDE, lat);
+			result.putExtra(RESULT_LONGITUDE, lon);
+			result.putExtra(RESULT_ZOOM, zoom);
 			setResult(RESULT_OK, result);
 			finish();
 		});
