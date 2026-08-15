@@ -27,6 +27,7 @@ import org.anonchatsecure.bramble.test.TestDatabaseConfigModule;
 import org.anonchatsecure.anonchat.api.attachment.AttachmentHeader;
 import org.anonchatsecure.anonchat.api.conversation.ConversationMessageHeader;
 import org.anonchatsecure.anonchat.api.messaging.MessagingManager;
+import org.anonchatsecure.anonchat.api.messaging.Location;
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessage;
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessageFactory;
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessageHeader;
@@ -224,6 +225,45 @@ public class MessagingManagerIntegrationTest
 		assertGroupCounts(c1, 0, 0);
 	}
 
+	/**
+	 * A location is counted and listed like any other message, and goes when
+	 * the conversation is deleted. Each of those is a separate place that
+	 * decides what a message type is, and one of them missing a type leaves
+	 * a message on screen that the user has asked to be rid of.
+	 */
+	@Test
+	public void testLocationIsCountedListedAndDeleted() throws Exception {
+		PrivateMessage text = sendMessage(c0, c1, getRandomString(42));
+		sendLocation(c0, c1,
+				new Location("Cafe;na esquina", 38.7223, -9.1393, 15.0));
+
+		// getMessages checks the headers and the ids agree, so a location
+		// missing from either one fails here
+		assertEquals(2, getMessages(c0).size());
+		assertEquals(2, getMessages(c1).size());
+		assertGroupCounts(c0, 2, 0);
+		assertGroupCounts(c1, 2, 2);
+
+		// Deleting the text leaves the location, and the counts are worked
+		// out again from the messages that remain
+		Set<MessageId> toDelete = new HashSet<>();
+		toDelete.add(text.getMessage().getId());
+		assertTrue(db1.transactionWithResult(false, txn ->
+				messagingManager1.deleteMessages(txn, contactId, toDelete))
+				.allDeleted());
+
+		assertEquals(1, getMessages(c1).size());
+		assertGroupCounts(c1, 1, 1);
+
+		// And the location goes when the conversation does
+		assertTrue(db1.transactionWithResult(false,
+				txn -> messagingManager1.deleteAllMessages(txn, contactId))
+				.allDeleted());
+
+		assertEquals(0, getMessages(c1).size());
+		assertGroupCounts(c1, 0, 0);
+	}
+
 	@Test
 	public void testDeleteSubset() throws Exception {
 		// send 3 message (1 with attachment)
@@ -352,6 +392,18 @@ public class MessagingManagerIntegrationTest
 				autoDeleteTimer);
 		from.getMessagingManager().addLocalMessage(m);
 		syncMessage(from, to, contactId, 1 + attachments.size(), true);
+		return m;
+	}
+
+	private PrivateMessage sendLocation(BriarIntegrationTestComponent from,
+			BriarIntegrationTestComponent to, Location location)
+			throws Exception {
+		GroupId g = from.getMessagingManager().getConversationId(contactId);
+		PrivateMessage m = messageFactory.createLocationMessage(g,
+				from.getClock().currentTimeMillis(), location,
+				NO_AUTO_DELETE_TIMER);
+		from.getMessagingManager().addLocalMessage(m);
+		syncMessage(from, to, contactId, 1, true);
 		return m;
 	}
 

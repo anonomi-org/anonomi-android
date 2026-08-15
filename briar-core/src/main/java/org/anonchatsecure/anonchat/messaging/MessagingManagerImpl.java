@@ -521,7 +521,8 @@ class MessagingManagerImpl implements MessagingManager, IncomingMessageHook,
 			for (Entry<MessageId, BdfDictionary> entry : messages.entrySet()) {
 				Integer type =
 						entry.getValue().getOptionalInt(MSG_KEY_MSG_TYPE);
-				if (type == null || type == PRIVATE_MESSAGE)
+				if (type == null || type == PRIVATE_MESSAGE
+						|| type == LOCATION)
 					result.add(entry.getKey());
 			}
 		} catch (FormatException e) {
@@ -623,7 +624,8 @@ class MessagingManagerImpl implements MessagingManager, IncomingMessageHook,
 			for (Entry<MessageId, BdfDictionary> entry : metadata.entrySet()) {
 				BdfDictionary meta = entry.getValue();
 				Integer messageType = meta.getOptionalInt(MSG_KEY_MSG_TYPE);
-				if (messageType == null || messageType == PRIVATE_MESSAGE) {
+				if (messageType == null || messageType == PRIVATE_MESSAGE
+						|| messageType == LOCATION) {
 					msgCount++;
 					if (!meta.getBoolean(MSG_KEY_READ)) unreadCount++;
 				}
