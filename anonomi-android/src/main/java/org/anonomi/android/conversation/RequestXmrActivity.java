@@ -47,6 +47,7 @@ import static org.anonomi.android.settings.MoneroSettingsFragment.PREF_KEY_MINOR
 import static org.anonomi.android.settings.MoneroSettingsFragment.PREF_KEY_MONERO_CURRENCY;
 import static org.anonomi.android.settings.MoneroSettingsFragment.PREF_KEY_PRIMARY_ADDRESS;
 import static org.anonomi.android.settings.MoneroSettingsFragment.PREF_KEY_PRIVATE_VIEW_KEY;
+import static org.anonchatsecure.bramble.util.StringUtils.utf8IsTooLong;
 import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_MONERO_CURRENCY_LENGTH;
 import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_MONERO_RATE;
 import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MIN_MONERO_RATE;
@@ -691,14 +692,20 @@ public class RequestXmrActivity extends BriarActivity {
 		}
 	}
 
+	/**
+	 * Returns the currency the rate is quoted in, or null if there is none
+	 * to send. A code short enough to type can still be too long to send,
+	 * since the limit is in bytes and the field is measured in characters,
+	 * and leaving it out costs a label where failing costs the request.
+	 */
 	@Nullable
 	private String readCurrency() {
 		SharedPreferences prefs =
 				PreferenceManager.getDefaultSharedPreferences(this);
 		String currency = prefs.getString(PREF_KEY_MONERO_CURRENCY, "").trim();
 		if (currency.isEmpty()) return null;
-		return currency.length() > MAX_MONERO_CURRENCY_LENGTH
-				? currency.substring(0, MAX_MONERO_CURRENCY_LENGTH) : currency;
+		if (utf8IsTooLong(currency, MAX_MONERO_CURRENCY_LENGTH)) return null;
+		return currency;
 	}
 
 	private String shortenAddress(String address) {
