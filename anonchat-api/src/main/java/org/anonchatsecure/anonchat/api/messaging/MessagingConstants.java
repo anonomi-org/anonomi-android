@@ -81,8 +81,13 @@ public interface MessagingConstants {
 	 * Bounds on the dictionary a payment request carries its extra fields
 	 * in. A key we do not recognise is ignored rather than rejected, which
 	 * is what lets a later release add a field without older peers
-	 * invalidating the message; these bound what such a key can cost us, so
-	 * a later release may add keys but must keep them within these limits.
+	 * invalidating the message, so a later release may add keys but must
+	 * keep them within these limits.
+	 * <p>
+	 * The value limit applies to text and raw values. A nested list or
+	 * dictionary is bounded only by the message body, which is the same
+	 * bound any private message's text already has, so nothing is gained by
+	 * rejecting one and forward compatibility would be lost.
 	 */
 	int MAX_MONERO_EXTRAS = 16;
 	int MAX_MONERO_EXTRA_KEY_LENGTH = 32;

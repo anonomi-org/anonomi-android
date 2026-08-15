@@ -261,6 +261,9 @@ class PrivateMessageValidator implements MessageValidator {
 			if (value instanceof String) {
 				checkLength((String) value, 0,
 						MAX_MONERO_EXTRA_VALUE_LENGTH);
+			} else if (value instanceof byte[]) {
+				checkLength((byte[]) value, 0,
+						MAX_MONERO_EXTRA_VALUE_LENGTH);
 			}
 		}
 		long timer = validateAutoDeleteTimer(body.getOptionalLong(5));

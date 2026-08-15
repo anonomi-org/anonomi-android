@@ -769,6 +769,15 @@ public class PrivateMessageValidatorTest extends BrambleMockTestCase {
 	}
 
 	@Test(expected = InvalidMessageException.class)
+	public void testRejectsTooLongRawExtraValue() throws Exception {
+		BdfDictionary extras = BdfDictionary.of(new BdfEntry("padding",
+				getRandomBytes(MAX_MONERO_EXTRA_VALUE_LENGTH + 1)));
+
+		testRejectsPrivateMessage(BdfList.of(MONERO_REQUEST, subaddress,
+				5_000_000_000L, "Invoice 42", extras, null));
+	}
+
+	@Test(expected = InvalidMessageException.class)
 	public void testRejectsMissingExtrasDictionary() throws Exception {
 		testRejectsPrivateMessage(BdfList.of(MONERO_REQUEST, subaddress,
 				5_000_000_000L, "Invoice 42", null, null));
