@@ -9,6 +9,7 @@ import org.anonchatsecure.anonchat.api.conversation.DeletionResult
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessage
 import org.anonchatsecure.anonchat.api.messaging.PrivateLocationHeader
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessageHeader
+import org.anonchatsecure.anonchat.api.messaging.PrivateMoneroRequestHeader
 import org.anonchatsecure.anonchat.headless.json.JsonDict
 
 internal fun ConversationMessageHeader.output(contactId: ContactId) = JsonDict(
@@ -40,6 +41,18 @@ internal fun PrivateLocationHeader.output(contactId: ContactId) =
         put("latitude", location.latitude)
         put("longitude", location.longitude)
         put("zoom", location.zoom)
+    }
+
+internal fun PrivateMoneroRequestHeader.output(contactId: ContactId) =
+    (this as ConversationMessageHeader).output(contactId).apply {
+        put("type", "PrivateMoneroRequest")
+        put("subaddress", request.subaddress)
+        // Atomic units, as they travel, so that a consumer is not handed a
+        // decimal amount to reconstruct
+        put("amount", request.amount)
+        put("description", request.description)
+        put("currency", request.currency)
+        put("rate", request.rate)
     }
 
 /**

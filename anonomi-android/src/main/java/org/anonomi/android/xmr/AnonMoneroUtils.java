@@ -1,8 +1,12 @@
 package org.anonomi.android.xmr;
 
+import java.math.BigDecimal;
 import java.util.regex.Pattern;
 
 public class AnonMoneroUtils {
+
+	/** Decimal places in one XMR, so 10^12 atomic units to the coin. */
+	private static final int ATOMIC_UNIT_DECIMALS = 12;
 
 	// Basic Monero address pattern (can be made more specific)
 	private static final Pattern MONERO_ADDRESS_PATTERN =
@@ -100,6 +104,59 @@ public class AnonMoneroUtils {
 		System.arraycopy(checksum, 0, address, ADDRESS_BODY_LENGTH,
 				CHECKSUM_LENGTH);
 		return MoneroBase58.encode(address);
+	}
+
+	/**
+	 * Returns true if the string is a well-formed mainnet subaddress whose
+	 * checksum matches. {@link #isValidMoneroAddress} will not do for this:
+	 * it matches a primary address, which carries a different network byte,
+	 * so it rejects every subaddress we generate.
+	 */
+	public static boolean isValidMoneroSubaddress(String address) {
+		if (address == null || address.isEmpty()) return false;
+		try {
+			byte[] decoded = MoneroBase58.decode(address);
+			if (decoded.length != ADDRESS_LENGTH) return false;
+			if (decoded[0] != SUBADDRESS_NETWORK_BYTE) return false;
+			verifyChecksum(decoded);
+			return true;
+		} catch (RuntimeException e) {
+			return false;
+		}
+	}
+
+	/**
+	 * Converts an amount in XMR, as the user typed it, to atomic units.
+	 * Done with BigDecimal because a double cannot hold a decimal amount
+	 * exactly, and this is the number the recipient is asked to pay.
+	 *
+	 * @throws NumberFormatException if the amount is not a number, is
+	 * negative, is finer than an atomic unit, or is too large to represent.
+	 */
+	public static long xmrToAtomicUnits(String xmr) {
+		if (xmr == null) throw new NumberFormatException("No amount");
+		BigDecimal value = new BigDecimal(xmr.trim().replace(',', '.'));
+		if (value.signum() < 0) {
+			throw new NumberFormatException("Negative amount");
+		}
+		BigDecimal atomic = value.movePointRight(ATOMIC_UNIT_DECIMALS);
+		try {
+			// Rejects a fraction of an atomic unit rather than rounding it
+			// away without telling anyone
+			return atomic.toBigIntegerExact().longValueExact();
+		} catch (ArithmeticException e) {
+			throw new NumberFormatException("Amount is not representable");
+		}
+	}
+
+	/**
+	 * Formats an amount in atomic units as XMR, without a trailing run of
+	 * zeros and without exponent notation.
+	 */
+	public static String atomicUnitsToXmr(long atomicUnits) {
+		BigDecimal xmr = BigDecimal.valueOf(atomicUnits)
+				.movePointLeft(ATOMIC_UNIT_DECIMALS).stripTrailingZeros();
+		return xmr.toPlainString();
 	}
 
 	public static byte[] hexToBytes(String s) {

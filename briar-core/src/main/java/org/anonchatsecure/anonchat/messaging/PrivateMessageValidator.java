@@ -40,11 +40,14 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import static org.anonchatsecure.bramble.api.sync.SyncConstants.MAX_MESSAGE_BODY_LENGTH;
 import static org.anonchatsecure.bramble.api.transport.TransportConstants.MAX_CLOCK_DIFFERENCE;
+import static org.anonchatsecure.bramble.util.StringUtils.utf8IsTooLong;
 import static org.anonchatsecure.bramble.util.ValidationUtils.checkLength;
+import static org.anonchatsecure.bramble.util.ValidationUtils.checkRange;
 import static org.anonchatsecure.bramble.util.ValidationUtils.checkSize;
 import static org.anonchatsecure.anonchat.api.attachment.MediaConstants.MAX_CONTENT_TYPE_BYTES;
 import static org.anonchatsecure.anonchat.api.attachment.MediaConstants.MSG_KEY_CONTENT_TYPE;
@@ -53,11 +56,21 @@ import static org.anonchatsecure.anonchat.api.autodelete.AutoDeleteConstants.NO_
 import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_ATTACHMENTS_PER_MESSAGE;
 import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_LOCATION_LABEL_LENGTH;
 import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_LOCATION_ZOOM;
+import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_MONERO_ADDRESS_LENGTH;
+import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_MONERO_AMOUNT;
+import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_MONERO_CURRENCY_LENGTH;
+import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_MONERO_DESCRIPTION_LENGTH;
+import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_MONERO_EXTRAS;
+import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_MONERO_EXTRA_KEY_LENGTH;
+import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_MONERO_EXTRA_VALUE_LENGTH;
+import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_MONERO_RATE;
 import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_PRIVATE_MESSAGE_TEXT_LENGTH;
 import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MIN_LOCATION_ZOOM;
+import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MIN_MONERO_RATE;
 import static org.anonchatsecure.anonchat.client.MessageTrackerConstants.MSG_KEY_READ;
 import static org.anonchatsecure.anonchat.messaging.MessageTypes.ATTACHMENT;
 import static org.anonchatsecure.anonchat.messaging.MessageTypes.LOCATION;
+import static org.anonchatsecure.anonchat.messaging.MessageTypes.MONERO_REQUEST;
 import static org.anonchatsecure.anonchat.messaging.MessageTypes.PRIVATE_MESSAGE;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_ATTACHMENT_HEADERS;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_AUTO_DELETE_TIMER;
@@ -67,6 +80,13 @@ import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_L
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_LOCATION_LATITUDE;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_LOCATION_LONGITUDE;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_LOCATION_ZOOM;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MONERO_EXTRA_CURRENCY;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MONERO_EXTRA_RATE;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_MONERO_AMOUNT;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_MONERO_CURRENCY;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_MONERO_DESCRIPTION;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_MONERO_RATE;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_MONERO_SUBADDRESS;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_MSG_TYPE;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_TIMESTAMP;
 import static org.anonchatsecure.anonchat.util.ValidationUtils.validateAutoDeleteTimer;
@@ -119,6 +139,9 @@ class PrivateMessageValidator implements MessageValidator {
 				} else if (messageType == LOCATION) {
 					if (!reader.eof()) throw new FormatException();
 					context = validateLocation(m, list);
+				} else if (messageType == MONERO_REQUEST) {
+					if (!reader.eof()) throw new FormatException();
+					context = validateMoneroRequest(m, list);
 				} else {
 					throw new InvalidMessageException();
 				}
@@ -214,6 +237,86 @@ class PrivateMessageValidator implements MessageValidator {
 			meta.put(MSG_KEY_AUTO_DELETE_TIMER, timer);
 		}
 		return new BdfMessageContext(meta);
+	}
+
+	private BdfMessageContext validateMoneroRequest(Message m, BdfList body)
+			throws FormatException {
+		// Message type, subaddress, optional amount, optional description,
+		// extra fields, optional auto-delete timer
+		checkSize(body, 6);
+		String subaddress = body.getString(1);
+		// Only the length is checked here. An address that is the right
+		// length but unpayable is for the screen to report, whereas
+		// rejecting it would destroy the message and every reply under it.
+		checkLength(subaddress, 1, MAX_MONERO_ADDRESS_LENGTH);
+		Long amount = body.getOptionalLong(2);
+		checkRange(amount, 0, MAX_MONERO_AMOUNT);
+		String description = body.getOptionalString(3);
+		checkLength(description, 0, MAX_MONERO_DESCRIPTION_LENGTH);
+		BdfDictionary extras = body.getDictionary(4);
+		checkSize(extras, 0, MAX_MONERO_EXTRAS);
+		for (String key : extras.keySet()) {
+			checkLength(key, 1, MAX_MONERO_EXTRA_KEY_LENGTH);
+			Object value = extras.get(key);
+			if (value instanceof String) {
+				checkLength((String) value, 0,
+						MAX_MONERO_EXTRA_VALUE_LENGTH);
+			}
+		}
+		long timer = validateAutoDeleteTimer(body.getOptionalLong(5));
+		// Return the metadata
+		BdfDictionary meta = new BdfDictionary();
+		meta.put(MSG_KEY_TIMESTAMP, m.getTimestamp());
+		meta.put(MSG_KEY_LOCAL, false);
+		meta.put(MSG_KEY_READ, false);
+		meta.put(MSG_KEY_MSG_TYPE, MONERO_REQUEST);
+		meta.put(MSG_KEY_MONERO_SUBADDRESS, subaddress);
+		if (amount != null) meta.put(MSG_KEY_MONERO_AMOUNT, amount);
+		if (description != null) {
+			meta.put(MSG_KEY_MONERO_DESCRIPTION, description);
+		}
+		putMoneroExtras(extras, meta);
+		if (timer != NO_AUTO_DELETE_TIMER) {
+			meta.put(MSG_KEY_AUTO_DELETE_TIMER, timer);
+		}
+		return new BdfMessageContext(meta);
+	}
+
+	/**
+	 * Copies across the extra fields we understand. A key we do not know is
+	 * ignored rather than rejected, which is what lets a later release add
+	 * one without older peers invalidating the message; a key we do know but
+	 * cannot read is dropped for the same reason, since none of them is
+	 * worth destroying a message and its replies over.
+	 */
+	private void putMoneroExtras(BdfDictionary extras, BdfDictionary meta) {
+		Object currency = extras.get(MONERO_EXTRA_CURRENCY);
+		if (currency instanceof String && !((String) currency).isEmpty()
+				&& !utf8IsTooLong((String) currency,
+				MAX_MONERO_CURRENCY_LENGTH)) {
+			meta.put(MSG_KEY_MONERO_CURRENCY, currency);
+		}
+		Double rate = readNumber(extras.get(MONERO_EXTRA_RATE));
+		// Excludes NaN with it, since every comparison against NaN is false
+		if (rate != null && rate >= MIN_MONERO_RATE
+				&& rate <= MAX_MONERO_RATE) {
+			meta.put(MSG_KEY_MONERO_RATE, rate);
+		}
+	}
+
+	/**
+	 * Reads a number written as either a float or an integer, since a whole
+	 * number may be encoded either way.
+	 */
+	@Nullable
+	private static Double readNumber(@Nullable Object o) {
+		if (o instanceof Double) return (Double) o;
+		if (o instanceof Float) return ((Float) o).doubleValue();
+		if (o instanceof Long) return ((Long) o).doubleValue();
+		if (o instanceof Integer) return ((Integer) o).doubleValue();
+		if (o instanceof Short) return ((Short) o).doubleValue();
+		if (o instanceof Byte) return ((Byte) o).doubleValue();
+		return null;
 	}
 
 	/**

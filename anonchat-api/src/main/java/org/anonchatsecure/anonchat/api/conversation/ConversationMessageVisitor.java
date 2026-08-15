@@ -26,6 +26,7 @@ import org.anonchatsecure.anonchat.api.introduction.IntroductionRequest;
 import org.anonchatsecure.anonchat.api.introduction.IntroductionResponse;
 import org.anonchatsecure.anonchat.api.messaging.PrivateLocationHeader;
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessageHeader;
+import org.anonchatsecure.anonchat.api.messaging.PrivateMoneroRequestHeader;
 import org.anonchatsecure.anonchat.api.privategroup.invitation.GroupInvitationRequest;
 import org.anonchatsecure.anonchat.api.privategroup.invitation.GroupInvitationResponse;
 import org.briarproject.nullsafety.NotNullByDefault;
@@ -36,6 +37,8 @@ public interface ConversationMessageVisitor<T> {
 	T visitPrivateMessageHeader(PrivateMessageHeader h);
 
 	T visitPrivateLocationHeader(PrivateLocationHeader h);
+
+	T visitPrivateMoneroRequestHeader(PrivateMoneroRequestHeader h);
 
 	T visitBlogInvitationRequest(BlogInvitationRequest r);
 

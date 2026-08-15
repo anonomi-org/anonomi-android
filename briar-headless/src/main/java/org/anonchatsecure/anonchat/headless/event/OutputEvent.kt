@@ -9,6 +9,7 @@ import org.anonchatsecure.anonchat.api.introduction.IntroductionRequest
 import org.anonchatsecure.anonchat.api.introduction.IntroductionResponse
 import org.anonchatsecure.anonchat.api.messaging.PrivateLocationHeader
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessageHeader
+import org.anonchatsecure.anonchat.api.messaging.PrivateMoneroRequestHeader
 import org.anonchatsecure.anonchat.api.privategroup.invitation.GroupInvitationRequest
 import org.anonchatsecure.anonchat.api.privategroup.invitation.GroupInvitationResponse
 import org.anonchatsecure.anonchat.headless.json.JsonDict
@@ -27,8 +28,11 @@ internal fun ConversationMessageReceivedEvent<*>.output(text: String?): JsonDict
 }
 
 internal fun ConversationMessageReceivedEvent<*>.output() = when (messageHeader) {
-    // locations, which are private messages too and so come first
+    // locations and payment requests, which are private messages too and so
+    // come first
     is PrivateLocationHeader -> (messageHeader as PrivateLocationHeader).output(contactId)
+    is PrivateMoneroRequestHeader ->
+        (messageHeader as PrivateMoneroRequestHeader).output(contactId)
     // requests
     is ForumInvitationRequest -> (messageHeader as ForumInvitationRequest).output(contactId)
     is BlogInvitationRequest -> (messageHeader as BlogInvitationRequest).output(contactId)

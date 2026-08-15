@@ -32,6 +32,7 @@ import org.anonchatsecure.anonchat.api.messaging.MessagingManager
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessageFactory
 import org.anonchatsecure.anonchat.api.messaging.PrivateLocationHeader
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessageHeader
+import org.anonchatsecure.anonchat.api.messaging.PrivateMoneroRequestHeader
 import org.anonchatsecure.anonchat.api.privategroup.invitation.GroupInvitationRequest
 import org.anonchatsecure.anonchat.api.privategroup.invitation.GroupInvitationResponse
 import org.anonchatsecure.anonchat.headless.event.WebSocketController
@@ -121,7 +122,7 @@ constructor(
         when (e) {
             is ConversationMessageReceivedEvent<*> -> {
                 val h = e.messageHeader
-                if (h is PrivateLocationHeader) {
+                if (h is PrivateLocationHeader || h is PrivateMoneroRequestHeader) {
                     webSocketController.sendEvent(EVENT_CONVERSATION_MESSAGE, e.output())
                 } else if (h is PrivateMessageHeader) dbExecutor.execute {
                     val text = messagingManager.getMessageText(h.id)
@@ -158,6 +159,9 @@ private class JsonVisitor(
         h.output(contactId, messagingManager.getMessageText(h.id))
 
     override fun visitPrivateLocationHeader(h: PrivateLocationHeader) = h.output(contactId)
+
+    override fun visitPrivateMoneroRequestHeader(h: PrivateMoneroRequestHeader) =
+        h.output(contactId)
 
     override fun visitBlogInvitationRequest(r: BlogInvitationRequest) = r.output(contactId)
 

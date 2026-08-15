@@ -14,6 +14,7 @@ import org.anonchatsecure.anonchat.api.introduction.IntroductionRequest;
 import org.anonchatsecure.anonchat.api.introduction.IntroductionResponse;
 import org.anonchatsecure.anonchat.api.messaging.PrivateLocationHeader;
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessageHeader;
+import org.anonchatsecure.anonchat.api.messaging.PrivateMoneroRequestHeader;
 import org.anonchatsecure.anonchat.api.privategroup.invitation.GroupInvitationRequest;
 import org.anonchatsecure.anonchat.api.privategroup.invitation.GroupInvitationResponse;
 import org.briarproject.nullsafety.NotNullByDefault;
@@ -102,6 +103,15 @@ class ConversationVisitor implements
 				? R.layout.list_item_conversation_msg_out
 				: R.layout.list_item_conversation_msg_in;
 		return new ConversationLocationItem(layoutRes, h, contactName);
+	}
+
+	@Override
+	public ConversationItem visitPrivateMoneroRequestHeader(
+			PrivateMoneroRequestHeader h) {
+		int layoutRes = h.isLocal()
+				? R.layout.list_item_conversation_msg_out
+				: R.layout.list_item_conversation_msg_in;
+		return new ConversationMoneroRequestItem(layoutRes, h, contactName);
 	}
 
 	@Override

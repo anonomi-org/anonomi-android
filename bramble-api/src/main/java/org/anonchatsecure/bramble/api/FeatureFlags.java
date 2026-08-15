@@ -13,6 +13,8 @@ public interface FeatureFlags {
 
 	boolean shouldEnableLocationMessages();
 
+	boolean shouldEnableMoneroRequests();
+
 	boolean shouldEnablePrivateGroupsInCore();
 
 	boolean shouldEnableForumsInCore();

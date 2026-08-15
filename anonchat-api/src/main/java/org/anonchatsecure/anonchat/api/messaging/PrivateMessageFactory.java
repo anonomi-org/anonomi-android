@@ -62,4 +62,12 @@ public interface PrivateMessageFactory {
 	 */
 	PrivateMessage createLocationMessage(GroupId groupId, long timestamp,
 			Location location, long autoDeleteTimer) throws FormatException;
+
+	/**
+	 * Creates a message carrying a payment request, which requires the
+	 * contact to support client version 0.5 or higher.
+	 */
+	PrivateMessage createMoneroRequestMessage(GroupId groupId, long timestamp,
+			MoneroRequest request, long autoDeleteTimer)
+			throws FormatException;
 }

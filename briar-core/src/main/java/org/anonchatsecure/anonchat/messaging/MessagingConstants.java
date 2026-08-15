@@ -33,6 +33,20 @@ interface MessagingConstants {
 	String MSG_KEY_LOCATION_LATITUDE = "locationLatitude";
 	String MSG_KEY_LOCATION_LONGITUDE = "locationLongitude";
 	String MSG_KEY_LOCATION_ZOOM = "locationZoom";
+	String MSG_KEY_MONERO_SUBADDRESS = "moneroSubaddress";
+	String MSG_KEY_MONERO_AMOUNT = "moneroAmount";
+	String MSG_KEY_MONERO_DESCRIPTION = "moneroDescription";
+	String MSG_KEY_MONERO_CURRENCY = "moneroCurrency";
+	String MSG_KEY_MONERO_RATE = "moneroRate";
+
+	/**
+	 * Keys of the dictionary a payment request carries its extra fields in.
+	 * A later release may add keys here, but must not add an element to the
+	 * message body itself: the body's size is checked exactly, so an extra
+	 * element would be invalid to every release that shipped before it.
+	 */
+	String MONERO_EXTRA_CURRENCY = "currency";
+	String MONERO_EXTRA_RATE = "rate";
 
 	/**
 	 * How long to keep incoming attachments that aren't listed by any private

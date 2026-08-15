@@ -32,6 +32,7 @@ import static org.anonchatsecure.anonchat.api.autodelete.AutoDeleteConstants.NO_
 import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_IMAGES;
 import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_IMAGES_AUTO_DELETE;
 import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_IMAGES_AUTO_DELETE_LOCATION;
+import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_IMAGES_AUTO_DELETE_LOCATION_MONERO;
 import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_ONLY;
 
 @Immutable
@@ -45,6 +46,8 @@ public class PrivateMessage {
 	private final PrivateMessageFormat format;
 	@Nullable
 	private final Location location;
+	@Nullable
+	private final MoneroRequest moneroRequest;
 
 	/**
 	 * Constructor for private messages in the
@@ -57,6 +60,7 @@ public class PrivateMessage {
 		autoDeleteTimer = NO_AUTO_DELETE_TIMER;
 		format = TEXT_ONLY;
 		location = null;
+		moneroRequest = null;
 	}
 
 	/**
@@ -71,6 +75,7 @@ public class PrivateMessage {
 		autoDeleteTimer = NO_AUTO_DELETE_TIMER;
 		format = TEXT_IMAGES;
 		location = null;
+		moneroRequest = null;
 	}
 
 	/**
@@ -86,6 +91,7 @@ public class PrivateMessage {
 		this.autoDeleteTimer = autoDeleteTimer;
 		format = TEXT_IMAGES_AUTO_DELETE;
 		location = null;
+		moneroRequest = null;
 	}
 
 	/**
@@ -101,6 +107,23 @@ public class PrivateMessage {
 		this.autoDeleteTimer = autoDeleteTimer;
 		format = TEXT_IMAGES_AUTO_DELETE_LOCATION;
 		this.location = location;
+		moneroRequest = null;
+	}
+
+	/**
+	 * Constructor for payment requests, which need the
+	 * {@link PrivateMessageFormat#TEXT_IMAGES_AUTO_DELETE_LOCATION_MONERO
+	 * TEXT_IMAGES_AUTO_DELETE_LOCATION_MONERO} format.
+	 */
+	public PrivateMessage(Message message, MoneroRequest moneroRequest,
+			long autoDeleteTimer) {
+		this.message = message;
+		hasText = false;
+		attachmentHeaders = emptyList();
+		this.autoDeleteTimer = autoDeleteTimer;
+		format = TEXT_IMAGES_AUTO_DELETE_LOCATION_MONERO;
+		location = null;
+		this.moneroRequest = moneroRequest;
 	}
 
 	/**
@@ -110,6 +133,15 @@ public class PrivateMessage {
 	@Nullable
 	public Location getLocation() {
 		return location;
+	}
+
+	/**
+	 * Returns the payment request this message carries, or null if it
+	 * carries anything else.
+	 */
+	@Nullable
+	public MoneroRequest getMoneroRequest() {
+		return moneroRequest;
 	}
 
 	public Message getMessage() {

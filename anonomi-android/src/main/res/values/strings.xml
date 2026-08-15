@@ -25,6 +25,7 @@
     <string name="invalid_monero_address">Invalid Monero address format.</string>
     <string name="invalid_monero_private_view_key">Invalid Monero private view key format.</string>
     <string name="invalid_monero_minor_index_key">Invalid Monero Subaddress index.</string>
+    <string name="invalid_monero_amount">That amount cannot be sent. Enter it in XMR, to at most 12 decimal places.</string>
     <string name="missing_monero_addressor_view_key">Missing Monero address or private view key.</string>
     <string name="monero_primary_address_not_set">Primary address is not set.</string>
     <string name="monero_settings_unreadable">Your saved Monero settings could not be read. Please enter them again.</string>
@@ -50,6 +51,17 @@
     <string name="request_xmr_manual_index_hint">Enter # (1 - 1,000,000)</string>
     <string name="request_xmr_generate_qr_code">Generate QR Code</string>
     <string name="request_xmr_send">Send</string>
+    <!-- A Monero payment request, as shown in a conversation -->
+    <string name="monero_request_title">Monero request</string>
+    <string name="monero_request_amount">Amount: %1$s XMR</string>
+    <string name="monero_request_rate">Rate: %1$s</string>
+    <string name="monero_request_rate_currency">Rate: %1$s %2$s/XMR</string>
+    <string name="monero_request_fiat">Approximately %1$s</string>
+    <string name="monero_request_fiat_currency">Approximately %1$s %2$s</string>
+    <string name="monero_request_tap">Tap to show the code</string>
+    <string name="monero_request_copy_address">Copy address</string>
+    <string name="monero_request_address_copied">Address copied</string>
+    <string name="monero_request_unpayable">This request\'s address is not one that can be paid</string>
     <string name="error_generating_qr">Error generating QR Code</string>
     <string name="please_generate_qr_first">Please generate the QR Code first</string>
     <string name="error_saving_image">Error saving image</string>
@@ -882,6 +894,8 @@
     <string name="pref_private_view_key_hint">Enter your private view key (64 hex characters)</string>
     <string name="pref_monero_rate_title">Monero Rate</string>
     <string name="pref_monero_rate_hint">Enter the XMR rate (e.g., 120.50)</string>
+    <string name="pref_monero_currency_title">Rate currency</string>
+    <string name="pref_monero_currency_hint">The currency the rate is in (e.g., EUR)</string>
     <string name="pref_minor_index_title">SubAddress Index</string>
     <string name="pref_minor_index_hint">Enter the current index</string>
     <string name="pref_category_monero_wallet">Wallet</string>

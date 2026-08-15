@@ -45,7 +45,14 @@ public enum PrivateMessageFormat {
 	 * supports locations. Support for this format was added in client
 	 * version 0.4.
 	 */
-	TEXT_IMAGES_AUTO_DELETE_LOCATION;
+	TEXT_IMAGES_AUTO_DELETE_LOCATION,
+
+	/**
+	 * Fifth version of the private message format, which additionally
+	 * supports payment requests. Support for this format was added in
+	 * client version 0.5.
+	 */
+	TEXT_IMAGES_AUTO_DELETE_LOCATION_MONERO;
 
 	// The constants are ordered by the features they add, so a format supports
 	// a feature if it is not older than the one that introduced it. Comparing
@@ -61,5 +68,9 @@ public enum PrivateMessageFormat {
 
 	public boolean supportsLocation() {
 		return compareTo(TEXT_IMAGES_AUTO_DELETE_LOCATION) >= 0;
+	}
+
+	public boolean supportsMoneroRequest() {
+		return compareTo(TEXT_IMAGES_AUTO_DELETE_LOCATION_MONERO) >= 0;
 	}
 }

@@ -1,14 +1,18 @@
 package org.anonomi.android.conversation;
 
 import android.annotation.SuppressLint;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.transition.Slide;
 import android.transition.Transition;
+import android.util.DisplayMetrics;
 import android.util.SparseArray;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -85,12 +89,16 @@ import org.anonchatsecure.anonchat.api.forum.ForumSharingManager;
 import org.anonchatsecure.anonchat.api.introduction.IntroductionManager;
 import org.anonchatsecure.anonchat.api.messaging.MessagingManager;
 import org.anonchatsecure.anonchat.api.messaging.Location;
+import org.anonchatsecure.anonchat.api.messaging.MoneroRequest;
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat;
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessageHeader;
 import org.anonchatsecure.anonchat.api.privategroup.invitation.GroupInvitationManager;
 import org.briarproject.nullsafety.MethodsNotNullByDefault;
 import org.briarproject.nullsafety.ParametersNotNullByDefault;
 import org.anonomi.android.map.MapViewActivity;
+import org.anonomi.android.qrcode.QrCodeUtils;
+import org.anonomi.android.xmr.AnonMoneroUtils;
+import org.anonomi.android.xmr.MoneroPaymentUri;
 
 import androidx.activity.result.contract.ActivityResultContracts;
 
@@ -1668,6 +1676,47 @@ public class ConversationActivity extends BriarActivity
 		intent.putExtra(MapViewActivity.EXTRA_LONGITUDE, data.longitude);
 		intent.putExtra(MapViewActivity.EXTRA_ZOOM, data.zoom);
 		startActivity(intent);
+	}
+
+	/**
+	 * Shows the code for a request that arrived as its own message. The code
+	 * is drawn here from the fields rather than sent as an image, so the
+	 * request costs a wallet address rather than a picture of one.
+	 */
+	@Override
+	public void onMoneroRequestClicked(MoneroRequest request) {
+		String subaddress = request.getSubaddress();
+		if (!AnonMoneroUtils.isValidMoneroSubaddress(subaddress)) {
+			Toast.makeText(this, R.string.monero_request_unpayable,
+					Toast.LENGTH_LONG).show();
+			return;
+		}
+		String uri = MoneroPaymentUri.build(subaddress, request.getAmount(),
+				request.getDescription());
+		DisplayMetrics dm = getResources().getDisplayMetrics();
+		int edge = (int) (Math.min(dm.widthPixels, dm.heightPixels) * 0.8);
+		Bitmap qr = QrCodeUtils.createQrCode(edge, uri);
+
+		ImageView image = new ImageView(this);
+		image.setImageBitmap(qr);
+		image.setAdjustViewBounds(true);
+		MaterialAlertDialogBuilder builder =
+				new MaterialAlertDialogBuilder(this, R.style.AnonDialogTheme);
+		builder.setTitle(getString(R.string.monero_request_title));
+		builder.setView(image);
+		builder.setNegativeButton(R.string.monero_request_copy_address,
+				(dialog, which) -> {
+					ClipboardManager cm = (ClipboardManager)
+							getSystemService(CLIPBOARD_SERVICE);
+					cm.setPrimaryClip(ClipData.newPlainText(
+							getString(R.string.monero_request_title),
+							subaddress));
+					Toast.makeText(this,
+							R.string.monero_request_address_copied,
+							Toast.LENGTH_SHORT).show();
+				});
+		builder.setPositiveButton(R.string.cancel, null);
+		builder.show();
 	}
 
 	// ---- Walkie-Talkie ----

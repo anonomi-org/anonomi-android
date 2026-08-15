@@ -23,6 +23,7 @@ import org.junit.Test;
 import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_IMAGES;
 import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_IMAGES_AUTO_DELETE;
 import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_IMAGES_AUTO_DELETE_LOCATION;
+import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_IMAGES_AUTO_DELETE_LOCATION_MONERO;
 import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_ONLY;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -49,10 +50,21 @@ public class PrivateMessageFormatTest {
 	}
 
 	@Test
-	public void testTextImagesAutoDeleteLocationSupportsAll() {
+	public void testTextImagesAutoDeleteLocationSupportsAllButMonero() {
 		assertTrue(TEXT_IMAGES_AUTO_DELETE_LOCATION.supportsImages());
 		assertTrue(TEXT_IMAGES_AUTO_DELETE_LOCATION.supportsAutoDelete());
 		assertTrue(TEXT_IMAGES_AUTO_DELETE_LOCATION.supportsLocation());
+		assertFalse(TEXT_IMAGES_AUTO_DELETE_LOCATION.supportsMoneroRequest());
+	}
+
+	@Test
+	public void testTextImagesAutoDeleteLocationMoneroSupportsAll() {
+		assertTrue(TEXT_IMAGES_AUTO_DELETE_LOCATION_MONERO.supportsImages());
+		assertTrue(
+				TEXT_IMAGES_AUTO_DELETE_LOCATION_MONERO.supportsAutoDelete());
+		assertTrue(TEXT_IMAGES_AUTO_DELETE_LOCATION_MONERO.supportsLocation());
+		assertTrue(TEXT_IMAGES_AUTO_DELETE_LOCATION_MONERO
+				.supportsMoneroRequest());
 	}
 
 	/**
@@ -69,6 +81,9 @@ public class PrivateMessageFormatTest {
 			}
 			if (f.compareTo(TEXT_IMAGES_AUTO_DELETE_LOCATION) >= 0) {
 				assertTrue(f.supportsLocation());
+			}
+			if (f.compareTo(TEXT_IMAGES_AUTO_DELETE_LOCATION_MONERO) >= 0) {
+				assertTrue(f.supportsMoneroRequest());
 			}
 		}
 	}

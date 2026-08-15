@@ -7,8 +7,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.anonomi.R;
+import org.anonomi.android.xmr.AnonMoneroUtils;
 import org.anonchatsecure.anonchat.api.messaging.Location;
+import org.anonchatsecure.anonchat.api.messaging.MoneroRequest;
 import org.briarproject.nullsafety.NotNullByDefault;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import androidx.annotation.CallSuper;
 import androidx.annotation.Nullable;
@@ -70,6 +75,10 @@ abstract class ConversationItemViewHolder extends ViewHolder {
 
 		if (item instanceof ConversationLocationItem && text != null) {
 			bindLocation(((ConversationLocationItem) item).getLocation());
+		} else if (item instanceof ConversationMoneroRequestItem
+				&& text != null) {
+			bindMoneroRequest(
+					((ConversationMoneroRequestItem) item).getRequest());
 		} else if (messageTextRaw != null && text != null) {
 			String trimmedText = trim(messageTextRaw);
 
@@ -152,6 +161,54 @@ abstract class ConversationItemViewHolder extends ViewHolder {
 				"\n   " + text.getContext().getString(
 				R.string.tap_to_view_on_map));
 		text.setOnClickListener(v -> listener.onMapMessageClicked(data));
+	}
+
+	/**
+	 * Shows what is being asked for. The rate is shown as the sender quoted
+	 * it, so that an amount priced days ago can be told from a current one.
+	 */
+	private void bindMoneroRequest(MoneroRequest request) {
+		Context ctx = text.getContext();
+		StringBuilder s = new StringBuilder();
+		s.append("🪙 ")
+				.append(ctx.getString(R.string.monero_request_title));
+		Long amount = request.getAmount();
+		String xmr = amount == null
+				? null : AnonMoneroUtils.atomicUnitsToXmr(amount);
+		if (xmr != null) {
+			s.append('\n').append(ctx.getString(
+					R.string.monero_request_amount, xmr));
+		}
+		Double rate = request.getRate();
+		String currency = request.getCurrency();
+		if (rate != null) {
+			String shown = formatDecimal(rate);
+			s.append('\n').append(currency == null
+					? ctx.getString(R.string.monero_request_rate, shown)
+					: ctx.getString(R.string.monero_request_rate_currency,
+							shown, currency));
+		}
+		if (rate != null && amount != null) {
+			String fiat = new BigDecimal(xmr)
+					.multiply(BigDecimal.valueOf(rate))
+					.setScale(2, RoundingMode.HALF_UP).toPlainString();
+			s.append('\n').append(currency == null
+					? ctx.getString(R.string.monero_request_fiat, fiat)
+					: ctx.getString(R.string.monero_request_fiat_currency,
+							fiat, currency));
+		}
+		String description = request.getDescription();
+		if (description != null && !description.isEmpty()) {
+			s.append('\n').append(description);
+		}
+		s.append('\n').append(ctx.getString(R.string.monero_request_tap));
+		text.setText(s.toString());
+		text.setOnClickListener(
+				v -> listener.onMoneroRequestClicked(request));
+	}
+
+	private static String formatDecimal(double value) {
+		return String.format(java.util.Locale.getDefault(), "%.2f", value);
 	}
 
 	private boolean isMapMessage(String text) {

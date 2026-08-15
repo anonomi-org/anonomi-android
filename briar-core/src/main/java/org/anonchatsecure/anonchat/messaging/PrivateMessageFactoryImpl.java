@@ -20,11 +20,13 @@ package org.anonchatsecure.anonchat.messaging;
 
 import org.anonchatsecure.bramble.api.FormatException;
 import org.anonchatsecure.bramble.api.client.ClientHelper;
+import org.anonchatsecure.bramble.api.data.BdfDictionary;
 import org.anonchatsecure.bramble.api.data.BdfList;
 import org.anonchatsecure.bramble.api.sync.GroupId;
 import org.anonchatsecure.bramble.api.sync.Message;
 import org.anonchatsecure.anonchat.api.attachment.AttachmentHeader;
 import org.anonchatsecure.anonchat.api.messaging.Location;
+import org.anonchatsecure.anonchat.api.messaging.MoneroRequest;
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessage;
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessageFactory;
 import org.briarproject.nullsafety.NotNullByDefault;
@@ -38,9 +40,17 @@ import javax.inject.Inject;
 import static org.anonchatsecure.bramble.util.StringUtils.utf8IsTooLong;
 import static org.anonchatsecure.anonchat.api.autodelete.AutoDeleteConstants.NO_AUTO_DELETE_TIMER;
 import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_LOCATION_LABEL_LENGTH;
+import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_MONERO_ADDRESS_LENGTH;
+import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_MONERO_CURRENCY_LENGTH;
+import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_MONERO_DESCRIPTION_LENGTH;
+import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_MONERO_RATE;
 import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_PRIVATE_MESSAGE_TEXT_LENGTH;
+import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MIN_MONERO_RATE;
 import static org.anonchatsecure.anonchat.messaging.MessageTypes.LOCATION;
+import static org.anonchatsecure.anonchat.messaging.MessageTypes.MONERO_REQUEST;
 import static org.anonchatsecure.anonchat.messaging.MessageTypes.PRIVATE_MESSAGE;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MONERO_EXTRA_CURRENCY;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MONERO_EXTRA_RATE;
 
 @Immutable
 @NotNullByDefault
@@ -105,6 +115,49 @@ class PrivateMessageFactoryImpl implements PrivateMessageFactory {
 				location.getZoom(), timer);
 		Message m = clientHelper.createMessage(groupId, timestamp, body);
 		return new PrivateMessage(m, location, autoDeleteTimer);
+	}
+
+	@Override
+	public PrivateMessage createMoneroRequestMessage(GroupId groupId,
+			long timestamp, MoneroRequest request, long autoDeleteTimer)
+			throws FormatException {
+		String subaddress = request.getSubaddress();
+		if (subaddress.isEmpty()
+				|| utf8IsTooLong(subaddress, MAX_MONERO_ADDRESS_LENGTH)) {
+			throw new IllegalArgumentException();
+		}
+		Long amount = request.getAmount();
+		if (amount != null && amount < 0) {
+			throw new IllegalArgumentException();
+		}
+		String description = request.getDescription();
+		if (description != null && utf8IsTooLong(description,
+				MAX_MONERO_DESCRIPTION_LENGTH)) {
+			throw new IllegalArgumentException();
+		}
+		String currency = request.getCurrency();
+		if (currency != null
+				&& utf8IsTooLong(currency, MAX_MONERO_CURRENCY_LENGTH)) {
+			throw new IllegalArgumentException();
+		}
+		Double rate = request.getRate();
+		// Excludes NaN with it, since every comparison against NaN is false
+		if (rate != null && !(rate >= MIN_MONERO_RATE
+				&& rate <= MAX_MONERO_RATE)) {
+			throw new IllegalArgumentException();
+		}
+		// Serialise the message
+		BdfDictionary extras = new BdfDictionary();
+		if (currency != null && !currency.isEmpty()) {
+			extras.put(MONERO_EXTRA_CURRENCY, currency);
+		}
+		if (rate != null) extras.put(MONERO_EXTRA_RATE, rate);
+		Long timer = autoDeleteTimer == NO_AUTO_DELETE_TIMER ?
+				null : autoDeleteTimer;
+		BdfList body = BdfList.of(MONERO_REQUEST, subaddress, amount,
+				description, extras, timer);
+		Message m = clientHelper.createMessage(groupId, timestamp, body);
+		return new PrivateMessage(m, request, autoDeleteTimer);
 	}
 
 	private void validateTextAndAttachmentHeaders(@Nullable String text,
