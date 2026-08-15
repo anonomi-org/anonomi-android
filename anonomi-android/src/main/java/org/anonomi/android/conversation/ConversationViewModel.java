@@ -77,8 +77,6 @@ import static org.anonomi.android.view.TextSendController.SendState.SENT;
 import static org.anonomi.android.view.TextSendController.SendState.UNEXPECTED_TIMER;
 import static org.anonchatsecure.anonchat.api.autodelete.AutoDeleteConstants.NO_AUTO_DELETE_TIMER;
 import static org.anonchatsecure.anonchat.api.autodelete.AutoDeleteManager.DEFAULT_TIMER_DURATION;
-import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_IMAGES;
-import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_ONLY;
 
 @NotNullByDefault
 public class ConversationViewModel extends DbViewModel
@@ -330,7 +328,7 @@ public class ConversationViewModel extends DbViewModel
 
 		// we only show one onboarding dialog at a time
 		Settings settings = settingsManager.getSettings(SETTINGS_NAMESPACE);
-		if (format != TEXT_ONLY &&
+		if (format.supportsImages() &&
 				settings.getBoolean(SHOW_ONBOARDING_IMAGE, true)) {
 			onOnboardingShown(SHOW_ONBOARDING_IMAGE);
 			showImageOnboarding.postEvent(true);
@@ -451,10 +449,10 @@ public class ConversationViewModel extends DbViewModel
 		long timestamp = conversationManager
 				.getTimestampForOutgoingMessage(txn, requireNonNull(contactId));
 		try {
-			if (format == TEXT_ONLY) {
+			if (!format.supportsImages()) {
 				return privateMessageFactory.createLegacyPrivateMessage(
 						groupId, timestamp, requireNonNull(text));
-			} else if (format == TEXT_IMAGES) {
+			} else if (!format.supportsAutoDelete()) {
 				return privateMessageFactory.createPrivateMessage(groupId,
 						timestamp, text, headers);
 			} else {

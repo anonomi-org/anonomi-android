@@ -322,7 +322,7 @@ class MessagingManagerImpl implements MessagingManager, IncomingMessageHook,
 			meta.put(MSG_KEY_TIMESTAMP, m.getMessage().getTimestamp());
 			meta.put(MSG_KEY_LOCAL, true);
 			meta.put(MSG_KEY_READ, true);
-			if (m.getFormat() != TEXT_ONLY) {
+			if (m.getFormat().supportsImages()) {
 				meta.put(MSG_KEY_MSG_TYPE, PRIVATE_MESSAGE);
 				meta.put(MSG_KEY_HAS_TEXT, m.hasText());
 				BdfList headers = new BdfList();
@@ -331,7 +331,7 @@ class MessagingManagerImpl implements MessagingManager, IncomingMessageHook,
 							BdfList.of(a.getMessageId(), a.getContentType()));
 				}
 				meta.put(MSG_KEY_ATTACHMENT_HEADERS, headers);
-				if (m.getFormat() == TEXT_IMAGES_AUTO_DELETE
+				if (m.getFormat().supportsAutoDelete()
 						&& timer != NO_AUTO_DELETE_TIMER) {
 					meta.put(MSG_KEY_AUTO_DELETE_TIMER, timer);
 				}

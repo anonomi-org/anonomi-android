@@ -186,8 +186,6 @@ import static org.anonomi.android.util.UiUtils.observeOnce;
 import static org.anonomi.android.view.AuthorView.setAvatar;
 import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_ATTACHMENTS_PER_MESSAGE;
 import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_PRIVATE_MESSAGE_TEXT_LENGTH;
-import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_IMAGES_AUTO_DELETE;
-import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_ONLY;
 
 
 @MethodsNotNullByDefault
@@ -477,7 +475,7 @@ public class ConversationActivity extends BriarActivity
 			sendController = new TextAttachmentController(textInputView,
 					imagePreview, this, viewModel);
 			observeOnce(viewModel.getPrivateMessageFormat(), this, format -> {
-				if (format != TEXT_ONLY) {
+				if (format.supportsImages()) {
 					// TODO: remove cast when removing feature flag
 					((TextAttachmentController) sendController)
 							.setImagesSupported();
@@ -805,7 +803,7 @@ public class ConversationActivity extends BriarActivity
 			item.setVisible(true);
 			// Enable menu item only if contact supports auto-delete
 			viewModel.getPrivateMessageFormat().observe(this, format ->
-					item.setEnabled(format == TEXT_IMAGES_AUTO_DELETE));
+					item.setEnabled(format.supportsAutoDelete()));
 		}
 		return super.onCreateOptionsMenu(menu);
 	}

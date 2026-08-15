@@ -38,5 +38,17 @@ public enum PrivateMessageFormat {
 	 * attachments and auto-deletion. Support for this format was added
 	 * in client version 0.3.
 	 */
-	TEXT_IMAGES_AUTO_DELETE
+	TEXT_IMAGES_AUTO_DELETE;
+
+	// The constants are ordered by the features they add, so a format supports
+	// a feature if it is not older than the one that introduced it. Comparing
+	// with == instead would drop a feature each time a newer format is added.
+
+	public boolean supportsImages() {
+		return compareTo(TEXT_IMAGES) >= 0;
+	}
+
+	public boolean supportsAutoDelete() {
+		return compareTo(TEXT_IMAGES_AUTO_DELETE) >= 0;
+	}
 }
