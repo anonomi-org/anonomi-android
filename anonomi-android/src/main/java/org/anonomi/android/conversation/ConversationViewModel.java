@@ -480,6 +480,12 @@ public class ConversationViewModel extends DbViewModel
 			} catch (DbException e) {
 				logException(LOG, WARNING, e);
 				liveData.postValue(ERROR);
+			} catch (IllegalArgumentException e) {
+				// Thrown for a label that is too long, which the input can
+				// still produce since it is capped in characters and the
+				// limit is in bytes
+				logException(LOG, WARNING, e);
+				liveData.postValue(ERROR);
 			}
 		});
 		return liveData;
