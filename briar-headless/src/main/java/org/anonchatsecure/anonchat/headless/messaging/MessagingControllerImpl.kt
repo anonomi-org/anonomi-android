@@ -121,7 +121,9 @@ constructor(
         when (e) {
             is ConversationMessageReceivedEvent<*> -> {
                 val h = e.messageHeader
-                if (h is PrivateMessageHeader) dbExecutor.execute {
+                if (h is PrivateLocationHeader) {
+                    webSocketController.sendEvent(EVENT_CONVERSATION_MESSAGE, e.output())
+                } else if (h is PrivateMessageHeader) dbExecutor.execute {
                     val text = messagingManager.getMessageText(h.id)
                     webSocketController.sendEvent(EVENT_CONVERSATION_MESSAGE, e.output(text))
                 } else {
