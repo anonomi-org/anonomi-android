@@ -52,6 +52,15 @@
 			app:useSimpleSummaryProvider="true" />
 
 		<EditTextPreference
+			android:key="pref_key_monero_currency"
+			android:title="@string/pref_monero_currency_title"
+			android:hint="@string/pref_monero_currency_hint"
+			android:inputType="textCapCharacters"
+			app:iconSpaceReserved="false"
+			app:singleLineTitle="false"
+			app:useSimpleSummaryProvider="true" />
+
+		<EditTextPreference
 			android:key="pref_key_minor_index_key"
 			android:persistent="false"
 			android:title="@string/pref_minor_index_title"

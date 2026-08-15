@@ -31,18 +31,25 @@ import org.anonomi.android.activity.BriarActivity;
 import org.anonchatsecure.bramble.api.contact.ContactId;
 import org.anonchatsecure.bramble.api.sync.GroupId;
 import org.anonchatsecure.anonchat.api.messaging.MessagingManager;
+import org.anonchatsecure.anonchat.api.messaging.MoneroRequest;
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessage;
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessageFactory;
+import org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat;
 import org.anonchatsecure.anonchat.api.attachment.AttachmentHeader;
 
 import org.anonomi.android.util.SecurePrefsManager;
 import org.anonomi.android.util.SecureValue;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
 import static org.anonomi.android.settings.MoneroSettingsFragment.PREF_KEY_MINOR_INDEX;
+import static org.anonomi.android.settings.MoneroSettingsFragment.PREF_KEY_MONERO_CURRENCY;
 import static org.anonomi.android.settings.MoneroSettingsFragment.PREF_KEY_PRIMARY_ADDRESS;
 import static org.anonomi.android.settings.MoneroSettingsFragment.PREF_KEY_PRIVATE_VIEW_KEY;
+import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_MONERO_CURRENCY_LENGTH;
+import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_MONERO_RATE;
+import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MIN_MONERO_RATE;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -538,54 +545,9 @@ public class RequestXmrActivity extends BriarActivity {
 				return;
 			}
 
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			qrBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos); // Change to PNG
-			byte[] qrBytes = baos.toByteArray();
-
 			long timestamp = System.currentTimeMillis();
 			GroupId groupId = messagingManager.getConversationId(contactId);
 
-			AttachmentHeader attachmentHeader = messagingManager.addLocalAttachment(
-					groupId, timestamp, "image/png", new ByteArrayInputStream(qrBytes) // NOTE: change MIME type!
-			);
-
-			// Build the message
-
-			String amount = amountEditText.getText().toString();
-			String rateStr = rateEditText.getText().toString();
-			String optionalMessage = optionalMessageEditText.getText().toString().trim();
-
-			// Safety: limit optional message to 100 characters
-			if (optionalMessage.length() > 100) {
-				optionalMessage = optionalMessage.substring(0, 100);
-			}
-
-			StringBuilder message = new StringBuilder();
-			message.append("🪙 Monero Request:\n")
-					.append("Address: ").append(shortenAddress(lastGeneratedSubaddress));
-
-			if (!amount.isEmpty()) {
-				message.append("\nAmount: ").append(amount).append(" XMR");
-			}
-
-			if (!rateStr.isEmpty()) {
-				message.append("\nRate: ").append(rateStr);
-			}
-
-			if (!amount.isEmpty() && !rateStr.isEmpty()) {
-				try {
-					double amountValue = Double.parseDouble(amount);
-					double rateValue = Double.parseDouble(rateStr);
-					double fiatValue = amountValue * rateValue;
-					message.append("\nFiat: ").append(String.format("%.2f", fiatValue));
-				} catch (NumberFormatException ignored) {}
-			}
-
-			if (!optionalMessage.isEmpty()) {
-				message.append("\n").append(optionalMessage);
-			}
-
-			// Create and send the message
 			long autoDeleteTimer = 0;
 			try {
 				autoDeleteTimer = transactionManager.transactionWithResult(true, txn ->
@@ -595,11 +557,16 @@ public class RequestXmrActivity extends BriarActivity {
 				e.printStackTrace(); // fallback to zero
 			}
 
-			PrivateMessage pm = privateMessageFactory.createPrivateMessage(
-					groupId, timestamp, message.toString(), Collections.singletonList(attachmentHeader), autoDeleteTimer
-			);
-
-			messagingManager.addLocalMessage(pm);
+			PrivateMessageFormat format = transactionManager
+					.transactionWithResult(true, txn -> messagingManager
+							.getContactMessageFormat(txn, contactId));
+			if (format.supportsMoneroRequest()) {
+				if (!sendTypedRequest(groupId, timestamp, autoDeleteTimer)) {
+					return;
+				}
+			} else {
+				sendTextRequest(groupId, timestamp, autoDeleteTimer);
+			}
 
 			// The index was already persisted when the subaddress was generated
 
@@ -610,6 +577,128 @@ public class RequestXmrActivity extends BriarActivity {
 			e.printStackTrace();
 			Toast.makeText(this, R.string.error_creating_message, Toast.LENGTH_SHORT).show();
 		}
+	}
+
+	/**
+	 * Sends the request as its own message, where the address arrives as a
+	 * value the contact's app can read rather than only as an image.
+	 *
+	 * @return false if the amount could not be sent as typed, having already
+	 * said so.
+	 */
+	private boolean sendTypedRequest(GroupId groupId, long timestamp,
+			long autoDeleteTimer) throws Exception {
+		String amountStr = amountEditText.getText().toString().trim();
+		Long amount = null;
+		if (!amountStr.isEmpty()) {
+			try {
+				amount = AnonMoneroUtils.xmrToAtomicUnits(amountStr);
+			} catch (NumberFormatException e) {
+				Toast.makeText(this, R.string.invalid_monero_amount,
+						Toast.LENGTH_SHORT).show();
+				return false;
+			}
+		}
+		String description = optionalMessageEditText.getText().toString().trim();
+		if (description.isEmpty()) description = null;
+		MoneroRequest request = new MoneroRequest(lastGeneratedSubaddress,
+				amount, description, readCurrency(), readRate());
+		PrivateMessage pm = privateMessageFactory.createMoneroRequestMessage(
+				groupId, timestamp, request, autoDeleteTimer);
+		messagingManager.addLocalMessage(pm);
+		return true;
+	}
+
+	/**
+	 * Sends the request as text with the code attached, for a contact on a
+	 * release that cannot read one of its own. Taking the feature away from
+	 * them instead would be a worse trade than the shortened address.
+	 */
+	private void sendTextRequest(GroupId groupId, long timestamp,
+			long autoDeleteTimer) throws Exception {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		qrBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+		byte[] qrBytes = baos.toByteArray();
+
+		AttachmentHeader attachmentHeader = messagingManager.addLocalAttachment(
+				groupId, timestamp, "image/png", new ByteArrayInputStream(qrBytes)
+		);
+
+		String amount = amountEditText.getText().toString();
+		String rateStr = rateEditText.getText().toString();
+		String optionalMessage = optionalMessageEditText.getText().toString().trim();
+
+		// Safety: limit optional message to 100 characters
+		if (optionalMessage.length() > 100) {
+			optionalMessage = optionalMessage.substring(0, 100);
+		}
+
+		StringBuilder message = new StringBuilder();
+		message.append("🪙 Monero Request:\n")
+				.append("Address: ").append(shortenAddress(lastGeneratedSubaddress));
+
+		if (!amount.isEmpty()) {
+			message.append("\nAmount: ").append(amount).append(" XMR");
+		}
+
+		if (!rateStr.isEmpty()) {
+			message.append("\nRate: ").append(rateStr);
+		}
+
+		if (!amount.isEmpty() && !rateStr.isEmpty()) {
+			try {
+				double amountValue = Double.parseDouble(amount);
+				double rateValue = Double.parseDouble(rateStr);
+				double fiatValue = amountValue * rateValue;
+				message.append("\nFiat: ").append(String.format("%.2f", fiatValue));
+			} catch (NumberFormatException ignored) {}
+		}
+
+		if (!optionalMessage.isEmpty()) {
+			message.append("\n").append(optionalMessage);
+		}
+
+		PrivateMessage pm = privateMessageFactory.createPrivateMessage(
+				groupId, timestamp, message.toString(),
+				Collections.singletonList(attachmentHeader), autoDeleteTimer
+		);
+
+		messagingManager.addLocalMessage(pm);
+	}
+
+	/**
+	 * Returns the rate the sender priced the amount at, or null if they did
+	 * not. A rate of zero is read as "not quoted": the field starts at zero
+	 * when no rate has been set, and quoting zero would say the amount was
+	 * priced when it was not.
+	 */
+	@Nullable
+	private Double readRate() {
+		String rateStr = rateEditText.getText().toString().trim()
+				.replace(',', '.');
+		if (rateStr.isEmpty()) return null;
+		try {
+			double rate = Double.parseDouble(rateStr);
+			if (rate == 0) return null;
+			// Excludes NaN with it, since every comparison against NaN
+			// is false
+			if (!(rate >= MIN_MONERO_RATE && rate <= MAX_MONERO_RATE)) {
+				return null;
+			}
+			return rate;
+		} catch (NumberFormatException e) {
+			return null;
+		}
+	}
+
+	@Nullable
+	private String readCurrency() {
+		SharedPreferences prefs =
+				PreferenceManager.getDefaultSharedPreferences(this);
+		String currency = prefs.getString(PREF_KEY_MONERO_CURRENCY, "").trim();
+		if (currency.isEmpty()) return null;
+		return currency.length() > MAX_MONERO_CURRENCY_LENGTH
+				? currency.substring(0, MAX_MONERO_CURRENCY_LENGTH) : currency;
 	}
 
 	private String shortenAddress(String address) {

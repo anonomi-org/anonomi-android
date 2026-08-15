@@ -25,6 +25,8 @@ public class MoneroSettingsFragment extends PreferenceFragmentCompat {
 	public static final String PREF_KEY_PRIMARY_ADDRESS = "pref_key_primary_address";
 	public static final String PREF_KEY_PRIVATE_VIEW_KEY = "pref_key_private_view_key";
 	public static final String PREF_KEY_MONERO_RATE = "pref_key_monero_rate";
+	public static final String PREF_KEY_MONERO_CURRENCY =
+			"pref_key_monero_currency";
 
 	public static final String PREF_KEY_MINOR_INDEX = "pref_key_minor_index_key";
 
