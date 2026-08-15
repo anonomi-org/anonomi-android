@@ -207,8 +207,14 @@ abstract class ConversationItemViewHolder extends ViewHolder {
 				v -> listener.onMoneroRequestClicked(request));
 	}
 
+	/**
+	 * Formats with a fixed separator rather than the reader's own, so that
+	 * the three figures in a request agree. The amount cannot use the
+	 * reader's: it is the same string a wallet reads out of the URI, where
+	 * a decimal comma would not be understood.
+	 */
 	private static String formatDecimal(double value) {
-		return String.format(java.util.Locale.getDefault(), "%.2f", value);
+		return String.format(java.util.Locale.US, "%.2f", value);
 	}
 
 	private boolean isMapMessage(String text) {
