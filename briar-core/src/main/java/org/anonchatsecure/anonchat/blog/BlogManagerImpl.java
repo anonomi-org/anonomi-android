@@ -759,17 +759,23 @@ class BlogManagerImpl extends BdfIncomingMessageHook implements BlogManager,
 		boolean hasImage = meta.containsKey(KEY_HAS_IMAGE) &&
 				meta.getBoolean(KEY_HAS_IMAGE);
 
+		// A message that has not been wrapped is its own original, and a
+		// locally added post carries no original ID in its metadata.
+		MessageId originalId = (type == POST || type == COMMENT) ? id
+				: new MessageId(meta.getRaw(KEY_ORIGINAL_MSG_ID));
+
 		if (type == COMMENT || type == WRAPPED_COMMENT) {
 			String comment = meta.getOptionalString(KEY_COMMENT);
 			MessageId parentId = new MessageId(meta.getRaw(KEY_PARENT_MSG_ID));
 			BlogPostHeader parent =
 					getPostHeaderFromMetadata(txn, groupId, parentId);
 			return new BlogCommentHeader(type, groupId, comment, parent, id,
-					timestamp, timeReceived, author, authorInfo, read);
+					timestamp, timeReceived, author, authorInfo, read,
+					originalId);
 		} else {
 			return new BlogPostHeader(type, groupId, id, null, timestamp,
 					timeReceived, author, authorInfo, isFeedPost, read,
-					hasImage);
+					hasImage, originalId);
 		}
 	}
 

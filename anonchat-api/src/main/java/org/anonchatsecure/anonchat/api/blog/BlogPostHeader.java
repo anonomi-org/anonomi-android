@@ -37,6 +37,7 @@ public class BlogPostHeader extends PostHeader {
 	private final long timeReceived;
 	private final boolean rssFeed;
 	private final boolean hasImage;
+	private final MessageId originalId;
 
 	public BlogPostHeader(MessageType type, GroupId groupId, MessageId id,
 			@Nullable MessageId parentId, long timestamp, long timeReceived,
@@ -46,16 +47,26 @@ public class BlogPostHeader extends PostHeader {
 				authorInfo, rssFeed, read, false);
 	}
 
+	/** Treats the message as its own original, so not for a wrapped copy. */
 	public BlogPostHeader(MessageType type, GroupId groupId, MessageId id,
 			@Nullable MessageId parentId, long timestamp, long timeReceived,
 			Author author, AuthorInfo authorInfo, boolean rssFeed,
 			boolean read, boolean hasImage) {
+		this(type, groupId, id, parentId, timestamp, timeReceived, author,
+				authorInfo, rssFeed, read, hasImage, id);
+	}
+
+	public BlogPostHeader(MessageType type, GroupId groupId, MessageId id,
+			@Nullable MessageId parentId, long timestamp, long timeReceived,
+			Author author, AuthorInfo authorInfo, boolean rssFeed,
+			boolean read, boolean hasImage, MessageId originalId) {
 		super(id, parentId, timestamp, author, authorInfo, read);
 		this.type = type;
 		this.groupId = groupId;
 		this.timeReceived = timeReceived;
 		this.rssFeed = rssFeed;
 		this.hasImage = hasImage;
+		this.originalId = originalId;
 	}
 
 	public BlogPostHeader(MessageType type, GroupId groupId, MessageId id,
@@ -83,6 +94,15 @@ public class BlogPostHeader extends PostHeader {
 
 	public boolean hasImage() {
 		return hasImage;
+	}
+
+	/**
+	 * The ID this message had in the blog it was first posted to, which is
+	 * the same in every blog it has been wrapped into. Equal to
+	 * {@link #getId()} unless this is a wrapped copy.
+	 */
+	public MessageId getOriginalId() {
+		return originalId;
 	}
 
 }

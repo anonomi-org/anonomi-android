@@ -28,7 +28,6 @@ import org.anonchatsecure.anonchat.util.HtmlUtils;
 import org.briarproject.nullsafety.NotNullByDefault;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -233,7 +232,7 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 		BlogCommentItem commentItem = (BlogCommentItem) specialItem;
 		BlogCommentHeader header = commentItem.getHeader();
 		String comment = header.getComment();
-		String targetKey = postKey(header.getParent());
+		MessageId targetKey = postKey(header.getParent());
 
 		// Find the target post by matching author+timestamp key
 		int targetIndex = -1;
@@ -371,7 +370,7 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 		List<BlogPostItem> items = getBlogPostItems();
 		if (items == null) return;
 
-		String targetKey = postKey(item.getHeader());
+		MessageId targetKey = postKey(item.getHeader());
 		int targetIndex = -1;
 		for (int i = 0; i < items.size(); i++) {
 			if (postKey(items.get(i).getHeader()).equals(targetKey)) {
@@ -482,15 +481,11 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 	}
 
 	/**
-	 * Creates a canonical key for a post based on its author and timestamp.
-	 * This survives wrapping: when a post is wrapped for another blog,
-	 * the wrapped copy preserves the original author and timestamp but gets
-	 * a new MessageId. Using author+timestamp lets us match likes to their
-	 * target posts regardless of wrapping.
+	 * Identifies a post across every blog it has been wrapped into, so a like
+	 * on a reblog counts towards the same post as one on the original.
 	 */
-	static String postKey(BlogPostHeader h) {
-		return Arrays.hashCode(h.getAuthor().getId().getBytes()) + ":"
-				+ h.getTimestamp();
+	static MessageId postKey(BlogPostHeader h) {
+		return h.getOriginalId();
 	}
 
 	/**
@@ -501,9 +496,10 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 	static void filterAndAggregateLikes(List<BlogPostItem> items,
 			AuthorId localAuthorId) {
 		// Map from target post key (author+timestamp) to per-author like state
-		Map<String, Map<AuthorId, LikeAction>> postLikes = new HashMap<>();
+		Map<MessageId, Map<AuthorId, LikeAction>> postLikes =
+				new HashMap<>();
 		// Map from target post key to list of comments
-		Map<String, List<BlogComment>> postComments = new HashMap<>();
+		Map<MessageId, List<BlogComment>> postComments = new HashMap<>();
 
 		// Collect like/unlike/comment actions and mark items for removal
 		List<BlogPostItem> toRemove = new ArrayList<>();
@@ -516,7 +512,7 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 			if (isLikeOrUnlike(comment)) {
 				// Use direct parent as target (not root post) so likes
 				// on reblogs attach to the reblog, not the original
-				String targetKey = postKey(header.getParent());
+				MessageId targetKey = postKey(header.getParent());
 				AuthorId authorId = header.getAuthor().getId();
 				boolean isLike = LIKE_MARKER.equals(comment);
 				long timestamp = header.getTimestamp();
@@ -538,7 +534,7 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 				toRemove.add(item);
 			} else if (isComment(comment)) {
 				// Use direct parent as target
-				String targetKey = postKey(header.getParent());
+				MessageId targetKey = postKey(header.getParent());
 				String commentText =
 						comment.substring(COMMENT_MARKER.length());
 				long timestamp = header.getTimestamp();
@@ -575,7 +571,7 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 		// Match on the item's own header (not inner post header) so
 		// reblogs get their own like/comment counts.
 		for (BlogPostItem item : items) {
-			String key = postKey(item.getHeader());
+			MessageId key = postKey(item.getHeader());
 
 			// Likes
 			Map<AuthorId, LikeAction> authorMap = postLikes.get(key);
@@ -651,9 +647,9 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 	}
 
 	protected static List<BlogPostItem> deduplicate(List<BlogPostItem> items) {
-		Map<String, BlogPostItem> unique = new LinkedHashMap<>();
+		Map<MessageId, BlogPostItem> unique = new LinkedHashMap<>();
 		for (BlogPostItem item : items) {
-			String key = postKey(item.getHeader());
+			MessageId key = postKey(item.getHeader());
 			BlogPostItem existing = unique.get(key);
 			if (existing == null || isBetter(item, existing)) {
 				unique.put(key, item);
