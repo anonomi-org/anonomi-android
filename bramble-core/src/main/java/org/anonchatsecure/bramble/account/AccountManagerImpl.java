@@ -18,7 +18,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.logging.Logger;
 
 import javax.annotation.Nullable;
@@ -26,7 +28,9 @@ import javax.annotation.concurrent.GuardedBy;
 import javax.inject.Inject;
 
 import static java.util.logging.Level.WARNING;
+import static org.anonchatsecure.bramble.api.account.BackupConstants.BACKUP_DB_FILE_NAME;
 import static org.anonchatsecure.bramble.api.crypto.DecryptionResult.INVALID_CIPHERTEXT;
+import static org.anonchatsecure.bramble.util.IoUtils.isNonEmptyDirectory;
 import static org.anonchatsecure.bramble.util.LogUtils.logException;
 import static org.anonchatsecure.bramble.util.StringUtils.UTF_8;
 import static org.anonchatsecure.bramble.util.StringUtils.fromHexString;
@@ -246,5 +250,89 @@ class AccountManagerImpl implements AccountManager {
 			SecretKey key = loadAndDecryptDatabaseKey(oldPassword);
 			encryptAndStoreDatabaseKey(key, newPassword);
 		}
+	}
+
+	@Override
+	public void verifyPassword(String password) throws DecryptionException {
+		synchronized (stateChangeLock) {
+			loadAndDecryptDatabaseKey(password);
+		}
+	}
+
+	@Override
+	public boolean restoreAccount(File dbFile, SecretKey dbKey,
+			String password) {
+		synchronized (stateChangeLock) {
+			if (hasDatabaseKey() || loadEncryptedDatabaseKey() != null) {
+				throw new IllegalStateException("Account already exists");
+			}
+			File dbDir = databaseConfig.getDatabaseDirectory();
+			if (dbDir.exists() && !dbDir.isDirectory()) {
+				throw new IllegalStateException("Database directory is a file");
+			}
+			if (isNonEmptyDirectory(dbDir)) {
+				throw new IllegalStateException("Database directory not empty");
+			}
+			if (!dbDir.exists() && !dbDir.mkdirs()) {
+				LOG.warning("Could not create database directory");
+				return false;
+			}
+			if (!moveIntoPlace(dbFile, new File(dbDir, BACKUP_DB_FILE_NAME))) {
+				rollBack(dbDir);
+				return false;
+			}
+			// The key goes last, so a failure here leaves no usable account
+			if (!encryptAndStoreDatabaseKey(dbKey, password)) {
+				LOG.warning("Could not store database key");
+				rollBack(dbDir);
+				return false;
+			}
+			databaseKey = dbKey;
+			return true;
+		}
+	}
+
+	/**
+	 * Removes what a failed restore created and nothing else. Deliberately
+	 * not {@link #deleteAccount()}, which subclasses widen to the whole of
+	 * the app's data.
+	 */
+	@GuardedBy("stateChangeLock")
+	private void rollBack(File dbDir) {
+		IoUtils.deleteFileOrDir(databaseConfig.getDatabaseKeyDirectory());
+		IoUtils.deleteFileOrDir(dbDir);
+		databaseKey = null;
+	}
+
+	@GuardedBy("stateChangeLock")
+	private boolean moveIntoPlace(File from, File to) {
+		if (from.renameTo(to)) return true;
+		// A rename across filesystems fails, so fall back to copying
+		LOG.info("Could not rename database file, copying instead");
+		try {
+			InputStream in = new FileInputStream(from);
+			try {
+				FileOutputStream out = new FileOutputStream(to);
+				try {
+					byte[] buf = new byte[4096];
+					int read;
+					while ((read = in.read(buf)) != -1) out.write(buf, 0, read);
+					out.flush();
+					// The key file is written next, and it is only safe to
+					// have one if the database is really on disk
+					out.getFD().sync();
+				} finally {
+					out.close();
+				}
+			} finally {
+				in.close();
+			}
+		} catch (IOException e) {
+			logException(LOG, WARNING, e);
+			IoUtils.delete(to);
+			return false;
+		}
+		IoUtils.delete(from);
+		return true;
 	}
 }

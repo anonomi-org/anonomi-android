@@ -3,6 +3,7 @@ package org.anonchatsecure.bramble.account;
 import org.anonchatsecure.bramble.api.FormatException;
 import org.anonchatsecure.bramble.api.account.BackupError;
 import org.anonchatsecure.bramble.api.account.BackupManifest;
+import org.anonchatsecure.bramble.api.account.BackupProgressListener;
 import org.anonchatsecure.bramble.api.account.InvalidBackupException;
 import org.anonchatsecure.bramble.api.crypto.CryptoComponent;
 import org.anonchatsecure.bramble.api.crypto.SecretKey;
@@ -26,6 +27,7 @@ import java.util.Arrays;
 import static org.anonchatsecure.bramble.api.account.BackupConstants.BACKUP_DB_FILE_NAME;
 import static org.anonchatsecure.bramble.api.account.BackupConstants.BACKUP_FORMAT_VERSION;
 import static org.anonchatsecure.bramble.api.account.BackupConstants.BACKUP_HEADER_BYTES;
+import static org.anonchatsecure.bramble.api.account.BackupConstants.BACKUP_PROGRESS_INTERVAL_BYTES;
 import static org.anonchatsecure.bramble.api.account.BackupConstants.DB_SHA_256_BYTES;
 import static org.anonchatsecure.bramble.api.account.BackupConstants.MANIFEST_APP_VERSION_CODE;
 import static org.anonchatsecure.bramble.api.account.BackupConstants.MANIFEST_APP_VERSION_NAME;
@@ -74,7 +76,8 @@ class BackupContainerReader {
 	 * Reads a backup from the given stream, writing the database to the given
 	 * stream, and returns the manifest. Neither stream is closed.
 	 */
-	BackupManifest read(InputStream in, String recoveryCode, OutputStream dbOut)
+	BackupManifest read(InputStream in, String recoveryCode, OutputStream dbOut,
+			BackupProgressListener listener)
 			throws IOException, InvalidBackupException {
 		byte[] headerBytes = new byte[BACKUP_HEADER_BYTES];
 		try {
@@ -115,7 +118,7 @@ class BackupContainerReader {
 		}
 		BackupManifest m = checkManifest(manifest, headerBytes, dbLength);
 		try {
-			copyDatabase(encrypted, dbOut, m);
+			copyDatabase(encrypted, dbOut, m, listener);
 		} catch (EOFException e) {
 			throw new InvalidBackupException(TRUNCATED);
 		} catch (FormatException e) {
@@ -186,18 +189,25 @@ class BackupContainerReader {
 	}
 
 	private void copyDatabase(InputStream in, OutputStream out,
-			BackupManifest m) throws IOException, InvalidBackupException {
+			BackupManifest m, BackupProgressListener listener)
+			throws IOException, InvalidBackupException {
 		SHA256Digest digest = new SHA256Digest();
 		byte[] buf = new byte[4096];
-		long remaining = m.getDbLength();
-		while (remaining > 0) {
-			int len = (int) Math.min(buf.length, remaining);
+		long total = m.getDbLength(), done = 0, reported = 0;
+		listener.onBackupProgress(0, total);
+		while (done < total) {
+			int len = (int) Math.min(buf.length, total - done);
 			int read = in.read(buf, 0, len);
 			if (read == -1) throw new EOFException();
 			out.write(buf, 0, read);
 			digest.update(buf, 0, read);
-			remaining -= read;
+			done += read;
+			if (done - reported >= BACKUP_PROGRESS_INTERVAL_BYTES) {
+				listener.onBackupProgress(done, total);
+				reported = done;
+			}
 		}
+		listener.onBackupProgress(done, total);
 		// Reading on past the database reaches the authenticated final frame,
 		// so a file cut short after the last whole frame is still caught
 		if (in.read() != -1) throw new InvalidBackupException(CORRUPT);

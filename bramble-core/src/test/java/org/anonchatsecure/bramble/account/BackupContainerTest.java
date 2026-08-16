@@ -2,6 +2,7 @@ package org.anonchatsecure.bramble.account;
 
 import org.anonchatsecure.bramble.api.account.BackupError;
 import org.anonchatsecure.bramble.api.account.BackupManifest;
+import org.anonchatsecure.bramble.api.account.BackupProgressListener;
 import org.anonchatsecure.bramble.api.account.InvalidBackupException;
 import org.anonchatsecure.bramble.api.account.RecoveryCode;
 import org.anonchatsecure.bramble.api.crypto.CryptoComponent;
@@ -69,6 +70,8 @@ public class BackupContainerTest extends BrambleTestCase {
 
 	private final byte[] db = getRandomBytes(DB_BYTES);
 	private final SecretKey dbKey = getSecretKey();
+	private final RecordingProgressListener progress =
+			new RecordingProgressListener();
 	private final BackupContainerWriter writer;
 	private final BackupContainerReader reader;
 
@@ -88,7 +91,7 @@ public class BackupContainerTest extends BrambleTestCase {
 		byte[] container = write(manifest());
 		ByteArrayOutputStream dbOut = new ByteArrayOutputStream();
 		BackupManifest m = reader.read(new ByteArrayInputStream(container),
-				CODE, dbOut);
+				CODE, dbOut, progress);
 		assertArrayEquals(db, dbOut.toByteArray());
 		assertEquals(BACKUP_FORMAT_VERSION, m.getFormatVersion());
 		assertEquals(1234, m.getAppVersionCode());
@@ -99,6 +102,7 @@ public class BackupContainerTest extends BrambleTestCase {
 		assertEquals(BACKUP_DB_FILE_NAME, m.getDbFileName());
 		assertEquals(DB_BYTES, m.getDbLength());
 		assertArrayEquals(sha256(db), m.getDbSha256());
+		progress.assertFinished(DB_BYTES);
 	}
 
 	@Test
@@ -161,9 +165,11 @@ public class BackupContainerTest extends BrambleTestCase {
 		BackupContainerWriter expensive = new BackupContainerWriter(crypto,
 				streamWriterFactory, bdfWriterFactory, MAX_BACKUP_LOG_COST);
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		expensive.write(out, CODE, manifest(), new ByteArrayInputStream(db));
+		expensive.write(out, CODE, manifest(), new ByteArrayInputStream(db),
+				progress);
 		ByteArrayOutputStream dbOut = new ByteArrayOutputStream();
-		reader.read(new ByteArrayInputStream(out.toByteArray()), CODE, dbOut);
+		reader.read(new ByteArrayInputStream(out.toByteArray()), CODE, dbOut,
+				progress);
 		assertArrayEquals(db, dbOut.toByteArray());
 	}
 
@@ -173,14 +179,14 @@ public class BackupContainerTest extends BrambleTestCase {
 		ByteArrayOutputStream dbOut = new ByteArrayOutputStream();
 		// The app shows the code in groups, so this is what a user types back
 		reader.read(new ByteArrayInputStream(container),
-				RecoveryCode.format(CODE), dbOut);
+				RecoveryCode.format(CODE), dbOut, progress);
 		assertArrayEquals(db, dbOut.toByteArray());
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testCodeThatIsNotARecoveryCodeIsRejected() throws Exception {
 		reader.read(new ByteArrayInputStream(write(manifest())), "nonsense",
-				new ByteArrayOutputStream());
+				new ByteArrayOutputStream(), progress);
 	}
 
 	@Test
@@ -257,7 +263,8 @@ public class BackupContainerTest extends BrambleTestCase {
 		byte[] container = write(manifest(CODE_SCHEMA_VERSION + 1));
 		ByteArrayOutputStream dbOut = new ByteArrayOutputStream();
 		try {
-			reader.read(new ByteArrayInputStream(container), CODE, dbOut);
+			reader.read(new ByteArrayInputStream(container), CODE, dbOut,
+					progress);
 			fail();
 		} catch (InvalidBackupException e) {
 			assertEquals(DATA_TOO_NEW, e.getError());
@@ -318,7 +325,7 @@ public class BackupContainerTest extends BrambleTestCase {
 
 	private byte[] write(BackupManifest m) throws IOException {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		writer.write(out, CODE, m, new ByteArrayInputStream(db));
+		writer.write(out, CODE, m, new ByteArrayInputStream(db), progress);
 		return out.toByteArray();
 	}
 
@@ -331,7 +338,7 @@ public class BackupContainerTest extends BrambleTestCase {
 			BackupError expected) throws Exception {
 		try {
 			reader.read(new ByteArrayInputStream(container), code,
-					new ByteArrayOutputStream());
+					new ByteArrayOutputStream(), progress);
 			fail();
 		} catch (InvalidBackupException e) {
 			assertEquals(expected, e.getError());
@@ -342,6 +349,34 @@ public class BackupContainerTest extends BrambleTestCase {
 		byte[] copy = b.clone();
 		copy[offset] ^= 1;
 		return copy;
+	}
+
+	/**
+	 * Records progress and fails as soon as it is reported out of order, so
+	 * every test that copies a database checks it.
+	 */
+	private static class RecordingProgressListener
+			implements BackupProgressListener {
+
+		private long lastDone = -1, lastTotal = -1;
+
+		@Override
+		public void onBackupProgress(long done, long total) {
+			assertTrue(done >= 0 && done <= total);
+			if (done == 0) {
+				// Every copy opens with a report of zero
+				lastTotal = total;
+			} else {
+				assertEquals(lastTotal, total);
+				assertTrue(done >= lastDone);
+			}
+			lastDone = done;
+		}
+
+		void assertFinished(long total) {
+			assertEquals(total, lastTotal);
+			assertEquals(total, lastDone);
+		}
 	}
 
 	private byte[] sha256(byte[] b) {

@@ -29,6 +29,12 @@ public enum BackupError {
 	TRUNCATED,
 
 	/**
+	 * The backup asks for more memory to derive its key than this device can
+	 * give it. The file is fine; another device may be able to read it.
+	 */
+	NOT_ENOUGH_MEMORY,
+
+	/**
 	 * The backup was written by a version of the app whose database schema
 	 * this code cannot open.
 	 */

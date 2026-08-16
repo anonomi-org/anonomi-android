@@ -20,6 +20,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Nullable;
 
@@ -65,6 +66,7 @@ public class AccountManagerImplTest extends BrambleMockTestCase {
 	private final File dbDir = new File(testDir, "db");
 	private final File keyDir = new File(testDir, "key");
 	private final File keyFile = new File(keyDir, "db.key");
+	private final byte[] restoredDbBytes = getRandomBytes(1234);
 	private final File keyBackupFile = new File(keyDir, "db.key.bak");
 
 	private AccountManagerImpl accountManager;
@@ -392,6 +394,200 @@ public class AccountManagerImplTest extends BrambleMockTestCase {
 		assertFalse(dbFile.exists());
 		assertFalse(accountManager.hasDatabaseKey());
 		assertFalse(accountManager.accountExists());
+	}
+
+	@Test
+	public void testVerifyPasswordDoesNotSignIn() throws Exception {
+		context.checking(new Expectations() {{
+			oneOf(crypto).decryptWithPassword(encryptedKey, password,
+					keyStrengthener);
+			will(returnValue(key.getBytes()));
+			oneOf(crypto).isEncryptedWithStrengthenedKey(encryptedKey);
+			will(returnValue(true));
+		}});
+		storeDatabaseKey(keyFile, encryptedKeyHex);
+		storeDatabaseKey(keyBackupFile, encryptedKeyHex);
+
+		accountManager.verifyPassword(password);
+
+		assertFalse(accountManager.hasDatabaseKey());
+		assertNull(accountManager.getDatabaseKey());
+	}
+
+	@Test
+	public void testVerifyPasswordThrowsExceptionIfPasswordIsWrong()
+			throws Exception {
+		context.checking(new Expectations() {{
+			oneOf(crypto).decryptWithPassword(encryptedKey, password,
+					keyStrengthener);
+			will(throwException(new DecryptionException(INVALID_PASSWORD)));
+		}});
+		storeDatabaseKey(keyFile, encryptedKeyHex);
+		storeDatabaseKey(keyBackupFile, encryptedKeyHex);
+
+		try {
+			accountManager.verifyPassword(password);
+			fail();
+		} catch (DecryptionException expected) {
+			assertEquals(INVALID_PASSWORD, expected.getDecryptionResult());
+		}
+		assertFalse(accountManager.hasDatabaseKey());
+	}
+
+	@Test
+	public void testRestoreAccountMovesTheDatabaseAndStoresTheKey()
+			throws Exception {
+		context.checking(new Expectations() {{
+			oneOf(crypto).encryptWithPassword(key.getBytes(), password,
+					keyStrengthener);
+			will(returnValue(encryptedKey));
+		}});
+		File restored = restoredDatabaseFile();
+
+		assertTrue(accountManager.restoreAccount(restored, key, password));
+
+		// The database is in place and the source has been consumed
+		assertFalse(restored.exists());
+		File dbFile = new File(dbDir, "db.mv.db");
+		assertTrue(dbFile.exists());
+		assertArrayEquals(restoredDbBytes, readFile(dbFile));
+		// The key is on disk and in memory, so the account can be opened
+		assertEquals(encryptedKeyHex, loadDatabaseKey(keyFile));
+		assertEquals(encryptedKeyHex, loadDatabaseKey(keyBackupFile));
+		assertTrue(accountManager.accountExists());
+		assertTrue(accountManager.hasDatabaseKey());
+		SecretKey restoredKey = accountManager.getDatabaseKey();
+		assertNotNull(restoredKey);
+		assertArrayEquals(key.getBytes(), restoredKey.getBytes());
+		// The identity manager is a strict mock with no expectations here,
+		// so a registration would have failed the test
+	}
+
+	@Test
+	public void testRestoreAccountLeavesNothingBehindIfTheKeyCannotBeStored()
+			throws Exception {
+		context.checking(new Expectations() {{
+			oneOf(crypto).encryptWithPassword(key.getBytes(), password,
+					keyStrengthener);
+			will(returnValue(encryptedKey));
+		}});
+		File restored = restoredDatabaseFile();
+		// A file where the key directory should go makes storing it fail
+		storeDatabaseKey(keyDir, "not a directory");
+
+		assertFalse(accountManager.restoreAccount(restored, key, password));
+
+		assertFalse(new File(dbDir, "db.mv.db").exists());
+		assertFalse(accountManager.hasDatabaseKey());
+		assertFalse(accountManager.accountExists());
+	}
+
+	/**
+	 * A failed restore must remove only what it created. Subclasses widen
+	 * {@link AccountManagerImpl#deleteAccount()} to the whole of the app's
+	 * data — shared preferences, external storage — none of which a failure
+	 * to write the key file has any business touching.
+	 */
+	@Test
+	public void testFailedRestoreDoesNotDeleteTheWholeAccount()
+			throws Exception {
+		context.checking(new Expectations() {{
+			oneOf(crypto).encryptWithPassword(key.getBytes(), password,
+					keyStrengthener);
+			will(returnValue(encryptedKey));
+		}});
+		AtomicBoolean deleteAccountCalled = new AtomicBoolean(false);
+		AccountManagerImpl manager = new AccountManagerImpl(databaseConfig,
+				crypto, identityManager) {
+
+			@Override
+			public void deleteAccount() {
+				deleteAccountCalled.set(true);
+				super.deleteAccount();
+			}
+		};
+		File restored = restoredDatabaseFile();
+		// A file where the key directory should go makes storing it fail
+		storeDatabaseKey(keyDir, "not a directory");
+
+		assertFalse(manager.restoreAccount(restored, key, password));
+
+		assertFalse(deleteAccountCalled.get());
+		assertFalse(new File(dbDir, "db.mv.db").exists());
+		assertFalse(manager.hasDatabaseKey());
+	}
+
+	@Test
+	public void testRestoreAccountRefusesADatabaseDirectoryThatIsAFile()
+			throws Exception {
+		storeDatabaseKey(dbDir, "not a directory");
+		File restored = restoredDatabaseFile();
+
+		try {
+			accountManager.restoreAccount(restored, key, password);
+			fail();
+		} catch (IllegalStateException expected) {
+			// Expected
+		}
+		assertEquals("not a directory", loadDatabaseKey(dbDir));
+	}
+
+	@Test
+	public void testRestoreAccountRefusesToOverwriteAnAccount()
+			throws Exception {
+		storeDatabaseKey(keyFile, encryptedKeyHex);
+		File restored = restoredDatabaseFile();
+
+		try {
+			accountManager.restoreAccount(restored, key, password);
+			fail();
+		} catch (IllegalStateException expected) {
+			// Expected
+		}
+		assertFalse(new File(dbDir, "db.mv.db").exists());
+	}
+
+	@Test
+	public void testRestoreAccountRefusesToOverwriteADatabase()
+			throws Exception {
+		assertTrue(dbDir.mkdirs());
+		storeDatabaseKey(new File(dbDir, "db.mv.db"), "existing");
+		File restored = restoredDatabaseFile();
+
+		try {
+			accountManager.restoreAccount(restored, key, password);
+			fail();
+		} catch (IllegalStateException expected) {
+			// Expected
+		}
+		assertEquals("existing", loadDatabaseKey(new File(dbDir, "db.mv.db")));
+	}
+
+	private File restoredDatabaseFile() throws IOException {
+		File dir = new File(testDir, "restore");
+		assertTrue(dir.mkdirs());
+		File f = new File(dir, "db.mv.db");
+		FileOutputStream out = new FileOutputStream(f);
+		out.write(restoredDbBytes);
+		out.flush();
+		out.close();
+		return f;
+	}
+
+	private byte[] readFile(File f) throws IOException {
+		FileInputStream in = new FileInputStream(f);
+		try {
+			byte[] b = new byte[(int) f.length()];
+			int offset = 0;
+			while (offset < b.length) {
+				int read = in.read(b, offset, b.length - offset);
+				if (read == -1) throw new IOException();
+				offset += read;
+			}
+			return b;
+		} finally {
+			in.close();
+		}
 	}
 
 	/**

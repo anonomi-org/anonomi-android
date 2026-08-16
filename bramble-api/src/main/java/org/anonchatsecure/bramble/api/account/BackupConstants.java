@@ -80,6 +80,12 @@ public interface BackupConstants {
 	int MAX_MANIFEST_BYTES = 4096;
 
 	/**
+	 * How much of the database is copied between calls to a
+	 * {@link BackupProgressListener}.
+	 */
+	int BACKUP_PROGRESS_INTERVAL_BYTES = 1024 * 1024;
+
+	/**
 	 * Label for deriving the header key from the recovery code. The format
 	 * version is part of the label, so a backup written by a later format
 	 * version cannot be read with a key derived for this one.

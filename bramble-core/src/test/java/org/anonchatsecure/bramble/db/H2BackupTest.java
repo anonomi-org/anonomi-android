@@ -4,12 +4,8 @@ import org.anonchatsecure.bramble.api.crypto.SecretKey;
 import org.anonchatsecure.bramble.api.db.DatabaseComponent;
 import org.anonchatsecure.bramble.api.db.DatabaseConfig;
 import org.anonchatsecure.bramble.api.db.Metadata;
-import org.anonchatsecure.bramble.api.event.Event;
-import org.anonchatsecure.bramble.api.event.EventBus;
-import org.anonchatsecure.bramble.api.event.EventListener;
 import org.anonchatsecure.bramble.api.identity.Author;
 import org.anonchatsecure.bramble.api.identity.Identity;
-import org.anonchatsecure.bramble.api.lifecycle.ShutdownManager;
 import org.anonchatsecure.bramble.api.sync.ClientId;
 import org.anonchatsecure.bramble.api.sync.Group;
 import org.anonchatsecure.bramble.api.sync.GroupId;
@@ -17,6 +13,8 @@ import org.anonchatsecure.bramble.api.sync.Message;
 import org.anonchatsecure.bramble.api.sync.MessageId;
 import org.anonchatsecure.bramble.system.SystemClock;
 import org.anonchatsecure.bramble.test.BrambleTestCase;
+import org.anonchatsecure.bramble.test.NullEventBus;
+import org.anonchatsecure.bramble.test.NullShutdownManager;
 import org.anonchatsecure.bramble.test.TestDatabaseConfig;
 import org.anonchatsecure.bramble.test.TestMessageFactory;
 import org.junit.After;
@@ -209,34 +207,6 @@ public class H2BackupTest extends BrambleTestCase {
 			db.commitTransaction(txn);
 		} finally {
 			db.close();
-		}
-	}
-
-	private static class NullEventBus implements EventBus {
-
-		@Override
-		public void addListener(EventListener l) {
-		}
-
-		@Override
-		public void removeListener(EventListener l) {
-		}
-
-		@Override
-		public void broadcast(Event e) {
-		}
-	}
-
-	private static class NullShutdownManager implements ShutdownManager {
-
-		@Override
-		public int addShutdownHook(Runnable hook) {
-			return 0;
-		}
-
-		@Override
-		public boolean removeShutdownHook(int handle) {
-			return true;
 		}
 	}
 }

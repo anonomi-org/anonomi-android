@@ -1,5 +1,6 @@
 package org.anonchatsecure.bramble.account;
 
+import org.anonchatsecure.bramble.api.account.AccountBackupManager;
 import org.anonchatsecure.bramble.api.account.AccountManager;
 
 import javax.inject.Singleton;
@@ -14,5 +15,11 @@ public class AccountModule {
 	@Singleton
 	AccountManager provideAccountManager(AccountManagerImpl accountManager) {
 		return accountManager;
+	}
+
+	@Provides
+	AccountBackupManager provideAccountBackupManager(
+			AccountBackupManagerImpl accountBackupManager) {
+		return accountBackupManager;
 	}
 }

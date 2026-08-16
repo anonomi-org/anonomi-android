@@ -26,6 +26,7 @@ import static org.anonchatsecure.bramble.api.account.BackupConstants.KDF_SCRYPT;
 import static org.anonchatsecure.bramble.api.account.BackupConstants.MAX_BACKUP_LOG_COST;
 import static org.anonchatsecure.bramble.api.account.BackupConstants.MIN_BACKUP_LOG_COST;
 import static org.anonchatsecure.bramble.api.account.BackupError.NOT_A_BACKUP;
+import static org.anonchatsecure.bramble.api.account.BackupError.NOT_ENOUGH_MEMORY;
 import static org.anonchatsecure.bramble.api.account.BackupError.UNSUPPORTED_FORMAT;
 
 /**
@@ -43,10 +44,22 @@ class BackupHeader {
 		this.logCost = logCost;
 	}
 
+	/**
+	 * Creates a header, lowering the cost if this device cannot afford the
+	 * one asked for. Writing a backup this device could not read back would
+	 * be worse than deriving the key a little more cheaply, and the recovery
+	 * code carries the security here.
+	 *
+	 * @throws IllegalStateException if even the lowest cost is unaffordable
+	 */
 	static BackupHeader create(SecureRandom random, int logCost) {
 		if (logCost < MIN_BACKUP_LOG_COST || logCost > MAX_BACKUP_LOG_COST) {
 			throw new IllegalArgumentException();
 		}
+		while (logCost > MIN_BACKUP_LOG_COST && !isAffordable(logCost)) {
+			logCost--;
+		}
+		if (!isAffordable(logCost)) throw new IllegalStateException();
 		byte[] bytes = new byte[BACKUP_HEADER_BYTES];
 		ByteUtils.writeUint64(BACKUP_MAGIC, bytes, 0);
 		bytes[BACKUP_FORMAT_VERSION_OFFSET] = (byte) BACKUP_FORMAT_VERSION;
@@ -80,13 +93,21 @@ class BackupHeader {
 		if (logCost < MIN_BACKUP_LOG_COST || logCost > MAX_BACKUP_LOG_COST) {
 			throw new InvalidBackupException(UNSUPPORTED_FORMAT);
 		}
-		// The cost is read before anything has been authenticated, so also
-		// refuse one this device cannot afford. Same bound as ScryptKdf.
-		long maxCost = Runtime.getRuntime().maxMemory() / KDF_BLOCK_SIZE / 256;
-		if ((1L << logCost) > maxCost) {
-			throw new InvalidBackupException(UNSUPPORTED_FORMAT);
+		// The cost is read before anything has been authenticated, so a
+		// header must never be able to demand more memory than there is
+		if (!isAffordable(logCost)) {
+			throw new InvalidBackupException(NOT_ENOUGH_MEMORY);
 		}
 		return new BackupHeader(bytes.clone(), logCost);
+	}
+
+	/**
+	 * Scrypt needs 128 * 2^logCost * r bytes. The bound is the one
+	 * {@code ScryptKdf} uses when it calibrates: half the heap.
+	 */
+	private static boolean isAffordable(int logCost) {
+		long maxCost = Runtime.getRuntime().maxMemory() / KDF_BLOCK_SIZE / 256;
+		return (1L << logCost) <= maxCost;
 	}
 
 	byte[] getBytes() {

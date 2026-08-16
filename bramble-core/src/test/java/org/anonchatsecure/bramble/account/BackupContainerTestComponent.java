@@ -21,4 +21,8 @@ import dagger.Component;
 interface BackupContainerTestComponent {
 
 	void inject(BackupContainerTest testCase);
+
+	void inject(AccountBackupManagerImplTest testCase);
+
+	void inject(AccountBackupIntegrationTest testCase);
 }

@@ -1,6 +1,7 @@
 package org.anonchatsecure.bramble.account;
 
 import org.anonchatsecure.bramble.api.account.BackupManifest;
+import org.anonchatsecure.bramble.api.account.BackupProgressListener;
 import org.anonchatsecure.bramble.api.crypto.CryptoComponent;
 import org.anonchatsecure.bramble.api.crypto.SecretKey;
 import org.anonchatsecure.bramble.api.data.BdfDictionary;
@@ -20,6 +21,7 @@ import java.util.Arrays;
 
 import static org.anonchatsecure.bramble.api.account.BackupConstants.BACKUP_FORMAT_VERSION;
 import static org.anonchatsecure.bramble.api.account.BackupConstants.BACKUP_LOG_COST;
+import static org.anonchatsecure.bramble.api.account.BackupConstants.BACKUP_PROGRESS_INTERVAL_BYTES;
 import static org.anonchatsecure.bramble.api.account.BackupConstants.MANIFEST_APP_VERSION_CODE;
 import static org.anonchatsecure.bramble.api.account.BackupConstants.MANIFEST_APP_VERSION_NAME;
 import static org.anonchatsecure.bramble.api.account.BackupConstants.MANIFEST_CREATED;
@@ -71,7 +73,8 @@ class BackupContainerWriter {
 	 * hash recorded in the manifest, as well as for the usual reasons
 	 */
 	void write(OutputStream out, String recoveryCode, BackupManifest m,
-			InputStream dbIn) throws IOException {
+			InputStream dbIn, BackupProgressListener listener)
+			throws IOException {
 		BackupHeader header =
 				BackupHeader.create(crypto.getSecureRandom(), logCost);
 		byte[] headerBytes = header.getBytes();
@@ -89,7 +92,7 @@ class BackupContainerWriter {
 		byte[] dbLength = new byte[INT_64_BYTES];
 		ByteUtils.writeUint64(m.getDbLength(), dbLength, 0);
 		encrypted.write(dbLength);
-		copyDatabase(dbIn, encrypted, m);
+		copyDatabase(dbIn, encrypted, m, listener);
 		streamWriter.sendEndOfStream();
 	}
 
@@ -119,18 +122,25 @@ class BackupContainerWriter {
 	 * where the file may be the only copy left.
 	 */
 	private void copyDatabase(InputStream in, OutputStream out,
-			BackupManifest m) throws IOException {
+			BackupManifest m, BackupProgressListener listener)
+			throws IOException {
 		SHA256Digest digest = new SHA256Digest();
 		byte[] buf = new byte[4096];
-		long remaining = m.getDbLength();
-		while (remaining > 0) {
-			int len = (int) Math.min(buf.length, remaining);
+		long total = m.getDbLength(), done = 0, reported = 0;
+		listener.onBackupProgress(0, total);
+		while (done < total) {
+			int len = (int) Math.min(buf.length, total - done);
 			int read = in.read(buf, 0, len);
 			if (read == -1) throw new IOException();
 			out.write(buf, 0, read);
 			digest.update(buf, 0, read);
-			remaining -= read;
+			done += read;
+			if (done - reported >= BACKUP_PROGRESS_INTERVAL_BYTES) {
+				listener.onBackupProgress(done, total);
+				reported = done;
+			}
 		}
+		listener.onBackupProgress(done, total);
 		if (in.read() != -1) throw new IOException();
 		byte[] hash = new byte[digest.getDigestSize()];
 		digest.doFinal(hash, 0);
