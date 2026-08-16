@@ -22,8 +22,8 @@ class BlogPostAdapter extends ListAdapter<BlogPostItem, BlogPostViewHolder> {
 		super(new DiffUtil.ItemCallback<BlogPostItem>() {
 			@Override
 			public boolean areItemsTheSame(BlogPostItem a, BlogPostItem b) {
-				// Reblogs of a post carry different message IDs, so identity
-				// comes from the original rather than from getId().
+				// The same identity aggregation and dedup use, so a rebuilt
+				// list keeps its items.
 				return BaseViewModel.postKey(a.getHeader())
 						.equals(BaseViewModel.postKey(b.getHeader()));
 			}

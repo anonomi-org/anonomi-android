@@ -49,16 +49,15 @@ import static java.util.logging.Logger.getLogger;
 import static org.anonchatsecure.bramble.util.LogUtils.logDuration;
 import static org.anonchatsecure.bramble.util.LogUtils.logException;
 import static org.anonchatsecure.bramble.util.LogUtils.now;
+import static org.anonchatsecure.anonchat.api.blog.BlogConstants.COMMENT_MARKER;
+import static org.anonchatsecure.anonchat.api.blog.BlogConstants.LIKE_MARKER;
+import static org.anonchatsecure.anonchat.api.blog.BlogConstants.UNLIKE_MARKER;
 import static org.anonchatsecure.anonchat.api.identity.AuthorInfo.Status.OURSELVES;
 
 @NotNullByDefault
 abstract class BaseViewModel extends DbViewModel implements EventListener {
 
 	private static final Logger LOG = getLogger(BaseViewModel.class.getName());
-
-	static final String LIKE_MARKER = "::like:";
-	static final String UNLIKE_MARKER = "::unlike:";
-	static final String COMMENT_MARKER = "::comment:";
 
 	private final EventBus eventBus;
 	protected final IdentityManager identityManager;
@@ -234,7 +233,7 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 		String comment = header.getComment();
 		MessageId targetKey = postKey(header.getParent());
 
-		// Find the target post by matching author+timestamp key
+		// Find the target post
 		int targetIndex = -1;
 		for (int i = 0; i < items.size(); i++) {
 			if (postKey(items.get(i).getHeader()).equals(targetKey)) {
@@ -414,7 +413,7 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 		}
 	}
 
-	/** Keeps likeCount equal to likers.size() before the comment is stored. */
+	/** Keeps likeCount equal to likers.size() once the local author is known. */
 	@UiThread
 	private void setLocalLike(BlogPostItem target, boolean liked) {
 		target.setLikedByMe(liked);
@@ -495,7 +494,7 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 	 */
 	static void filterAndAggregateLikes(List<BlogPostItem> items,
 			AuthorId localAuthorId) {
-		// Map from target post key (author+timestamp) to per-author like state
+		// Map from target post to per-author like state
 		Map<MessageId, Map<AuthorId, LikeAction>> postLikes =
 				new HashMap<>();
 		// Map from target post key to list of comments

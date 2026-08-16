@@ -169,7 +169,7 @@ public class BlogReactionAggregationTest {
 	// ---------- the two paths must not disagree ----------
 
 	@Test
-	public void incrementalMatchesReloadForTheSameEvents() {
+	public void incrementalMatchesReloadWhenEventsArriveInOrder() {
 		BlogPostHeader target = postHeader(alice, 1000);
 		// bob likes twice and keeps it, carol likes then takes it back
 		Object[][] events = {
@@ -200,6 +200,34 @@ public class BlogReactionAggregationTest {
 		assertEquals(items.get(0).getLikeCount(), incremental.size());
 		assertEquals(1, incremental.size());
 		assertEquals(bob.getId(), incremental.get(0).author.getId());
+	}
+
+	/**
+	 * Arrival order decides incrementally, latest timestamp on a reload, so
+	 * one author's own like and unlike arriving reversed disagree until the
+	 * next reload. Pinned so a change to either rule is deliberate.
+	 */
+	@Test
+	public void incrementalAndReloadDifferWhenOneAuthorsEventsArriveReversed() {
+		BlogPostHeader target = postHeader(alice, 1000);
+
+		// the unlike is newer, but it arrives first
+		List<BlogLiker> incremental = emptyList();
+		List<BlogLiker> afterUnlike =
+				BaseViewModel.applyLike(incremental, bob, info, false);
+		if (afterUnlike != null) incremental = afterUnlike;
+		List<BlogLiker> afterLike =
+				BaseViewModel.applyLike(incremental, bob, info, true);
+		if (afterLike != null) incremental = afterLike;
+
+		List<BlogPostItem> items = new ArrayList<>();
+		items.add(post(target));
+		items.add(reaction(bob, target, UNLIKE_MARKER, 3000));
+		items.add(reaction(bob, target, LIKE_MARKER, 2000));
+		BaseViewModel.filterAndAggregateLikes(items, alice.getId());
+
+		assertEquals(1, incremental.size());          // incremental: liking
+		assertEquals(0, items.get(0).getLikeCount()); // reload: not liking
 	}
 
 	@Test

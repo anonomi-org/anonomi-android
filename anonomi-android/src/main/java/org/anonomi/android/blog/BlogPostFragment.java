@@ -41,6 +41,7 @@ import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 import static java.util.Objects.requireNonNull;
 import static java.util.logging.Logger.getLogger;
+import static org.anonchatsecure.anonchat.api.blog.BlogConstants.COMMENT_MARKER;
 import static org.anonchatsecure.anonchat.api.blog.BlogConstants.MAX_BLOG_COMMENT_TEXT_LENGTH;
 import static org.anonchatsecure.bramble.util.StringUtils.toUtf8;
 import static org.anonchatsecure.bramble.util.StringUtils.utf8IsTooLong;
@@ -60,7 +61,7 @@ public class BlogPostFragment extends BaseFragment
 	/** In UTF-8 bytes, not characters, and the marker counts towards it. */
 	private static final int MAX_COMMENT_TEXT_BYTES =
 			MAX_BLOG_COMMENT_TEXT_LENGTH
-					- toUtf8(BaseViewModel.COMMENT_MARKER).length;
+					- toUtf8(COMMENT_MARKER).length;
 
 	protected BlogViewModel viewModel;
 	private final Handler handler = new Handler(Looper.getMainLooper());
@@ -229,7 +230,10 @@ public class BlogPostFragment extends BaseFragment
 		dialog.setOnShowListener(d -> dialog.getButton(BUTTON_POSITIVE)
 				.setOnClickListener(v -> {
 					String comment = input.getText().toString().trim();
-					if (comment.isEmpty()) return;
+					if (comment.isEmpty()) {
+						dialog.dismiss();
+						return;
+					}
 					if (utf8IsTooLong(comment, MAX_COMMENT_TEXT_BYTES)) {
 						input.setError(getString(R.string.text_too_long));
 						return;

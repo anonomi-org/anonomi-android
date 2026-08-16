@@ -39,7 +39,11 @@ public class BlogPostIdentityTest {
 				timestamp, timestamp, author, info, false, true);
 	}
 
-	/** The same post as it appears after being wrapped into another blog. */
+	/**
+	 * The same post as it appears after being wrapped into another blog.
+	 * Only ever reached as a comment's parent: getPostHeaders returns POST
+	 * and COMMENT only, so a wrapped header is never a list item.
+	 */
 	private BlogPostHeader wrappedCopyOf(BlogPostHeader original) {
 		return new BlogPostHeader(WRAPPED_POST, otherGroupId,
 				new MessageId(getRandomId()), null, original.getTimestamp(),
@@ -84,11 +88,13 @@ public class BlogPostIdentityTest {
 	}
 
 	@Test
-	public void deduplicateCollapsesAWrappedCopyOntoTheOriginal() {
+	public void deduplicateCollapsesTheSamePostListedTwice() {
+		// loadBlogPost appends the post it is opening to a list that already
+		// contains it, which is the duplicate deduplicate actually sees
 		BlogPostHeader original = post(alice, 1000);
 		List<BlogPostItem> items = new ArrayList<>();
 		items.add(new BlogPostItem(original, "the post"));
-		items.add(new BlogPostItem(wrappedCopyOf(original), "the post"));
+		items.add(new BlogPostItem(original, "the post"));
 
 		assertEquals(1, BaseViewModel.deduplicate(items).size());
 	}
