@@ -66,6 +66,10 @@ import android.util.Log;
 import org.anonomi.android.xmr.AnonMoneroUtils;
 import org.anonomi.android.xmr.MoneroDecodedAddress;
 
+import org.anonchatsecure.bramble.api.FormatException;
+
+import static java.util.Objects.requireNonNull;
+import static org.anonchatsecure.anonchat.api.autodelete.AutoDeleteConstants.NO_AUTO_DELETE_TIMER;
 import org.anonchatsecure.anonchat.api.autodelete.AutoDeleteManager;
 import org.anonchatsecure.anonchat.api.conversation.ConversationManager;
 import org.anonchatsecure.bramble.api.db.TransactionManager;
@@ -545,116 +549,154 @@ public class RequestXmrActivity extends BriarActivity {
 	}
 
 	private void sendRequestMessage() {
-		try {
-			if (qrBitmap == null) {
-				Toast.makeText(this, R.string.no_qr_code_generated,
-						Toast.LENGTH_SHORT).show();
-				return;
-			}
+		if (qrBitmap == null) {
+			Toast.makeText(this, R.string.no_qr_code_generated,
+					Toast.LENGTH_SHORT).show();
+			return;
+		}
 
-			GroupId groupId = messagingManager.getConversationId(contactId);
+		// Read the views here: the rest runs on the database thread.
+		Bitmap qr = qrBitmap;
+		String subaddress = lastGeneratedSubaddress;
+		String amountRaw = amountEditText.getText().toString();
+		String amountTrimmed = amountRaw.trim();
+		String rateRaw = rateEditText.getText().toString();
+		String description =
+				optionalMessageEditText.getText().toString().trim();
+		String currency = readCurrency();
+		Double rate = readRate();
 
-			// The conversation decides the timestamp, not the clock, or a
-			// contact whose clock runs ahead sorts this above their newer
-			// messages. Read-only, so it does not take the write lock.
-			long timestamp = transactionManager.transactionWithResult(true,
-					txn -> conversationManager
-							.getTimestampForOutgoingMessage(txn, contactId));
-
-			// The three-argument form records the timestamp, but it writes,
-			// so it belongs in the same transaction as the message. That
-			// needs the send moved off this thread first.
-			long autoDeleteTimer = 0;
+		// Parsed here so nothing is written before the value is known to be
+		// good. A failure only stops the typed form: the text form prints the
+		// amount as typed and never needed it as a number.
+		Long parsed = null;
+		boolean unusable = false;
+		if (!amountTrimmed.isEmpty()) {
 			try {
-				autoDeleteTimer = transactionManager.transactionWithResult(true, txn ->
-						autoDeleteManager.getAutoDeleteTimer(txn, contactId)
-				);
-			} catch (Exception e) {
-				e.printStackTrace(); // fallback to zero
+				parsed = AnonMoneroUtils.xmrToAtomicUnits(amountTrimmed);
+			} catch (NumberFormatException e) {
+				unusable = true;
 			}
+		}
+		Long amount = parsed;
+		boolean amountUnusable = unusable;
 
-			PrivateMessageFormat format = transactionManager
-					.transactionWithResult(true, txn -> messagingManager
-							.getContactMessageFormat(txn, contactId));
-			// The contact's format says what they can read, not what we are
-			// willing to send: the flag has to be checked here too, or
-			// turning it off would stop peers sending us a typed request
-			// while we carried on sending them one
-			if (featureFlags.shouldEnableMoneroRequests()
-					&& format.supportsMoneroRequest()) {
-				if (!sendTypedRequest(groupId, timestamp, autoDeleteTimer)) {
+		// The send is no longer synchronous, so the button has to stop
+		// accepting a second tap itself.
+		sendButton.setEnabled(false);
+
+		runOnDbThread(() -> {
+			try {
+				GroupId groupId = transactionManager.transactionWithResult(
+						true, txn -> messagingManager
+								.getConversationId(txn, contactId));
+				PrivateMessageFormat format = transactionManager
+						.transactionWithResult(true, txn -> messagingManager
+								.getContactMessageFormat(txn, contactId));
+				// The contact's format says what they can read, not what we
+				// are willing to send: the flag has to be checked here too,
+				// or turning it off would stop peers sending us a typed
+				// request while we carried on sending them one
+				boolean typed = featureFlags.shouldEnableMoneroRequests()
+						&& format.supportsMoneroRequest();
+				if (typed && amountUnusable) {
+					runOnUiThreadUnlessDestroyed(() -> {
+						sendButton.setEnabled(true);
+						Toast.makeText(this, R.string.invalid_monero_amount,
+								Toast.LENGTH_SHORT).show();
+					});
 					return;
 				}
-			} else {
-				sendTextRequest(groupId, timestamp, autoDeleteTimer);
+
+				// The attachment has no transaction-taking overload and has
+				// to exist before the message that refers to it. It carries
+				// no bookkeeping, so leaving it outside costs only an orphan
+				// if the message then fails.
+				AttachmentHeader attachment = typed ? null
+						: addQrAttachment(groupId, qr);
+
+				// One write. The timer read records the timestamp it was read
+				// against, so it has to commit with the message it belongs
+				// to, or a later failure leaves us saying we sent a timer we
+				// never sent.
+				transactionManager.transaction(false, txn -> {
+					long timestamp = conversationManager
+							.getTimestampForOutgoingMessage(txn, contactId);
+					// A contact who cannot carry a timer must not have one
+					// recorded against them.
+					long timer = format.supportsAutoDelete()
+							? autoDeleteManager.getAutoDeleteTimer(txn,
+									contactId, timestamp)
+							: NO_AUTO_DELETE_TIMER;
+					PrivateMessage pm = typed
+							? typedRequest(groupId, timestamp, timer,
+									subaddress, amount, description, currency,
+									rate)
+							: textRequest(groupId, timestamp, timer,
+									requireNonNull(attachment), subaddress,
+									amountRaw, rateRaw, description);
+					messagingManager.addLocalMessage(txn, pm);
+				});
+
+				// The index was already persisted when the subaddress was
+				// generated
+				runOnUiThreadUnlessDestroyed(() -> {
+					Toast.makeText(this, R.string.request_sent,
+							Toast.LENGTH_SHORT).show();
+					finish();
+				});
+			} catch (Exception e) {
+				e.printStackTrace();
+				runOnUiThreadUnlessDestroyed(() -> {
+					sendButton.setEnabled(true);
+					Toast.makeText(this, R.string.error_creating_message,
+							Toast.LENGTH_SHORT).show();
+				});
 			}
+		});
+	}
 
-			// The index was already persisted when the subaddress was generated
-
-			Toast.makeText(this, R.string.request_sent, Toast.LENGTH_SHORT).show();
-			finish();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			Toast.makeText(this, R.string.error_creating_message, Toast.LENGTH_SHORT).show();
-		}
+	private AttachmentHeader addQrAttachment(GroupId groupId, Bitmap qr)
+			throws Exception {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		qr.compress(Bitmap.CompressFormat.PNG, 100, baos);
+		long timestamp = transactionManager.transactionWithResult(true,
+				txn -> conversationManager
+						.getTimestampForOutgoingMessage(txn, contactId));
+		return messagingManager.addLocalAttachment(groupId, timestamp,
+				"image/png", new ByteArrayInputStream(baos.toByteArray()));
 	}
 
 	/**
-	 * Sends the request as its own message, where the address arrives as a
+	 * Builds the request as its own message, where the address arrives as a
 	 * value the contact's app can read rather than only as an image.
-	 *
-	 * @return false if the amount could not be sent as typed, having already
-	 * said so.
 	 */
-	private boolean sendTypedRequest(GroupId groupId, long timestamp,
-			long autoDeleteTimer) throws Exception {
-		String amountStr = amountEditText.getText().toString().trim();
-		Long amount = null;
-		if (!amountStr.isEmpty()) {
-			try {
-				amount = AnonMoneroUtils.xmrToAtomicUnits(amountStr);
-			} catch (NumberFormatException e) {
-				Toast.makeText(this, R.string.invalid_monero_amount,
-						Toast.LENGTH_SHORT).show();
-				return false;
-			}
-		}
-		String description = optionalMessageEditText.getText().toString().trim();
-		if (description.isEmpty()) description = null;
-		// The field is capped in characters and the limit is in bytes, so a
-		// description short enough to type can still be too long to send.
-		// The text form truncates rather than refusing, and a request that
-		// reaches one contact should not fail for another.
-		else description = truncateUtf8(description,
-				MAX_MONERO_DESCRIPTION_LENGTH);
-		MoneroRequest request = new MoneroRequest(lastGeneratedSubaddress,
-				amount, description, readCurrency(), readRate());
-		PrivateMessage pm = privateMessageFactory.createMoneroRequestMessage(
-				groupId, timestamp, request, autoDeleteTimer);
-		messagingManager.addLocalMessage(pm);
-		return true;
+	private PrivateMessage typedRequest(GroupId groupId, long timestamp,
+			long autoDeleteTimer, String subaddress, @Nullable Long amount,
+			String description, @Nullable String currency,
+			@Nullable Double rate) throws FormatException {
+		String text = description.isEmpty() ? null
+				// The field is capped in characters and the limit is in
+				// bytes, so a description short enough to type can still be
+				// too long to send. The text form truncates rather than
+				// refusing, and a request that reaches one contact should not
+				// fail for another.
+				: truncateUtf8(description, MAX_MONERO_DESCRIPTION_LENGTH);
+		MoneroRequest request = new MoneroRequest(subaddress, amount, text,
+				currency, rate);
+		return privateMessageFactory.createMoneroRequestMessage(groupId,
+				timestamp, request, autoDeleteTimer);
 	}
 
 	/**
-	 * Sends the request as text with the code attached, for a contact on a
+	 * Builds the request as text with the code attached, for a contact on a
 	 * release that cannot read one of its own. Taking the feature away from
 	 * them instead would be a worse trade than the shortened address.
 	 */
-	private void sendTextRequest(GroupId groupId, long timestamp,
-			long autoDeleteTimer) throws Exception {
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		qrBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-		byte[] qrBytes = baos.toByteArray();
-
-		AttachmentHeader attachmentHeader = messagingManager.addLocalAttachment(
-				groupId, timestamp, "image/png", new ByteArrayInputStream(qrBytes)
-		);
-
-		String amount = amountEditText.getText().toString();
-		String rateStr = rateEditText.getText().toString();
-		String optionalMessage = optionalMessageEditText.getText().toString().trim();
-
+	private PrivateMessage textRequest(GroupId groupId, long timestamp,
+			long autoDeleteTimer, AttachmentHeader attachment,
+			String subaddress, String amount, String rateStr,
+			String optionalMessage) throws FormatException {
 		// Safety: limit optional message to 100 characters
 		if (optionalMessage.length() > 100) {
 			optionalMessage = optionalMessage.substring(0, 100);
@@ -662,7 +704,7 @@ public class RequestXmrActivity extends BriarActivity {
 
 		StringBuilder message = new StringBuilder();
 		message.append("🪙 Monero Request:\n")
-				.append("Address: ").append(shortenAddress(lastGeneratedSubaddress));
+				.append("Address: ").append(shortenAddress(subaddress));
 
 		if (!amount.isEmpty()) {
 			message.append("\nAmount: ").append(amount).append(" XMR");
@@ -677,7 +719,8 @@ public class RequestXmrActivity extends BriarActivity {
 				double amountValue = Double.parseDouble(amount);
 				double rateValue = Double.parseDouble(rateStr);
 				double fiatValue = amountValue * rateValue;
-				message.append("\nFiat: ").append(String.format("%.2f", fiatValue));
+				message.append("\nFiat: ")
+						.append(String.format("%.2f", fiatValue));
 			} catch (NumberFormatException ignored) {}
 		}
 
@@ -685,12 +728,9 @@ public class RequestXmrActivity extends BriarActivity {
 			message.append("\n").append(optionalMessage);
 		}
 
-		PrivateMessage pm = privateMessageFactory.createPrivateMessage(
-				groupId, timestamp, message.toString(),
-				Collections.singletonList(attachmentHeader), autoDeleteTimer
-		);
-
-		messagingManager.addLocalMessage(pm);
+		return privateMessageFactory.createPrivateMessage(groupId, timestamp,
+				message.toString(), Collections.singletonList(attachment),
+				autoDeleteTimer);
 	}
 
 	/**
