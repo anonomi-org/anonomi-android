@@ -67,6 +67,7 @@ import org.anonomi.android.xmr.AnonMoneroUtils;
 import org.anonomi.android.xmr.MoneroDecodedAddress;
 
 import org.anonchatsecure.anonchat.api.autodelete.AutoDeleteManager;
+import org.anonchatsecure.anonchat.api.conversation.ConversationManager;
 import org.anonchatsecure.bramble.api.db.TransactionManager;
 
 public class RequestXmrActivity extends BriarActivity {
@@ -106,6 +107,7 @@ public class RequestXmrActivity extends BriarActivity {
 	private TextView minorIndexTextView;
 
 	@Inject AutoDeleteManager autoDeleteManager;
+	@Inject ConversationManager conversationManager;
 	@Inject TransactionManager transactionManager;
 
 	@Override
@@ -550,9 +552,18 @@ public class RequestXmrActivity extends BriarActivity {
 				return;
 			}
 
-			long timestamp = System.currentTimeMillis();
 			GroupId groupId = messagingManager.getConversationId(contactId);
 
+			// The conversation decides the timestamp, not the clock, or a
+			// contact whose clock runs ahead sorts this above their newer
+			// messages. Read-only, so it does not take the write lock.
+			long timestamp = transactionManager.transactionWithResult(true,
+					txn -> conversationManager
+							.getTimestampForOutgoingMessage(txn, contactId));
+
+			// The three-argument form records the timestamp, but it writes,
+			// so it belongs in the same transaction as the message. That
+			// needs the send moved off this thread first.
 			long autoDeleteTimer = 0;
 			try {
 				autoDeleteTimer = transactionManager.transactionWithResult(true, txn ->
