@@ -469,6 +469,12 @@ class CryptoComponentImpl implements CryptoComponent {
 	}
 
 	@Override
+	public SecretKey deriveKeyFromPassword(String password, byte[] salt,
+			int cost) {
+		return passwordBasedKdf.deriveKey(password, salt, cost);
+	}
+
+	@Override
 	public boolean isEncryptedWithStrengthenedKey(byte[] ciphertext) {
 		return ciphertext.length > 0 &&
 				ciphertext[0] == PBKDF_FORMAT_SCRYPT_STRENGTHENED;

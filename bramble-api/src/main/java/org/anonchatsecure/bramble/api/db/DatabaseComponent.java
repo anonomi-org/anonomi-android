@@ -28,6 +28,7 @@ import org.anonchatsecure.bramble.api.transport.TransportKeySet;
 import org.anonchatsecure.bramble.api.transport.TransportKeys;
 import org.briarproject.nullsafety.NotNullByDefault;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -75,6 +76,13 @@ public interface DatabaseComponent extends TransactionManager {
 	 * Waits for any open transactions to finish and closes the database.
 	 */
 	void close() throws DbException;
+
+	/**
+	 * Writes a snapshot of the open database to the given file as a zip
+	 * archive. The write lock is held for the duration of the copy, so
+	 * nothing can be written to the database while the snapshot is taken.
+	 */
+	void backupDatabase(File dest) throws DbException;
 
 	/**
 	 * Stores a contact associated with the given local and remote pseudonyms,

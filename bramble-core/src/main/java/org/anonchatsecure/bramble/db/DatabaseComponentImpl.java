@@ -73,6 +73,7 @@ import org.anonchatsecure.bramble.api.transport.TransportKeySet;
 import org.anonchatsecure.bramble.api.transport.TransportKeys;
 import org.briarproject.nullsafety.NotNullByDefault;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -166,6 +167,11 @@ class DatabaseComponentImpl<T> implements DatabaseComponent {
 			else lock.writeLock().unlock();
 			throw e;
 		}
+	}
+
+	@Override
+	public void backupDatabase(File dest) throws DbException {
+		transaction(false, txn -> db.backupTo(unbox(txn), dest));
 	}
 
 	@Override

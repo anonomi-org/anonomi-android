@@ -75,6 +75,7 @@ import static java.util.logging.Level.WARNING;
 import static java.util.logging.Logger.getLogger;
 import static org.anonchatsecure.bramble.api.db.DatabaseComponent.NO_CLEANUP_DEADLINE;
 import static org.anonchatsecure.bramble.api.db.DatabaseComponent.TIMER_NOT_STARTED;
+import static org.anonchatsecure.bramble.api.db.DatabaseSchema.CODE_SCHEMA_VERSION;
 import static org.anonchatsecure.bramble.api.db.Metadata.REMOVE;
 import static org.anonchatsecure.bramble.api.record.Record.RECORD_HEADER_BYTES;
 import static org.anonchatsecure.bramble.api.sync.Group.Visibility.INVISIBLE;
@@ -99,9 +100,6 @@ import static org.anonchatsecure.bramble.util.LogUtils.now;
  */
 @NotNullByDefault
 abstract class JdbcDatabase implements Database<Connection> {
-
-	// Package access for testing
-	static final int CODE_SCHEMA_VERSION = 52;
 
 	/**
 	 * The maximum number of idle connections to keep open.

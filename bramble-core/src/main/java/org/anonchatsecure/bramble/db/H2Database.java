@@ -13,6 +13,7 @@ import org.briarproject.nullsafety.NotNullByDefault;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
@@ -103,6 +104,20 @@ class H2Database extends JdbcDatabase {
 		} catch (SQLException e) {
 			tryToClose(s, LOG, WARNING);
 			tryToClose(c, LOG, WARNING);
+			throw new DbException(e);
+		}
+	}
+
+	@Override
+	public void backupTo(Connection txn, File dest) throws DbException {
+		PreparedStatement ps = null;
+		try {
+			ps = txn.prepareStatement("BACKUP TO ?");
+			ps.setString(1, dest.getAbsolutePath());
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			tryToClose(ps, LOG, WARNING);
 			throw new DbException(e);
 		}
 	}

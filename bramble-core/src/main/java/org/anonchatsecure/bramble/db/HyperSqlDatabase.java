@@ -94,6 +94,11 @@ class HyperSqlDatabase extends JdbcDatabase {
 	}
 
 	@Override
+	public void backupTo(Connection txn, File dest) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	protected Connection createConnection() throws DbException, SQLException {
 		SecretKey key = this.key;
 		if (key == null) throw new DbClosedException();

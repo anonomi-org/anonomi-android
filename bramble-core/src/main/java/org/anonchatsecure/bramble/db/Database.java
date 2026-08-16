@@ -32,6 +32,7 @@ import org.anonchatsecure.bramble.api.transport.TransportKeySet;
 import org.anonchatsecure.bramble.api.transport.TransportKeys;
 import org.briarproject.nullsafety.NotNullByDefault;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -91,6 +92,12 @@ interface Database<T> {
 	 * will be applied to the database.
 	 */
 	void commitTransaction(T txn) throws DbException;
+
+	/**
+	 * Writes a snapshot of the open database to the given file as a zip
+	 * archive, using the given transaction's connection.
+	 */
+	void backupTo(T txn, File dest) throws DbException;
 
 	/**
 	 * Stores a contact associated with the given local and remote pseudonyms,
