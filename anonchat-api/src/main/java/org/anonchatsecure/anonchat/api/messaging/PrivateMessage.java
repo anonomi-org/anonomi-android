@@ -24,12 +24,15 @@ import org.briarproject.nullsafety.NotNullByDefault;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import static java.util.Collections.emptyList;
 import static org.anonchatsecure.anonchat.api.autodelete.AutoDeleteConstants.NO_AUTO_DELETE_TIMER;
 import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_IMAGES;
 import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_IMAGES_AUTO_DELETE;
+import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_IMAGES_AUTO_DELETE_LOCATION;
+import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_IMAGES_AUTO_DELETE_LOCATION_MONERO;
 import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_ONLY;
 
 @Immutable
@@ -41,6 +44,10 @@ public class PrivateMessage {
 	private final List<AttachmentHeader> attachmentHeaders;
 	private final long autoDeleteTimer;
 	private final PrivateMessageFormat format;
+	@Nullable
+	private final Location location;
+	@Nullable
+	private final MoneroRequest moneroRequest;
 
 	/**
 	 * Constructor for private messages in the
@@ -52,6 +59,8 @@ public class PrivateMessage {
 		attachmentHeaders = emptyList();
 		autoDeleteTimer = NO_AUTO_DELETE_TIMER;
 		format = TEXT_ONLY;
+		location = null;
+		moneroRequest = null;
 	}
 
 	/**
@@ -65,6 +74,8 @@ public class PrivateMessage {
 		this.attachmentHeaders = headers;
 		autoDeleteTimer = NO_AUTO_DELETE_TIMER;
 		format = TEXT_IMAGES;
+		location = null;
+		moneroRequest = null;
 	}
 
 	/**
@@ -79,6 +90,58 @@ public class PrivateMessage {
 		this.attachmentHeaders = headers;
 		this.autoDeleteTimer = autoDeleteTimer;
 		format = TEXT_IMAGES_AUTO_DELETE;
+		location = null;
+		moneroRequest = null;
+	}
+
+	/**
+	 * Constructor for locations, which need the
+	 * {@link PrivateMessageFormat#TEXT_IMAGES_AUTO_DELETE_LOCATION
+	 * TEXT_IMAGES_AUTO_DELETE_LOCATION} format.
+	 */
+	public PrivateMessage(Message message, Location location,
+			long autoDeleteTimer) {
+		this.message = message;
+		hasText = false;
+		attachmentHeaders = emptyList();
+		this.autoDeleteTimer = autoDeleteTimer;
+		format = TEXT_IMAGES_AUTO_DELETE_LOCATION;
+		this.location = location;
+		moneroRequest = null;
+	}
+
+	/**
+	 * Constructor for payment requests, which need the
+	 * {@link PrivateMessageFormat#TEXT_IMAGES_AUTO_DELETE_LOCATION_MONERO
+	 * TEXT_IMAGES_AUTO_DELETE_LOCATION_MONERO} format.
+	 */
+	public PrivateMessage(Message message, MoneroRequest moneroRequest,
+			long autoDeleteTimer) {
+		this.message = message;
+		hasText = false;
+		attachmentHeaders = emptyList();
+		this.autoDeleteTimer = autoDeleteTimer;
+		format = TEXT_IMAGES_AUTO_DELETE_LOCATION_MONERO;
+		location = null;
+		this.moneroRequest = moneroRequest;
+	}
+
+	/**
+	 * Returns the location this message carries, or null if it carries text
+	 * and attachments.
+	 */
+	@Nullable
+	public Location getLocation() {
+		return location;
+	}
+
+	/**
+	 * Returns the payment request this message carries, or null if it
+	 * carries anything else.
+	 */
+	@Nullable
+	public MoneroRequest getMoneroRequest() {
+		return moneroRequest;
 	}
 
 	public Message getMessage() {

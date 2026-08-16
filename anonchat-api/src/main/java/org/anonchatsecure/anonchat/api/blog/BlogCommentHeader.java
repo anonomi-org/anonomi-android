@@ -42,9 +42,18 @@ public class BlogCommentHeader extends BlogPostHeader {
 			@Nullable String comment, BlogPostHeader parent, MessageId id,
 			long timestamp, long timeReceived, Author author,
 			AuthorInfo authorInfo, boolean read) {
+		this(type, groupId, comment, parent, id, timestamp, timeReceived,
+				author, authorInfo, read, id);
+	}
+
+	public BlogCommentHeader(MessageType type, GroupId groupId,
+			@Nullable String comment, BlogPostHeader parent, MessageId id,
+			long timestamp, long timeReceived, Author author,
+			AuthorInfo authorInfo, boolean read, MessageId originalId) {
 
 		super(type, groupId, id, parent.getId(), timestamp,
-				timeReceived, author, authorInfo, false, read);
+				timeReceived, author, authorInfo, false, read, false,
+				originalId);
 
 		if (type != COMMENT && type != WRAPPED_COMMENT)
 			throw new IllegalArgumentException("Incompatible Message Type");

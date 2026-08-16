@@ -1,14 +1,18 @@
 package org.anonomi.android.conversation;
 
 import android.annotation.SuppressLint;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.transition.Slide;
 import android.transition.Transition;
+import android.util.DisplayMetrics;
 import android.util.SparseArray;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -84,11 +88,17 @@ import org.anonchatsecure.anonchat.api.conversation.event.ConversationMessageRec
 import org.anonchatsecure.anonchat.api.forum.ForumSharingManager;
 import org.anonchatsecure.anonchat.api.introduction.IntroductionManager;
 import org.anonchatsecure.anonchat.api.messaging.MessagingManager;
+import org.anonchatsecure.anonchat.api.messaging.Location;
+import org.anonchatsecure.anonchat.api.messaging.MoneroRequest;
+import org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat;
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessageHeader;
 import org.anonchatsecure.anonchat.api.privategroup.invitation.GroupInvitationManager;
 import org.briarproject.nullsafety.MethodsNotNullByDefault;
 import org.briarproject.nullsafety.ParametersNotNullByDefault;
 import org.anonomi.android.map.MapViewActivity;
+import org.anonomi.android.qrcode.QrCodeUtils;
+import org.anonomi.android.xmr.AnonMoneroUtils;
+import org.anonomi.android.xmr.MoneroPaymentUri;
 
 import androidx.activity.result.contract.ActivityResultContracts;
 
@@ -186,8 +196,6 @@ import static org.anonomi.android.util.UiUtils.observeOnce;
 import static org.anonomi.android.view.AuthorView.setAvatar;
 import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_ATTACHMENTS_PER_MESSAGE;
 import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_PRIVATE_MESSAGE_TEXT_LENGTH;
-import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_IMAGES_AUTO_DELETE;
-import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_ONLY;
 
 
 @MethodsNotNullByDefault
@@ -477,7 +485,7 @@ public class ConversationActivity extends BriarActivity
 			sendController = new TextAttachmentController(textInputView,
 					imagePreview, this, viewModel);
 			observeOnce(viewModel.getPrivateMessageFormat(), this, format -> {
-				if (format != TEXT_ONLY) {
+				if (format.supportsImages()) {
 					// TODO: remove cast when removing feature flag
 					((TextAttachmentController) sendController)
 							.setImagesSupported();
@@ -735,10 +743,7 @@ public class ConversationActivity extends BriarActivity
 					.make(list, R.string.introduction_sent, Snackbar.LENGTH_SHORT)
 					.show();
 		} else if (request == REQUEST_SEND_LOCATION && result == RESULT_OK && data != null) {
-			String message = data.getStringExtra(MapLocationPickerActivity.RESULT_MAP_MESSAGE);
-			if (message != null) {
-				sendMapMessage(message);
-			}
+			sendLocationResult(data);
 		}
 	}
 
@@ -805,7 +810,7 @@ public class ConversationActivity extends BriarActivity
 			item.setVisible(true);
 			// Enable menu item only if contact supports auto-delete
 			viewModel.getPrivateMessageFormat().observe(this, format ->
-					item.setEnabled(format == TEXT_IMAGES_AUTO_DELETE));
+					item.setEnabled(format.supportsAutoDelete()));
 		}
 		return super.onCreateOptionsMenu(menu);
 	}
@@ -968,8 +973,40 @@ public class ConversationActivity extends BriarActivity
 		startActivityForResult(intent, REQUEST_SEND_LOCATION);
 	}
 
+	/**
+	 * Sends the location as its own message where the contact can read one,
+	 * and as text where they are still on a release that cannot.
+	 */
+	private void sendLocationResult(Intent data) {
+		PrivateMessageFormat format =
+				viewModel.getPrivateMessageFormat().getValue();
+		String label =
+				data.getStringExtra(MapLocationPickerActivity.RESULT_LABEL);
+		// The contact's format says what they can read, not what we are
+		// willing to send, so the flag has to be checked here too
+		if (featureFlags.shouldEnableLocationMessages() && format != null
+				&& format.supportsLocation() && label != null) {
+			Location location = new Location(label,
+					data.getDoubleExtra(
+							MapLocationPickerActivity.RESULT_LATITUDE, 0),
+					data.getDoubleExtra(
+							MapLocationPickerActivity.RESULT_LONGITUDE, 0),
+					data.getDoubleExtra(
+							MapLocationPickerActivity.RESULT_ZOOM, 15));
+			observeLocationSend(viewModel.sendLocation(location));
+			return;
+		}
+		String message = data.getStringExtra(
+				MapLocationPickerActivity.RESULT_MAP_MESSAGE);
+		if (message != null) sendMapMessage(message);
+	}
+
 	private void sendMapMessage(String messageText) {
-		viewModel.sendMapMessage(messageText).observe(this, state -> {
+		observeLocationSend(viewModel.sendMapMessage(messageText));
+	}
+
+	private void observeLocationSend(LiveData<SendState> sendState) {
+		sendState.observe(this, state -> {
 			if (state == SendState.SENT) {
 				Toast.makeText(this, R.string.location_sent, Toast.LENGTH_SHORT).show();
 				loadMessages();  // refresh UI
@@ -1642,6 +1679,56 @@ public class ConversationActivity extends BriarActivity
 		intent.putExtra(MapViewActivity.EXTRA_LONGITUDE, data.longitude);
 		intent.putExtra(MapViewActivity.EXTRA_ZOOM, data.zoom);
 		startActivity(intent);
+	}
+
+	/**
+	 * Shows the code for a request that arrived as its own message. The code
+	 * is drawn here from the fields rather than sent as an image, so the
+	 * request costs a wallet address rather than a picture of one.
+	 */
+	@Override
+	public void onMoneroRequestClicked(MoneroRequest request) {
+		String subaddress = request.getSubaddress();
+		// We only ever send subaddresses, but the message type accepts any
+		// address a wallet could pay, and a primary one is still payable
+		boolean payable =
+				AnonMoneroUtils.isValidMoneroSubaddress(subaddress) ||
+						AnonMoneroUtils.isValidMoneroAddress(subaddress);
+		Bitmap qr = null;
+		if (payable) {
+			String uri = MoneroPaymentUri.build(subaddress,
+					request.getAmount(), request.getDescription());
+			DisplayMetrics dm = getResources().getDisplayMetrics();
+			int edge =
+					(int) (Math.min(dm.widthPixels, dm.heightPixels) * 0.8);
+			qr = QrCodeUtils.createQrCode(edge, uri);
+		}
+		MaterialAlertDialogBuilder builder =
+				new MaterialAlertDialogBuilder(this, R.style.AnonDialogTheme);
+		builder.setTitle(getString(R.string.monero_request_title));
+		if (qr == null) {
+			// An address we cannot draw a code for is still an address, and
+			// copying it is the one thing the reader actually needs
+			builder.setMessage(R.string.monero_request_unpayable);
+		} else {
+			ImageView image = new ImageView(this);
+			image.setImageBitmap(qr);
+			image.setAdjustViewBounds(true);
+			builder.setView(image);
+		}
+		builder.setPositiveButton(R.string.monero_request_copy_address,
+				(dialog, which) -> {
+					ClipboardManager cm = (ClipboardManager)
+							getSystemService(CLIPBOARD_SERVICE);
+					cm.setPrimaryClip(ClipData.newPlainText(
+							getString(R.string.monero_request_title),
+							subaddress));
+					Toast.makeText(this,
+							R.string.monero_request_address_copied,
+							Toast.LENGTH_SHORT).show();
+				});
+		builder.setNegativeButton(R.string.cancel, null);
+		builder.show();
 	}
 
 	// ---- Walkie-Talkie ----

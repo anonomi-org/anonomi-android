@@ -22,9 +22,8 @@ class BlogPostAdapter extends ListAdapter<BlogPostItem, BlogPostViewHolder> {
 		super(new DiffUtil.ItemCallback<BlogPostItem>() {
 			@Override
 			public boolean areItemsTheSame(BlogPostItem a, BlogPostItem b) {
-				// Use the postKey (author + timestamp) for identity because
-				// reblogs of the same post have different MessageIds but
-				// should be treated as the same item for optimistic updates.
+				// The same identity aggregation and dedup use, so a rebuilt
+				// list keeps its items.
 				return BaseViewModel.postKey(a.getHeader())
 						.equals(BaseViewModel.postKey(b.getHeader()));
 			}

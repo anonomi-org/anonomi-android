@@ -11,6 +11,10 @@ public interface FeatureFlags {
 
 	boolean shouldEnableDisappearingMessages();
 
+	boolean shouldEnableLocationMessages();
+
+	boolean shouldEnableMoneroRequests();
+
 	boolean shouldEnablePrivateGroupsInCore();
 
 	boolean shouldEnableForumsInCore();

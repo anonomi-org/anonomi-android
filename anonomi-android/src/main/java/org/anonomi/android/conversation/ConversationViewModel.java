@@ -41,6 +41,8 @@ import org.anonchatsecure.anonchat.api.conversation.ConversationManager;
 import org.anonchatsecure.anonchat.api.identity.AuthorInfo;
 import org.anonchatsecure.anonchat.api.identity.AuthorManager;
 import org.anonchatsecure.anonchat.api.messaging.MessagingManager;
+import org.anonchatsecure.anonchat.api.messaging.Location;
+import org.anonchatsecure.anonchat.api.messaging.PrivateLocationHeader;
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessage;
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessageFactory;
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat;
@@ -77,8 +79,6 @@ import static org.anonomi.android.view.TextSendController.SendState.SENT;
 import static org.anonomi.android.view.TextSendController.SendState.UNEXPECTED_TIMER;
 import static org.anonchatsecure.anonchat.api.autodelete.AutoDeleteConstants.NO_AUTO_DELETE_TIMER;
 import static org.anonchatsecure.anonchat.api.autodelete.AutoDeleteManager.DEFAULT_TIMER_DURATION;
-import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_IMAGES;
-import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_ONLY;
 
 @NotNullByDefault
 public class ConversationViewModel extends DbViewModel
@@ -330,7 +330,7 @@ public class ConversationViewModel extends DbViewModel
 
 		// we only show one onboarding dialog at a time
 		Settings settings = settingsManager.getSettings(SETTINGS_NAMESPACE);
-		if (format != TEXT_ONLY &&
+		if (format.supportsImages() &&
 				settings.getBoolean(SHOW_ONBOARDING_IMAGE, true)) {
 			onOnboardingShown(SHOW_ONBOARDING_IMAGE);
 			showImageOnboarding.postEvent(true);
@@ -438,6 +438,59 @@ public class ConversationViewModel extends DbViewModel
 		return sendMessage(text, Collections.emptyList(), getAutoDeleteTimer().getValue());
 	}
 
+	LiveData<SendState> sendLocation(Location location) {
+		MutableLiveData<SendState> liveData = new MutableLiveData<>();
+		long expectedTimer =
+				requireNonNull(getAutoDeleteTimer().getValue());
+		runOnDbThread(() -> {
+			try {
+				db.transaction(false, txn -> {
+					Contact contact = requireNonNull(
+							contactItem.getValue()).getContact();
+					GroupId groupId =
+							messagingManager.getContactGroup(contact).getId();
+					long timestamp = conversationManager
+							.getTimestampForOutgoingMessage(txn,
+									requireNonNull(contactId));
+					long timer = autoDeleteManager
+							.getAutoDeleteTimer(txn, contactId, timestamp);
+					if (timer != expectedTimer) {
+						throw new UnexpectedTimerException();
+					}
+					PrivateMessage m;
+					try {
+						m = privateMessageFactory.createLocationMessage(
+								groupId, timestamp, location, timer);
+					} catch (FormatException e) {
+						throw new AssertionError(e);
+					}
+					messagingManager.addLocalMessage(txn, m);
+					Message message = m.getMessage();
+					PrivateLocationHeader h = new PrivateLocationHeader(
+							message.getId(), message.getGroupId(),
+							message.getTimestamp(), true, true, false, false,
+							location, m.getAutoDeleteTimer());
+					txn.attach(() -> {
+						liveData.setValue(SENT);
+						addedHeader.setEvent(h);
+					});
+				});
+			} catch (UnexpectedTimerException e) {
+				liveData.postValue(UNEXPECTED_TIMER);
+			} catch (DbException e) {
+				logException(LOG, WARNING, e);
+				liveData.postValue(ERROR);
+			} catch (IllegalArgumentException e) {
+				// Thrown for a label that is too long, which the input can
+				// still produce since it is capped in characters and the
+				// limit is in bytes
+				logException(LOG, WARNING, e);
+				liveData.postValue(ERROR);
+			}
+		});
+		return liveData;
+	}
+
 	private PrivateMessage createMessage(Transaction txn, @Nullable String text,
 			List<AttachmentHeader> headers, long expectedTimer)
 			throws DbException {
@@ -451,10 +504,10 @@ public class ConversationViewModel extends DbViewModel
 		long timestamp = conversationManager
 				.getTimestampForOutgoingMessage(txn, requireNonNull(contactId));
 		try {
-			if (format == TEXT_ONLY) {
+			if (!format.supportsImages()) {
 				return privateMessageFactory.createLegacyPrivateMessage(
 						groupId, timestamp, requireNonNull(text));
-			} else if (format == TEXT_IMAGES) {
+			} else if (!format.supportsAutoDelete()) {
 				return privateMessageFactory.createPrivateMessage(groupId,
 						timestamp, text, headers);
 			} else {

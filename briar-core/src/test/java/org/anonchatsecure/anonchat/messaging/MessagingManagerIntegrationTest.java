@@ -27,9 +27,12 @@ import org.anonchatsecure.bramble.test.TestDatabaseConfigModule;
 import org.anonchatsecure.anonchat.api.attachment.AttachmentHeader;
 import org.anonchatsecure.anonchat.api.conversation.ConversationMessageHeader;
 import org.anonchatsecure.anonchat.api.messaging.MessagingManager;
+import org.anonchatsecure.anonchat.api.messaging.Location;
+import org.anonchatsecure.anonchat.api.messaging.MoneroRequest;
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessage;
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessageFactory;
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessageHeader;
+import org.anonchatsecure.anonchat.api.messaging.PrivateMoneroRequestHeader;
 import org.anonchatsecure.anonchat.test.BriarIntegrationTest;
 import org.anonchatsecure.anonchat.test.BriarIntegrationTestComponent;
 import org.anonchatsecure.anonchat.test.DaggerBriarIntegrationTestComponent;
@@ -60,6 +63,11 @@ import static org.junit.Assert.fail;
 
 public class MessagingManagerIntegrationTest
 		extends BriarIntegrationTest<BriarIntegrationTestComponent> {
+
+	// A real mainnet subaddress, so the length is the one the wire sees
+	private static final String SUBADDRESS =
+			"87i7kA61fNvMboXiYWHVygPAggKJPETFqLXXcdH4mQTrECvrTxZMtt6e6owj1k8j" +
+					"UVjNR11eBuBMWHFBtxAwEVcm9dcSUxr";
 
 	private DatabaseComponent db0, db1;
 	private MessagingManager messagingManager0, messagingManager1;
@@ -224,6 +232,104 @@ public class MessagingManagerIntegrationTest
 		assertGroupCounts(c1, 0, 0);
 	}
 
+	/**
+	 * A location is counted and listed like any other message, and goes when
+	 * the conversation is deleted. Each of those is a separate place that
+	 * decides what a message type is, and one of them missing a type leaves
+	 * a message on screen that the user has asked to be rid of.
+	 */
+	@Test
+	public void testLocationIsCountedListedAndDeleted() throws Exception {
+		PrivateMessage text = sendMessage(c0, c1, getRandomString(42));
+		sendLocation(c0, c1,
+				new Location("Cafe;na esquina", 38.7223, -9.1393, 15.0));
+
+		// getMessages checks the headers and the ids agree, so a location
+		// missing from either one fails here
+		assertEquals(2, getMessages(c0).size());
+		assertEquals(2, getMessages(c1).size());
+		assertGroupCounts(c0, 2, 0);
+		assertGroupCounts(c1, 2, 2);
+
+		// Deleting the text leaves the location, and the counts are worked
+		// out again from the messages that remain
+		Set<MessageId> toDelete = new HashSet<>();
+		toDelete.add(text.getMessage().getId());
+		assertTrue(db1.transactionWithResult(false, txn ->
+				messagingManager1.deleteMessages(txn, contactId, toDelete))
+				.allDeleted());
+
+		assertEquals(1, getMessages(c1).size());
+		assertGroupCounts(c1, 1, 1);
+
+		// And the location goes when the conversation does
+		assertTrue(db1.transactionWithResult(false,
+				txn -> messagingManager1.deleteAllMessages(txn, contactId))
+				.allDeleted());
+
+		assertEquals(0, getMessages(c1).size());
+		assertGroupCounts(c1, 0, 0);
+	}
+
+	/**
+	 * As above for a payment request, since every place that decides what a
+	 * message type is has to be told about each new one separately.
+	 */
+	@Test
+	public void testMoneroRequestIsCountedListedAndDeleted() throws Exception {
+		PrivateMessage text = sendMessage(c0, c1, getRandomString(42));
+		sendMoneroRequest(c0, c1, new MoneroRequest(SUBADDRESS,
+				100_000_000_000L, "Invoice 42", "EUR", 155.5));
+
+		// getMessages checks the headers and the ids agree, so a request
+		// missing from either one fails here
+		assertEquals(2, getMessages(c0).size());
+		assertEquals(2, getMessages(c1).size());
+		assertGroupCounts(c0, 2, 0);
+		assertGroupCounts(c1, 2, 2);
+
+		// Deleting the text leaves the request, and the counts are worked
+		// out again from the messages that remain
+		Set<MessageId> toDelete = new HashSet<>();
+		toDelete.add(text.getMessage().getId());
+		assertTrue(db1.transactionWithResult(false, txn ->
+				messagingManager1.deleteMessages(txn, contactId, toDelete))
+				.allDeleted());
+
+		assertEquals(1, getMessages(c1).size());
+		assertGroupCounts(c1, 1, 1);
+
+		// And the request goes when the conversation does
+		assertTrue(db1.transactionWithResult(false,
+				txn -> messagingManager1.deleteAllMessages(txn, contactId))
+				.allDeleted());
+
+		assertEquals(0, getMessages(c1).size());
+		assertGroupCounts(c1, 0, 0);
+	}
+
+	/**
+	 * The amount has to arrive as the exact number of atomic units that was
+	 * sent, since it is what the recipient pays.
+	 */
+	@Test
+	public void testMoneroRequestFieldsSurviveTheWire() throws Exception {
+		sendMoneroRequest(c0, c1, new MoneroRequest(SUBADDRESS,
+				100_000_000_000L, "Invoice 42", "EUR", 155.5));
+
+		Collection<ConversationMessageHeader> headers = getMessages(c1);
+		assertEquals(1, headers.size());
+		ConversationMessageHeader h = headers.iterator().next();
+		assertTrue(h instanceof PrivateMoneroRequestHeader);
+		MoneroRequest received =
+				((PrivateMoneroRequestHeader) h).getRequest();
+		assertEquals(SUBADDRESS, received.getSubaddress());
+		assertEquals(100_000_000_000L, received.getAmount().longValue());
+		assertEquals("Invoice 42", received.getDescription());
+		assertEquals("EUR", received.getCurrency());
+		assertEquals(155.5, received.getRate(), 0.0);
+	}
+
 	@Test
 	public void testDeleteSubset() throws Exception {
 		// send 3 message (1 with attachment)
@@ -352,6 +458,31 @@ public class MessagingManagerIntegrationTest
 				autoDeleteTimer);
 		from.getMessagingManager().addLocalMessage(m);
 		syncMessage(from, to, contactId, 1 + attachments.size(), true);
+		return m;
+	}
+
+	private PrivateMessage sendLocation(BriarIntegrationTestComponent from,
+			BriarIntegrationTestComponent to, Location location)
+			throws Exception {
+		GroupId g = from.getMessagingManager().getConversationId(contactId);
+		PrivateMessage m = messageFactory.createLocationMessage(g,
+				from.getClock().currentTimeMillis(), location,
+				NO_AUTO_DELETE_TIMER);
+		from.getMessagingManager().addLocalMessage(m);
+		syncMessage(from, to, contactId, 1, true);
+		return m;
+	}
+
+	private PrivateMessage sendMoneroRequest(
+			BriarIntegrationTestComponent from,
+			BriarIntegrationTestComponent to, MoneroRequest request)
+			throws Exception {
+		GroupId g = from.getMessagingManager().getConversationId(contactId);
+		PrivateMessage m = messageFactory.createMoneroRequestMessage(g,
+				from.getClock().currentTimeMillis(), request,
+				NO_AUTO_DELETE_TIMER);
+		from.getMessagingManager().addLocalMessage(m);
+		syncMessage(from, to, contactId, 1, true);
 		return m;
 	}
 

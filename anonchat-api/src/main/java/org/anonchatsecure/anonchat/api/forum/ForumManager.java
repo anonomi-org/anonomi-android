@@ -48,8 +48,12 @@ public interface ForumManager {
 
 	/**
 	 * The current minor version of the forum client.
+	 * <p>
+	 * Version 1 accepts posts carrying audio or image media, which have two
+	 * extra elements in the body. Clients have sent those since 1.1.0 without
+	 * advertising them, so this only lets later changes be negotiated.
 	 */
-	int MINOR_VERSION = 0;
+	int MINOR_VERSION = 1;
 
 	/**
 	 * Subscribes to a forum.

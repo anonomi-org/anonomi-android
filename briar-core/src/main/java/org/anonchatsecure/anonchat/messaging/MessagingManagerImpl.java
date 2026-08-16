@@ -55,7 +55,11 @@ import org.anonchatsecure.anonchat.api.conversation.ConversationManager;
 import org.anonchatsecure.anonchat.api.conversation.ConversationManager.ConversationClient;
 import org.anonchatsecure.anonchat.api.conversation.ConversationMessageHeader;
 import org.anonchatsecure.anonchat.api.conversation.DeletionResult;
+import org.anonchatsecure.anonchat.api.messaging.Location;
 import org.anonchatsecure.anonchat.api.messaging.MessagingManager;
+import org.anonchatsecure.anonchat.api.messaging.MoneroRequest;
+import org.anonchatsecure.anonchat.api.messaging.PrivateLocationHeader;
+import org.anonchatsecure.anonchat.api.messaging.PrivateMoneroRequestHeader;
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessage;
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat;
 import org.anonchatsecure.anonchat.api.messaging.PrivateMessageHeader;
@@ -75,6 +79,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 import javax.inject.Inject;
 
@@ -91,15 +96,28 @@ import static org.anonchatsecure.anonchat.api.attachment.MediaConstants.MSG_KEY_
 import static org.anonchatsecure.anonchat.api.autodelete.AutoDeleteConstants.NO_AUTO_DELETE_TIMER;
 import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_IMAGES;
 import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_IMAGES_AUTO_DELETE;
+import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_IMAGES_AUTO_DELETE_LOCATION;
+import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_IMAGES_AUTO_DELETE_LOCATION_MONERO;
 import static org.anonchatsecure.anonchat.api.messaging.PrivateMessageFormat.TEXT_ONLY;
 import static org.anonchatsecure.anonchat.client.MessageTrackerConstants.MSG_KEY_READ;
 import static org.anonchatsecure.anonchat.messaging.MessageTypes.ATTACHMENT;
+import static org.anonchatsecure.anonchat.messaging.MessageTypes.LOCATION;
+import static org.anonchatsecure.anonchat.messaging.MessageTypes.MONERO_REQUEST;
 import static org.anonchatsecure.anonchat.messaging.MessageTypes.PRIVATE_MESSAGE;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MISSING_ATTACHMENT_CLEANUP_DURATION_MS;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_ATTACHMENT_HEADERS;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_AUTO_DELETE_TIMER;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_HAS_TEXT;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_LOCAL;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_LOCATION_LABEL;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_LOCATION_LATITUDE;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_LOCATION_LONGITUDE;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_LOCATION_ZOOM;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_MONERO_AMOUNT;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_MONERO_CURRENCY;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_MONERO_DESCRIPTION;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_MONERO_RATE;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_MONERO_SUBADDRESS;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_MSG_TYPE;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_TIMESTAMP;
 
@@ -202,12 +220,20 @@ class MessagingManagerImpl implements MessagingManager, IncomingMessageHook,
 			// Message type is null for version 0.0 private messages
 			Integer messageType = metaDict.getOptionalInt(MSG_KEY_MSG_TYPE);
 			if (messageType == null) {
-				incomingPrivateMessage(txn, m, metaDict, true, emptyList());
+				incomingPrivateMessage(txn, m, metaDict, true, emptyList(),
+						null, null);
 			} else if (messageType == PRIVATE_MESSAGE) {
 				boolean hasText = metaDict.getBoolean(MSG_KEY_HAS_TEXT);
 				List<AttachmentHeader> headers =
 						parseAttachmentHeaders(m.getGroupId(), metaDict);
-				incomingPrivateMessage(txn, m, metaDict, hasText, headers);
+				incomingPrivateMessage(txn, m, metaDict, hasText, headers,
+						null, null);
+			} else if (messageType == LOCATION) {
+				incomingPrivateMessage(txn, m, metaDict, false, emptyList(),
+						parseLocation(metaDict), null);
+			} else if (messageType == MONERO_REQUEST) {
+				incomingPrivateMessage(txn, m, metaDict, false, emptyList(),
+						null, parseMoneroRequest(metaDict));
 			} else if (messageType == ATTACHMENT) {
 				incomingAttachment(txn, m);
 			} else {
@@ -220,7 +246,8 @@ class MessagingManagerImpl implements MessagingManager, IncomingMessageHook,
 	}
 
 	private void incomingPrivateMessage(Transaction txn, Message m,
-			BdfDictionary meta, boolean hasText, List<AttachmentHeader> headers)
+			BdfDictionary meta, boolean hasText, List<AttachmentHeader> headers,
+			@Nullable Location location, @Nullable MoneroRequest request)
 			throws DbException, FormatException {
 		long start = now();
 		GroupId groupId = m.getGroupId();
@@ -229,9 +256,17 @@ class MessagingManagerImpl implements MessagingManager, IncomingMessageHook,
 		boolean read = meta.getBoolean(MSG_KEY_READ);
 		long timer = meta.getLong(MSG_KEY_AUTO_DELETE_TIMER,
 				NO_AUTO_DELETE_TIMER);
-		PrivateMessageHeader header =
-				new PrivateMessageHeader(m.getId(), groupId, timestamp, local,
-						read, false, false, hasText, headers, timer);
+		PrivateMessageHeader header;
+		if (location != null) {
+			header = new PrivateLocationHeader(m.getId(), groupId, timestamp,
+					local, read, false, false, location, timer);
+		} else if (request != null) {
+			header = new PrivateMoneroRequestHeader(m.getId(), groupId,
+					timestamp, local, read, false, false, request, timer);
+		} else {
+			header = new PrivateMessageHeader(m.getId(), groupId, timestamp,
+					local, read, false, false, hasText, headers, timer);
+		}
 		ContactId contactId = getContactId(txn, groupId);
 		PrivateMessageReceivedEvent event =
 				new PrivateMessageReceivedEvent(header, contactId);
@@ -244,6 +279,22 @@ class MessagingManagerImpl implements MessagingManager, IncomingMessageHook,
 				timestamp);
 		if (!headers.isEmpty()) stopAttachmentCleanupTimers(txn, m, headers);
 		logDuration(LOG, "Receiving private message", start);
+	}
+
+	private Location parseLocation(BdfDictionary meta) throws FormatException {
+		return new Location(meta.getString(MSG_KEY_LOCATION_LABEL),
+				meta.getDouble(MSG_KEY_LOCATION_LATITUDE),
+				meta.getDouble(MSG_KEY_LOCATION_LONGITUDE),
+				meta.getDouble(MSG_KEY_LOCATION_ZOOM));
+	}
+
+	private MoneroRequest parseMoneroRequest(BdfDictionary meta)
+			throws FormatException {
+		return new MoneroRequest(meta.getString(MSG_KEY_MONERO_SUBADDRESS),
+				meta.getOptionalLong(MSG_KEY_MONERO_AMOUNT),
+				meta.getOptionalString(MSG_KEY_MONERO_DESCRIPTION),
+				meta.getOptionalString(MSG_KEY_MONERO_CURRENCY),
+				meta.getOptionalDouble(MSG_KEY_MONERO_RATE));
 	}
 
 	private List<AttachmentHeader> parseAttachmentHeaders(GroupId g,
@@ -322,7 +373,40 @@ class MessagingManagerImpl implements MessagingManager, IncomingMessageHook,
 			meta.put(MSG_KEY_TIMESTAMP, m.getMessage().getTimestamp());
 			meta.put(MSG_KEY_LOCAL, true);
 			meta.put(MSG_KEY_READ, true);
-			if (m.getFormat() != TEXT_ONLY) {
+			Location location = m.getLocation();
+			MoneroRequest request = m.getMoneroRequest();
+			// Both of these are also formats that support images, so they
+			// have to be handled before the branch that tests for that
+			if (location != null) {
+				meta.put(MSG_KEY_MSG_TYPE, LOCATION);
+				meta.put(MSG_KEY_LOCATION_LABEL, location.getLabel());
+				meta.put(MSG_KEY_LOCATION_LATITUDE, location.getLatitude());
+				meta.put(MSG_KEY_LOCATION_LONGITUDE, location.getLongitude());
+				meta.put(MSG_KEY_LOCATION_ZOOM, location.getZoom());
+				if (timer != NO_AUTO_DELETE_TIMER) {
+					meta.put(MSG_KEY_AUTO_DELETE_TIMER, timer);
+				}
+			} else if (request != null) {
+				meta.put(MSG_KEY_MSG_TYPE, MONERO_REQUEST);
+				meta.put(MSG_KEY_MONERO_SUBADDRESS, request.getSubaddress());
+				Long amount = request.getAmount();
+				if (amount != null) {
+					meta.put(MSG_KEY_MONERO_AMOUNT, amount);
+				}
+				String description = request.getDescription();
+				if (description != null) {
+					meta.put(MSG_KEY_MONERO_DESCRIPTION, description);
+				}
+				String currency = request.getCurrency();
+				if (currency != null) {
+					meta.put(MSG_KEY_MONERO_CURRENCY, currency);
+				}
+				Double rate = request.getRate();
+				if (rate != null) meta.put(MSG_KEY_MONERO_RATE, rate);
+				if (timer != NO_AUTO_DELETE_TIMER) {
+					meta.put(MSG_KEY_AUTO_DELETE_TIMER, timer);
+				}
+			} else if (m.getFormat().supportsImages()) {
 				meta.put(MSG_KEY_MSG_TYPE, PRIVATE_MESSAGE);
 				meta.put(MSG_KEY_HAS_TEXT, m.hasText());
 				BdfList headers = new BdfList();
@@ -331,7 +415,7 @@ class MessagingManagerImpl implements MessagingManager, IncomingMessageHook,
 							BdfList.of(a.getMessageId(), a.getContentType()));
 				}
 				meta.put(MSG_KEY_ATTACHMENT_HEADERS, headers);
-				if (m.getFormat() == TEXT_IMAGES_AUTO_DELETE
+				if (m.getFormat().supportsAutoDelete()
 						&& timer != NO_AUTO_DELETE_TIMER) {
 					meta.put(MSG_KEY_AUTO_DELETE_TIMER, timer);
 				}
@@ -445,12 +529,27 @@ class MessagingManagerImpl implements MessagingManager, IncomingMessageHook,
 			try {
 				// Message type is null for version 0.0 private messages
 				Integer messageType = meta.getOptionalInt(MSG_KEY_MSG_TYPE);
-				if (messageType != null && messageType != PRIVATE_MESSAGE)
+				if (messageType != null && messageType != PRIVATE_MESSAGE
+						&& messageType != LOCATION
+						&& messageType != MONERO_REQUEST)
 					continue;
 				long timestamp = meta.getLong(MSG_KEY_TIMESTAMP);
 				boolean local = meta.getBoolean(MSG_KEY_LOCAL);
 				boolean read = meta.getBoolean(MSG_KEY_READ);
-				if (messageType == null) {
+				if (messageType != null && messageType == LOCATION) {
+					long timer = meta.getLong(MSG_KEY_AUTO_DELETE_TIMER,
+							NO_AUTO_DELETE_TIMER);
+					headers.add(new PrivateLocationHeader(id, g, timestamp,
+							local, read, s.isSent(), s.isSeen(),
+							parseLocation(meta), timer));
+				} else if (messageType != null
+						&& messageType == MONERO_REQUEST) {
+					long timer = meta.getLong(MSG_KEY_AUTO_DELETE_TIMER,
+							NO_AUTO_DELETE_TIMER);
+					headers.add(new PrivateMoneroRequestHeader(id, g,
+							timestamp, local, read, s.isSent(), s.isSeen(),
+							parseMoneroRequest(meta), timer));
+				} else if (messageType == null) {
 					headers.add(new PrivateMessageHeader(id, g, timestamp,
 							local, read, s.isSent(), s.isSeen(), true,
 							emptyList(), NO_AUTO_DELETE_TIMER));
@@ -480,7 +579,8 @@ class MessagingManagerImpl implements MessagingManager, IncomingMessageHook,
 			for (Entry<MessageId, BdfDictionary> entry : messages.entrySet()) {
 				Integer type =
 						entry.getValue().getOptionalInt(MSG_KEY_MSG_TYPE);
-				if (type == null || type == PRIVATE_MESSAGE)
+				if (type == null || type == PRIVATE_MESSAGE
+						|| type == LOCATION || type == MONERO_REQUEST)
 					result.add(entry.getKey());
 			}
 		} catch (FormatException e) {
@@ -500,7 +600,10 @@ class MessagingManagerImpl implements MessagingManager, IncomingMessageHook,
 		try {
 			BdfList body = clientHelper.getMessageAsList(txn, m);
 			if (body.size() == 1) return body.getString(0); // Legacy format
-			else return body.getOptionalString(1);
+			// A typed message carries one of its own fields at this index,
+			// so returning it would show a label or an address as the text
+			if (body.getInt(0) != PRIVATE_MESSAGE) return null;
+			return body.getOptionalString(1);
 		} catch (FormatException e) {
 			throw new DbException(e);
 		}
@@ -511,7 +614,9 @@ class MessagingManagerImpl implements MessagingManager, IncomingMessageHook,
 			ContactId c) throws DbException {
 		int minorVersion = clientVersioningManager
 				.getClientMinorVersion(txn, c, CLIENT_ID, 0);
-		if (minorVersion >= 3) return TEXT_IMAGES_AUTO_DELETE;
+		if (minorVersion >= 5) return TEXT_IMAGES_AUTO_DELETE_LOCATION_MONERO;
+		else if (minorVersion >= 4) return TEXT_IMAGES_AUTO_DELETE_LOCATION;
+		else if (minorVersion >= 3) return TEXT_IMAGES_AUTO_DELETE;
 		else if (minorVersion >= 1) return TEXT_IMAGES;
 		else return TEXT_ONLY;
 	}
@@ -581,7 +686,9 @@ class MessagingManagerImpl implements MessagingManager, IncomingMessageHook,
 			for (Entry<MessageId, BdfDictionary> entry : metadata.entrySet()) {
 				BdfDictionary meta = entry.getValue();
 				Integer messageType = meta.getOptionalInt(MSG_KEY_MSG_TYPE);
-				if (messageType == null || messageType == PRIVATE_MESSAGE) {
+				if (messageType == null || messageType == PRIVATE_MESSAGE
+						|| messageType == LOCATION
+						|| messageType == MONERO_REQUEST) {
 					msgCount++;
 					if (!meta.getBoolean(MSG_KEY_READ)) unreadCount++;
 				}

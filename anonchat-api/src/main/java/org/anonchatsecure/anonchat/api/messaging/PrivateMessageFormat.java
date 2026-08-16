@@ -38,5 +38,39 @@ public enum PrivateMessageFormat {
 	 * attachments and auto-deletion. Support for this format was added
 	 * in client version 0.3.
 	 */
-	TEXT_IMAGES_AUTO_DELETE
+	TEXT_IMAGES_AUTO_DELETE,
+
+	/**
+	 * Fourth version of the private message format, which additionally
+	 * supports locations. Support for this format was added in client
+	 * version 0.4.
+	 */
+	TEXT_IMAGES_AUTO_DELETE_LOCATION,
+
+	/**
+	 * Fifth version of the private message format, which additionally
+	 * supports payment requests. Support for this format was added in
+	 * client version 0.5.
+	 */
+	TEXT_IMAGES_AUTO_DELETE_LOCATION_MONERO;
+
+	// The constants are ordered by the features they add, so a format supports
+	// a feature if it is not older than the one that introduced it. Comparing
+	// with == instead would drop a feature each time a newer format is added.
+
+	public boolean supportsImages() {
+		return compareTo(TEXT_IMAGES) >= 0;
+	}
+
+	public boolean supportsAutoDelete() {
+		return compareTo(TEXT_IMAGES_AUTO_DELETE) >= 0;
+	}
+
+	public boolean supportsLocation() {
+		return compareTo(TEXT_IMAGES_AUTO_DELETE_LOCATION) >= 0;
+	}
+
+	public boolean supportsMoneroRequest() {
+		return compareTo(TEXT_IMAGES_AUTO_DELETE_LOCATION_MONERO) >= 0;
+	}
 }

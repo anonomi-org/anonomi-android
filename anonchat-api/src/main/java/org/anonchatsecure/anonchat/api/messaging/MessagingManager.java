@@ -50,7 +50,7 @@ public interface MessagingManager extends ConversationClient {
 	/**
 	 * The current minor version of the messaging client.
 	 */
-	int MINOR_VERSION = 3;
+	int MINOR_VERSION = 5;
 
 	/**
 	 * Stores a local private message.

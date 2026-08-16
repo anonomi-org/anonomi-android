@@ -3,6 +3,7 @@ package org.anonomi.android.conversation;
 import android.view.View;
 
 import org.anonomi.android.attachment.AttachmentItem;
+import org.anonchatsecure.anonchat.api.messaging.MoneroRequest;
 import org.briarproject.nullsafety.NotNullByDefault;
 
 import androidx.annotation.UiThread;
@@ -23,5 +24,7 @@ interface ConversationListener {
 	void onLinkClick(String url);
 
 	void onMapMessageClicked(MapMessageData data);
+
+	void onMoneroRequestClicked(MoneroRequest request);
 
 }

@@ -51,14 +51,33 @@ import static org.anonchatsecure.anonchat.api.attachment.MediaConstants.MSG_KEY_
 import static org.anonchatsecure.anonchat.api.autodelete.AutoDeleteConstants.MAX_AUTO_DELETE_TIMER_MS;
 import static org.anonchatsecure.anonchat.api.autodelete.AutoDeleteConstants.MIN_AUTO_DELETE_TIMER_MS;
 import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_ATTACHMENTS_PER_MESSAGE;
+import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_LOCATION_LABEL_LENGTH;
+import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_LOCATION_ZOOM;
 import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_PRIVATE_MESSAGE_TEXT_LENGTH;
 import static org.anonchatsecure.anonchat.client.MessageTrackerConstants.MSG_KEY_READ;
+import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_MONERO_ADDRESS_LENGTH;
+import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_MONERO_DESCRIPTION_LENGTH;
+import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_MONERO_EXTRAS;
+import static org.anonchatsecure.anonchat.api.messaging.MessagingConstants.MAX_MONERO_EXTRA_VALUE_LENGTH;
 import static org.anonchatsecure.anonchat.messaging.MessageTypes.ATTACHMENT;
+import static org.anonchatsecure.anonchat.messaging.MessageTypes.LOCATION;
+import static org.anonchatsecure.anonchat.messaging.MessageTypes.MONERO_REQUEST;
 import static org.anonchatsecure.anonchat.messaging.MessageTypes.PRIVATE_MESSAGE;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MONERO_EXTRA_CURRENCY;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MONERO_EXTRA_RATE;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_MONERO_AMOUNT;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_MONERO_CURRENCY;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_MONERO_DESCRIPTION;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_MONERO_RATE;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_MONERO_SUBADDRESS;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_ATTACHMENT_HEADERS;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_AUTO_DELETE_TIMER;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_HAS_TEXT;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_LOCAL;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_LOCATION_LABEL;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_LOCATION_LATITUDE;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_LOCATION_LONGITUDE;
+import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_LOCATION_ZOOM;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_MSG_TYPE;
 import static org.anonchatsecure.anonchat.messaging.MessagingConstants.MSG_KEY_TIMESTAMP;
 import static org.junit.Assert.assertEquals;
@@ -110,6 +129,39 @@ public class PrivateMessageValidatorTest extends BrambleMockTestCase {
 			// counting input stream
 			new BdfEntry(MSG_KEY_DESCRIPTOR_LENGTH, 0L),
 			new BdfEntry(MSG_KEY_CONTENT_TYPE, contentType)
+	);
+
+	private final String locationLabel =
+			getRandomString(MAX_LOCATION_LABEL_LENGTH);
+	private final BdfDictionary locationMeta = BdfDictionary.of(
+			new BdfEntry(MSG_KEY_TIMESTAMP, message.getTimestamp()),
+			new BdfEntry(MSG_KEY_LOCAL, false),
+			new BdfEntry(MSG_KEY_READ, false),
+			new BdfEntry(MSG_KEY_MSG_TYPE, LOCATION),
+			new BdfEntry(MSG_KEY_LOCATION_LABEL, locationLabel),
+			new BdfEntry(MSG_KEY_LOCATION_LATITUDE, 38.7),
+			new BdfEntry(MSG_KEY_LOCATION_LONGITUDE, -9.1),
+			new BdfEntry(MSG_KEY_LOCATION_ZOOM, 15.0)
+	);
+
+	// A real mainnet subaddress, so the length is the one the wire sees
+	private final String subaddress =
+			"87i7kA61fNvMboXiYWHVygPAggKJPETFqLXXcdH4mQTrECvrTxZMtt6e6owj1k8j" +
+					"UVjNR11eBuBMWHFBtxAwEVcm9dcSUxr";
+	private final BdfDictionary moneroExtras = BdfDictionary.of(
+			new BdfEntry(MONERO_EXTRA_CURRENCY, "EUR"),
+			new BdfEntry(MONERO_EXTRA_RATE, 155.5)
+	);
+	private final BdfDictionary moneroMeta = BdfDictionary.of(
+			new BdfEntry(MSG_KEY_TIMESTAMP, message.getTimestamp()),
+			new BdfEntry(MSG_KEY_LOCAL, false),
+			new BdfEntry(MSG_KEY_READ, false),
+			new BdfEntry(MSG_KEY_MSG_TYPE, MONERO_REQUEST),
+			new BdfEntry(MSG_KEY_MONERO_SUBADDRESS, subaddress),
+			new BdfEntry(MSG_KEY_MONERO_AMOUNT, 5_000_000_000L),
+			new BdfEntry(MSG_KEY_MONERO_DESCRIPTION, "Invoice 42"),
+			new BdfEntry(MSG_KEY_MONERO_CURRENCY, "EUR"),
+			new BdfEntry(MSG_KEY_MONERO_RATE, 155.5)
 	);
 
 	private final PrivateMessageValidator validator =
@@ -407,7 +459,7 @@ public class PrivateMessageValidatorTest extends BrambleMockTestCase {
 	@Test(expected = InvalidMessageException.class)
 	public void testRejectsUnknownMessageType() throws Exception {
 		expectCheckTimestamp(now);
-		expectParseList(BdfList.of(ATTACHMENT + 1, contentType));
+		expectParseList(BdfList.of(MONERO_REQUEST + 1, contentType));
 
 		validator.validateMessage(message, group);
 	}
@@ -460,6 +512,275 @@ public class PrivateMessageValidatorTest extends BrambleMockTestCase {
 		expectReadEof(true);
 
 		validator.validateMessage(message, group);
+	}
+
+	@Test
+	public void testAcceptsLocation() throws Exception {
+		testAcceptsPrivateMessage(
+				BdfList.of(LOCATION, locationLabel, 38.7, -9.1, 15.0),
+				locationMeta);
+	}
+
+	@Test
+	public void testAcceptsLocationAtRangeLimits() throws Exception {
+		BdfDictionary meta = BdfDictionary.of(
+				new BdfEntry(MSG_KEY_TIMESTAMP, message.getTimestamp()),
+				new BdfEntry(MSG_KEY_LOCAL, false),
+				new BdfEntry(MSG_KEY_READ, false),
+				new BdfEntry(MSG_KEY_MSG_TYPE, LOCATION),
+				new BdfEntry(MSG_KEY_LOCATION_LABEL, ""),
+				new BdfEntry(MSG_KEY_LOCATION_LATITUDE, -90.0),
+				new BdfEntry(MSG_KEY_LOCATION_LONGITUDE, 180.0),
+				new BdfEntry(MSG_KEY_LOCATION_ZOOM, MAX_LOCATION_ZOOM)
+		);
+		testAcceptsPrivateMessage(BdfList.of(LOCATION, "", -90.0, 180.0,
+				MAX_LOCATION_ZOOM), meta);
+	}
+
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsTooShortLocation() throws Exception {
+		testRejectsPrivateMessage(
+				BdfList.of(LOCATION, locationLabel, 38.7, -9.1));
+	}
+
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsTooLongLocation() throws Exception {
+		testRejectsPrivateMessage(BdfList.of(LOCATION, locationLabel, 38.7,
+				-9.1, 15.0, null, "extra"));
+	}
+
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsTooLongLocationLabel() throws Exception {
+		String invalid = getRandomString(MAX_LOCATION_LABEL_LENGTH + 1);
+
+		testRejectsPrivateMessage(BdfList.of(LOCATION, invalid, 38.7, -9.1,
+				15.0));
+	}
+
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsNonStringLocationLabel() throws Exception {
+		testRejectsPrivateMessage(BdfList.of(LOCATION, 123, 38.7, -9.1, 15.0));
+	}
+
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsLatitudeAboveRange() throws Exception {
+		testRejectsPrivateMessage(BdfList.of(LOCATION, locationLabel, 90.1,
+				-9.1, 15.0));
+	}
+
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsLatitudeBelowRange() throws Exception {
+		testRejectsPrivateMessage(BdfList.of(LOCATION, locationLabel, -90.1,
+				-9.1, 15.0));
+	}
+
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsLongitudeAboveRange() throws Exception {
+		testRejectsPrivateMessage(BdfList.of(LOCATION, locationLabel, 38.7,
+				180.1, 15.0));
+	}
+
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsNotANumberLatitude() throws Exception {
+		testRejectsPrivateMessage(BdfList.of(LOCATION, locationLabel,
+				Double.NaN, -9.1, 15.0));
+	}
+
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsInfiniteLongitude() throws Exception {
+		testRejectsPrivateMessage(BdfList.of(LOCATION, locationLabel, 38.7,
+				Double.POSITIVE_INFINITY, 15.0));
+	}
+
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsZoomAboveRange() throws Exception {
+		testRejectsPrivateMessage(BdfList.of(LOCATION, locationLabel, 38.7,
+				-9.1, MAX_LOCATION_ZOOM + 1));
+	}
+
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsIntegerLatitude() throws Exception {
+		testRejectsPrivateMessage(BdfList.of(LOCATION, locationLabel, 38, -9.1,
+				15.0));
+	}
+
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsNullLatitude() throws Exception {
+		testRejectsPrivateMessage(BdfList.of(LOCATION, locationLabel, null,
+				-9.1, 15.0));
+	}
+
+	@Test
+	public void testAcceptsMoneroRequest() throws Exception {
+		testAcceptsPrivateMessage(BdfList.of(MONERO_REQUEST, subaddress,
+				5_000_000_000L, "Invoice 42", moneroExtras, null),
+				moneroMeta);
+	}
+
+	@Test
+	public void testAcceptsMoneroRequestWithoutOptionalFields()
+			throws Exception {
+		BdfDictionary meta = BdfDictionary.of(
+				new BdfEntry(MSG_KEY_TIMESTAMP, message.getTimestamp()),
+				new BdfEntry(MSG_KEY_LOCAL, false),
+				new BdfEntry(MSG_KEY_READ, false),
+				new BdfEntry(MSG_KEY_MSG_TYPE, MONERO_REQUEST),
+				new BdfEntry(MSG_KEY_MONERO_SUBADDRESS, subaddress)
+		);
+		testAcceptsPrivateMessage(BdfList.of(MONERO_REQUEST, subaddress, null,
+				null, new BdfDictionary(), null), meta);
+	}
+
+	/**
+	 * The reason the extra fields are carried in a dictionary rather than as
+	 * elements of the body: a release that adds a key here has to stay valid
+	 * to every release that shipped before it.
+	 */
+	@Test
+	public void testAcceptsUnknownExtraFields() throws Exception {
+		BdfDictionary extras = BdfDictionary.of(
+				new BdfEntry(MONERO_EXTRA_CURRENCY, "EUR"),
+				new BdfEntry(MONERO_EXTRA_RATE, 155.5),
+				new BdfEntry("rateSource", "a later release"),
+				new BdfEntry("rateTimestamp", 1_700_000_000_000L)
+		);
+		// The fields this release knows survive, and the ones it does not
+		// are ignored rather than invalidating the message
+		testAcceptsPrivateMessage(BdfList.of(MONERO_REQUEST, subaddress,
+				5_000_000_000L, "Invoice 42", extras, null), moneroMeta);
+	}
+
+	/**
+	 * The counterpart of the above: the body's own size is checked exactly,
+	 * so a later release must not add an element to it.
+	 */
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsExtraMoneroRequestElement() throws Exception {
+		testRejectsPrivateMessage(BdfList.of(MONERO_REQUEST, subaddress,
+				5_000_000_000L, "Invoice 42", moneroExtras, null, "extra"));
+	}
+
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsTooShortMoneroRequest() throws Exception {
+		testRejectsPrivateMessage(BdfList.of(MONERO_REQUEST, subaddress,
+				5_000_000_000L, "Invoice 42", moneroExtras));
+	}
+
+	/**
+	 * A whole-number rate may be encoded as an integer, and destroying the
+	 * message and its replies over a value that is only shown would be out
+	 * of proportion.
+	 */
+	@Test
+	public void testAcceptsIntegerRate() throws Exception {
+		BdfDictionary extras = BdfDictionary.of(
+				new BdfEntry(MONERO_EXTRA_CURRENCY, "EUR"),
+				new BdfEntry(MONERO_EXTRA_RATE, 155L)
+		);
+		BdfDictionary meta = BdfDictionary.of(
+				new BdfEntry(MSG_KEY_TIMESTAMP, message.getTimestamp()),
+				new BdfEntry(MSG_KEY_LOCAL, false),
+				new BdfEntry(MSG_KEY_READ, false),
+				new BdfEntry(MSG_KEY_MSG_TYPE, MONERO_REQUEST),
+				new BdfEntry(MSG_KEY_MONERO_SUBADDRESS, subaddress),
+				new BdfEntry(MSG_KEY_MONERO_AMOUNT, 5_000_000_000L),
+				new BdfEntry(MSG_KEY_MONERO_DESCRIPTION, "Invoice 42"),
+				new BdfEntry(MSG_KEY_MONERO_CURRENCY, "EUR"),
+				new BdfEntry(MSG_KEY_MONERO_RATE, 155.0)
+		);
+		testAcceptsPrivateMessage(BdfList.of(MONERO_REQUEST, subaddress,
+				5_000_000_000L, "Invoice 42", extras, null), meta);
+	}
+
+	/**
+	 * An extra field we cannot read is dropped rather than rejected, for the
+	 * same reason.
+	 */
+	@Test
+	public void testDropsUnreadableExtraFields() throws Exception {
+		BdfDictionary extras = BdfDictionary.of(
+				new BdfEntry(MONERO_EXTRA_CURRENCY, 123),
+				new BdfEntry(MONERO_EXTRA_RATE, "not a number")
+		);
+		BdfDictionary meta = BdfDictionary.of(
+				new BdfEntry(MSG_KEY_TIMESTAMP, message.getTimestamp()),
+				new BdfEntry(MSG_KEY_LOCAL, false),
+				new BdfEntry(MSG_KEY_READ, false),
+				new BdfEntry(MSG_KEY_MSG_TYPE, MONERO_REQUEST),
+				new BdfEntry(MSG_KEY_MONERO_SUBADDRESS, subaddress),
+				new BdfEntry(MSG_KEY_MONERO_AMOUNT, 5_000_000_000L),
+				new BdfEntry(MSG_KEY_MONERO_DESCRIPTION, "Invoice 42")
+		);
+		testAcceptsPrivateMessage(BdfList.of(MONERO_REQUEST, subaddress,
+				5_000_000_000L, "Invoice 42", extras, null), meta);
+	}
+
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsTooLongSubaddress() throws Exception {
+		String invalid = getRandomString(MAX_MONERO_ADDRESS_LENGTH + 1);
+
+		testRejectsPrivateMessage(BdfList.of(MONERO_REQUEST, invalid,
+				5_000_000_000L, "Invoice 42", moneroExtras, null));
+	}
+
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsEmptySubaddress() throws Exception {
+		testRejectsPrivateMessage(BdfList.of(MONERO_REQUEST, "",
+				5_000_000_000L, "Invoice 42", moneroExtras, null));
+	}
+
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsNullSubaddress() throws Exception {
+		testRejectsPrivateMessage(BdfList.of(MONERO_REQUEST, null,
+				5_000_000_000L, "Invoice 42", moneroExtras, null));
+	}
+
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsNegativeAmount() throws Exception {
+		testRejectsPrivateMessage(BdfList.of(MONERO_REQUEST, subaddress, -1L,
+				"Invoice 42", moneroExtras, null));
+	}
+
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsTooLongMoneroDescription() throws Exception {
+		String invalid = getRandomString(MAX_MONERO_DESCRIPTION_LENGTH + 1);
+
+		testRejectsPrivateMessage(BdfList.of(MONERO_REQUEST, subaddress,
+				5_000_000_000L, invalid, moneroExtras, null));
+	}
+
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsTooManyExtraFields() throws Exception {
+		BdfDictionary extras = new BdfDictionary();
+		for (int i = 0; i <= MAX_MONERO_EXTRAS; i++) {
+			extras.put("key" + i, "value");
+		}
+		testRejectsPrivateMessage(BdfList.of(MONERO_REQUEST, subaddress,
+				5_000_000_000L, "Invoice 42", extras, null));
+	}
+
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsTooLongExtraValue() throws Exception {
+		BdfDictionary extras = BdfDictionary.of(new BdfEntry("padding",
+				getRandomString(MAX_MONERO_EXTRA_VALUE_LENGTH + 1)));
+
+		testRejectsPrivateMessage(BdfList.of(MONERO_REQUEST, subaddress,
+				5_000_000_000L, "Invoice 42", extras, null));
+	}
+
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsTooLongRawExtraValue() throws Exception {
+		BdfDictionary extras = BdfDictionary.of(new BdfEntry("padding",
+				getRandomBytes(MAX_MONERO_EXTRA_VALUE_LENGTH + 1)));
+
+		testRejectsPrivateMessage(BdfList.of(MONERO_REQUEST, subaddress,
+				5_000_000_000L, "Invoice 42", extras, null));
+	}
+
+	@Test(expected = InvalidMessageException.class)
+	public void testRejectsMissingExtrasDictionary() throws Exception {
+		testRejectsPrivateMessage(BdfList.of(MONERO_REQUEST, subaddress,
+				5_000_000_000L, "Invoice 42", null, null));
 	}
 
 	private void testAcceptsLegacyMessage(BdfList body) throws Exception {

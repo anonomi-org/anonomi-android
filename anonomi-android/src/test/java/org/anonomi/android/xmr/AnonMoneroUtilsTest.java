@@ -33,6 +33,87 @@ public class AnonMoneroUtilsTest {
 					"nvLo4MAuQFMLP6Si4xp6t6BS788db3t";
 
 	@Test
+	public void testAcceptsDerivedSubaddresses() {
+		assertTrue(AnonMoneroUtils.isValidMoneroSubaddress(SUBADDRESS_0_1));
+		assertTrue(AnonMoneroUtils.isValidMoneroSubaddress(SUBADDRESS_0_2));
+	}
+
+	/**
+	 * The two checks are not interchangeable: a primary address and a
+	 * subaddress carry different network bytes, so each is invalid to the
+	 * other's check.
+	 */
+	@Test
+	public void testSubaddressCheckRejectsAPrimaryAddress() {
+		assertFalse(AnonMoneroUtils.isValidMoneroSubaddress(PRIMARY_ADDRESS));
+		assertFalse(AnonMoneroUtils.isValidMoneroAddress(SUBADDRESS_0_1));
+	}
+
+	@Test
+	public void testSubaddressCheckRejectsAlteredAddress() {
+		// Change one character, which the checksum has to catch
+		String altered = SUBADDRESS_0_1.substring(0, 10) + "X" +
+				SUBADDRESS_0_1.substring(11);
+		assertFalse(AnonMoneroUtils.isValidMoneroSubaddress(altered));
+		assertFalse(AnonMoneroUtils.isValidMoneroSubaddress(""));
+		assertFalse(AnonMoneroUtils.isValidMoneroSubaddress(null));
+		assertFalse(AnonMoneroUtils.isValidMoneroSubaddress("not an address"));
+	}
+
+	/**
+	 * The amounts a double would get wrong. 0.1 has no exact binary
+	 * representation, and 12 decimal places is the finest Monero counts.
+	 */
+	@Test
+	public void testConvertsDecimalAmountsExactly() {
+		assertEquals(100_000_000_000L,
+				AnonMoneroUtils.xmrToAtomicUnits("0.1"));
+		assertEquals(1L, AnonMoneroUtils.xmrToAtomicUnits("0.000000000001"));
+		assertEquals(0L, AnonMoneroUtils.xmrToAtomicUnits("0"));
+		assertEquals(1_000_000_000_000L,
+				AnonMoneroUtils.xmrToAtomicUnits("1"));
+		assertEquals(123_456_789_012L,
+				AnonMoneroUtils.xmrToAtomicUnits("0.123456789012"));
+		// The comma the amount field accepts as a decimal separator
+		assertEquals(500_000_000_000L,
+				AnonMoneroUtils.xmrToAtomicUnits("0,5"));
+		assertEquals(2_500_000_000_000L,
+				AnonMoneroUtils.xmrToAtomicUnits(" 2.5 "));
+	}
+
+	@Test
+	public void testRoundTripsAmounts() {
+		assertEquals("0.1", AnonMoneroUtils.atomicUnitsToXmr(
+				AnonMoneroUtils.xmrToAtomicUnits("0.1")));
+		assertEquals("0.000000000001", AnonMoneroUtils.atomicUnitsToXmr(1L));
+		assertEquals("0", AnonMoneroUtils.atomicUnitsToXmr(0L));
+		assertEquals("1", AnonMoneroUtils.atomicUnitsToXmr(
+				1_000_000_000_000L));
+		assertEquals("2.5", AnonMoneroUtils.atomicUnitsToXmr(
+				2_500_000_000_000L));
+	}
+
+	@Test
+	public void testRejectsUnrepresentableAmounts() {
+		String[] invalid = {
+				"-1",              // negative
+				"0.0000000000001", // finer than an atomic unit
+				"10000000",        // more atomic units than a long holds
+				"",
+				"abc",
+				null
+		};
+		for (String s : invalid) {
+			try {
+				AnonMoneroUtils.xmrToAtomicUnits(s);
+				fail("accepted " + s);
+			} catch (NumberFormatException expected) {
+				// Expected
+			}
+		}
+	}
+
+	@Test
 	public void testPrimaryAddressDecodesToPublishedSpendKey() {
 		MoneroDecodedAddress decoded =
 				AnonMoneroUtils.decodeAddress(PRIMARY_ADDRESS);

@@ -115,7 +115,7 @@ public class BlogInteractionsActivity extends BriarActivity {
 				AuthorId localAuthorId = localAuthor.getId();
 
 				// Build the postKey for the target post
-				String targetPostKey = null;
+				MessageId targetPostKey = null;
 				Collection<Blog> blogs = blogManager.getBlogs();
 				List<BlogPostHeader> allHeaders = new ArrayList<>();
 				for (Blog blog : blogs) {

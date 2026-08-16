@@ -7,7 +7,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.anonomi.R;
+import org.anonomi.android.xmr.AnonMoneroUtils;
+import org.anonchatsecure.anonchat.api.messaging.Location;
+import org.anonchatsecure.anonchat.api.messaging.MoneroRequest;
 import org.briarproject.nullsafety.NotNullByDefault;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import androidx.annotation.CallSuper;
 import androidx.annotation.Nullable;
@@ -67,9 +73,17 @@ abstract class ConversationItemViewHolder extends ViewHolder {
 
 		String messageTextRaw = item.getText();
 
-		if (messageTextRaw != null && text != null) {
+		if (item instanceof ConversationLocationItem && text != null) {
+			bindLocation(((ConversationLocationItem) item).getLocation());
+		} else if (item instanceof ConversationMoneroRequestItem
+				&& text != null) {
+			bindMoneroRequest(
+					((ConversationMoneroRequestItem) item).getRequest());
+		} else if (messageTextRaw != null && text != null) {
 			String trimmedText = trim(messageTextRaw);
 
+			// Locations sent before they had a message type of their own are
+			// still in the database as text
 			if (isMapMessage(trimmedText)) {
 				MapMessageData mapData = parseMapMessage(trimmedText);
 				String displayText = "\uD83D\uDCCD" + mapData.label +
@@ -80,10 +94,20 @@ abstract class ConversationItemViewHolder extends ViewHolder {
 				text.setText(displayText);
 				text.setOnClickListener(v -> listener.onMapMessageClicked(mapData));
 			} else {
+				// A holder showing a location is recycled into this one, so
+				// the listener it left behind has to go with it
+				text.setOnClickListener(null);
 				text.setText(trimmedText);
 				Linkify.addLinks(text, Linkify.WEB_URLS);
 				makeLinksClickable(text, listener::onLinkClick);
 			}
+		} else if (text != null) {
+			// A message whose text has not been loaded yet reaches none of
+			// the branches above, so without this it keeps whatever the
+			// recycled holder was showing - someone else's location or
+			// payment request, still clickable, until the text arrives
+			text.setOnClickListener(null);
+			text.setText(null);
 		}
 
 		time.setText(formatDate(time.getContext(), item.getTime()));
@@ -132,6 +156,78 @@ abstract class ConversationItemViewHolder extends ViewHolder {
 		} else {
 			topNotice.setVisibility(GONE);
 		}
+	}
+
+	private void bindLocation(Location location) {
+		MapMessageData data = new MapMessageData(location.getLabel(),
+				location.getLatitude(), location.getLongitude(),
+				String.valueOf(location.getZoom()));
+		text.setText("📍" + data.label +
+				"\n   " + data.latitude +
+				"\n   " + data.longitude +
+				"\n   " + text.getContext().getString(
+				R.string.tap_to_view_on_map));
+		text.setOnClickListener(v -> listener.onMapMessageClicked(data));
+	}
+
+	/**
+	 * Shows what is being asked for. The rate is shown as the sender quoted
+	 * it, so that an amount priced days ago can be told from a current one.
+	 */
+	private void bindMoneroRequest(MoneroRequest request) {
+		Context ctx = text.getContext();
+		StringBuilder s = new StringBuilder();
+		s.append("🪙 ")
+				.append(ctx.getString(R.string.monero_request_title));
+		Long amount = request.getAmount();
+		String xmr = amount == null
+				? null : AnonMoneroUtils.atomicUnitsToXmr(amount);
+		if (xmr != null) {
+			s.append('\n').append(ctx.getString(
+					R.string.monero_request_amount, xmr));
+		}
+		Double rate = request.getRate();
+		String currency = request.getCurrency();
+		if (rate != null) {
+			String shown = formatRate(rate);
+			s.append('\n').append(currency == null
+					? ctx.getString(R.string.monero_request_rate, shown)
+					: ctx.getString(R.string.monero_request_rate_currency,
+							shown, currency));
+		}
+		if (rate != null && amount != null) {
+			String fiat = new BigDecimal(xmr)
+					.multiply(BigDecimal.valueOf(rate))
+					.setScale(2, RoundingMode.HALF_UP).toPlainString();
+			s.append('\n').append(currency == null
+					? ctx.getString(R.string.monero_request_fiat, fiat)
+					: ctx.getString(R.string.monero_request_fiat_currency,
+							fiat, currency));
+		}
+		String description = request.getDescription();
+		if (description != null && !description.isEmpty()) {
+			s.append('\n').append(description);
+		}
+		s.append('\n').append(ctx.getString(R.string.monero_request_tap));
+		text.setText(s.toString());
+		text.setOnClickListener(
+				v -> listener.onMoneroRequestClicked(request));
+	}
+
+	/**
+	 * Formats a rate with a fixed separator rather than the reader's own, so
+	 * that the figures in a request agree. The amount cannot use the
+	 * reader's: it is the same string a wallet reads out of the URI, where a
+	 * decimal comma would not be understood.
+	 * <p>
+	 * The decimals are not fixed at two, since the currency is whatever the
+	 * sender wrote: a rate quoted against another coin can be far below
+	 * 0.01, and rounding it would print zero beside a converted value
+	 * worked out from the real figure.
+	 */
+	private static String formatRate(double value) {
+		return BigDecimal.valueOf(value).stripTrailingZeros()
+				.toPlainString();
 	}
 
 	private boolean isMapMessage(String text) {

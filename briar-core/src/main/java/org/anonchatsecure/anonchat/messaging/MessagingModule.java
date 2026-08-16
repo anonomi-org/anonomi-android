@@ -82,11 +82,20 @@ public class MessagingModule {
 		validationManager.registerIncomingMessageHook(CLIENT_ID, MAJOR_VERSION,
 				messagingManager);
 		conversationManager.registerConversationClient(messagingManager);
-		// Don't advertise support for image attachments or disappearing
-		// messages unless the respective feature flags are enabled
+		// Don't advertise support for image attachments, disappearing
+		// messages, locations or payment requests unless the respective
+		// feature flags are enabled. Each one builds on the one before it,
+		// so the version stops at the first that is off.
 		boolean images = featureFlags.shouldEnableImageAttachments();
 		boolean disappear = featureFlags.shouldEnableDisappearingMessages();
-		int minorVersion = images ? (disappear ? MINOR_VERSION : 2) : 0;
+		boolean location = featureFlags.shouldEnableLocationMessages();
+		boolean monero = featureFlags.shouldEnableMoneroRequests();
+		int minorVersion;
+		if (!images) minorVersion = 0;
+		else if (!disappear) minorVersion = 2;
+		else if (!location) minorVersion = 3;
+		else if (!monero) minorVersion = 4;
+		else minorVersion = MINOR_VERSION;
 		clientVersioningManager.registerClient(CLIENT_ID, MAJOR_VERSION,
 				minorVersion, messagingManager);
 		cleanupManager.registerCleanupHook(CLIENT_ID, MAJOR_VERSION,
