@@ -8,6 +8,7 @@ import org.anonchatsecure.bramble.api.db.Transaction;
 import org.anonchatsecure.bramble.api.db.TransactionManager;
 import org.anonchatsecure.bramble.api.event.EventBus;
 import org.anonchatsecure.bramble.api.event.EventListener;
+import org.anonchatsecure.bramble.api.identity.Author;
 import org.anonchatsecure.bramble.api.identity.AuthorId;
 import org.anonchatsecure.bramble.api.identity.IdentityManager;
 import org.anonchatsecure.bramble.api.identity.LocalAuthor;
@@ -247,20 +248,16 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 		BlogPostItem target = items.get(targetIndex).copy();
 
 		// Incrementally update the target post's state
-		if (LIKE_MARKER.equals(comment)) {
-			AuthorId authorId = header.getAuthor().getId();
-			if (authorId.equals(localAuthorId)) {
-				if (target.isLikedByMe()) return; // Already liked
-				target.setLikedByMe(true);
+		if (isLikeOrUnlike(comment)) {
+			boolean isLike = LIKE_MARKER.equals(comment);
+			List<BlogLiker> likers = applyLike(target.getLikers(),
+					header.getAuthor(), header.getAuthorInfo(), isLike);
+			if (likers == null) return; // nothing changes for this author
+			target.setLikers(likers);
+			target.setLikeCount(likers.size());
+			if (header.getAuthor().getId().equals(localAuthorId)) {
+				target.setLikedByMe(isLike);
 			}
-			target.setLikeCount(target.getLikeCount() + 1);
-		} else if (UNLIKE_MARKER.equals(comment)) {
-			AuthorId authorId = header.getAuthor().getId();
-			if (authorId.equals(localAuthorId)) {
-				if (!target.isLikedByMe()) return; // Already unliked
-				target.setLikedByMe(false);
-			}
-			target.setLikeCount(Math.max(0, target.getLikeCount() - 1));
 		} else if (isComment(comment)) {
 			String commentText = comment.substring(COMMENT_MARKER.length());
 			List<BlogComment> comments =
@@ -387,11 +384,9 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 			BlogPostItem target = items.get(targetIndex).copy();
 			if (liked != null) {
 				if (liked && !target.isLikedByMe()) {
-					target.setLikedByMe(true);
-					target.setLikeCount(target.getLikeCount() + 1);
+					setLocalLike(target, true);
 				} else if (!liked && target.isLikedByMe()) {
-					target.setLikedByMe(false);
-					target.setLikeCount(Math.max(0, target.getLikeCount() - 1));
+					setLocalLike(target, false);
 				}
 			}
 			if (comment != null) {
@@ -418,6 +413,56 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 			newList.set(targetIndex, target);
 			blogPosts.setValue(new LiveResult<>(new ListUpdate(null, newList)));
 		}
+	}
+
+	/** Keeps likeCount equal to likers.size() before the comment is stored. */
+	@UiThread
+	private void setLocalLike(BlogPostItem target, boolean liked) {
+		target.setLikedByMe(liked);
+		LocalAuthor a = localAuthor;
+		if (a == null) {
+			// Not loaded yet: move the count so the tap feels immediate and
+			// let the event for our own comment rebuild the list.
+			target.setLikeCount(liked ? target.getLikeCount() + 1
+					: Math.max(0, target.getLikeCount() - 1));
+			return;
+		}
+		List<BlogLiker> likers = applyLike(target.getLikers(), a,
+				new AuthorInfo(OURSELVES), liked);
+		if (likers == null) return;
+		target.setLikers(likers);
+		target.setLikeCount(likers.size());
+	}
+
+	/**
+	 * Applies one like or unlike, or returns null if it changes nothing for
+	 * that author. Arrival order decides here where a reload uses the latest
+	 * timestamp, so the two can differ until the next reload settles it.
+	 */
+	@Nullable
+	static List<BlogLiker> applyLike(List<BlogLiker> current, Author author,
+			AuthorInfo authorInfo, boolean isLike) {
+		List<BlogLiker> likers = new ArrayList<>(current);
+		boolean wasLiking = false;
+		for (BlogLiker l : likers) {
+			if (l.author.getId().equals(author.getId())) {
+				wasLiking = true;
+				break;
+			}
+		}
+		if (isLike == wasLiking) return null;
+		if (isLike) {
+			likers.add(new BlogLiker(author, authorInfo));
+		} else {
+			Iterator<BlogLiker> it = likers.iterator();
+			while (it.hasNext()) {
+				if (it.next().author.getId().equals(author.getId())) {
+					it.remove();
+					break;
+				}
+			}
+		}
+		return likers;
 	}
 
 	static boolean isLikeOrUnlike(@Nullable String comment) {
@@ -535,24 +580,19 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 			// Likes
 			Map<AuthorId, LikeAction> authorMap = postLikes.get(key);
 			if (authorMap != null) {
-				int count = 0;
 				boolean likedByMe = false;
 				List<BlogLiker> likers = new ArrayList<>();
 				for (Map.Entry<AuthorId, LikeAction> entry :
 						authorMap.entrySet()) {
-					if (entry.getValue().isLike) {
-						count++;
-						if (entry.getKey().equals(localAuthorId)) {
-							likedByMe = true;
-						}
-						LikeAction la = entry.getValue();
-						if (la.authorInfo != null) {
-							likers.add(new BlogLiker(la.author,
-									la.authorInfo));
-						}
+					LikeAction la = entry.getValue();
+					if (!la.isLike) continue;
+					if (entry.getKey().equals(localAuthorId)) {
+						likedByMe = true;
 					}
+					likers.add(new BlogLiker(la.author, la.authorInfo));
 				}
-				item.setLikeCount(count);
+				// One fact, not two: keep the count derived from the list.
+				item.setLikeCount(likers.size());
 				item.setLikedByMe(likedByMe);
 				item.setLikers(likers);
 			}
@@ -631,12 +671,11 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 		final boolean isLike;
 		final long timestamp;
 		final org.anonchatsecure.bramble.api.identity.Author author;
-		@Nullable
 		final AuthorInfo authorInfo;
 
 		LikeAction(boolean isLike, long timestamp,
 				org.anonchatsecure.bramble.api.identity.Author author,
-				@Nullable AuthorInfo authorInfo) {
+				AuthorInfo authorInfo) {
 			this.isLike = isLike;
 			this.timestamp = timestamp;
 			this.author = author;
