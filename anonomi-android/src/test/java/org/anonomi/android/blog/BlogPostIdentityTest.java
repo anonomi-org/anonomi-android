@@ -78,6 +78,14 @@ public class BlogPostIdentityTest {
 		assertEquals(3, BaseViewModel.deduplicate(items).size());
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void aWrappedCopyCannotBeBuiltWithoutItsOriginalId() {
+		// the short form would quietly take the copy's own ID as the original
+		new BlogPostHeader(WRAPPED_POST, otherGroupId,
+				new MessageId(getRandomId()), 1000, 1000, alice, info, false,
+				true);
+	}
+
 	@Test
 	public void aWrappedCopyKeepsTheIdentityOfTheOriginal() {
 		BlogPostHeader original = post(alice, 1000);

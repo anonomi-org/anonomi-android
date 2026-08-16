@@ -25,6 +25,9 @@ import org.anonchatsecure.anonchat.api.client.PostHeader;
 import org.anonchatsecure.anonchat.api.identity.AuthorInfo;
 import org.briarproject.nullsafety.NotNullByDefault;
 
+import static org.anonchatsecure.anonchat.api.blog.MessageType.WRAPPED_COMMENT;
+import static org.anonchatsecure.anonchat.api.blog.MessageType.WRAPPED_POST;
+
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
@@ -47,13 +50,26 @@ public class BlogPostHeader extends PostHeader {
 				authorInfo, rssFeed, read, false);
 	}
 
-	/** Treats the message as its own original, so not for a wrapped copy. */
+	/** For a message that is its own original; rejects a wrapped copy. */
 	public BlogPostHeader(MessageType type, GroupId groupId, MessageId id,
 			@Nullable MessageId parentId, long timestamp, long timeReceived,
 			Author author, AuthorInfo authorInfo, boolean rssFeed,
 			boolean read, boolean hasImage) {
 		this(type, groupId, id, parentId, timestamp, timeReceived, author,
-				authorInfo, rssFeed, read, hasImage, id);
+				authorInfo, rssFeed, read, hasImage, ownIdAsOriginal(type, id));
+	}
+
+	/**
+	 * A wrapped copy has an ID of its own, so taking it as the original would
+	 * key it onto the wrong post. Only reachable from a constructor argument,
+	 * where a check cannot precede {@code this(...)}.
+	 */
+	static MessageId ownIdAsOriginal(MessageType type, MessageId id) {
+		if (type == WRAPPED_POST || type == WRAPPED_COMMENT) {
+			throw new IllegalArgumentException(
+					"A wrapped copy needs the ID it had in its first blog");
+		}
+		return id;
 	}
 
 	public BlogPostHeader(MessageType type, GroupId groupId, MessageId id,

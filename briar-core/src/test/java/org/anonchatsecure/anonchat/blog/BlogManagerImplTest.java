@@ -818,7 +818,8 @@ public class BlogManagerImplTest extends BrambleMockTestCase {
 
 		BlogPostHeader wrappedPostHeader = new BlogPostHeader(WRAPPED_POST,
 				blog1.getId(), wrappedPostId, null, timestamp, timeReceived,
-				rssLocalAuthor, new AuthorInfo(NONE), true, true);
+				rssLocalAuthor, new AuthorInfo(NONE), true, true, false,
+				messageId);
 		BlogCommentHeader originalCommentHeader = new BlogCommentHeader(COMMENT,
 				blog1.getId(), comment, wrappedPostHeader, originalCommentId,
 				timestamp, timeReceived, localAuthor1, verifiedInfo, true);

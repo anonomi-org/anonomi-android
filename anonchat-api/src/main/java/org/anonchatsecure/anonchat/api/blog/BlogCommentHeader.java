@@ -43,7 +43,8 @@ public class BlogCommentHeader extends BlogPostHeader {
 			long timestamp, long timeReceived, Author author,
 			AuthorInfo authorInfo, boolean read) {
 		this(type, groupId, comment, parent, id, timestamp, timeReceived,
-				author, authorInfo, read, id);
+				author, authorInfo, read,
+				BlogPostHeader.ownIdAsOriginal(type, id));
 	}
 
 	public BlogCommentHeader(MessageType type, GroupId groupId,
