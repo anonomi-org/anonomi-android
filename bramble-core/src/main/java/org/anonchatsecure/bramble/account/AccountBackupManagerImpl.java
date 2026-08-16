@@ -6,6 +6,7 @@ import org.anonchatsecure.bramble.api.account.AccountManager;
 import org.anonchatsecure.bramble.api.account.BackupManifest;
 import org.anonchatsecure.bramble.api.account.BackupProgressListener;
 import org.anonchatsecure.bramble.api.account.InvalidBackupException;
+import org.anonchatsecure.bramble.api.account.NotEnoughSpaceException;
 import org.anonchatsecure.bramble.api.account.RecoveryCode;
 import org.anonchatsecure.bramble.api.crypto.CryptoComponent;
 import org.anonchatsecure.bramble.api.crypto.SecretKey;
@@ -90,7 +91,9 @@ class AccountBackupManagerImpl implements AccountBackupManager {
 			// The snapshot is about the size of the database, so make sure
 			// there is room for it before blocking writers to take it
 			long dbSize = directorySize(databaseConfig.getDatabaseDirectory());
-			if (tempDir.getUsableSpace() < dbSize) throw new IOException();
+			if (tempDir.getUsableSpace() < dbSize) {
+				throw new NotEnoughSpaceException();
+			}
 			db.backupDatabase(zip);
 			// The manifest describes the database, so it has to be measured
 			// and hashed before it can be written. Reading the archive twice
@@ -187,17 +190,18 @@ class AccountBackupManagerImpl implements AccountBackupManager {
 	}
 
 	/**
-	 * Returns a stream positioned at the database entry of the archive. The
-	 * caller closes it.
+	 * Returns a stream positioned at the database entry of the archive, which
+	 * has to be the first entry. The caller closes it.
+	 * <p>
+	 * Skipping past anything in front of it would leave that out of the
+	 * backup as silently as trailing entries are refused by
+	 * {@link #hashDatabase}.
 	 */
 	private ZipInputStream openDatabaseEntry(File zip) throws IOException {
 		ZipInputStream in = new ZipInputStream(new FileInputStream(zip));
 		try {
-			ZipEntry e;
-			while ((e = in.getNextEntry()) != null) {
-				if (BACKUP_DB_FILE_NAME.equals(e.getName())) return in;
-				in.closeEntry();
-			}
+			ZipEntry e = in.getNextEntry();
+			if (e != null && BACKUP_DB_FILE_NAME.equals(e.getName())) return in;
 		} catch (IOException e) {
 			tryToClose(in, LOG, WARNING);
 			throw e;

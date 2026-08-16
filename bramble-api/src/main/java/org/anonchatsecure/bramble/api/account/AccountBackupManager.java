@@ -20,8 +20,8 @@ public interface AccountBackupManager {
 	 *
 	 * @throws IllegalArgumentException if the code is not a recovery code
 	 * @throws IllegalStateException if the account is not unlocked
-	 * @throws IOException if there is not enough room for the snapshot, as
-	 * well as for the usual reasons
+	 * @throws NotEnoughSpaceException if there is not enough room for the
+	 * snapshot
 	 */
 	BackupManifest exportAccount(OutputStream out, String recoveryCode,
 			BackupProgressListener listener) throws DbException, IOException;

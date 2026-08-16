@@ -17,6 +17,7 @@ import org.anonomi.android.blog.ReblogFragment;
 import org.anonomi.android.blog.RssFeedActivity;
 import org.anonomi.android.blog.RssFeedDeleteFeedDialogFragment;
 import org.anonomi.android.blog.RssFeedImportFailedDialogFragment;
+import org.anonomi.android.backup.BackupActivity;
 import org.anonomi.android.blog.RssFeedImportFragment;
 import org.anonomi.android.blog.RssFeedManageFragment;
 import org.anonomi.android.blog.WriteBlogPostActivity;
@@ -191,6 +192,8 @@ public interface ActivityComponent {
 	void inject(HotspotActivity hotspotActivity);
 
 	void inject(RemovableDriveActivity activity);
+
+	void inject(BackupActivity activity);
 
 	// Fragments
 

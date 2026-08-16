@@ -34,6 +34,18 @@
 			android:targetPackage="@string/app_package" />
 	</Preference>
 
+	<Preference
+		android:key="pref_key_backup_account"
+		android:summary="@string/backup_setting_hint"
+		android:title="@string/backup_setting_title"
+		app:iconSpaceReserved="false"
+		app:singleLineTitle="false">
+
+		<intent
+			android:targetClass="org.anonomi.android.backup.BackupActivity"
+			android:targetPackage="@string/app_package" />
+	</Preference>
+
 	<PreferenceCategory
 		android:layout="@layout/preferences_category"
 		android:title="@string/panic_setting_title">

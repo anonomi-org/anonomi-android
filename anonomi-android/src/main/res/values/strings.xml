@@ -1264,4 +1264,42 @@ Anonomi Messenger is an independent project and is not affiliated with, endorsed
     <string name="scan_qr_code">Scan QR Code</string>
     <string name="camera_permission_denied">Camera permission denied.</string>
     <string name="load_qr_code">Load QR Code</string>
+
+    <!-- Account backup -->
+    <string name="backup_setting_title">Back up account</string>
+    <string name="backup_setting_hint">Save an encrypted copy of your account, so you can get it back if you lose this phone</string>
+    <string name="backup_setting_last">Last backup: %1$s</string>
+    <string name="backup_title">Back up account</string>
+    <string name="backup_intro_text">A backup is a copy of your whole account: your name, your contacts, every message you still have, and the keys that unlock them.\n\nAnyone who has both the file and the recovery code has your account, for good. Keep them apart, and keep the file somewhere only you can reach.\n\nNothing is uploaded. The file is written where you choose it to be, and moving it off this phone is up to you. A backup that stays on the phone is lost with the phone, and the panic wipe will try to delete it.\n\nYour settings for the panic button, the calculator and the screen lock are not in the backup. Set those up again on the phone you restore to.</string>
+    <string name="backup_password_explanation">Enter your password to go on. A backup outlasts an unlocked screen, so a phone found unlocked should not be enough to walk away with your account.</string>
+    <string name="backup_code_title">Your recovery code</string>
+    <string name="backup_code_text">Write this down on paper and keep it away from the backup file.\n\nIt is shown once. It is not kept on this phone and it cannot be shown again. Without it the backup cannot be opened, by you or by anyone else.</string>
+    <string name="backup_code_written_down">I have written it down</string>
+    <string name="backup_confirm_title">Type the code back</string>
+    <string name="backup_confirm_text">Type the recovery code you just wrote down, so you find out now rather than when you need it.</string>
+    <string name="backup_confirm_hint">Recovery code</string>
+    <string name="backup_confirm_wrong">That is not the code. Check what you wrote down.</string>
+    <string name="backup_show_code_again">Show the code again</string>
+    <string name="backup_choose_file">Choose where to save</string>
+    <string name="backup_start_again">The recovery code was lost. Start again.</string>
+    <string name="backup_cloud_warning_title">This may leave the phone</string>
+    <string name="backup_cloud_warning_text">Anonomi Messenger cannot tell where this location keeps the file. If it syncs to an account online, your backup goes there too.\n\nSaving it to this phone or a removable drive, and moving it yourself, is the only way to know where it ends up.</string>
+    <string name="backup_cloud_warning_continue">Save here anyway</string>
+    <string name="backup_cloud_warning_choose">Choose somewhere else</string>
+    <string name="backup_progress_title">Writing the backup</string>
+    <string name="backup_progress_snapshot">Taking a copy of your account…</string>
+    <string name="backup_progress_writing">Writing the backup…</string>
+    <string name="backup_progress_checking">Checking the backup can be read…</string>
+    <string name="backup_progress_wait">Keep Anonomi Messenger open until this finishes.</string>
+    <string name="backup_success_title">Backup written</string>
+    <string name="backup_success_text">The backup has been written, and read back to check it can be opened.\n\nKeep the recovery code away from the file. You need both to restore.</string>
+    <string name="backup_success_named_text">%1$s has been written, and read back to check it can be opened.\n\nKeep the recovery code away from the file. You need both to restore.</string>
+    <string name="backup_success_on_this_device">This file is still on this phone. Move it somewhere else: a backup kept with the phone goes wherever the phone goes, and a panic wipe will delete it.</string>
+    <string name="backup_error_title">Backup failed</string>
+    <string name="backup_error_no_space">There is not enough free space on this phone to take a copy of your account. Free some up and try again.</string>
+    <string name="backup_error_write">The backup could not be written. If you saved to a removable drive, check that it is properly inserted.</string>
+    <string name="backup_error_unreadable">The backup was written but could not be read back, so it would not have restored.</string>
+    <string name="backup_error_signed_out">You were signed out before the backup finished.</string>
+    <string name="backup_error_file_deleted">The unusable file has been deleted.</string>
+    <string name="backup_error_file_left_behind">%1$s is still there and cannot be used as a backup. Delete it yourself, so that it is not mistaken for one.</string>
 </resources>

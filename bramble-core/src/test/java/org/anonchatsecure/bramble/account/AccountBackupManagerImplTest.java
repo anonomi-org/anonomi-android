@@ -231,6 +231,32 @@ public class AccountBackupManagerImplTest extends BrambleMockTestCase {
 		}
 	}
 
+	@Test
+	public void testArchiveHoldingSomethingBeforeTheDatabaseIsRefused()
+			throws Exception {
+		context.checking(new Expectations() {{
+			oneOf(accountManager).getDatabaseKey();
+			will(returnValue(dbKey));
+			oneOf(db).backupDatabase(new File(tempDir, "db.zip"));
+			will(new CustomAction("writes an archive with a first entry") {
+				@Override
+				public Object invoke(Invocation invocation) {
+					writeArchive((File) invocation.getParameter(0), true,
+							false);
+					return null;
+				}
+			});
+		}});
+		// Skipping past it would leave it out of the backup just as silently
+		// as a trailing entry would
+		try {
+			manager.exportAccount(new ByteArrayOutputStream(), CODE, progress);
+			fail();
+		} catch (IOException expected) {
+			// Expected
+		}
+	}
+
 	@Test(expected = IllegalStateException.class)
 	public void testExportNeedsAnUnlockedAccount() throws Exception {
 		context.checking(new Expectations() {{
@@ -265,21 +291,30 @@ public class AccountBackupManagerImplTest extends BrambleMockTestCase {
 	}
 
 	private void writeArchive(File zip, boolean extraEntry) {
+		writeArchive(zip, false, extraEntry);
+	}
+
+	private void writeArchive(File zip, boolean entryBefore,
+			boolean entryAfter) {
 		try {
 			ZipOutputStream out =
 					new ZipOutputStream(new FileOutputStream(zip));
+			if (entryBefore) writeExtraEntry(out, "db.blob.db");
 			out.putNextEntry(new ZipEntry(BACKUP_DB_FILE_NAME));
 			out.write(dbBytes);
 			out.closeEntry();
-			if (extraEntry) {
-				out.putNextEntry(new ZipEntry("db.lob.db"));
-				out.write(getRandomBytes(64));
-				out.closeEntry();
-			}
+			if (entryAfter) writeExtraEntry(out, "db.lob.db");
 			out.close();
 		} catch (IOException e) {
 			throw new AssertionError(e);
 		}
+	}
+
+	private void writeExtraEntry(ZipOutputStream out, String name)
+			throws IOException {
+		out.putNextEntry(new ZipEntry(name));
+		out.write(getRandomBytes(64));
+		out.closeEntry();
 	}
 
 	private byte[] readFile(File f) throws IOException {
