@@ -30,15 +30,20 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 import androidx.annotation.UiThread;
+import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
+import static android.content.DialogInterface.BUTTON_POSITIVE;
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 import static java.util.Objects.requireNonNull;
 import static java.util.logging.Logger.getLogger;
+import static org.anonchatsecure.anonchat.api.blog.BlogConstants.MAX_BLOG_COMMENT_TEXT_LENGTH;
+import static org.anonchatsecure.bramble.util.StringUtils.toUtf8;
+import static org.anonchatsecure.bramble.util.StringUtils.utf8IsTooLong;
 import static org.anonomi.android.activity.BriarActivity.GROUP_ID;
 import static org.anonomi.android.util.UiUtils.MIN_DATE_RESOLUTION;
 
@@ -51,6 +56,11 @@ public class BlogPostFragment extends BaseFragment
 	private static final Logger LOG = getLogger(TAG);
 
 	static final String POST_ID = "briar.POST_ID";
+
+	/** In UTF-8 bytes, not characters, and the marker counts towards it. */
+	private static final int MAX_COMMENT_TEXT_BYTES =
+			MAX_BLOG_COMMENT_TEXT_LENGTH
+					- toUtf8(BaseViewModel.COMMENT_MARKER).length;
 
 	protected BlogViewModel viewModel;
 	private final Handler handler = new Handler(Looper.getMainLooper());
@@ -207,18 +217,27 @@ public class BlogPostFragment extends BaseFragment
 				new android.widget.FrameLayout(getContext());
 		container.setPadding(pad, pad / 2, pad, 0);
 		container.addView(input);
-		new MaterialAlertDialogBuilder(getContext(),
+		AlertDialog dialog = new MaterialAlertDialogBuilder(getContext(),
 				R.style.AnonDialogTheme)
 				.setTitle(R.string.comment_blog_post)
 				.setView(container)
-				.setPositiveButton(android.R.string.ok, (d, w) -> {
-					String comment = input.getText().toString().trim();
-					if (!comment.isEmpty()) {
-						viewModel.commentOnPost(post, comment);
-					}
-				})
+				.setPositiveButton(android.R.string.ok, null)
 				.setNegativeButton(R.string.cancel, null)
-				.show();
+				.create();
+		// Bound on the button rather than in the builder, so a rejected
+		// comment leaves the dialog open with the text still in it.
+		dialog.setOnShowListener(d -> dialog.getButton(BUTTON_POSITIVE)
+				.setOnClickListener(v -> {
+					String comment = input.getText().toString().trim();
+					if (comment.isEmpty()) return;
+					if (utf8IsTooLong(comment, MAX_COMMENT_TEXT_BYTES)) {
+						input.setError(getString(R.string.text_too_long));
+						return;
+					}
+					viewModel.commentOnPost(post, comment);
+					dialog.dismiss();
+				}));
+		dialog.show();
 	}
 
 	private void startPeriodicUpdate() {
