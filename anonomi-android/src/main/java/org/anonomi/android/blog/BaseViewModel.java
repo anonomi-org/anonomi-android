@@ -50,6 +50,7 @@ import static org.anonchatsecure.bramble.util.LogUtils.logDuration;
 import static org.anonchatsecure.bramble.util.LogUtils.logException;
 import static org.anonchatsecure.bramble.util.LogUtils.now;
 import static org.anonchatsecure.anonchat.api.blog.BlogConstants.COMMENT_MARKER;
+import static org.anonchatsecure.anonchat.api.blog.BlogConstants.isComment;
 import static org.anonchatsecure.anonchat.api.blog.BlogConstants.LIKE_MARKER;
 import static org.anonchatsecure.anonchat.api.blog.BlogConstants.UNLIKE_MARKER;
 import static org.anonchatsecure.anonchat.api.identity.AuthorInfo.Status.OURSELVES;
@@ -434,8 +435,12 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 
 	/**
 	 * Applies one like or unlike, or returns null if it changes nothing for
-	 * that author. Arrival order decides here where a reload uses the latest
-	 * timestamp, so the two can differ until the next reload settles it.
+	 * that author.
+	 * <p>
+	 * Known defect, not a rule: this decides on arrival order while a reload
+	 * decides on the latest timestamp, so an author's own like and unlike
+	 * arriving reversed leaves the wrong state until the next reload. Fixing
+	 * it needs each author's last action kept per item, not just the likers.
 	 */
 	@Nullable
 	static List<BlogLiker> applyLike(List<BlogLiker> current, Author author,
@@ -465,10 +470,6 @@ abstract class BaseViewModel extends DbViewModel implements EventListener {
 
 	static boolean isLikeOrUnlike(@Nullable String comment) {
 		return LIKE_MARKER.equals(comment) || UNLIKE_MARKER.equals(comment);
-	}
-
-	static boolean isComment(@Nullable String comment) {
-		return comment != null && comment.startsWith(COMMENT_MARKER);
 	}
 
 	/**

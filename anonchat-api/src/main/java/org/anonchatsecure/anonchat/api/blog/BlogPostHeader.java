@@ -56,20 +56,7 @@ public class BlogPostHeader extends PostHeader {
 			Author author, AuthorInfo authorInfo, boolean rssFeed,
 			boolean read, boolean hasImage) {
 		this(type, groupId, id, parentId, timestamp, timeReceived, author,
-				authorInfo, rssFeed, read, hasImage, ownIdAsOriginal(type, id));
-	}
-
-	/**
-	 * A wrapped copy has an ID of its own, so taking it as the original would
-	 * key it onto the wrong post. Only reachable from a constructor argument,
-	 * where a check cannot precede {@code this(...)}.
-	 */
-	static MessageId ownIdAsOriginal(MessageType type, MessageId id) {
-		if (type == WRAPPED_POST || type == WRAPPED_COMMENT) {
-			throw new IllegalArgumentException(
-					"A wrapped copy needs the ID it had in its first blog");
-		}
-		return id;
+				authorInfo, rssFeed, read, hasImage, id);
 	}
 
 	public BlogPostHeader(MessageType type, GroupId groupId, MessageId id,
@@ -77,6 +64,13 @@ public class BlogPostHeader extends PostHeader {
 			Author author, AuthorInfo authorInfo, boolean rssFeed,
 			boolean read, boolean hasImage, MessageId originalId) {
 		super(id, parentId, timestamp, author, authorInfo, read);
+		// A wrapped copy is a different message in a different blog, so its
+		// own ID as the original would key it onto the wrong post.
+		if ((type == WRAPPED_POST || type == WRAPPED_COMMENT)
+				&& originalId.equals(id)) {
+			throw new IllegalArgumentException(
+					"A wrapped copy needs the ID it had in its first blog");
+		}
 		this.type = type;
 		this.groupId = groupId;
 		this.timeReceived = timeReceived;

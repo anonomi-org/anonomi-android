@@ -203,12 +203,13 @@ public class BlogReactionAggregationTest {
 	}
 
 	/**
-	 * Arrival order decides incrementally, latest timestamp on a reload, so
-	 * one author's own like and unlike arriving reversed disagree until the
-	 * next reload. Pinned so a change to either rule is deliberate.
+	 * Records a known defect rather than intended behaviour: arrival order
+	 * decides incrementally, latest timestamp on a reload, so reversed
+	 * delivery of one author's own like and unlike leaves the two
+	 * disagreeing until the next reload. Change this test when it is fixed.
 	 */
 	@Test
-	public void incrementalAndReloadDifferWhenOneAuthorsEventsArriveReversed() {
+	public void incrementalAndReloadDisagreeOnReversedDelivery() {
 		BlogPostHeader target = postHeader(alice, 1000);
 
 		// the unlike is newer, but it arrives first
