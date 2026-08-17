@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:padding="@dimen/margin_large">
+
+			<TextView
+				android:id="@+id/confirmTextView"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/backup_confirm_text"
+				android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+			<com.google.android.material.textfield.TextInputLayout
+				android:id="@+id/codeEntryWrapper"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/margin_large"
+				app:errorEnabled="true"
+				app:hintEnabled="false">
+
+				<com.google.android.material.textfield.TextInputEditText
+					android:id="@+id/codeEntry"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:hint="@string/backup_confirm_hint"
+					android:imeOptions="actionDone|flagNoPersonalizedLearning"
+					android:importantForAutofill="no"
+					android:inputType="number"
+					android:maxLines="1"
+					android:typeface="monospace" />
+
+			</com.google.android.material.textfield.TextInputLayout>
+
+			<Button
+				android:id="@+id/showCodeAgainButton"
+				style="@style/AnonomiButtonFlat"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/backup_show_code_again" />
+
+		</LinearLayout>
+
+	</ScrollView>
+
+	<Button
+		android:id="@+id/chooseFileButton"
+		style="@style/AnonomiButton"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_margin="@dimen/margin_large"
+		android:enabled="false"
+		android:text="@string/backup_choose_file" />
+
+</LinearLayout>

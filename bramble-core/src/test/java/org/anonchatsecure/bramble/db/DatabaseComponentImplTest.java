@@ -18,6 +18,7 @@ import org.anonchatsecure.bramble.api.db.NoSuchIdentityException;
 import org.anonchatsecure.bramble.api.db.NoSuchMessageException;
 import org.anonchatsecure.bramble.api.db.NoSuchPendingContactException;
 import org.anonchatsecure.bramble.api.db.NoSuchTransportException;
+import org.anonchatsecure.bramble.api.db.Transaction;
 import org.anonchatsecure.bramble.api.event.Event;
 import org.anonchatsecure.bramble.api.event.EventBus;
 import org.anonchatsecure.bramble.api.identity.Author;
@@ -58,12 +59,16 @@ import org.anonchatsecure.bramble.test.BrambleMockTestCase;
 import org.anonchatsecure.bramble.test.CaptureArgumentAction;
 import org.jmock.Expectations;
 import org.jmock.Sequence;
+import org.jmock.api.Invocation;
+import org.jmock.lib.action.CustomAction;
 import org.junit.Test;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
 import java.util.concurrent.Executor;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static java.util.Arrays.asList;
@@ -71,6 +76,7 @@ import static java.util.Collections.emptyList;
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.singletonList;
 import static java.util.Collections.singletonMap;
+import static java.lang.Thread.State.WAITING;
 import static java.util.concurrent.TimeUnit.HOURS;
 import static org.anonchatsecure.bramble.api.db.DatabaseComponent.TIMER_NOT_STARTED;
 import static org.anonchatsecure.bramble.api.record.Record.RECORD_HEADER_BYTES;
@@ -1952,6 +1958,51 @@ public class DatabaseComponentImplTest extends BrambleMockTestCase {
 			transaction.attach(action3);
 			transaction.attach(action4);
 		});
+	}
+
+	@Test
+	public void testBackupDatabaseHoldsTheWriteLock() throws Exception {
+		File dest = new File("backup.zip");
+		AtomicBoolean readerHasLock = new AtomicBoolean(false);
+		AtomicReference<Exception> readerFailed = new AtomicReference<>();
+		DatabaseComponent db = createDatabaseComponent(database, eventBus,
+				eventExecutor, shutdownManager);
+		Thread reader = new Thread(() -> {
+			try {
+				Transaction transaction = db.startTransaction(true);
+				readerHasLock.set(true);
+				db.endTransaction(transaction);
+			} catch (Exception e) {
+				readerFailed.set(e);
+			}
+		});
+		context.checking(new Expectations() {{
+			exactly(2).of(database).startTransaction();
+			will(returnValue(txn));
+			oneOf(database).backupTo(txn, dest);
+			will(new CustomAction("checks that the write lock is held") {
+				@Override
+				public Object invoke(Invocation invocation) throws Throwable {
+					// Start the reader now that the copy holds the lock, and
+					// wait until it has parked on it, so the check below
+					// can't pass just because it hasn't run yet
+					reader.start();
+					long deadline = System.currentTimeMillis() + 10_000;
+					while (reader.getState() != WAITING) {
+						if (System.currentTimeMillis() > deadline) fail();
+						Thread.sleep(10);
+					}
+					assertFalse(readerHasLock.get());
+					return null;
+				}
+			});
+			oneOf(database).commitTransaction(txn);
+			oneOf(database).abortTransaction(txn);
+		}});
+		db.backupDatabase(dest);
+		reader.join(10_000);
+		assertNull(readerFailed.get());
+		assertTrue(readerHasLock.get());
 	}
 
 	private static class TestEvent extends Event {

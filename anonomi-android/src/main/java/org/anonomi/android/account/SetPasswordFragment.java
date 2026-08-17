@@ -79,7 +79,8 @@ public class SetPasswordFragment extends SetupFragment {
 		nextButton.setOnClickListener(this);
 
 		if (!viewModel.needToShowDozeFragment()) {
-			nextButton.setText(R.string.create_account_button);
+			nextButton.setText(viewModel.isRestoring() ?
+					R.string.restore_button : R.string.create_account_button);
 		}
 
 		viewModel.getIsCreatingAccount()

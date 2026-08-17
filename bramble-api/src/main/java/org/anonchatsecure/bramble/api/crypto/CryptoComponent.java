@@ -196,6 +196,14 @@ public interface CryptoComponent {
 	boolean isEncryptedWithStrengthenedKey(byte[] ciphertext);
 
 	/**
+	 * Derives a key from the given password using the given salt and cost
+	 * parameter. Unlike {@link #encryptWithPassword(byte[], String,
+	 * KeyStrengthener)} the cost is not calibrated to the device, so the same
+	 * key can be derived on a device of any speed.
+	 */
+	SecretKey deriveKeyFromPassword(String password, byte[] salt, int cost);
+
+	/**
 	 * Encrypts the given plaintext to the given public key.
 	 */
 	byte[] encryptToKey(PublicKey publicKey, byte[] plaintext);

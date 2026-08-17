@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import org.briarproject.android.dontkillmelib.DozeHelper;
+import org.anonchatsecure.bramble.api.account.AccountBackupManager;
 import org.anonchatsecure.bramble.api.account.AccountManager;
 import org.anonchatsecure.bramble.api.crypto.PasswordStrengthEstimator;
 import org.anonchatsecure.bramble.test.BrambleMockTestCase;
@@ -34,6 +35,7 @@ public class SetupViewModelTest extends BrambleMockTestCase {
 	private final Application app;
 	private final Context appContext;
 	private final AccountManager accountManager;
+	private final AccountBackupManager backupManager;
 	private final DozeHelper dozeHelper;
 
 	public SetupViewModelTest() {
@@ -41,6 +43,7 @@ public class SetupViewModelTest extends BrambleMockTestCase {
 		app = context.mock(Application.class);
 		appContext = context.mock(Context.class);
 		accountManager = context.mock(AccountManager.class);
+		backupManager = context.mock(AccountBackupManager.class);
 		dozeHelper = context.mock(DozeHelper.class);
 	}
 
@@ -61,6 +64,7 @@ public class SetupViewModelTest extends BrambleMockTestCase {
 
 		SetupViewModel viewModel = new SetupViewModel(app,
 				accountManager,
+				backupManager,
 				new ImmediateExecutor(),
 				context.mock(PasswordStrengthEstimator.class),
 				dozeHelper);

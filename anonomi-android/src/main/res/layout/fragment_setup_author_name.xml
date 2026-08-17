@@ -77,7 +77,8 @@
 				android:inputType="text|textCapWords"
 				android:maxLines="1" />
 
-			<requestFocus />
+			<!-- Deliberately not focused: the keyboard it raises covers the
+			     restore option at the bottom of the screen. -->
 		</com.google.android.material.textfield.TextInputLayout>
 
 		<Button
@@ -102,10 +103,22 @@
 			android:enabled="false"
 			android:text="@string/setup_next"
 			app:layout_constraintTop_toBottomOf="@id/info_button"
-			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintBottom_toTopOf="@id/restore_button"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			tools:enabled="true" />
+
+		<Button
+			android:id="@+id/restore_button"
+			style="@style/AnonomiButtonFlat.Neutral"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="8dp"
+			android:text="@string/restore_setup_button"
+			app:layout_constraintTop_toBottomOf="@id/next"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toEndOf="parent" />
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

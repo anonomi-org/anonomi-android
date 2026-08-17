@@ -35,6 +35,11 @@ import org.anonchatsecure.anonchat.BriarCoreModule;
 import org.anonomi.android.attachment.AttachmentModule;
 import org.anonomi.android.attachment.media.ImageCompressor;
 import org.anonomi.android.attachment.media.MediaModule;
+import org.anonomi.android.backup.BackupCodeFragment;
+import org.anonomi.android.backup.BackupConfirmFragment;
+import org.anonomi.android.backup.BackupIntroFragment;
+import org.anonomi.android.backup.BackupProgressFragment;
+import org.anonomi.android.backup.BackupResultFragment;
 import org.anonomi.android.contact.connect.BluetoothIntroFragment;
 import org.anonomi.android.conversation.glide.BriarModelLoader;
 import org.anonomi.android.hotspot.AbstractTabsFragment;
@@ -251,6 +256,16 @@ public interface AndroidComponent
 	void inject(ManualHotspotFragment manualHotspotFragment);
 
 	void inject(FallbackFragment fallbackFragment);
+
+	void inject(BackupIntroFragment backupIntroFragment);
+
+	void inject(BackupCodeFragment backupCodeFragment);
+
+	void inject(BackupConfirmFragment backupConfirmFragment);
+
+	void inject(BackupProgressFragment backupProgressFragment);
+
+	void inject(BackupResultFragment backupResultFragment);
 
 	void inject(ChooserFragment chooserFragment);
 

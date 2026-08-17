@@ -9,6 +9,7 @@ import com.vanniktech.emoji.RecentEmoji;
 
 import org.anonchatsecure.bramble.api.FeatureFlags;
 import org.anonchatsecure.bramble.api.FormatException;
+import org.anonchatsecure.bramble.api.account.AccountBackupConfig;
 import org.anonchatsecure.bramble.api.crypto.CryptoComponent;
 import org.anonchatsecure.bramble.api.crypto.KeyStrengthener;
 import org.anonchatsecure.bramble.api.crypto.PublicKey;
@@ -33,9 +34,11 @@ import org.anonchatsecure.bramble.plugin.tcp.AndroidLanTcpPluginFactory;
 import org.anonchatsecure.bramble.plugin.tor.AndroidTorPluginFactory;
 import org.anonchatsecure.bramble.util.AndroidUtils;
 import org.anonchatsecure.bramble.util.StringUtils;
+import org.anonomi.BuildConfig;
 import org.anonomi.android.account.DozeHelperModule;
 import org.anonomi.android.account.LockManagerImpl;
 import org.anonomi.android.account.SetupModule;
+import org.anonomi.android.backup.BackupModule;
 import org.anonomi.android.blog.BlogModule;
 import org.anonomi.android.contact.ContactListModule;
 import org.anonomi.android.contact.add.nearby.AddNearbyContactModule;
@@ -109,6 +112,7 @@ import static org.anonomi.android.TestingConstants.IS_DEBUG_BUILD;
 		HotspotModule.class,
 		TransferDataModule.class,
 		MailboxModule.class,
+		BackupModule.class,
 })
 public class AppModule {
 
@@ -263,6 +267,33 @@ public class AppModule {
 			}
 		};
 		return devConfig;
+	}
+
+	@Provides
+	@Singleton
+	AccountBackupConfig provideAccountBackupConfig(Application app) {
+		@NotNullByDefault
+		AccountBackupConfig config = new AccountBackupConfig() {
+
+			@Override
+			public File getBackupTempDirectory() {
+				// Under the cache directory, whose contents deleting an
+				// account clears, so a snapshot left behind by an export that
+				// was interrupted does not outlive the account it came from.
+				return new File(app.getCacheDir(), "backup");
+			}
+
+			@Override
+			public long getAppVersionCode() {
+				return BuildConfig.VERSION_CODE;
+			}
+
+			@Override
+			public String getAppVersionName() {
+				return BuildConfig.VERSION_NAME;
+			}
+		};
+		return config;
 	}
 
 	@Provides

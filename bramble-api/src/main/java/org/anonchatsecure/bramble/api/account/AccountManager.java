@@ -5,6 +5,8 @@ import org.anonchatsecure.bramble.api.crypto.SecretKey;
 import org.anonchatsecure.bramble.api.identity.IdentityManager;
 import org.briarproject.nullsafety.NotNullByDefault;
 
+import java.io.File;
+
 import javax.annotation.Nullable;
 
 @NotNullByDefault
@@ -78,4 +80,29 @@ public interface AccountManager {
 	 */
 	void changePassword(String oldPassword, String newPassword)
 			throws DecryptionException;
+
+	/**
+	 * Checks that the given password decrypts the database key, without
+	 * signing in. Used before handing out anything that would outlive the
+	 * unlocked screen.
+	 *
+	 * @throws DecryptionException If the database key could not be loaded and
+	 * decrypted.
+	 */
+	void verifyPassword(String password) throws DecryptionException;
+
+	/**
+	 * Moves the given database file into place and stores the given database
+	 * key, encrypted with the given password, so the account can be signed
+	 * into afterwards. No identity is registered: the restored database
+	 * already has one.
+	 * <p>
+	 * The key is stored last. If the process dies in between there is a
+	 * database and no key, which the next launch clears.
+	 *
+	 * @return true if the account was restored, false if it was not, in which
+	 * case nothing of it is left on disk.
+	 * @throws IllegalStateException if an account already exists.
+	 */
+	boolean restoreAccount(File dbFile, SecretKey dbKey, String password);
 }

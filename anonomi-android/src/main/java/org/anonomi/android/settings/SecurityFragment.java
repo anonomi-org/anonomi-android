@@ -8,6 +8,7 @@ import android.text.InputType;
 import android.view.View;
 
 import org.anonomi.R;
+import org.anonomi.android.backup.LastBackup;
 import org.anonomi.android.util.AndroidPasscodeClock;
 import org.anonomi.android.util.PasscodeAttemptStore;
 import org.anonomi.android.util.PasscodeHasher;
@@ -26,6 +27,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.ListPreference;
+import androidx.preference.Preference;
 import androidx.preference.SwitchPreferenceCompat;
 import androidx.preference.PreferenceFragmentCompat;
 
@@ -33,6 +35,7 @@ import static android.os.Build.VERSION.SDK_INT;
 import static java.util.Objects.requireNonNull;
 import static org.anonomi.android.AppModule.getAndroidComponent;
 import static org.anonomi.android.settings.SettingsActivity.enableAndPersist;
+import static org.anonomi.android.util.UiUtils.formatDateAbsolute;
 import static org.anonomi.android.util.UiUtils.hasScreenLock;
 
 @MethodsNotNullByDefault
@@ -46,6 +49,9 @@ public class SecurityFragment extends PreferenceFragmentCompat {
 
 	public static final String PREF_KEY_CALCULATOR_PASSCODE =
 			"pref_key_set_calculator_passcode";
+
+	public static final String PREF_KEY_BACKUP_ACCOUNT =
+			"pref_key_backup_account";
 
 	/**
 	 * How many wrong passcodes have been entered in a row, and until when the
@@ -299,6 +305,20 @@ public class SecurityFragment extends PreferenceFragmentCompat {
 		if (stealthSwitch != null) {
 			stealthSwitch.setChecked(stealthEnabled());
 		}
+		showLastBackup();
+	}
+
+	/**
+	 * Says when the last backup was written, so that an old one is not
+	 * mistaken for a current one.
+	 */
+	private void showLastBackup() {
+		Preference backup = findPreference(PREF_KEY_BACKUP_ACCOUNT);
+		if (backup == null) return;
+		LastBackup last = LastBackup.load(requireContext());
+		backup.setSummary(last == null ? getString(R.string.backup_setting_hint)
+				: getString(R.string.backup_setting_last,
+						formatDateAbsolute(requireContext(), last.created)));
 	}
 
 	/**

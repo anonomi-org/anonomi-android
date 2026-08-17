@@ -12,9 +12,9 @@ import androidx.appcompat.app.AlertDialog;
 import static org.anonomi.android.util.UiUtils.getDialogIcon;
 
 @NotNullByDefault
-class LoginUtils {
+public class LoginUtils {
 
-	static AlertDialog createKeyStrengthenerErrorDialog(Context ctx) {
+	public static AlertDialog createKeyStrengthenerErrorDialog(Context ctx) {
 		MaterialAlertDialogBuilder builder =
 				new MaterialAlertDialogBuilder(ctx, R.style.AnonDialogTheme);
 		builder.setIcon(getDialogIcon(ctx, R.drawable.alerts_and_states_error));
