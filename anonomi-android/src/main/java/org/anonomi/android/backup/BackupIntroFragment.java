@@ -86,7 +86,9 @@ public class BackupIntroFragment extends Fragment {
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before,
 					int count) {
-				setError(passwordWrapper, null, false);
+				// Only once something has been typed: a wrong password empties
+				// the field, and that must not wipe the error it just showed
+				if (count > 0) setError(passwordWrapper, null, false);
 				continueButton.setEnabled(s.length() > 0);
 			}
 
