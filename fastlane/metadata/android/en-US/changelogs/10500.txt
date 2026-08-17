@@ -1,0 +1,10 @@
+Version 1.5.0:
+* Back up your account to an encrypted file and restore it on another phone
+* Locations and payment requests are now sent as their own messages
+* Monero addresses can be read even when the QR code cannot be shown
+* Forums now advertise image and voice message support
+* Fixed blog like counts and posts sharing an author and time
+* Updated onion addresses
+* Anonomi Postbox 1.0.6
+* Security and reliability improvements
+* Updated translations
