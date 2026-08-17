@@ -72,8 +72,8 @@ class SetupViewModel extends AndroidViewModel {
 	 */
 	enum RestoreFailure {
 		NOT_A_BACKUP, WRONG_CODE_OR_DAMAGED, TRUNCATED, DAMAGED, TOO_NEW,
-		TOO_OLD, NOT_ENOUGH_MEMORY, NOT_ENOUGH_SPACE, CANNOT_READ_FILE,
-		COULD_NOT_RESTORE
+		UNSUPPORTED_FORMAT, TOO_OLD, NOT_ENOUGH_MEMORY, NOT_ENOUGH_SPACE,
+		CANNOT_READ_FILE, COULD_NOT_RESTORE
 	}
 
 	/**
@@ -473,8 +473,12 @@ class SetupViewModel extends AndroidViewModel {
 				return RestoreFailure.TOO_OLD;
 			// A format, key derivation function or cost this code does not
 			// know is what a newer version's backup looks like, and also what
-			// damage to those few bytes looks like
+			// damage to those few bytes looks like: they are read before
+			// anything has been authenticated
 			case UNSUPPORTED_FORMAT:
+				return RestoreFailure.UNSUPPORTED_FORMAT;
+			// The schema version comes out of the authenticated manifest, so
+			// this one really was written by a newer version
 			case DATA_TOO_NEW:
 				return RestoreFailure.TOO_NEW;
 			// Anything else, including a reason added later, is a file that

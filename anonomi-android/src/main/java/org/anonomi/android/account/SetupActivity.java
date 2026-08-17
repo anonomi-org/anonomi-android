@@ -77,7 +77,9 @@ public class SetupActivity extends BaseActivity
 
 	private void onStateChanged(SetupViewModel.State state) {
 		if (state == AUTHOR_NAME) {
-			setInputStateAlwaysVisible(this);
+			// Not always-visible, unlike the other typing screens: the keyboard
+			// covers the offer to restore from a backup at the foot of this one
+			setInputStateHidden(this);
 			showInitialFragment(AuthorNameFragment.newInstance());
 		} else if (state == SET_PASSWORD) {
 			setInputStateAlwaysVisible(this);

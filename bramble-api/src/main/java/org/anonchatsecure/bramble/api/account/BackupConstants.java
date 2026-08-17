@@ -40,10 +40,12 @@ public interface BackupConstants {
 	int MIN_BACKUP_LOG_COST = 14;
 
 	/**
-	 * The highest cost exponent a backup may declare. Scrypt needs
-	 * 128 * 2^logCost * r bytes, so this bound is 64 MiB; the cost is read
-	 * from the file before anything is authenticated, and a phone's heap is
-	 * a few hundred MiB.
+	 * The highest cost exponent a backup may declare. The cost is read from
+	 * the file before anything is authenticated, so it has to be bounded;
+	 * 2^16 allocates 64 MiB and a reader is required to have twice that, so
+	 * only a phone with a 128 MiB heap can open one. Nothing here writes that
+	 * cost, but the range is what a reader accepts from a file written
+	 * elsewhere.
 	 */
 	int MAX_BACKUP_LOG_COST = 16;
 

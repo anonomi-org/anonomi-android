@@ -198,13 +198,16 @@ public class SetupRestoreViewModelTest {
 			throws Exception {
 		assertFailureFor(BackupError.NOT_A_BACKUP,
 				RestoreFailure.NOT_A_BACKUP);
+		// Read from the plaintext header, so a newer version and a damaged
+		// file are indistinguishable here
 		assertFailureFor(BackupError.UNSUPPORTED_FORMAT,
-				RestoreFailure.TOO_NEW);
+				RestoreFailure.UNSUPPORTED_FORMAT);
 		assertFailureFor(BackupError.WRONG_CODE_OR_DAMAGED,
 				RestoreFailure.WRONG_CODE_OR_DAMAGED);
 		assertFailureFor(BackupError.TRUNCATED, RestoreFailure.TRUNCATED);
 		assertFailureFor(BackupError.NOT_ENOUGH_MEMORY,
 				RestoreFailure.NOT_ENOUGH_MEMORY);
+		// Read from the authenticated manifest, so this one really is newer
 		assertFailureFor(BackupError.DATA_TOO_NEW, RestoreFailure.TOO_NEW);
 		assertFailureFor(BackupError.DATA_TOO_OLD, RestoreFailure.TOO_OLD);
 		assertFailureFor(BackupError.CORRUPT, RestoreFailure.DAMAGED);

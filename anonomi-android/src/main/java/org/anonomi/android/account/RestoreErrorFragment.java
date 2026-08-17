@@ -92,6 +92,8 @@ public class RestoreErrorFragment extends RestoreFragment {
 			return R.string.restore_error_truncated;
 		} else if (f == RestoreFailure.TOO_NEW) {
 			return R.string.restore_error_too_new;
+		} else if (f == RestoreFailure.UNSUPPORTED_FORMAT) {
+			return R.string.restore_error_unsupported_format;
 		} else if (f == RestoreFailure.TOO_OLD) {
 			return R.string.restore_error_too_old;
 		} else if (f == RestoreFailure.NOT_ENOUGH_MEMORY) {
