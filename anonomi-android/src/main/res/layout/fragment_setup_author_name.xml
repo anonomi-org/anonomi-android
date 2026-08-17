@@ -77,7 +77,8 @@
 				android:inputType="text|textCapWords"
 				android:maxLines="1" />
 
-			<requestFocus />
+			<!-- Deliberately not focused: the keyboard it raises covers the
+			     restore option at the bottom of the screen. -->
 		</com.google.android.material.textfield.TextInputLayout>
 
 		<Button

@@ -1327,7 +1327,7 @@ Anonomi Messenger is an independent project and is not affiliated with, endorsed
     <string name="restore_error_wrong_code">The recovery code did not open the file. Either the code is not the right one, or the file has been altered — there is no way to tell which apart.</string>
     <string name="restore_error_truncated">The file stops before the end of the backup. Copy it again from wherever you keep it, in full.</string>
     <string name="restore_error_damaged">The file is damaged and cannot be used.</string>
-    <string name="restore_error_too_new">This backup was made by a newer version of Anonomi Messenger. Update the app, then try again.</string>
+    <string name="restore_error_too_new">Either this backup was made by a newer version of Anonomi Messenger, or the file has been altered — there is no way to tell which apart. Update the app; if it is already up to date, the file is damaged.</string>
     <string name="restore_error_too_old">This backup was made by a version too old to be brought forward.</string>
     <string name="restore_error_not_enough_memory">This phone does not have enough memory to open this backup. Another phone may be able to; the file itself is fine.</string>
     <string name="restore_error_not_enough_space">There is not enough free space on this phone for the account in this backup. Free some up and try again.</string>
