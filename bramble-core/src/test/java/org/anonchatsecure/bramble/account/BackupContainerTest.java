@@ -27,8 +27,10 @@ import static org.anonchatsecure.bramble.api.account.BackupConstants.BACKUP_FORM
 import static org.anonchatsecure.bramble.api.account.BackupConstants.BACKUP_FORMAT_VERSION_OFFSET;
 import static org.anonchatsecure.bramble.api.account.BackupConstants.BACKUP_HEADER_BYTES;
 import static org.anonchatsecure.bramble.api.account.BackupConstants.BACKUP_KDF_OFFSET;
+import static org.anonchatsecure.bramble.api.account.BackupConstants.BACKUP_LOG_COST;
 import static org.anonchatsecure.bramble.api.account.BackupConstants.BACKUP_LOG_COST_OFFSET;
 import static org.anonchatsecure.bramble.api.account.BackupConstants.BACKUP_SALT_OFFSET;
+import static org.anonchatsecure.bramble.api.account.BackupConstants.KDF_BLOCK_SIZE;
 import static org.anonchatsecure.bramble.api.account.BackupConstants.MAX_BACKUP_LOG_COST;
 import static org.anonchatsecure.bramble.api.account.BackupConstants.MIN_BACKUP_LOG_COST;
 import static org.anonchatsecure.bramble.api.account.BackupError.CORRUPT;
@@ -56,6 +58,9 @@ public class BackupContainerTest extends BrambleTestCase {
 	private static final String WRONG_CODE = "999999999999999999999999999999";
 	// Enough to span several frames, so a middle frame can be altered
 	private static final int DB_BYTES = 3000;
+	// The heap an old or low-memory phone is left with, which is the phone a
+	// backup may have to be restored onto
+	private static final long SMALLEST_SUPPORTED_HEAP_BYTES = 32 * 1024 * 1024;
 
 	@Inject
 	CryptoComponent crypto;
@@ -154,6 +159,18 @@ public class BackupContainerTest extends BrambleTestCase {
 		assertRejected(container, UNSUPPORTED_FORMAT);
 		container[BACKUP_LOG_COST_OFFSET] = 30;
 		assertRejected(container, UNSUPPORTED_FORMAT);
+	}
+
+	/**
+	 * A backup is written on one phone and read on another, which may be the
+	 * cheaper one someone still has after losing the first. Raising the cost
+	 * this code writes would leave those backups unreadable there for good,
+	 * because a reader has no way to lower it.
+	 */
+	@Test
+	public void testDefaultCostCanBeReadOnTheSmallestSupportedHeap() {
+		long needed = (256L * KDF_BLOCK_SIZE) << BACKUP_LOG_COST;
+		assertTrue(needed <= SMALLEST_SUPPORTED_HEAP_BYTES);
 	}
 
 	/**

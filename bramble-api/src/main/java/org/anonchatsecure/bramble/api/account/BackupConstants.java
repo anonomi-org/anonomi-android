@@ -26,9 +26,13 @@ public interface BackupConstants {
 	int KDF_BLOCK_SIZE = 8;
 
 	/**
-	 * The cost exponent used for new backups. 2^15 needs 32 MiB.
+	 * The cost exponent used for new backups. 2^14 needs 16 MiB, and a reader
+	 * needs twice that. A backup is restored onto whatever phone is to hand,
+	 * which may be smaller than the one that wrote it, so the cost is kept
+	 * within reach of a small heap: the recovery code is thirty random digits,
+	 * not a memorised secret, so stretching it harder buys very little.
 	 */
-	int BACKUP_LOG_COST = 15;
+	int BACKUP_LOG_COST = 14;
 
 	/**
 	 * The lowest cost exponent a backup may declare.

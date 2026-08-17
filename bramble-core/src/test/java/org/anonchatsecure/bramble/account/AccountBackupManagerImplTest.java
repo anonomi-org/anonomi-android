@@ -85,6 +85,7 @@ public class AccountBackupManagerImplTest extends BrambleMockTestCase {
 	};
 
 	private AccountBackupManagerImpl manager;
+	private DatabaseConfig databaseConfig;
 
 	public AccountBackupManagerImplTest() {
 		BackupContainerTestComponent component =
@@ -95,7 +96,10 @@ public class AccountBackupManagerImplTest extends BrambleMockTestCase {
 	@Before
 	public void setUp() {
 		assertTrue(testDir.mkdirs());
-		DatabaseConfig databaseConfig = new TestDatabaseConfig(testDir);
+		databaseConfig = new TestDatabaseConfig(testDir);
+		// An open account always has one, and the size of the database cannot
+		// be measured without it
+		assertTrue(databaseConfig.getDatabaseDirectory().mkdirs());
 		AccountBackupConfig config = new AccountBackupConfig() {
 
 			@Override
@@ -222,6 +226,25 @@ public class AccountBackupManagerImplTest extends BrambleMockTestCase {
 					return null;
 				}
 			});
+		}});
+		try {
+			manager.exportAccount(new ByteArrayOutputStream(), CODE, progress);
+			fail();
+		} catch (IOException expected) {
+			// Expected
+		}
+	}
+
+	/**
+	 * A directory that cannot be listed used to measure as empty, which let the
+	 * check pass without having measured anything.
+	 */
+	@Test
+	public void testDatabaseThatCannotBeMeasuredIsRefused() throws Exception {
+		deleteTestDirectory(databaseConfig.getDatabaseDirectory());
+		context.checking(new Expectations() {{
+			oneOf(accountManager).getDatabaseKey();
+			will(returnValue(dbKey));
 		}});
 		try {
 			manager.exportAccount(new ByteArrayOutputStream(), CODE, progress);

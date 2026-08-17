@@ -210,9 +210,14 @@ class AccountBackupManagerImpl implements AccountBackupManager {
 		throw new IOException();
 	}
 
-	private long directorySize(File dir) {
+	/**
+	 * Throws rather than returning zero for a directory it cannot list: the
+	 * size is there to decide whether the snapshot fits, and a zero would make
+	 * that check pass without having measured anything.
+	 */
+	private long directorySize(File dir) throws IOException {
 		File[] children = dir.listFiles();
-		if (children == null) return 0;
+		if (children == null) throw new IOException("Cannot list " + dir);
 		long size = 0;
 		for (File child : children) {
 			size += child.isDirectory() ? directorySize(child) : child.length();
