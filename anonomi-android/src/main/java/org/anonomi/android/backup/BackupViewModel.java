@@ -2,10 +2,8 @@ package org.anonomi.android.backup;
 
 import android.app.Application;
 import android.content.ContentResolver;
-import android.database.Cursor;
 import android.net.Uri;
 import android.provider.DocumentsContract;
-import android.provider.OpenableColumns;
 
 import org.anonchatsecure.bramble.api.account.AccountBackupManager;
 import org.anonchatsecure.bramble.api.account.AccountManager;
@@ -21,6 +19,7 @@ import org.anonchatsecure.bramble.api.crypto.DecryptionResult;
 import org.anonchatsecure.bramble.api.db.DbException;
 import org.anonchatsecure.bramble.api.lifecycle.IoExecutor;
 import org.anonchatsecure.bramble.api.system.Clock;
+import org.anonomi.android.util.DocumentInfo;
 import org.anonomi.android.viewmodel.LiveEvent;
 import org.anonomi.android.viewmodel.MutableLiveEvent;
 import org.briarproject.nullsafety.NotNullByDefault;
@@ -45,8 +44,6 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
-import static android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
 import static java.util.Arrays.asList;
 import static java.util.Locale.US;
 import static java.util.logging.Level.WARNING;
@@ -269,19 +266,20 @@ public class BackupViewModel extends AndroidViewModel {
 	@IoExecutor
 	private void export(Uri uri, String code) {
 		ContentResolver resolver = getApplication().getContentResolver();
-		// Asked for before the file is written, so that a location we will
-		// not be able to reach again is known about while there is still
-		// someone in front of the screen
-		takePersistableGrant(resolver, uri);
+		// No persistable permission is taken. Nothing reaches the backup
+		// again after this export: it is the user's to move and the user's to
+		// delete. A lasting grant would also record the file's path in the
+		// system's own list, outside anything of ours that is encrypted
+		//
 		// Asked for before anything is written: every outcome names the file,
 		// and whether it was empty when we were handed it decides whether it
 		// is ours to delete afterwards
-		Document doc = queryDocument(resolver, uri);
+		DocumentInfo doc = DocumentInfo.query(resolver, uri);
 		try {
 			BackupManifest m = write(resolver, uri, code);
 			verify(resolver, uri, code, m);
 			result = new Result(doc.displayName, isLocalDestination(uri), false);
-			record(uri, m.getCreated(), doc.displayName);
+			record(m.getCreated());
 			state.postValue(State.DONE);
 		} catch (NotEnoughSpaceException e) {
 			logException(LOG, WARNING, e);
@@ -289,7 +287,13 @@ public class BackupViewModel extends AndroidViewModel {
 		} catch (InvalidBackupException e) {
 			logException(LOG, WARNING, e);
 			fail(resolver, uri, doc, Failure.UNREADABLE);
-		} catch (DbException | IOException e) {
+		} catch (DbException e) {
+			// Locking or signing out closes the database under us, which
+			// arrives here rather than as the IllegalStateException below
+			logException(LOG, WARNING, e);
+			fail(resolver, uri, doc, accountManager.hasDatabaseKey() ?
+					Failure.WRITE_FAILED : Failure.SIGNED_OUT);
+		} catch (IOException e) {
 			logException(LOG, WARNING, e);
 			fail(resolver, uri, doc, Failure.WRITE_FAILED);
 		} catch (RuntimeException e) {
@@ -303,16 +307,16 @@ public class BackupViewModel extends AndroidViewModel {
 	}
 
 	/**
-	 * Notes where the backup went, for settings to name and for a wipe to
-	 * delete. Failing is survivable and the backup is not: the Keystore can
-	 * refuse this - after the screen lock has changed, for instance - and a
-	 * backup that has been written and read back must not be thrown away
-	 * because the note about it could not be stored.
+	 * Notes when the backup was written, so settings can say how old it is.
+	 * Failing is survivable and the backup is not: the Keystore can refuse
+	 * this - after the screen lock has changed, for instance - and a backup
+	 * that has been written and read back must not be thrown away because the
+	 * note about it could not be stored.
 	 */
 	@IoExecutor
-	private void record(Uri uri, long created, String displayName) {
+	private void record(long created) {
 		try {
-			LastBackup.save(getApplication(), uri, created, displayName);
+			LastBackup.save(getApplication(), created);
 		} catch (RuntimeException e) {
 			logException(LOG, WARNING, e);
 		}
@@ -382,14 +386,15 @@ public class BackupViewModel extends AndroidViewModel {
 	}
 
 	@IoExecutor
-	private void fail(ContentResolver resolver, Uri uri, Document doc,
+	private void fail(ContentResolver resolver, Uri uri, DocumentInfo doc,
 			Failure reason) {
 		// A half-written file that looks like a backup is the trap this
 		// feature exists to avoid, so take it away - but only if the picker
 		// made it for us. One that already held something was chosen rather
-		// than created, and it could be the last backup
+		// than created, and it could be the last backup. A provider that will
+		// not say how big it is counts as not ours
 		boolean leftBehind = true;
-		if (doc.wasEmpty) leftBehind = !deleteQuietly(resolver, uri);
+		if (doc.size == 0) leftBehind = !deleteQuietly(resolver, uri);
 		failure = reason;
 		result = new Result(doc.displayName, isLocalDestination(uri),
 				leftBehind);
@@ -405,7 +410,7 @@ public class BackupViewModel extends AndroidViewModel {
 	void discardDocument(Uri uri) {
 		ioExecutor.execute(() -> {
 			ContentResolver resolver = getApplication().getContentResolver();
-			if (queryDocument(resolver, uri).wasEmpty) {
+			if (DocumentInfo.query(resolver, uri).size == 0) {
 				deleteQuietly(resolver, uri);
 			}
 		});
@@ -420,70 +425,6 @@ public class BackupViewModel extends AndroidViewModel {
 			logException(LOG, WARNING, e);
 			return false;
 		}
-	}
-
-	private void takePersistableGrant(ContentResolver resolver, Uri uri) {
-		try {
-			resolver.takePersistableUriPermission(uri,
-					FLAG_GRANT_READ_URI_PERMISSION |
-							FLAG_GRANT_WRITE_URI_PERMISSION);
-		} catch (SecurityException e) {
-			// The backup can still be written now, but nothing will be able
-			// to reach the file again after a restart
-			logException(LOG, WARNING, e);
-		}
-	}
-
-	/**
-	 * What the provider says about the document the picker returned.
-	 */
-	private static class Document {
-
-		final String displayName;
-		/**
-		 * Whether the document held nothing when it was handed to us, which
-		 * is what a document the picker created for us looks like. A provider
-		 * that returns one that already exists gives us a file that is not
-		 * ours to remove.
-		 */
-		final boolean wasEmpty;
-
-		Document(String displayName, boolean wasEmpty) {
-			this.displayName = displayName;
-			this.wasEmpty = wasEmpty;
-		}
-	}
-
-	private Document queryDocument(ContentResolver resolver, Uri uri) {
-		String last = uri.getLastPathSegment();
-		String displayName = last == null ? uri.toString() : last;
-		// A provider that will not say stays on the safe side of both
-		// questions: a name we can show, and a file we do not delete
-		boolean wasEmpty = false;
-		String[] columns =
-				{OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE};
-		try {
-			Cursor c = resolver.query(uri, columns, null, null, null);
-			if (c != null) {
-				try {
-					if (c.moveToFirst()) {
-						int name =
-								c.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-						if (name != -1 && !c.isNull(name)) {
-							displayName = c.getString(name);
-						}
-						int size = c.getColumnIndex(OpenableColumns.SIZE);
-						wasEmpty = size != -1 && !c.isNull(size) &&
-								c.getLong(size) == 0;
-					}
-				} finally {
-					c.close();
-				}
-			}
-		} catch (Exception e) {
-			logException(LOG, WARNING, e);
-		}
-		return new Document(displayName, wasEmpty);
 	}
 
 	/**

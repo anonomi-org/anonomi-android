@@ -1,24 +1,35 @@
 package org.anonomi.android.backup;
 
 import android.content.Context;
-import android.net.Uri;
 
 import org.anonomi.android.util.SecurePrefsManager;
 import org.anonomi.android.util.SecureValue;
 import org.briarproject.nullsafety.NotNullByDefault;
 
+import java.util.logging.Logger;
+
 import javax.annotation.Nullable;
 
+import static java.util.logging.Level.WARNING;
+import static java.util.logging.Logger.getLogger;
+import static org.anonchatsecure.bramble.util.LogUtils.logException;
+
 /**
- * What the app remembers about the backup it last wrote, so that it can be
- * named in settings and deleted by a panic wipe.
+ * When the app last wrote a backup, so that settings can say how old it is
+ * and an old backup is not mistaken for a current one.
  * <p>
- * Encrypted, because where a backup is kept is worth as much to someone
- * searching the phone as the fact that one exists. Written as a single record
- * so that it cannot be found half updated.
+ * Deliberately only the time. Where the backup went is not kept: nothing
+ * reaches the file again once it has been written, and a note of its
+ * whereabouts would answer the one question a search of the phone should not
+ * be able to answer.
+ * <p>
+ * Encrypted, because even the fact that a backup exists is worth something to
+ * someone searching the phone.
  */
 @NotNullByDefault
 public class LastBackup {
+
+	private static final Logger LOG = getLogger(LastBackup.class.getName());
 
 	/**
 	 * Not shared with any {@code Preference} of the same name - see
@@ -27,38 +38,38 @@ public class LastBackup {
 	 */
 	public static final String PREF_KEY_LAST_BACKUP = "pref_key_last_backup";
 
-	private static final String SEPARATOR = "\n";
-
-	public final Uri uri;
 	public final long created;
-	public final String displayName;
 
-	private LastBackup(Uri uri, long created, String displayName) {
-		this.uri = uri;
+	private LastBackup(long created) {
 		this.created = created;
-		this.displayName = displayName;
 	}
 
-	public static void save(Context ctx, Uri uri, long created,
-			String displayName) {
-		save(new SecurePrefsManager(ctx), uri, created, displayName);
+	public static void save(Context ctx, long created) {
+		save(new SecurePrefsManager(ctx), created);
 	}
 
-	static void save(SecurePrefsManager prefs, Uri uri, long created,
-			String displayName) {
-		prefs.putEncrypted(PREF_KEY_LAST_BACKUP,
-				encode(uri, created, displayName));
+	static void save(SecurePrefsManager prefs, long created) {
+		prefs.putEncrypted(PREF_KEY_LAST_BACKUP, encode(created));
 	}
 
 	/**
 	 * Returns the last backup, or null if there has not been one or the record
 	 * cannot be read. A record that will not decrypt is treated as no record:
-	 * everything it is used for is best-effort, and the alternative is telling
-	 * the user about a backup we cannot name or reach.
+	 * what it is used for is cosmetic, and the alternative is telling the user
+	 * about a backup we cannot date.
 	 */
 	@Nullable
 	public static LastBackup load(Context ctx) {
-		return load(new SecurePrefsManager(ctx));
+		try {
+			return load(new SecurePrefsManager(ctx));
+		} catch (RuntimeException e) {
+			// Opening the encrypted preferences throws when the Keystore
+			// refuses - after the screen lock has changed, for instance. This
+			// is read while a settings screen is being shown, and a date on
+			// it is not worth taking the screen down for
+			logException(LOG, WARNING, e);
+			return null;
+		}
 	}
 
 	@Nullable
@@ -68,24 +79,16 @@ public class LastBackup {
 		return decode(stored.get());
 	}
 
-	static String encode(Uri uri, long created, String displayName) {
-		// The name goes last because it is the only part that can hold a
-		// separator
-		return created + SEPARATOR + uri + SEPARATOR + displayName;
+	static String encode(long created) {
+		return String.valueOf(created);
 	}
 
 	@Nullable
 	static LastBackup decode(String stored) {
-		String[] parts = stored.split(SEPARATOR, 3);
-		if (parts.length != 3) return null;
-		long created;
 		try {
-			created = Long.parseLong(parts[0]);
+			return new LastBackup(Long.parseLong(stored));
 		} catch (NumberFormatException e) {
 			return null;
 		}
-		Uri uri = Uri.parse(parts[1]);
-		if (uri.getScheme() == null) return null;
-		return new LastBackup(uri, created, parts[2]);
 	}
 }

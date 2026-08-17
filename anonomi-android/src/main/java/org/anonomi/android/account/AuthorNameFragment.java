@@ -62,6 +62,9 @@ public class AuthorNameFragment extends SetupFragment {
 				)
 		);
 
+		Button restoreButton = v.findViewById(R.id.restore_button);
+		restoreButton.setOnClickListener(view -> viewModel.startRestore());
+
 		authorNameInput.addTextChangedListener(textWatcher);
 
 		// Ensure initial state is correct

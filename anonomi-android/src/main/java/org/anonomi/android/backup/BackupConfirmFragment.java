@@ -28,6 +28,8 @@ import javax.inject.Inject;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -63,6 +65,15 @@ public class BackupConfirmFragment extends Fragment {
 	private TextInputLayout codeWrapper;
 	private EditText codeEntry;
 	private Button chooseFileButton;
+
+	/**
+	 * The dialog asking about the destination, and the document the picker
+	 * made for it, while neither button has been pressed.
+	 */
+	@Nullable
+	private AlertDialog warning = null;
+	@Nullable
+	private Uri undecided = null;
 
 	@Override
 	public void onAttach(Context context) {
@@ -150,8 +161,20 @@ public class BackupConfirmFragment extends Fragment {
 			viewModel.restart();
 			return;
 		}
-		if (isLocalDestination(uri)) viewModel.exportTo(uri);
+		if (isLocalDestination(uri)) showLocalWarning(uri);
 		else showCloudWarning(uri);
+	}
+
+	/**
+	 * Every destination the picker can offer is on the phone, so this is not
+	 * a choice between a safe place and an unsafe one. It is said here rather
+	 * than only on the result screen because afterwards the job feels done,
+	 * and moving the file is the half that is left.
+	 */
+	private void showLocalWarning(Uri uri) {
+		showDestinationWarning(uri, R.string.backup_local_warning_title,
+				R.string.backup_local_warning_text,
+				R.string.backup_local_warning_continue);
 	}
 
 	/**
@@ -159,21 +182,48 @@ public class BackupConfirmFragment extends Fragment {
 	 * online, so anywhere we do not recognise is worth saying so about.
 	 */
 	private void showCloudWarning(Uri uri) {
-		new MaterialAlertDialogBuilder(requireContext(),
+		showDestinationWarning(uri, R.string.backup_cloud_warning_title,
+				R.string.backup_cloud_warning_text,
+				R.string.backup_cloud_warning_continue);
+	}
+
+	private void showDestinationWarning(Uri uri, @StringRes int title,
+			@StringRes int text, @StringRes int confirm) {
+		undecided = uri;
+		warning = new MaterialAlertDialogBuilder(requireContext(),
 				R.style.AnonDialogTheme)
-				.setTitle(R.string.backup_cloud_warning_title)
-				.setMessage(R.string.backup_cloud_warning_text)
+				.setTitle(title)
+				.setMessage(text)
 				// The picker has already made the file, so dismissing this
 				// without answering would leave one behind at a destination
 				// the user is in the middle of rejecting
 				.setCancelable(false)
-				.setPositiveButton(R.string.backup_cloud_warning_continue,
-						(dialog, which) -> viewModel.exportTo(uri))
-				.setNegativeButton(R.string.backup_cloud_warning_choose,
+				.setPositiveButton(confirm, (dialog, which) -> {
+					undecided = null;
+					viewModel.exportTo(uri);
+				})
+				.setNegativeButton(R.string.backup_warning_choose,
 						(dialog, which) -> {
+							undecided = null;
 							viewModel.discardDocument(uri);
 							chooseFile();
 						})
 				.show();
+	}
+
+	@Override
+	public void onDestroyView() {
+		// A rotation takes the dialog down without either button firing, so
+		// the file the picker made would be stranded at a destination that
+		// was never agreed to - the same thing setCancelable(false) is for
+		if (warning != null) {
+			warning.dismiss();
+			warning = null;
+		}
+		if (undecided != null) {
+			viewModel.discardDocument(undecided);
+			undecided = null;
+		}
+		super.onDestroyView();
 	}
 }

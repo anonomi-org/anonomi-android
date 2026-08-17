@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:padding="@dimen/margin_large">
+
+			<TextView
+				android:id="@+id/titleView"
+				style="@style/TextAppearance.AppCompat.Large"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center"
+				android:text="@string/restore_confirm_title" />
+
+			<TextView
+				android:id="@+id/foundTextView"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/margin_large"
+				android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+				tools:text="@string/restore_confirm_text" />
+
+			<TextView
+				android:id="@+id/warningTextView"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/margin_large"
+				android:text="@string/restore_confirm_last_warning"
+				android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+			<TextView
+				android:id="@+id/passwordTextView"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/margin_large"
+				android:text="@string/restore_confirm_password"
+				android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+		</LinearLayout>
+
+	</ScrollView>
+
+	<Button
+		android:id="@+id/continueButton"
+		style="@style/AnonomiButton"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_margin="@dimen/margin_large"
+		android:text="@string/continue_button" />
+
+</LinearLayout>

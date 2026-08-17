@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:padding="@dimen/margin_large">
+
+			<TextView
+				android:id="@+id/titleView"
+				style="@style/TextAppearance.AppCompat.Large"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center"
+				android:text="@string/restore_intro_title" />
+
+			<TextView
+				android:id="@+id/introTextView"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/margin_large"
+				android:text="@string/restore_intro_text"
+				android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+		</LinearLayout>
+
+	</ScrollView>
+
+	<Button
+		android:id="@+id/chooseFileButton"
+		style="@style/AnonomiButton"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_margin="@dimen/margin_large"
+		android:text="@string/restore_choose_file" />
+
+</LinearLayout>
