@@ -18,17 +18,16 @@ public final class PasscodePolicy {
 
 	private static final String OPERATORS = "+-*/%@";
 
-	public static final int MIN_LENGTH = 8;
-	public static final int MIN_OPERATORS = 2;
-	public static final int MIN_OPERANDS = 3;
+	public static final int MIN_LENGTH = 4;
+	public static final int MIN_OPERATORS = 1;
+	public static final int MIN_OPERANDS = 2;
 
 	/**
 	 * Counting operators and operands measures shape, not variety, and the two
-	 * come apart: {@code 1+1+1+1+1} satisfies every other rule here on one
-	 * repeated key. Requiring several different digits is what rules out an
-	 * expression long enough to look deliberate and short enough to guess.
+	 * come apart: {@code 1+1+1} satisfies every other rule here on one
+	 * repeated key.
 	 */
-	public static final int MIN_DISTINCT_DIGITS = 3;
+	public static final int MIN_DISTINCT_DIGITS = 2;
 
 	private PasscodePolicy() {
 	}

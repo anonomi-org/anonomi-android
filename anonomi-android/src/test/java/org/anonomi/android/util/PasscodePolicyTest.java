@@ -19,7 +19,14 @@ public class PasscodePolicyTest {
 				PasscodePolicy.isAcceptable("1+1"));
 		assertFalse(PasscodePolicy.isAcceptable("2+2"));
 		assertFalse(PasscodePolicy.isAcceptable("1+2"));
-		assertFalse(PasscodePolicy.isAcceptable("12+34"));
+		assertFalse(PasscodePolicy.isAcceptable("2*2"));
+	}
+
+	@Test
+	public void aShortExpressionWithSomeVarietyIsAccepted() {
+		assertTrue(PasscodePolicy.isAcceptable("4*50"));
+		assertTrue(PasscodePolicy.isAcceptable("12+34"));
+		assertTrue(PasscodePolicy.isAcceptable("2+35"));
 	}
 
 	@Test
@@ -42,23 +49,14 @@ public class PasscodePolicyTest {
 		assertFalse(PasscodePolicy.isAcceptable("2+2+2+2+2"));
 		assertFalse(PasscodePolicy.isAcceptable("1*1*1*1*1"));
 		assertFalse(PasscodePolicy.isAcceptable("9-9-9-9-9"));
-	}
-
-	/**
-	 * Two digits is not variety either, however they are arranged.
-	 */
-	@Test
-	public void anExpressionWithTooFewDistinctDigitsIsRejected() {
-		assertFalse(PasscodePolicy.isAcceptable("12+12+12"));
-		assertFalse(PasscodePolicy.isAcceptable("1+2+1+2+1"));
-		assertFalse(PasscodePolicy.isAcceptable("11*22-11"));
+		assertFalse(PasscodePolicy.isAcceptable("11*11"));
 	}
 
 	@Test
-	public void anExpressionWithoutEnoughStepsIsRejected() {
-		// long enough, but only one operator and two operands
-		assertFalse(PasscodePolicy.isAcceptable("12345+6789"));
-		assertFalse(PasscodePolicy.isAcceptable("1234567+8"));
+	public void anExpressionWithoutAnOperatorIsRejected() {
+		assertFalse(PasscodePolicy.isAcceptable("1234"));
+		assertFalse(PasscodePolicy.isAcceptable("123456789"));
+		assertFalse(PasscodePolicy.isAcceptable("1234+"));
 	}
 
 	@Test
@@ -66,7 +64,6 @@ public class PasscodePolicyTest {
 		assertFalse(PasscodePolicy.isAcceptable(null));
 		assertFalse(PasscodePolicy.isAcceptable(""));
 		assertFalse(PasscodePolicy.isAcceptable("   "));
-		assertFalse(PasscodePolicy.isAcceptable("123456789"));
 		assertFalse(PasscodePolicy.isAcceptable("+++++++++"));
 	}
 
