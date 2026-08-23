@@ -1074,8 +1074,8 @@
     <string name="monero_request_copy_address">Ünvanı kopyalayın</string>
     <string name="monero_request_address_copied">Ünvan kopyalandı</string>
     <string name="monero_request_unpayable">Bu tələbin ünvanı ödəniş edilə bilən bir ünvan deyil</string>
-    <string name="passcode_requirements">Ən azı 8 düymədən istifadə edin, iki və ya daha çox operator, və ən azı üç fərqli rəqəmlə (məsələn, 123+45*6).</string>
-    <string name="set_passcode_hint_expression">İfadə (məsələn, 123+45*6)</string>
+    <string name="passcode_requirements">Ən azı 8 düymədən istifadə edin, iki və ya daha çox operator, və ən azı üç fərqli rəqəmlə (məsələn, 123+45×6).</string>
+    <string name="set_passcode_hint_expression">İfadə (məsələn, 123+45×6)</string>
     <string name="panic_sequence_unreadable">Saxlanılmış ardıcıllığınız oxuna bilmədi, buna görə panik tetikləyicisi söndürülüb. Onu yenidən qeyd edin.</string>
     <string name="panic_action_unreadable_summary">Saxlanılmış seçiminiz oxuna bilmədi. Siz yenidən seçənə qədər, panik hesabınızı siləcək.</string>
     <string name="pref_monero_currency_title">Məzənnə valyutası</string>

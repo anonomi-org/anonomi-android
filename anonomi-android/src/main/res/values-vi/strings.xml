@@ -990,8 +990,8 @@
     <string name="monero_request_copy_address">Sao chép địa chỉ</string>
     <string name="monero_request_address_copied">Địa chỉ đã được sao chép</string>
     <string name="monero_request_unpayable">Địa chỉ của yêu cầu này không phải là địa chỉ có thể thanh toán được</string>
-    <string name="passcode_requirements">Sử dụng ít nhất 8 phím, với 2 toán tử trở lên và ít nhất 3 chữ số khác nhau (ví dụ: 123+45*6).</string>
-    <string name="set_passcode_hint_expression">Biểu thức (ví dụ: 123+45*6)</string>
+    <string name="passcode_requirements">Sử dụng ít nhất 8 phím, với 2 toán tử trở lên và ít nhất 3 chữ số khác nhau (ví dụ: 123+45×6).</string>
+    <string name="set_passcode_hint_expression">Biểu thức (ví dụ: 123+45×6)</string>
     <string name="panic_sequence_unreadable">Không thể đọc trình tự đã lưu của bạn, vì vậy cơ chế kích hoạt khẩn cấp đã tắt. Hãy ghi lại trình tự đó.</string>
     <string name="panic_action_unreadable_summary">Không thể đọc lựa chọn đã lưu của bạn. Cho đến khi bạn chọn lại, hoảng loạn sẽ xóa tài khoản của bạn.</string>
     <string name="pref_monero_currency_title">Đơn vị tiền tệ của tỷ giá</string>

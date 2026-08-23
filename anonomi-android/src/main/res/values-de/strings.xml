@@ -1112,8 +1112,8 @@
     <string name="monero_request_copy_address">Adresse kopieren</string>
     <string name="monero_request_address_copied">Adresse kopiert</string>
     <string name="monero_request_unpayable">Die Adresse dieser Anfrage kann nicht bezahlt werden</string>
-    <string name="passcode_requirements">Verwende mindestens 8 Zeichen, mit zwei oder mehr Operatoren und mindestens drei verschiedenen Ziffern (z. B. 123+45*6).</string>
-    <string name="set_passcode_hint_expression">Ausdruck (z. B. 123+45*6)</string>
+    <string name="passcode_requirements">Verwende mindestens 8 Zeichen, mit zwei oder mehr Operatoren und mindestens drei verschiedenen Ziffern (z. B. 123+45×6).</string>
+    <string name="set_passcode_hint_expression">Ausdruck (z. B. 123+45×6)</string>
     <string name="panic_sequence_unreadable">Deine gespeicherte Sequenz konnte nicht gelesen werden, daher ist der Panik-Auslöser deaktiviert. Zeichne sie erneut auf.</string>
     <string name="panic_action_unreadable_summary">Deine gespeicherte Auswahl konnte nicht gelesen werden. Bis du erneut wählst, löscht der Panikmodus dein Konto.</string>
     <string name="pref_monero_currency_title">Kurswährung</string>

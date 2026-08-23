@@ -1103,8 +1103,8 @@
     <string name="monero_request_copy_address">複製地址</string>
     <string name="monero_request_address_copied">地址已複製</string>
     <string name="monero_request_unpayable">此請求的地址無法收款</string>
-    <string name="passcode_requirements">請至少使用 8 個按鍵，包含 2 個以上的運算子，並至少使用 3 個不同的數字（例如，123+45*6）。</string>
-    <string name="set_passcode_hint_expression">表達式（例如，123+45*6）</string>
+    <string name="passcode_requirements">請至少使用 8 個按鍵，包含 2 個以上的運算子，並至少使用 3 個不同的數字（例如，123+45×6）。</string>
+    <string name="set_passcode_hint_expression">表達式（例如，123+45×6）</string>
     <string name="panic_sequence_unreadable">您儲存的序列無法讀取，緊急觸發器已關閉。請重新記錄。</string>
     <string name="panic_action_unreadable_summary">您儲存的選擇無法讀取。在您重新選擇之前，恐慌將刪除您的帳戶。</string>
     <string name="pref_monero_currency_title">匯率貨幣</string>

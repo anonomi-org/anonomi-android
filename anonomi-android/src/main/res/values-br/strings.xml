@@ -1089,8 +1089,8 @@
     <string name="monero_request_copy_address">Eilañ ar chomlec\'h</string>
     <string name="monero_request_address_copied">Chomlec\'h eilet</string>
     <string name="monero_request_unpayable">Chomlec\'h ar goulenn-mañ n\'eo ket unan a c\'haller paeañ</string>
-    <string name="passcode_requirements">Implijit da vihanañ 8 bouton, gant 2 arouez matematikel pe muioc\'h, ha da vihanañ 3 sifr disheñvel (da sk., 123+45*6).</string>
-    <string name="set_passcode_hint_expression">Eztaol (da sk., 123+45*6)</string>
+    <string name="passcode_requirements">Implijit da vihanañ 8 bouton, gant 2 arouez matematikel pe muioc\'h, ha da vihanañ 3 sifr disheñvel (da sk., 123+45×6).</string>
+    <string name="set_passcode_hint_expression">Eztaol (da sk., 123+45×6)</string>
     <string name="panic_sequence_unreadable">N\'haller ket bet lenn an heuliad enrollet ganeoc\'h, neuze diweredekaet eo ar mod spont. Enrollit anezhañ en-dro.</string>
     <string name="panic_action_unreadable_summary">N\'haller ket bet lenn an dibab enrollet ganeoc\'h. Betek ma tibabot en-dro, ar mod spont a zilamo ho kont.</string>
     <string name="pref_monero_currency_title">Moneiz ar feur</string>

@@ -1081,8 +1081,8 @@
     <string name="monero_request_copy_address">Kopiatu helbidea</string>
     <string name="monero_request_address_copied">Helbidea kopiatu da</string>
     <string name="monero_request_unpayable">Eskaera honen helbidea ez da ordaindu daitekeen bat</string>
-    <string name="passcode_requirements">Erabili gutxienez 8 tekla, bi eragile edo gehiagorekin eta gutxienez hiru digitu ezberdinekin (adibidez, 123+45*6).</string>
-    <string name="set_passcode_hint_expression">Adierazpena (adibidez, 123+45*6)</string>
+    <string name="passcode_requirements">Erabili gutxienez 8 tekla, bi eragile edo gehiagorekin eta gutxienez hiru digitu ezberdinekin (adibidez, 123+45×6).</string>
+    <string name="set_passcode_hint_expression">Adierazpena (adibidez, 123+45×6)</string>
     <string name="panic_sequence_unreadable">Ezin izan da gordetako sekuentzia irakurri, beraz izuaren abiarazlea itzalita dago. Grabatu berriro.</string>
     <string name="panic_action_unreadable_summary">Ezin izan da gordetako aukera irakurri. Berriro aukeratu arte, izuak zure kontua ezabatuko du.</string>
     <string name="pref_monero_currency_title">Tasaren moneta</string>

@@ -673,7 +673,7 @@
     <string name="set_passcode_message">Create a calculator expression you’ll use to unlock Stealth Mode.</string>
     <string name="passcode_confirm_failed">Passcode didn’t match.</string>
     <string name="passcode_attention_label">Attention</string>
-    <string name="set_passcode_hint_expression">Expression (e.g., 123+45*6)</string>
+    <string name="set_passcode_hint_expression">Expression (e.g., 123+45×6)</string>
     <string name="set_passcode_hint_2">Re-enter expression</string>
     <string name="stealth_mode_title">Stealth Mode</string>
     <string name="stealth_mode_switch_title">Stealth Mode</string>

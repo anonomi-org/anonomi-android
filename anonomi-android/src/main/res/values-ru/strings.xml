@@ -1142,8 +1142,8 @@
     <string name="monero_request_copy_address">Копировать адрес</string>
     <string name="monero_request_address_copied">Адрес скопирован</string>
     <string name="monero_request_unpayable">Адрес этого запроса не тот, на который можно отправить платёж</string>
-    <string name="passcode_requirements">Используйте не менее 8 клавиш, с двумя и более операторами и не менее чем тремя разными цифрами (например, 123+45*6).</string>
-    <string name="set_passcode_hint_expression">Выражение (например, 123+45*6)</string>
+    <string name="passcode_requirements">Используйте не менее 8 клавиш, с двумя и более операторами и не менее чем тремя разными цифрами (например, 123+45×6).</string>
+    <string name="set_passcode_hint_expression">Выражение (например, 123+45×6)</string>
     <string name="panic_sequence_unreadable">Не удалось прочитать сохранённую последовательность, поэтому триггер паники отключён. Запишите её заново.</string>
     <string name="panic_action_unreadable_summary">Не удалось прочитать сохранённый выбор. Пока вы не выберете его заново, паника будет удалять ваш аккаунт.</string>
     <string name="pref_monero_currency_title">Валюта курса</string>

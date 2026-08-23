@@ -1174,8 +1174,8 @@
     <string name="monero_request_copy_address">نسخ العنوان</string>
     <string name="monero_request_address_copied">تم نسخ العنوان</string>
     <string name="monero_request_unpayable">عنوان هذا الطلب ليس عنوانًا يمكن الدفع إليه</string>
-    <string name="passcode_requirements">استخدم 8 مفاتيح على الأقل، مع عمليتين حسابيتين أو أكثر وثلاثة أرقام مختلفة على الأقل (على سبيل المثال، 123+45*6).</string>
-    <string name="set_passcode_hint_expression">التعبير (على سبيل المثال، 123+45*6)</string>
+    <string name="passcode_requirements">استخدم 8 مفاتيح على الأقل، مع عمليتين حسابيتين أو أكثر وثلاثة أرقام مختلفة على الأقل (على سبيل المثال، 123+45×6).</string>
+    <string name="set_passcode_hint_expression">التعبير (على سبيل المثال، 123+45×6)</string>
     <string name="panic_sequence_unreadable">تعذّرت قراءة التسلسل المحفوظ، لذا تم إيقاف مشغّل الذعر. سجّله من جديد.</string>
     <string name="panic_action_unreadable_summary">تعذّرت قراءة اختيارك المحفوظ. وإلى أن تختار مجددًا، سيقوم الذعر بحذف حسابك.</string>
     <string name="pref_monero_currency_title">عملة السعر</string>

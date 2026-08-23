@@ -1128,8 +1128,8 @@
     <string name="monero_request_copy_address">Copiați adresa</string>
     <string name="monero_request_address_copied">Adresă copiată</string>
     <string name="monero_request_unpayable">Adresa acestei cereri nu poate fi plătită</string>
-    <string name="passcode_requirements">Folosiți cel puțin 8 taste, cu două sau mai mulți operatori și cel puțin trei cifre diferite (de ex., 123+45*6).</string>
-    <string name="set_passcode_hint_expression">Expresie (de ex., 123+45*6)</string>
+    <string name="passcode_requirements">Folosiți cel puțin 8 taste, cu două sau mai mulți operatori și cel puțin trei cifre diferite (de ex., 123+45×6).</string>
+    <string name="set_passcode_hint_expression">Expresie (de ex., 123+45×6)</string>
     <string name="panic_sequence_unreadable">Secvența dvs. salvată nu a putut fi citită, așa că declanșatorul de panică este dezactivat. Înregistrați-o din nou.</string>
     <string name="panic_action_unreadable_summary">Alegerea dvs. salvată nu a putut fi citită. Până când nu alegeți din nou, panica vă va șterge contul.</string>
     <string name="pref_monero_currency_title">Moneda ratei</string>

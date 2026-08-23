@@ -1112,8 +1112,8 @@ Vigyázat: Ez végleg törli az identitásait, kapcsolatait és üzeneteit</stri
     <string name="monero_request_copy_address">Cím másolása</string>
     <string name="monero_request_address_copied">Cím másolva</string>
     <string name="monero_request_unpayable">Ennek a kérésnek a címére nem lehet fizetni</string>
-    <string name="passcode_requirements">Használjon legalább 8 billentyűt, legalább két műveleti jellel és legalább három különböző számjeggyel (pl. 123+45*6).</string>
-    <string name="set_passcode_hint_expression">Kifejezés (pl. 123+45*6)</string>
+    <string name="passcode_requirements">Használjon legalább 8 billentyűt, legalább két műveleti jellel és legalább három különböző számjeggyel (pl. 123+45×6).</string>
+    <string name="set_passcode_hint_expression">Kifejezés (pl. 123+45×6)</string>
     <string name="panic_sequence_unreadable">A mentett sorozatot nem sikerült beolvasni, ezért a pánikindító ki van kapcsolva. Rögzítse újra.</string>
     <string name="panic_action_unreadable_summary">A mentett választást nem sikerült beolvasni. Amíg nem választ újra, a pánik törölni fogja a fiókját.</string>
     <string name="pref_monero_currency_title">Árfolyam pénzneme</string>

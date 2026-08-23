@@ -1114,8 +1114,8 @@ Først, installer appen "Anonomi Postbox" på en annen enhet fra det samme stede
     <string name="monero_request_copy_address">Kopier adresse</string>
     <string name="monero_request_address_copied">Adresse kopiert</string>
     <string name="monero_request_unpayable">Adressen til denne forespørselen kan ikke betales</string>
-    <string name="passcode_requirements">Bruk minst 8 tegn, med to eller flere operatorer og minst tre forskjellige sifre (f.eks. 123+45*6).</string>
-    <string name="set_passcode_hint_expression">Uttrykk (f.eks. 123+45*6)</string>
+    <string name="passcode_requirements">Bruk minst 8 tegn, med to eller flere operatorer og minst tre forskjellige sifre (f.eks. 123+45×6).</string>
+    <string name="set_passcode_hint_expression">Uttrykk (f.eks. 123+45×6)</string>
     <string name="panic_sequence_unreadable">Den lagrede sekvensen din kunne ikke leses, så panikkutløseren er slått av. Ta den opp på nytt.</string>
     <string name="panic_action_unreadable_summary">Det lagrede valget ditt kunne ikke leses. Inntil du velger på nytt, vil panikkmodus slette kontoen din.</string>
     <string name="pref_monero_currency_title">Kursvaluta</string>

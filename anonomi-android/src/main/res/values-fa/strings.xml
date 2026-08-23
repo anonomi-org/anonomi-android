@@ -1157,8 +1157,8 @@ Anonomi (برایر) موقعیت شما را ذخیره نمی‌کند و آن
     <string name="monero_request_copy_address">کپی آدرس</string>
     <string name="monero_request_address_copied">آدرس کپی شد</string>
     <string name="monero_request_unpayable">آدرس این درخواست، آدرسی نیست که بتوان به آن پرداخت کرد</string>
-    <string name="passcode_requirements">حداقل از 8 کلید استفاده کنید، با دو عملگر یا بیشتر و حداقل سه رقم متفاوت (مثلاً، 123+45*6).</string>
-    <string name="set_passcode_hint_expression">عبارت (مثلاً، 123+45*6)</string>
+    <string name="passcode_requirements">حداقل از 8 کلید استفاده کنید، با دو عملگر یا بیشتر و حداقل سه رقم متفاوت (مثلاً، 123+45×6).</string>
+    <string name="set_passcode_hint_expression">عبارت (مثلاً، 123+45×6)</string>
     <string name="panic_sequence_unreadable">توالی ذخیره‌شده شما قابل خواندن نبود، بنابراین ماشه وحشت خاموش است. آن را دوباره ضبط کنید.</string>
     <string name="panic_action_unreadable_summary">انتخاب ذخیره‌شده شما قابل خواندن نبود. تا زمانی که دوباره انتخاب کنید، وحشت حساب کاربری شما را حذف خواهد کرد.</string>
     <string name="pref_monero_currency_title">واحد پول نرخ</string>

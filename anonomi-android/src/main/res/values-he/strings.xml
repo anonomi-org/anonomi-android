@@ -1121,8 +1121,8 @@
     <string name="monero_request_copy_address">העתק כתובת</string>
     <string name="monero_request_address_copied">הכתובת הועתקה</string>
     <string name="monero_request_unpayable">הכתובת של הבקשה הזו אינה כתובת שניתן לשלם אליה</string>
-    <string name="passcode_requirements">השתמש לפחות ב-8 מקשים, עם שני אופרטורים או יותר ולפחות שלוש ספרות שונות (לדוגמה, 123+45*6).</string>
-    <string name="set_passcode_hint_expression">ביטוי (לדוגמה, 123+45*6)</string>
+    <string name="passcode_requirements">השתמש לפחות ב-8 מקשים, עם שני אופרטורים או יותר ולפחות שלוש ספרות שונות (לדוגמה, 123+45×6).</string>
+    <string name="set_passcode_hint_expression">ביטוי (לדוגמה, 123+45×6)</string>
     <string name="panic_sequence_unreadable">לא ניתן היה לקרוא את הרצף השמור שלך, ולכן הפעלת הפאניקה כבויה. הקלט אותו שוב.</string>
     <string name="panic_action_unreadable_summary">לא ניתן היה לקרוא את הבחירה השמורה שלך. עד שתבחר שוב, מצב הפאניקה ימחק את חשבונך.</string>
     <string name="pref_monero_currency_title">מטבע השער</string>

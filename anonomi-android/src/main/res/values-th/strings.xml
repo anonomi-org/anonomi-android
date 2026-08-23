@@ -990,8 +990,8 @@
     <string name="monero_request_copy_address">คัดลอกที่อยู่</string>
     <string name="monero_request_address_copied">คัดลอกที่อยู่แล้ว</string>
     <string name="monero_request_unpayable">ที่อยู่ของคำขอนี้ไม่ใช่ที่อยู่ที่สามารถชำระเงินได้</string>
-    <string name="passcode_requirements">ใช้อย่างน้อย 8 ตัวอักษร โดยมีตัวดำเนินการตั้งแต่สองตัวขึ้นไป และตัวเลขที่แตกต่างกันอย่างน้อยสามตัว (เช่น 123+45*6)</string>
-    <string name="set_passcode_hint_expression">นิพจน์ (เช่น 123+45*6)</string>
+    <string name="passcode_requirements">ใช้อย่างน้อย 8 ตัวอักษร โดยมีตัวดำเนินการตั้งแต่สองตัวขึ้นไป และตัวเลขที่แตกต่างกันอย่างน้อยสามตัว (เช่น 123+45×6)</string>
+    <string name="set_passcode_hint_expression">นิพจน์ (เช่น 123+45×6)</string>
     <string name="panic_sequence_unreadable">ไม่สามารถอ่านลำดับที่คุณบันทึกไว้ได้ ตัวกระตุ้นฉุกเฉินจึงถูกปิดใช้งาน บันทึกอีกครั้ง</string>
     <string name="panic_action_unreadable_summary">ไม่สามารถอ่านตัวเลือกที่คุณบันทึกไว้ได้ จนกว่าคุณจะเลือกใหม่อีกครั้ง โหมดตื่นตระหนกจะลบบัญชีของคุณ</string>
     <string name="pref_monero_currency_title">สกุลเงินของอัตราแลกเปลี่ยน</string>

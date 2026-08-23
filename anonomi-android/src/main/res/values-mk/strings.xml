@@ -1081,8 +1081,8 @@
     <string name="monero_request_copy_address">Копирај адреса</string>
     <string name="monero_request_address_copied">Адресата е копирана</string>
     <string name="monero_request_unpayable">Адресата во ова барање не е таква на која може да се плати</string>
-    <string name="passcode_requirements">Користете најмалку 8 копчиња, со два или повеќе оператори и најмалку три различни цифри (на пр., 123+45*6).</string>
-    <string name="set_passcode_hint_expression">Израз (на пр., 123+45*6)</string>
+    <string name="passcode_requirements">Користете најмалку 8 копчиња, со два или повеќе оператори и најмалку три различни цифри (на пр., 123+45×6).</string>
+    <string name="set_passcode_hint_expression">Израз (на пр., 123+45×6)</string>
     <string name="panic_sequence_unreadable">Вашата зачувана низа не можеше да биде прочитана, па активирањето на паниката е исклучено. Снимете ја повторно.</string>
     <string name="panic_action_unreadable_summary">Вашиот зачуван избор не можеше да биде прочитан. Додека повторно не изберете, паниката ќе ја избрише вашата сметка.</string>
     <string name="pref_monero_currency_title">Валута на стапката</string>

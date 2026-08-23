@@ -1106,8 +1106,8 @@
     <string name="monero_request_copy_address">Afrita vistfang</string>
     <string name="monero_request_address_copied">Vistfang afritað</string>
     <string name="monero_request_unpayable">Ekki er hægt að greiða á vistfang þessarar beiðni</string>
-    <string name="passcode_requirements">Notaðu að minnsta kosti 8 stafi, með tveimur eða fleiri reikniaðgerðum og að minnsta kosti þremur mismunandi tölustöfum (t.d. 123+45*6).</string>
-    <string name="set_passcode_hint_expression">Segð (t.d. 123+45*6)</string>
+    <string name="passcode_requirements">Notaðu að minnsta kosti 8 stafi, með tveimur eða fleiri reikniaðgerðum og að minnsta kosti þremur mismunandi tölustöfum (t.d. 123+45×6).</string>
+    <string name="set_passcode_hint_expression">Segð (t.d. 123+45×6)</string>
     <string name="panic_sequence_unreadable">Ekki tókst að lesa vistaða röð þína, svo neyðarkveikjarinn er óvirkur. Taktu hana upp aftur.</string>
     <string name="panic_action_unreadable_summary">Ekki tókst að lesa vistað val þitt. Þar til þú velur aftur, mun neyðarstillingin eyða notandaaðgangi þínum.</string>
     <string name="pref_monero_currency_title">Gengisgjaldmiðill</string>

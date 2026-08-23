@@ -1127,8 +1127,8 @@ Per prima cosa, installa l\'app Anonomi Postbox su un altro dispositivo da dove 
     <string name="monero_request_copy_address">Copia indirizzo</string>
     <string name="monero_request_address_copied">Indirizzo copiato</string>
     <string name="monero_request_unpayable">L\'indirizzo di questa richiesta non è pagabile</string>
-    <string name="passcode_requirements">Usa almeno 8 tasti, con due o più operatori e almeno tre cifre diverse (ad es. 123+45*6).</string>
-    <string name="set_passcode_hint_expression">Espressione (ad es. 123+45*6)</string>
+    <string name="passcode_requirements">Usa almeno 8 tasti, con due o più operatori e almeno tre cifre diverse (ad es. 123+45×6).</string>
+    <string name="set_passcode_hint_expression">Espressione (ad es. 123+45×6)</string>
     <string name="panic_sequence_unreadable">La sequenza salvata non può essere letta, quindi il trigger di panico è disattivato. Registrala di nuovo.</string>
     <string name="panic_action_unreadable_summary">La tua scelta salvata non può essere letta. Finché non scegli di nuovo, il panico eliminerà il tuo account.</string>
     <string name="pref_monero_currency_title">Valuta del tasso</string>

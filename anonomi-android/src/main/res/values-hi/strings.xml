@@ -1082,8 +1082,8 @@
     <string name="monero_request_copy_address">पता कॉपी करें</string>
     <string name="monero_request_address_copied">पता कॉपी हो गया</string>
     <string name="monero_request_unpayable">इस अनुरोध का पता ऐसा नहीं है जिसे भुगतान किया जा सके</string>
-    <string name="passcode_requirements">कम से कम 8 वर्णों का उपयोग करें, जिनमें दो या अधिक ऑपरेटर और कम से कम तीन अलग-अलग अंक हों (उदाहरण के लिए, 123+45*6)।</string>
-    <string name="set_passcode_hint_expression">व्यंजक (उदाहरण के लिए, 123+45*6)</string>
+    <string name="passcode_requirements">कम से कम 8 वर्णों का उपयोग करें, जिनमें दो या अधिक ऑपरेटर और कम से कम तीन अलग-अलग अंक हों (उदाहरण के लिए, 123+45×6)।</string>
+    <string name="set_passcode_hint_expression">व्यंजक (उदाहरण के लिए, 123+45×6)</string>
     <string name="panic_sequence_unreadable">आपका सहेजा गया अनुक्रम पढ़ा नहीं जा सका, इसलिए पैनिक ट्रिगर बंद है। इसे फिर से रिकॉर्ड करें।</string>
     <string name="panic_action_unreadable_summary">आपकी सहेजी गई पसंद पढ़ी नहीं जा सकी। जब तक आप फिर से नहीं चुनते, पैनिक आपका खाता हटा देगा।</string>
     <string name="pref_monero_currency_title">दर मुद्रा</string>

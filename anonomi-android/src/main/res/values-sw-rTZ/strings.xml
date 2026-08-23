@@ -1004,8 +1004,8 @@
     <string name="monero_request_copy_address">Nakili anwani</string>
     <string name="monero_request_address_copied">Anwani imenakiliwa</string>
     <string name="monero_request_unpayable">Anwani ya ombi hili si anwani inayoweza kulipwa</string>
-    <string name="passcode_requirements">Tumia vitufe 8 au zaidi, vikiwa na alama 2 au zaidi za hesabu na tarakimu 3 tofauti au zaidi (k.m., 123+45*6).</string>
-    <string name="set_passcode_hint_expression">Usemi (k.m., 123+45*6)</string>
+    <string name="passcode_requirements">Tumia vitufe 8 au zaidi, vikiwa na alama 2 au zaidi za hesabu na tarakimu 3 tofauti au zaidi (k.m., 123+45×6).</string>
+    <string name="set_passcode_hint_expression">Usemi (k.m., 123+45×6)</string>
     <string name="panic_sequence_unreadable">Mfuatano wako uliohifadhiwa haukuweza kusomwa, hivyo kichocheo cha hofu kimezimwa. Kirekodi tena.</string>
     <string name="panic_action_unreadable_summary">Chaguo lako lililohifadhiwa halikuweza kusomwa. Hadi utakapochagua tena, hofu itafuta akaunti yako.</string>
     <string name="pref_monero_currency_title">Sarafu ya kiwango</string>

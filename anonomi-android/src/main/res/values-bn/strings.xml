@@ -1113,8 +1113,8 @@
     <string name="monero_request_copy_address">ঠিকানা কপি করুন</string>
     <string name="monero_request_address_copied">ঠিকানা কপি হয়েছে</string>
     <string name="monero_request_unpayable">এই অনুরোধের ঠিকানায় অর্থপ্রদান করা যায় না</string>
-    <string name="passcode_requirements">কমপক্ষে 8টি কী ব্যবহার করুন, যাতে দুই বা ততোধিক অপারেটর এবং কমপক্ষে তিনটি ভিন্ন অঙ্ক থাকে (যেমন, 123+45*6)।</string>
-    <string name="set_passcode_hint_expression">রাশি (যেমন, 123+45*6)</string>
+    <string name="passcode_requirements">কমপক্ষে 8টি কী ব্যবহার করুন, যাতে দুই বা ততোধিক অপারেটর এবং কমপক্ষে তিনটি ভিন্ন অঙ্ক থাকে (যেমন, 123+45×6)।</string>
+    <string name="set_passcode_hint_expression">রাশি (যেমন, 123+45×6)</string>
     <string name="panic_sequence_unreadable">আপনার সংরক্ষিত ক্রম পড়া যায়নি, তাই প্যানিক ট্রিগার বন্ধ আছে। এটি আবার রেকর্ড করুন।</string>
     <string name="panic_action_unreadable_summary">আপনার সংরক্ষিত পছন্দ পড়া যায়নি। আপনি আবার নির্বাচন না করা পর্যন্ত, প্যানিক আপনার অ্যাকাউন্ট মুছে ফেলবে।</string>
     <string name="pref_monero_currency_title">রেট মুদ্রা</string>

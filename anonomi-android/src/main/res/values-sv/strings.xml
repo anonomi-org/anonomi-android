@@ -1115,8 +1115,8 @@ Installera först Anonomi Postbox-appen på en annan enhet genom att hämta den 
     <string name="monero_request_copy_address">Kopiera adress</string>
     <string name="monero_request_address_copied">Adress kopierad</string>
     <string name="monero_request_unpayable">Adressen för denna förfrågan går inte att betala</string>
-    <string name="passcode_requirements">Använd minst 8 tecken, med två eller fler operatorer och minst tre olika siffror (t.ex. 123+45*6).</string>
-    <string name="set_passcode_hint_expression">Uttryck (t.ex. 123+45*6)</string>
+    <string name="passcode_requirements">Använd minst 8 tecken, med två eller fler operatorer och minst tre olika siffror (t.ex. 123+45×6).</string>
+    <string name="set_passcode_hint_expression">Uttryck (t.ex. 123+45×6)</string>
     <string name="panic_sequence_unreadable">Din sparade sekvens kunde inte läsas, så panikutlösaren är avstängd. Spela in den igen.</string>
     <string name="panic_action_unreadable_summary">Ditt sparade val kunde inte läsas. Tills du väljer igen kommer panikläget att radera ditt konto.</string>
     <string name="pref_monero_currency_title">Kursvaluta</string>

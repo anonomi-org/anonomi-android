@@ -282,8 +282,8 @@
     <string name="monero_request_copy_address">Copiar direición</string>
     <string name="monero_request_address_copied">Direición copiada</string>
     <string name="monero_request_unpayable">La direición d\'esta solicitú nun ye una que se pueda pagar</string>
-    <string name="passcode_requirements">Usa 8 tecles como mínimu, con 2 operadores o más y 3 cifres diferentes como mínimu (por exemplu, 123+45*6).</string>
-    <string name="set_passcode_hint_expression">Espresión (por exemplu, 123+45*6)</string>
+    <string name="passcode_requirements">Usa 8 tecles como mínimu, con 2 operadores o más y 3 cifres diferentes como mínimu (por exemplu, 123+45×6).</string>
+    <string name="set_passcode_hint_expression">Espresión (por exemplu, 123+45×6)</string>
     <string name="panic_sequence_unreadable">Nun se pudo lleer la secuencia guardada, asina que\'l disparador de pánicu ta desactiváu. Grábala otra vuelta.</string>
     <string name="panic_action_unreadable_summary">Nun se pudo lleer la escoyeta guardada. Hasta que nun escueyas otra vuelta, el pánicu va desaniciar la to cuenta.</string>
     <string name="pref_monero_currency_title">Moneda del cambiu</string>

@@ -1118,8 +1118,8 @@ Anonomi-i i përdor ato paralelisht.</string>
     <string name="monero_request_copy_address">Kopjo adresën</string>
     <string name="monero_request_address_copied">Adresa u kopjua</string>
     <string name="monero_request_unpayable">Adresa e kësaj kërkese nuk është e tillë që mund të paguhet</string>
-    <string name="passcode_requirements">Përdorni të paktën 8 tasta, me dy a më tepër operatorë dhe të paktën tre shifra të ndryshme (p.sh., 123+45*6).</string>
-    <string name="set_passcode_hint_expression">Shprehje (p.sh., 123+45*6)</string>
+    <string name="passcode_requirements">Përdorni të paktën 8 tasta, me dy a më tepër operatorë dhe të paktën tre shifra të ndryshme (p.sh., 123+45×6).</string>
+    <string name="set_passcode_hint_expression">Shprehje (p.sh., 123+45×6)</string>
     <string name="panic_sequence_unreadable">Sekuenca juaj e ruajtur s’u lexua dot, ndaj shkasi i panikut është i çaktivizuar. Regjistrojeni sërish.</string>
     <string name="panic_action_unreadable_summary">Zgjedhja juaj e ruajtur s’u lexua dot. Deri sa të zgjidhni sërish, paniku do të fshijë llogarinë tuaj.</string>
     <string name="pref_monero_currency_title">Monedha e normës</string>

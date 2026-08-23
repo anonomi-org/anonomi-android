@@ -1114,8 +1114,8 @@
     <string name="monero_request_copy_address">მისამართის კოპირება</string>
     <string name="monero_request_address_copied">მისამართი დაკოპირდა</string>
     <string name="monero_request_unpayable">ამ მოთხოვნის მისამართზე გადახდა შეუძლებელია</string>
-    <string name="passcode_requirements">გამოიყენეთ მინიმუმ 8 კლავიში, ორი ან მეტი მოქმედების ნიშნით და მინიმუმ სამი განსხვავებული ციფრით (მაგ., 123+45*6).</string>
-    <string name="set_passcode_hint_expression">გამოსახულება (მაგ., 123+45*6)</string>
+    <string name="passcode_requirements">გამოიყენეთ მინიმუმ 8 კლავიში, ორი ან მეტი მოქმედების ნიშნით და მინიმუმ სამი განსხვავებული ციფრით (მაგ., 123+45×6).</string>
+    <string name="set_passcode_hint_expression">გამოსახულება (მაგ., 123+45×6)</string>
     <string name="panic_sequence_unreadable">თქვენი შენახული თანმიმდევრობის წაკითხვა ვერ მოხერხდა, ამიტომ პანიკის გამშვები გამორთულია. ჩაწერეთ იგი ხელახლა.</string>
     <string name="panic_action_unreadable_summary">თქვენი შენახული არჩევანის წაკითხვა ვერ მოხერხდა. სანამ ხელახლა არ აირჩევთ, პანიკა წაშლის თქვენს ანგარიშს.</string>
     <string name="pref_monero_currency_title">კურსის ვალუტა</string>

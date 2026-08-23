@@ -1140,8 +1140,8 @@ Primeiro, instale o app Anonomi Postbox em outro dispositivo a partir do mesmo l
     <string name="monero_request_copy_address">Copiar endereço</string>
     <string name="monero_request_address_copied">Endereço copiado</string>
     <string name="monero_request_unpayable">O endereço deste pedido não aceita pagamentos</string>
-    <string name="passcode_requirements">Use pelo menos 8 teclas, com dois ou mais operadores e pelo menos três dígitos diferentes (ex.: 123+45*6).</string>
-    <string name="set_passcode_hint_expression">Expressão (por exemplo, 123+45*6)</string>
+    <string name="passcode_requirements">Use pelo menos 8 teclas, com dois ou mais operadores e pelo menos três dígitos diferentes (ex.: 123+45×6).</string>
+    <string name="set_passcode_hint_expression">Expressão (por exemplo, 123+45×6)</string>
     <string name="panic_sequence_unreadable">Não foi possível ler sua sequência salva, então o gatilho de pânico está desativado. Grave-a novamente.</string>
     <string name="panic_action_unreadable_summary">Não foi possível ler sua escolha salva. Até você escolher novamente, o pânico apagará sua conta.</string>
     <string name="pref_monero_currency_title">Moeda da taxa</string>

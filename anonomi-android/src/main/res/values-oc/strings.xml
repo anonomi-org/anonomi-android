@@ -1088,8 +1088,8 @@ parteja pas amb degun.</string>
     <string name="monero_request_copy_address">Copiar l\'adreça</string>
     <string name="monero_request_address_copied">Adreça copiada</string>
     <string name="monero_request_unpayable">L\'adreça d\'aquesta demanda pòt pas èsser pagada</string>
-    <string name="passcode_requirements">Utilizatz al mens 8 tòcas, amb dos o mai operators e al mens tres chifras diferentas (per ex., 123+45*6).</string>
-    <string name="set_passcode_hint_expression">Expression (per ex., 123+45*6)</string>
+    <string name="passcode_requirements">Utilizatz al mens 8 tòcas, amb dos o mai operators e al mens tres chifras diferentas (per ex., 123+45×6).</string>
+    <string name="set_passcode_hint_expression">Expression (per ex., 123+45×6)</string>
     <string name="panic_sequence_unreadable">Vòstra sequéncia enregistrada a pas pogut èsser legida, alara lo desencadenant de panica es desactivat. Tornatz l\'enregistrar.</string>
     <string name="panic_action_unreadable_summary">Vòstra causida enregistrada a pas pogut èsser legida. Fins que tornetz causir, la panica suprimirà vòstre compte.</string>
     <string name="pref_monero_currency_title">Devisa de la tarifa</string>

@@ -1134,8 +1134,8 @@
     <string name="monero_request_copy_address">Copiar dirección</string>
     <string name="monero_request_address_copied">Dirección copiada</string>
     <string name="monero_request_unpayable">La dirección de esta solicitud no admite el pago</string>
-    <string name="passcode_requirements">Usa al menos 8 teclas, con dos o más operadores y al menos tres dígitos diferentes (por ejemplo, 123+45*6).</string>
-    <string name="set_passcode_hint_expression">Expresión (por ejemplo, 123+45*6)</string>
+    <string name="passcode_requirements">Usa al menos 8 teclas, con dos o más operadores y al menos tres dígitos diferentes (por ejemplo, 123+45×6).</string>
+    <string name="set_passcode_hint_expression">Expresión (por ejemplo, 123+45×6)</string>
     <string name="panic_sequence_unreadable">No se ha podido leer tu secuencia guardada, así que el activador de pánico está desactivado. Vuelve a grabarla.</string>
     <string name="panic_action_unreadable_summary">No se ha podido leer tu elección guardada. Hasta que vuelvas a elegir, el pánico eliminará tu cuenta.</string>
     <string name="pref_monero_currency_title">Moneda de la tasa</string>

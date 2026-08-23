@@ -1028,8 +1028,8 @@
     <string name="monero_request_copy_address">Salin alamat</string>
     <string name="monero_request_address_copied">Alamat disalin</string>
     <string name="monero_request_unpayable">Alamat permintaan ini bukan alamat yang boleh dibayar</string>
-    <string name="passcode_requirements">Gunakan sekurang-kurangnya 8 kekunci, dengan dua atau lebih operator dan sekurang-kurangnya 3 digit berbeza (cth., 123+45*6).</string>
-    <string name="set_passcode_hint_expression">Ungkapan (cth., 123+45*6)</string>
+    <string name="passcode_requirements">Gunakan sekurang-kurangnya 8 kekunci, dengan dua atau lebih operator dan sekurang-kurangnya 3 digit berbeza (cth., 123+45×6).</string>
+    <string name="set_passcode_hint_expression">Ungkapan (cth., 123+45×6)</string>
     <string name="panic_sequence_unreadable">Urutan anda yang disimpan tidak dapat dibaca, jadi pencetus panik dimatikan. Rakamkannya semula.</string>
     <string name="panic_action_unreadable_summary">Pilihan anda yang disimpan tidak dapat dibaca. Sehingga anda memilih semula, panik akan memadam akaun anda.</string>
     <string name="pref_monero_currency_title">Mata wang kadar</string>

@@ -1124,8 +1124,8 @@ copies des messages que vous envoyez.
     <string name="monero_request_copy_address">Copier l\'adresse</string>
     <string name="monero_request_address_copied">Adresse copiée</string>
     <string name="monero_request_unpayable">L\'adresse de cette demande ne peut pas être payée</string>
-    <string name="passcode_requirements">Utilisez au moins 8 touches, avec deux opérateurs ou plus et au moins trois chiffres différents (par exemple, 123+45*6).</string>
-    <string name="set_passcode_hint_expression">Expression (par exemple, 123+45*6)</string>
+    <string name="passcode_requirements">Utilisez au moins 8 touches, avec deux opérateurs ou plus et au moins trois chiffres différents (par exemple, 123+45×6).</string>
+    <string name="set_passcode_hint_expression">Expression (par exemple, 123+45×6)</string>
     <string name="panic_sequence_unreadable">Votre séquence enregistrée n\'a pas pu être lue, si bien que le déclencheur d\'urgence est désactivé. Enregistrez-la à nouveau.</string>
     <string name="panic_action_unreadable_summary">Votre choix enregistré n\'a pas pu être lu. Tant que vous n\'aurez pas choisi à nouveau, la panique supprimera votre compte.</string>
     <string name="pref_monero_currency_title">Devise du taux</string>

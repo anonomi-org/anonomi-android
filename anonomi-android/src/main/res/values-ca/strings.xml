@@ -1104,8 +1104,8 @@ Així que l\'actualitzi li veureu una icona diferent .</string>
     <string name="monero_request_copy_address">Copiar l\'adreça</string>
     <string name="monero_request_address_copied">Adreça copiada</string>
     <string name="monero_request_unpayable">L\'adreça d\'aquesta sol·licitud no admet pagaments</string>
-    <string name="passcode_requirements">Utilitzeu almenys 8 tecles, amb dos o més operadors i almenys tres dígits diferents (p. ex., 123+45*6).</string>
-    <string name="set_passcode_hint_expression">Expressió (p. ex., 123+45*6)</string>
+    <string name="passcode_requirements">Utilitzeu almenys 8 tecles, amb dos o més operadors i almenys tres dígits diferents (p. ex., 123+45×6).</string>
+    <string name="set_passcode_hint_expression">Expressió (p. ex., 123+45×6)</string>
     <string name="panic_sequence_unreadable">No s\'ha pogut llegir la vostra seqüència desada, de manera que el disparador de pànic està desactivat. Torneu-la a gravar.</string>
     <string name="panic_action_unreadable_summary">No s\'ha pogut llegir la vostra elecció desada. Fins que no torneu a triar, el pànic suprimirà el vostre compte.</string>
     <string name="pref_monero_currency_title">Moneda de la taxa</string>

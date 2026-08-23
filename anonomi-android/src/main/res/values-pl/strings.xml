@@ -1143,8 +1143,8 @@ Brak dostępu do aparatu. Spróbuj ponownie, może po ponownym uruchomieniu urz�
     <string name="monero_request_copy_address">Kopiuj adres</string>
     <string name="monero_request_address_copied">Adres skopiowany</string>
     <string name="monero_request_unpayable">Adres tego żądania nie jest takim, na który można dokonać płatności</string>
-    <string name="passcode_requirements">Użyj co najmniej 8 znaków, z dwoma lub więcej operatorami i co najmniej trzema różnymi cyframi (np. 123+45*6).</string>
-    <string name="set_passcode_hint_expression">Wyrażenie (np. 123+45*6)</string>
+    <string name="passcode_requirements">Użyj co najmniej 8 znaków, z dwoma lub więcej operatorami i co najmniej trzema różnymi cyframi (np. 123+45×6).</string>
+    <string name="set_passcode_hint_expression">Wyrażenie (np. 123+45×6)</string>
     <string name="panic_sequence_unreadable">Nie udało się odczytać zapisanej sekwencji, więc wyzwalacz paniki jest wyłączony. Zapisz ją ponownie.</string>
     <string name="panic_action_unreadable_summary">Nie udało się odczytać zapisanego wyboru. Dopóki nie wybierzesz ponownie, panika będzie usuwać Twoje konto.</string>
     <string name="pref_monero_currency_title">Waluta kursu</string>

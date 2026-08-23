@@ -1139,8 +1139,8 @@ O teu contacto também pode alterar esta configuração para ambos.</string>
     <string name="monero_request_copy_address">Copiar endereço</string>
     <string name="monero_request_address_copied">Endereço copiado</string>
     <string name="monero_request_unpayable">O endereço deste pedido não aceita pagamentos</string>
-    <string name="passcode_requirements">Usa pelo menos 8 teclas, com dois ou mais operadores e pelo menos três dígitos diferentes (ex.: 123+45*6).</string>
-    <string name="set_passcode_hint_expression">Expressão (por exemplo, 123+45*6)</string>
+    <string name="passcode_requirements">Usa pelo menos 8 teclas, com dois ou mais operadores e pelo menos três dígitos diferentes (ex.: 123+45×6).</string>
+    <string name="set_passcode_hint_expression">Expressão (por exemplo, 123+45×6)</string>
     <string name="panic_sequence_unreadable">Não foi possível ler a tua sequência guardada, por isso o gatilho de pânico está desativado. Grava-a novamente.</string>
     <string name="panic_action_unreadable_summary">Não foi possível ler a tua escolha guardada. Até escolheres novamente, o pânico eliminará a tua conta.</string>
     <string name="pref_monero_currency_title">Moeda da taxa</string>

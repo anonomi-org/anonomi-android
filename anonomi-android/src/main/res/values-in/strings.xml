@@ -990,8 +990,8 @@
     <string name="monero_request_copy_address">Salin alamat</string>
     <string name="monero_request_address_copied">Alamat disalin</string>
     <string name="monero_request_unpayable">Alamat permintaan ini bukan alamat yang dapat dibayar</string>
-    <string name="passcode_requirements">Gunakan minimal 8 tombol, dengan dua operator atau lebih dan minimal tiga angka yang berbeda (misalnya, 123+45*6).</string>
-    <string name="set_passcode_hint_expression">Ekspresi (misalnya, 123+45*6)</string>
+    <string name="passcode_requirements">Gunakan minimal 8 tombol, dengan dua operator atau lebih dan minimal tiga angka yang berbeda (misalnya, 123+45×6).</string>
+    <string name="set_passcode_hint_expression">Ekspresi (misalnya, 123+45×6)</string>
     <string name="panic_sequence_unreadable">Urutan yang tersimpan tidak dapat dibaca, sehingga pemicu panik dinonaktifkan. Rekam lagi.</string>
     <string name="panic_action_unreadable_summary">Pilihan yang tersimpan tidak dapat dibaca. Sampai Anda memilih lagi, mode panik akan menghapus akun Anda.</string>
     <string name="pref_monero_currency_title">Mata uang kurs</string>

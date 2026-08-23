@@ -1110,8 +1110,8 @@ Molim vas da uzmete u obzir odobravanja pristupa.</string>
     <string name="monero_request_copy_address">Kopiraj adresu</string>
     <string name="monero_request_address_copied">Adresa je kopirana</string>
     <string name="monero_request_unpayable">Adresa u ovom zahtevu nije takva da se može platiti</string>
-    <string name="passcode_requirements">Koristite najmanje 8 tastera, sa dva ili više operatora i najmanje tri različite cifre (npr. 123+45*6).</string>
-    <string name="set_passcode_hint_expression">Izraz (npr. 123+45*6)</string>
+    <string name="passcode_requirements">Koristite najmanje 8 tastera, sa dva ili više operatora i najmanje tri različite cifre (npr. 123+45×6).</string>
+    <string name="set_passcode_hint_expression">Izraz (npr. 123+45×6)</string>
     <string name="panic_sequence_unreadable">Vaša sačuvana sekvenca nije mogla biti pročitana, pa je okidač za paniku isključen. Snimite je ponovo.</string>
     <string name="panic_action_unreadable_summary">Vaš sačuvani izbor nije mogao biti pročitan. Dok ponovo ne izaberete, panika će izbrisati vaš račun.</string>
     <string name="pref_monero_currency_title">Valuta kursa</string>

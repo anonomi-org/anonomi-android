@@ -1101,8 +1101,8 @@
     <string name="monero_request_copy_address">复制地址</string>
     <string name="monero_request_address_copied">地址已复制</string>
     <string name="monero_request_unpayable">此请求的地址无法收款</string>
-    <string name="passcode_requirements">至少使用 8 个按键，包含 2 个或以上运算符，以及至少 3 个不同的数字（例如，123+45*6）。</string>
-    <string name="set_passcode_hint_expression">表达式（例如，123+45*6）</string>
+    <string name="passcode_requirements">至少使用 8 个按键，包含 2 个或以上运算符，以及至少 3 个不同的数字（例如，123+45×6）。</string>
+    <string name="set_passcode_hint_expression">表达式（例如，123+45×6）</string>
     <string name="panic_sequence_unreadable">无法读取您保存的序列，紧急触发器已关闭。请重新记录。</string>
     <string name="panic_action_unreadable_summary">无法读取您保存的选择。在您重新选择之前，恐慌将删除您的帐户。</string>
     <string name="pref_monero_currency_title">汇率货币</string>

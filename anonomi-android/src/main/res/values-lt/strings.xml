@@ -1142,8 +1142,8 @@ Pirmiausia, įdiekite „Anonomi Postbox“ programėlę į kitą įrenginį iš
     <string name="monero_request_copy_address">Kopijuoti adresą</string>
     <string name="monero_request_address_copied">Adresas nukopijuotas</string>
     <string name="monero_request_unpayable">Šios užklausos adresu apmokėti negalima</string>
-    <string name="passcode_requirements">Naudokite bent 8 klavišus, su dviem ar daugiau veiksmų ženklų ir bent trimis skirtingais skaitmenimis (pvz., 123+45*6).</string>
-    <string name="set_passcode_hint_expression">Išraiška (pvz., 123+45*6)</string>
+    <string name="passcode_requirements">Naudokite bent 8 klavišus, su dviem ar daugiau veiksmų ženklų ir bent trimis skirtingais skaitmenimis (pvz., 123+45×6).</string>
+    <string name="set_passcode_hint_expression">Išraiška (pvz., 123+45×6)</string>
     <string name="panic_sequence_unreadable">Nepavyko nuskaityti išsaugotos sekos, todėl panikos trigeris išjungtas. Įrašykite ją iš naujo.</string>
     <string name="panic_action_unreadable_summary">Nepavyko nuskaityti išsaugoto pasirinkimo. Kol pasirinksite iš naujo, panika ištrins jūsų paskyrą.</string>
     <string name="pref_monero_currency_title">Kurso valiuta</string>

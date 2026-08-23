@@ -1098,8 +1098,8 @@
     <string name="monero_request_copy_address">アドレスをコピー</string>
     <string name="monero_request_address_copied">アドレスをコピーしました</string>
     <string name="monero_request_unpayable">このリクエストのアドレスは支払いに使用できません</string>
-    <string name="passcode_requirements">少なくとも8個のキーを使用し、2つ以上の演算子と、少なくとも3つの異なる数字を含めてください（例：123+45*6）。</string>
-    <string name="set_passcode_hint_expression">式（例：123+45*6）</string>
+    <string name="passcode_requirements">少なくとも8個のキーを使用し、2つ以上の演算子と、少なくとも3つの異なる数字を含めてください（例：123+45×6）。</string>
+    <string name="set_passcode_hint_expression">式（例：123+45×6）</string>
     <string name="panic_sequence_unreadable">保存されたシーケンスを読み込めなかったため、パニックトリガーがオフになりました。もう一度記録してください。</string>
     <string name="panic_action_unreadable_summary">保存された選択を読み込めませんでした。選び直すまでは、パニック時にアカウントが削除されます。</string>
     <string name="pref_monero_currency_title">レートの通貨</string>

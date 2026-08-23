@@ -1143,8 +1143,8 @@ Najprv nainštalujte aplikáciu Anonomi Postbox do iného zariadenia z rovnakéh
     <string name="monero_request_copy_address">Kopírovať adresu</string>
     <string name="monero_request_address_copied">Adresa skopírovaná</string>
     <string name="monero_request_unpayable">Adresa tejto požiadavky nie je taká, na ktorú možno zaplatiť</string>
-    <string name="passcode_requirements">Použite aspoň 8 klávesov, s dvoma alebo viacerými operátormi a aspoň tromi rôznymi číslicami (napr. 123+45*6).</string>
-    <string name="set_passcode_hint_expression">Výraz (napr. 123+45*6)</string>
+    <string name="passcode_requirements">Použite aspoň 8 klávesov, s dvoma alebo viacerými operátormi a aspoň tromi rôznymi číslicami (napr. 123+45×6).</string>
+    <string name="set_passcode_hint_expression">Výraz (napr. 123+45×6)</string>
     <string name="panic_sequence_unreadable">Vašu uloženú sekvenciu sa nepodarilo prečítať, takže spúšťač paniky je vypnutý. Zaznamenajte ju znova.</string>
     <string name="panic_action_unreadable_summary">Vašu uloženú voľbu sa nepodarilo prečítať. Kým ju nezvolíte znova, panika bude mazať váš účet.</string>
     <string name="pref_monero_currency_title">Mena kurzu</string>
