@@ -16,6 +16,7 @@ import org.anonomi.android.Localizer;
 import org.anonomi.android.controller.ActivityLifecycleController;
 import org.anonomi.android.fragment.BaseFragment;
 import org.anonomi.android.fragment.ScreenFilterDialogFragment;
+import org.anonomi.android.util.Disguise;
 import org.anonomi.android.util.UiUtils;
 import org.anonomi.android.panic.PanicDialogHelper;
 import org.anonomi.android.panic.PanicResponderActivity;
@@ -119,6 +120,7 @@ public abstract class BaseActivity extends AppCompatActivity
 				.build();
 		injectActivity(activityComponent);
 		super.onCreate(state);
+		Disguise.applyTaskDescription(this);
 		//if (LOG.isLoggable(INFO)) {
 		//	LOG.info("Creating " + getClass().getSimpleName());
 		//}

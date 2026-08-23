@@ -9,6 +9,7 @@ import android.view.View;
 
 import org.anonomi.R;
 import org.anonomi.android.backup.LastBackup;
+import org.anonomi.android.util.Disguise;
 import org.anonomi.android.util.AndroidPasscodeClock;
 import org.anonomi.android.util.PasscodeAttemptStore;
 import org.anonomi.android.util.PasscodeHasher;
@@ -321,14 +322,8 @@ public class SecurityFragment extends PreferenceFragmentCompat {
 						formatDateAbsolute(requireContext(), last.created)));
 	}
 
-	/**
-	 * Whether the app is wearing the disguise, which is what the launcher was
-	 * last told rather than what any preference of ours says.
-	 */
 	private boolean stealthEnabled() {
-		return requireContext().getPackageManager()
-				.getComponentEnabledSetting(calcAlias()) ==
-				PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
+		return Disguise.isEnabled(requireContext());
 	}
 
 	private void setStateIfNeeded(PackageManager pm, ComponentName cn,
@@ -341,12 +336,12 @@ public class SecurityFragment extends PreferenceFragmentCompat {
 
 	private ComponentName splash() {
 		return new ComponentName(requireContext().getPackageName(),
-				"org.anonomi.android.splash.SplashScreenActivity");
+				Disguise.SPLASH);
 	}
 
 	private ComponentName calcAlias() {
 		return new ComponentName(requireContext().getPackageName(),
-				"org.anonomi.android.splash.CalculatorAlias");
+				Disguise.CALCULATOR_ALIAS);
 	}
 
 	private void enableStealthMode() {
@@ -355,6 +350,8 @@ public class SecurityFragment extends PreferenceFragmentCompat {
 		// 1) Enable the new launcher FIRST
 		setStateIfNeeded(pm, calcAlias(),
 				PackageManager.COMPONENT_ENABLED_STATE_ENABLED);
+
+		Disguise.applyTaskDescription(requireActivity());
 
 		// 2) Disable the old launcher AFTER a tick (prevents task teardown on A15)
 		new android.os.Handler(android.os.Looper.getMainLooper()).post(() ->
@@ -371,9 +368,10 @@ public class SecurityFragment extends PreferenceFragmentCompat {
 				PackageManager.COMPONENT_ENABLED_STATE_ENABLED);
 
 		// 2) Then disable the calculator alias
-		new android.os.Handler(android.os.Looper.getMainLooper()).post(() ->
-				setStateIfNeeded(pm, calcAlias(),
-						PackageManager.COMPONENT_ENABLED_STATE_DISABLED)
-		);
+		new android.os.Handler(android.os.Looper.getMainLooper()).post(() -> {
+			setStateIfNeeded(pm, calcAlias(),
+					PackageManager.COMPONENT_ENABLED_STATE_DISABLED);
+			Disguise.applyTaskDescription(requireActivity());
+		});
 	}
 }

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.anonomi.R;
+import org.anonomi.android.util.Disguise;
 import org.anonomi.android.panic.PanicDialogHelper;
 import org.anonomi.android.panic.PanicResponderActivity;
 import org.anonomi.android.panic.PanicSequenceDetector;
@@ -61,6 +62,7 @@ public class CalculatorActivity extends AppCompatActivity {
 		if (SDK_INT >= 31) getWindow().setHideOverlayWindows(true);
 
 		setContentView(R.layout.activity_calculator);
+		Disguise.applyTaskDescription(this);
 
 		passcodeExecutor = Executors.newSingleThreadExecutor();
 		display = findViewById(R.id.input);
